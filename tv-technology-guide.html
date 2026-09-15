@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מדריך טכנולוגיות מסך - Master Mount</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Suez+One&family=Big+Shoulders+Display:wght@600;800&family=Assistant:wght@300;400;500;600;700;800&display=swap">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #ffffff;
+    --surface: #f7f9fc;
+    --surface-2: #edf1f8;
+    --border: #dde3ee;
+    --text-primary: #10192b;
+    --text-secondary: #57627a;
+    --text-tertiary: #8b93a5;
+    --blue: #2f5fce;
+    --blue-ink: #ffffff;
+    --blue-soft: #e8eefb;
+    --blue-deep: #12234a;
+    --orange: #f0872e;
+    --orange-ink: #241002;
+    --orange-soft: #fdecdc;
+    --shadow: 0 1px 2px rgba(16,25,43,.05), 0 16px 34px -16px rgba(16,25,43,.18);
+    --dot: var(--border);
+    --accent: var(--blue);
+    --accent-ink: var(--blue-ink);
+    --accent-soft: var(--blue-soft);
+    --premium: var(--orange);
+    --premium-soft: var(--orange-soft);
+    --good: #1c8a54;
+    --good-soft: #e6f5ec;
+    --watch: #b3591b;
+    --watch-soft: #fbeee0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #0a0e18; --surface: #111726; --surface-2: #1a2236; --border: #2a3450;
+      --text-primary: #f2f4f9; --text-secondary: #aab2c7; --text-tertiary: #798197;
+      --blue: #5f8dfd; --blue-ink: #051224; --blue-soft: #182544; --blue-deep: #a9c2ff;
+      --orange: #ff9d52; --orange-ink: #241002; --orange-soft: #33221a;
+      --shadow: 0 1px 2px rgba(0,0,0,.45), 0 24px 50px -20px rgba(0,0,0,.75);
+      --dot: #1c2540;
+      --accent: var(--blue); --accent-ink: var(--blue-ink); --accent-soft: var(--blue-soft);
+      --premium: var(--orange); --premium-soft: var(--orange-soft);
+      --good: #4fbd85; --good-soft: #16281f;
+      --watch: #e0975a; --watch-soft: #2c2013;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0a0e18; --surface: #111726; --surface-2: #1a2236; --border: #2a3450;
+    --text-primary: #f2f4f9; --text-secondary: #aab2c7; --text-tertiary: #798197;
+    --blue: #5f8dfd; --blue-ink: #051224; --blue-soft: #182544; --blue-deep: #a9c2ff;
+    --orange: #ff9d52; --orange-ink: #241002; --orange-soft: #33221a;
+    --shadow: 0 1px 2px rgba(0,0,0,.45), 0 24px 50px -20px rgba(0,0,0,.75);
+    --dot: #1c2540;
+    --accent: var(--blue); --accent-ink: var(--blue-ink); --accent-soft: var(--blue-soft);
+    --premium: var(--orange); --premium-soft: var(--orange-soft);
+    --good: #4fbd85; --good-soft: #16281f;
+    --watch: #e0975a; --watch-soft: #2c2013;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  }
+  body {
+    margin: 0; background: var(--bg); color: var(--text-primary);
+    font-family: "Assistant", "Segoe UI", Tahoma, sans-serif; line-height: 1.6; direction: rtl;
+    font-size: 16.5px;
+  }
+  h1,h2,h3 { font-family: "Suez One","Assistant",serif; font-weight: 400; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  button { font-family: inherit; cursor: pointer; }
+  a { color: inherit; }
+  img { max-width: 100%; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; }
+
+  /* ---------------- topbar (copied from index.html for visual consistency) ---------------- */
+  .topbar { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  .topbar-inner { max-width: 1080px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; gap: 18px; }
+  .brandmark { display: flex; align-items: center; gap: 8px; font-family: "Big Shoulders Display","Assistant",sans-serif; font-weight: 800; font-size: 1.15rem; letter-spacing: .03em; text-transform: uppercase; flex-shrink: 0; text-decoration: none; }
+  .brandmark svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .toplinks { display: flex; gap: 4px; margin-inline-end: auto; overflow-x: auto; }
+  .toplinks a { font-size: .85rem; color: var(--text-secondary); text-decoration: none; padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+  .toplinks a:hover { background: var(--surface-2); color: var(--text-primary); }
+  .top-cta { display: flex; align-items: center; gap: 6px; background: var(--orange); color: var(--orange-ink); border: none; border-radius: 999px; padding: 8px 16px; font-size: .85rem; font-weight: 700; flex-shrink: 0; text-decoration: none; }
+  .top-cta:hover { filter: brightness(1.06); }
+  @media (max-width: 640px) { .toplinks { display: none; } }
+
+  .btn-accent { background: var(--accent); color: var(--accent-ink); border: none; border-radius: 999px; padding: 13px 26px; font-weight: 700; font-size: .98rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-accent:hover { filter: brightness(1.06); }
+  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-primary); border-radius: 999px; padding: 13px 24px; font-size: .95rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---------------- guide hero ---------------- */
+  .guide-hero {
+    position: relative; overflow: hidden; padding-block: 48px 40px;
+    background-image: radial-gradient(var(--dot) 1.4px, transparent 1.4px);
+    background-size: 30px 30px; text-align: center;
+  }
+  .guide-hero-inner { max-width: 760px; margin: 0 auto; padding-inline: 20px; position: relative; }
+  .guide-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .78rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin-bottom: 16px; }
+  .guide-hero h1 { font-size: clamp(1.7rem, 4.4vw, 2.5rem); margin-bottom: 14px; }
+  .guide-hero p.lede { font-size: 1.05rem; color: var(--text-secondary); max-width: 56ch; margin: 0 auto; }
+  .jump-nav { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+  .jump-nav a { font-size: .88rem; font-weight: 700; color: var(--text-secondary); background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 8px 18px; text-decoration: none; }
+  .jump-nav a:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---------------- generic section ---------------- */
+  section.block { padding-block: 52px; border-top: 1px solid var(--border); }
+  .block-head { text-align: center; max-width: 640px; margin: 0 auto 30px; }
+  .block-eyebrow { font-size: .74rem; letter-spacing: .1em; color: var(--text-tertiary); font-weight: 700; margin-bottom: 8px; display: block; }
+  .block-head h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+  .block-head p { color: var(--text-secondary); margin-top: 10px; }
+
+  /* ---------------- basics grid ---------------- */
+  .basics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .basics-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+  .basics-card .b-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 800; font-size: .82rem; margin-bottom: 12px; }
+  .basics-card h3 { font-size: 1.05rem; font-family: "Assistant", sans-serif; font-weight: 800; margin-bottom: 8px; }
+  .basics-card .b-highlight { font-weight: 700; color: var(--accent); font-size: .92rem; margin-bottom: 8px; }
+  .basics-card p.b-explain { font-size: .88rem; color: var(--text-secondary); }
+  .basics-note { grid-column: 1 / -1; background: var(--surface-2); border: 1px dashed var(--border); border-radius: 16px; padding: 18px 20px; font-size: .88rem; color: var(--text-secondary); }
+  .basics-note strong { color: var(--text-primary); }
+
+  .hdr-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+  .hdr-strip .hdr-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; }
+  .hdr-strip h4 { font-family: "Assistant", sans-serif; font-weight: 800; font-size: .96rem; margin-bottom: 6px; }
+  .hdr-strip p { font-size: .87rem; color: var(--text-secondary); }
+
+  /* ---------------- brand sections ---------------- */
+  .brand-block { --brand: var(--accent); }
+  .brand-head { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; flex-wrap: wrap; }
+  .brand-pill { display: inline-flex; align-items: center; font-family: "Big Shoulders Display", sans-serif; font-weight: 800; letter-spacing: .04em; font-size: 1.4rem; color: var(--brand); text-transform: uppercase; }
+  .brand-tagline { color: var(--text-secondary); font-size: .95rem; max-width: 62ch; margin-bottom: 20px; }
+  .brand-facts { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+  .brand-fact { display: flex; flex-direction: column; gap: 2px; background: var(--surface); border: 1px solid var(--border); border-inline-start: 3px solid var(--brand); border-radius: 10px; padding: 10px 16px; min-width: 150px; }
+  .brand-fact .fact-label { font-size: .72rem; color: var(--text-tertiary); font-weight: 700; letter-spacing: .04em; }
+  .brand-fact .fact-value { font-size: .9rem; font-weight: 700; color: var(--text-primary); }
+
+  .tier-list { display: flex; flex-direction: column; gap: 16px; }
+  .tier-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 22px 24px; position: relative; }
+  .tier-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .tier-rung { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--brand); color: var(--bg); font-weight: 800; font-size: .88rem; flex-shrink: 0; }
+  .tier-name { font-family: "Assistant", sans-serif; font-weight: 800; font-size: 1.12rem; }
+  .tier-badge { font-size: .72rem; font-weight: 700; color: var(--brand); background: color-mix(in srgb, var(--brand) 14%, transparent); border-radius: 999px; padding: 3px 12px; }
+  .tier-highlight { font-weight: 700; color: var(--brand); font-size: 1rem; margin-bottom: 10px; }
+  .tier-explain { font-size: .92rem; color: var(--text-secondary); margin-bottom: 16px; }
+  .tier-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .tier-cols h4 { font-size: .82rem; font-weight: 800; margin-bottom: 8px; }
+  .tier-pros h4 { color: var(--good); }
+  .tier-cons h4 { color: var(--watch); }
+  .tier-cols li { font-size: .87rem; color: var(--text-secondary); padding-inline-start: 20px; position: relative; margin-bottom: 6px; }
+  .tier-pros li::before { content: "✓"; position: absolute; inset-inline-start: 0; color: var(--good); font-weight: 800; }
+  .tier-cons li::before { content: "!"; position: absolute; inset-inline-start: 4px; color: var(--watch); font-weight: 800; }
+  .tier-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tier-tags span { font-size: .78rem; font-weight: 600; background: var(--surface-2); color: var(--text-secondary); border-radius: 999px; padding: 5px 13px; }
+  @media (max-width: 640px) {
+    .tier-cols { grid-template-columns: 1fr; }
+  }
+
+  /* ---------------- compare table ---------------- */
+  .compare-scroll { overflow-x: auto; }
+  table.compare { width: 100%; border-collapse: collapse; min-width: 560px; }
+  table.compare th, table.compare td { padding: 12px 16px; text-align: start; border-bottom: 1px solid var(--border); font-size: .9rem; }
+  table.compare thead th { color: var(--text-tertiary); font-size: .74rem; letter-spacing: .06em; font-weight: 700; }
+  table.compare tbody th { color: var(--text-secondary); font-weight: 700; white-space: nowrap; }
+  table.compare tbody td { font-weight: 600; }
+
+  /* ---------------- closing cta ---------------- */
+  .guide-cta { text-align: center; padding-block: 56px; }
+  .guide-cta h2 { margin-bottom: 12px; }
+  .guide-cta p { color: var(--text-secondary); margin-bottom: 24px; max-width: 54ch; margin-inline: auto; }
+  .guide-cta .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ---------------- footer ---------------- */
+  footer.site-foot { padding-block: 40px; border-top: 1px solid var(--border); }
+  .foot-grid { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .foot-grid .brandmark { margin-bottom: 8px; }
+  footer.site-foot p, footer.site-foot a { color: var(--text-tertiary); font-size: .85rem; text-decoration: none; }
+  footer.site-foot a:hover { color: var(--accent); }
+  .foot-links { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 640px) {
+    body { font-size: 15.5px; }
+    .brand-facts { gap: 8px; }
+    .brand-fact { min-width: 130px; padding: 8px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brandmark" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="16" height="16" rx="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="7.7" cy="7.7" r="1.35" fill="var(--accent)"/><circle cx="16.3" cy="7.7" r="1.35" fill="var(--accent)"/><circle cx="7.7" cy="16.3" r="1.35" fill="var(--accent)"/><circle cx="16.3" cy="16.3" r="1.35" fill="var(--accent)"/></svg>
+      Master Mount
+    </a>
+    <nav class="toplinks">
+      <a href="index.html#products">טלוויזיות למכירה</a>
+      <a href="index.html#configurator">מחשבון מחיר התקנה</a>
+      <a href="index.html#bundles">באנדלים</a>
+      <a href="tv-technology-guide.html">מדריך טכנולוגיות</a>
+      <a href="index.html#contact">יצירת קשר</a>
+    </nav>
+    <a class="top-cta" id="topWhatsappBtn" href="#" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.36 2 11.75c0 2.06.65 3.97 1.76 5.55L2.5 22l4.86-1.24a10.1 10.1 0 0 0 4.64 1.14c5.52 0 10-4.36 10-9.75S17.52 2 12 2Zm0 17.75c-1.5 0-2.9-.4-4.1-1.09l-.29-.17-2.88.73.77-2.8-.19-.29A7.66 7.66 0 0 1 4.15 11.75C4.15 7.46 7.66 4 12 4s7.85 3.46 7.85 7.75-3.51 7.75-7.85 7.75Zm4.3-5.8c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.17-.7-.62-1.18-1.39-1.31-1.63-.14-.24-.01-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28Z"/></svg>
+      וואטסאפ
+    </a>
+  </div>
+</div>
+
+<section class="guide-hero">
+  <div class="guide-hero-inner">
+    <span class="guide-eyebrow">📺 מדריך צרכני</span>
+    <h1>מדריך טכנולוגיות מסך: SAMSUNG · LG · TCL</h1>
+    <p class="lede">בחירת טלוויזיה היא הרבה יותר מגודל ומחיר - הטכנולוגיה שמאחורי המסך היא מה שבאמת קובע איך התמונה תיראה בסלון שלכם. ריכזנו לכם את כל הטכנולוגיות של שלושת המותגים שאנחנו מוכרים, בשפה פשוטה, עם יתרונות, חסרונות והמלצה למי כל טכנולוגיה הכי מתאימה.</p>
+    <nav class="jump-nav">
+      <a href="#basics">יסודות</a>
+      <a href="#samsung">SAMSUNG</a>
+      <a href="#lg">LG</a>
+      <a href="#tcl">TCL</a>
+      <a href="#compare">השוואה מהירה</a>
+    </nav>
+  </div>
+</section>
+
+<section class="block" id="basics">
+  <div class="wrap">
+    <div class="block-head">
+      <span class="block-eyebrow">לפני שמתחילים</span>
+      <h2>יסודות: מה בכלל ההבדל בין כל המונחים האלה</h2>
+      <p>חמישה מושגי-בסיס שחוזרים אצל כל היצרנים, בשמות שונים - ברגע שהם ברורים, קל הרבה יותר להבין את מה שכתוב בהמשך המדריך לפי מותג.</p>
+    </div>
+    <div class="basics-grid">
+      <div class="basics-card">
+        <span class="b-num">1</span>
+        <h3>LED (מסך LCD עם תאורת רקע)</h3>
+        <p class="b-highlight">הבסיס של רוב הטלוויזיות: מסך LCD, מואר מאחור בנורות LED רגילות.</p>
+        <p class="b-explain">הפיקסלים עצמם לא מייצרים אור - הם רק חוסמים או מעבירים אור שמגיע מתאורת-רקע אחידה מאחורי המסך. זו הטכנולוגיה הבסיסית שעליה בנויות כל שאר הרמות שתראו בהמשך.</p>
+      </div>
+      <div class="basics-card">
+        <span class="b-num">2</span>
+        <h3>QLED (שכבת Quantum Dot)</h3>
+        <p class="b-highlight">אותו LCD, עם שכבת נקודות-קוונטים שמעשירה את הצבע.</p>
+        <p class="b-explain">שכבה דקה של גבישים זעירים שממירה את האור מהתאורה לצבעים נקיים ורוויים יותר. משפרת צבעוניות ובהירות, אבל לא משנה בעצמה את אופן התאורה.</p>
+      </div>
+      <div class="basics-card">
+        <span class="b-num">3</span>
+        <h3>Mini-LED (שדרוג תאורת-הרקע)</h3>
+        <p class="b-highlight">אלפי נורות LED זעירות במקום עשרות - שליטה מדויקת הרבה יותר בכל אזור.</p>
+        <p class="b-explain">ככל שיש יותר נקודות-תאורה עצמאיות, כך אפשר לעמעם כל אזור במסך בנפרד - שחורים עמוקים יותר לצד בהירות שיא. זהו שדרוג לתאורת-הרקע, ולכן אפשר למצוא אותו גם ב-QLED וגם בדגמים אחרים של כל אחד מהמותגים.</p>
+      </div>
+      <div class="basics-card">
+        <span class="b-num">4</span>
+        <h3>OLED (מסך שמאיר את עצמו)</h3>
+        <p class="b-highlight">כל פיקסל הוא מקור-אור עצמאי - אין תאורת-רקע בכלל.</p>
+        <p class="b-explain">טכנולוגיה שונה לחלוטין: כשפיקסל צריך להיות שחור, הוא פשוט כבה. התוצאה - ניגודיות אינסופית וזוויות-צפייה מושלמות, במחיר של בהירות-שיא נמוכה יותר מדגמי ה-LCD המתקדמים.</p>
+      </div>
+      <div class="basics-card">
+        <span class="b-num">5</span>
+        <h3>Micro-LED מול "Micro RGB" / "RGB Mini-LED"</h3>
+        <p class="b-highlight">שני שמות דומים - שתי טכנולוגיות שונות לגמרי.</p>
+        <p class="b-explain">Micro-LED האמיתי דומה ל-OLED: כל פיקסל הוא נורית-לד זעירה שמאירה בעצמה, בלי תאורת-רקע - אבל יקר ונדיר מאוד כרגע. "Micro RGB" (סמסונג) ו-"RGB Mini-LED" (TCL ואחרים) הם דווקא שדרוג לתאורת-הרקע של מסך LCD רגיל - נקודות אדום/ירוק/כחול זעירות במקום לד לבן אחיד. מרשים ומתקדם, אבל לא אותו דבר.</p>
+      </div>
+      <div class="basics-note">
+        <strong>שני מושגים נוספים שכדאי להכיר:</strong> תוכן HDR מגיע עם "הוראות" לצבע ובהירות - <strong>HDR10</strong> הוא הבסיס שכל טלוויזיה תומכת בו, ו-<strong>HDR10+</strong> ו-<strong>Dolby Vision</strong> הם שני שדרוגים מתחרים שמתאימים את ההוראות לכל סצנה בנפרד. טלוויזיה תומכת רק במה שהיא תומכת - וזה משתנה בין המותגים (פירוט בכל מותג בהמשך). בנוסף, <strong>תדר-רענון גבוה</strong> (120Hz ומעלה, עם VRR ו-ALLM) חשוב בעיקר לגיימרים ולתוכן ספורט/אקשן מהיר - התמונה זזה בצורה חלקה יותר, בלי טשטוש-תנועה.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block brand-block samsung" id="samsung" style="--brand:#1c3a63;">
+  <div class="wrap">
+    <div class="brand-head">
+      <span class="brand-pill">SAMSUNG</span>
+    </div>
+    <p class="brand-tagline">סמסונג מובילה בבהירות מסך, בטכנולוגיית Quantum Dot ובמערכת גיימינג עשירה שמובנית בתוך הטלוויזיה עצמה - בלי צורך בקונסולה חיצונית.</p>
+    <div class="brand-facts">
+      <div class="brand-fact"><span class="fact-label">מערכת הפעלה</span><span class="fact-value">Tizen (Gaming Hub מובנה)</span></div>
+      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">HDR10+ בלבד (לא Dolby Vision)</span></div>
+      <div class="brand-fact"><span class="fact-label">גיימינג</span><span class="fact-value">Game Bar · ALLM · VRR מובנים</span></div>
+    </div>
+
+    <div class="tier-list">
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">1</span>
+          <span class="tier-name">Crystal UHD</span>
+          <span class="tier-badge">כניסה</span>
+        </div>
+        <p class="tier-highlight">כניסה חכמה ל-4K, במחיר הכי נגיש שיש למותג</p>
+        <p class="tier-explain">מסך LED עם רזולוציית 4K אמיתית ועיבוד-תמונה בסיסי, בלי שכבת ה-Quantum Dot של הדגמים שמעליו. הבחירה הפשוטה כשהתקציב הוא השיקול המרכזי.</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>המחיר הנגיש ביותר במותג</li>
+            <li>4K אמיתי + HDR בסיסי</li>
+            <li>תפעול Tizen פשוט ונוח</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>טווח צבעים ובהירות מוגבלים יחסית</li>
+            <li>פחות מתאים לחדר מואר מאוד</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>חדר שני / חדר ילדים</span><span>תקציב חסכוני</span><span>צפייה יומיומית בסיסית</span></div>
+      </article>
+
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">2</span>
+          <span class="tier-name">QLED</span>
+          <span class="tier-badge">בינוני</span>
+        </div>
+        <p class="tier-highlight">צבע עשיר ובהיר יותר, בזכות שכבת נקודות-הקוונטים</p>
+        <p class="tier-explain">אותו מסך LCD בבסיסו, אך עם שכבת Quantum Dot שמרחיבה משמעותית את טווח הצבעים ואת רמת הבהירות לעומת Crystal UHD.</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>צבעוניות עשירה ומדויקת</li>
+            <li>בהירות טובה שמתמודדת עם אור יום</li>
+            <li>יחס מחיר-ביצועים אטרקטיבי</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>שחורים פחות עמוקים מ-OLED</li>
+            <li>עמעום-רקע כללי, לא מדויק כמו Neo QLED</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>סלון עם הרבה אור טבעי</span><span>צפייה משפחתית כללית</span><span>שדרוג ראשון מ-LED רגיל</span></div>
+      </article>
+
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">3</span>
+          <span class="tier-name">Neo QLED</span>
+          <span class="tier-badge">פרימיום</span>
+        </div>
+        <p class="tier-highlight">תאורת Mini-LED = שחורים עמוקים יותר ובהירות שיא</p>
+        <p class="tier-explain">אותה שכבת Quantum Dot, עם תאורת-רקע Mini-LED שמאפשרת עמעום מדויק באלפי אזורים נפרדים - ניגודיות משמעותית טובה יותר ובהירות HDR גבוהה.</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>ניגודיות ובהירות מהטובות בשוק ה-LCD</li>
+            <li>מעולה לחדרים מוארים</li>
+            <li>ביצועי גיימינג מהירים (VRR / ALLM / Game Bar)</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>מחיר גבוה יותר מ-QLED רגיל</li>
+            <li>עדיין לא שחור-מושלם כמו OLED, ייתכן "בלימינג" קל</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>קולנוע ביתי בסלון מואר</span><span>גיימרים</span><span>מי שרוצה כמעט-הכל בלי לעבור ל-OLED</span></div>
+      </article>
+
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">4</span>
+          <span class="tier-name">OLED (QD-OLED)</span>
+          <span class="tier-badge">פרימיום</span>
+        </div>
+        <p class="tier-highlight">כל פיקסל דולק בעצמו - שחור אמיתי, בכל זווית צפייה</p>
+        <p class="tier-explain">טכנולוגיה שונה לגמרי מ-LCD: אין תאורת-רקע בכלל, וכל פיקסל יכול לכבות באופן מוחלט. סמסונג משתמשת בפאנל QD-OLED משלה, עם שכבת קוונטים שמוסיפה צבעוניות ובהירות מעבר ל-OLED המסורתי.</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>שחור מושלם וניגודיות אינסופית</li>
+            <li>זוויות-צפייה מושלמות מכל מקום בסלון</li>
+            <li>תמונה קולנועית ברמה הגבוהה ביותר</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>בהירות-שיא נמוכה במעט מ-Neo QLED (פחות אידיאלי מול חלון גדול)</li>
+            <li>מחיר פרימיום</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>חדר צפייה מוחשך / מבוקר-תאורה</span><span>קולנוע ביתי ברמה הגבוהה</span><span>חובבי איכות תמונה על פני הכל</span></div>
+      </article>
+
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">5</span>
+          <span class="tier-name">Micro RGB</span>
+          <span class="tier-badge">דגל 2026</span>
+        </div>
+        <p class="tier-highlight">שלושה צבעי-לד עצמאיים בכל נקודת-תאורה - הדור הבא של ה-LCD</p>
+        <p class="tier-explain">הדגם הכי חדש של סמסונג: תאורת-הרקע בנויה מנקודות אדום/ירוק/כחול זעירות ונפרדות, במקום לד לבן עם פילטר צבע - טווח-צבעים עצום ובהירות יוצאת דופן. חשוב להבהיר: זו עדיין טכנולוגיית LCD עם תאורת-רקע, לא Micro-LED האמיתי (ר' הסבר ב"יסודות" למעלה).</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>טווח הצבעים הרחב ביותר שסמסונג הציעה אי-פעם</li>
+            <li>בהירות מהגבוהות בשוק</li>
+            <li>ניגודיות משופרת לעומת Neo QLED</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>מחיר פרימיום גבוה</li>
+            <li>טכנולוגיה חדשה יחסית בשוק</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>המחפשים את המתקדם ביותר ב-LCD</span><span>חדרים מוארים עם דרישת-בהירות גבוהה</span><span>תקציב גמיש</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="block brand-block lg" id="lg" style="--brand:#a8264a;">
+  <div class="wrap">
+    <div class="brand-head">
+      <span class="brand-pill">LG</span>
+    </div>
+    <p class="brand-tagline">אל.ג'י המציאה את ה-OLED הצרכני וממשיכה להוביל בו - עם מערכת הפעלה נוחה ושלט Magic Remote שמצביע כמו עכבר.</p>
+    <div class="brand-facts">
+      <div class="brand-fact"><span class="fact-label">מערכת הפעלה</span><span class="fact-value">webOS (שלט Magic Remote)</span></div>
+      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">Dolby Vision בלבד (לא HDR10+)</span></div>
+      <div class="brand-fact"><span class="fact-label">מעבד</span><span class="fact-value">α (Alpha) AI Processor</span></div>
+    </div>
+
+    <div class="tier-list">
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">1</span>
+          <span class="tier-name">LED</span>
+          <span class="tier-badge">כניסה</span>
+        </div>
+        <p class="tier-highlight">הבסיס הפשוט של אל.ג'י - LCD עם תאורת-רקע רגילה</p>
+        <p class="tier-explain">מסך LCD סטנדרטי בלי שכבות שיפור-צבע נוספות. הבחירה הכי משתלמת לצפייה כללית פשוטה.</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>המחיר הנגיש ביותר במותג</li>
+            <li>פשוט לתפעול</li>
+            <li>מספיק ליישומים בסיסיים</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>טווח צבעים מוגבל יחסית</li>
+            <li>בהירות וניגודיות בסיסיות</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>חדר משני</span><span>תקציב חסכוני</span><span>צפייה בסיסית ללא דרישות מיוחדות</span></div>
+      </article>
+
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">2</span>
+          <span class="tier-name">NanoCell</span>
+          <span class="tier-badge">בינוני</span>
+        </div>
+        <p class="tier-highlight">שכבת ננו-חלקיקים שמנקה גוונים ומדייקת את הצבע</p>
+        <p class="tier-explain">שכבת סינון עדינה שמסננת גוונים "לא נקיים" מהאור, לצבע מדויק יותר וזוויות-צפייה טובות יותר מ-LED רגיל - עדיין עם תאורת-רקע סטנדרטית (לא Mini-LED).</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>דיוק-צבע משופר משמעותית לעומת LED בסיסי</li>
+            <li>זוויות צפייה טובות יותר</li>
+            <li>מחיר סביר</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>אין תאורת Mini-LED, כך שהניגודיות מוגבלת</li>
+            <li>לא מתאים לחדר מואר מאוד</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>סלון ביתי רגיל</span><span>צפייה משפחתית</span><span>שדרוג-צבע בלי לשלם על Mini-LED</span></div>
+      </article>
+
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">3</span>
+          <span class="tier-name">QNED evo</span>
+          <span class="tier-badge">פרימיום</span>
+        </div>
+        <p class="tier-highlight">Quantum Dot + NanoCell + Mini-LED ביחד - הדגל של ה-LCD אצל אל.ג'י</p>
+        <p class="tier-explain">משלב את שכבת ה-NanoCell עם נקודות-קוונטים ותאורת Mini-LED עתירת-אזורי-עמעום - השילוב הכי מתקדם שאל.ג'י מציעה מחוץ ל-OLED, כולל מסכים ענקיים במיוחד.</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>ניגודיות ובהירות גבוהות משמעותית מ-NanoCell</li>
+            <li>מסכים בגדלים ענקיים</li>
+            <li>מעבד AI חזק (α8) לתמונה וקול</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>מחיר גבוה יחסית</li>
+            <li>עדיין לא שחור-מושלם כמו OLED</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>מסך ענק לסלון מרווח</span><span>אור-יום עם דרישת ניגודיות טובה</span><span>ספורט/גיימינג במסך גדול</span></div>
+      </article>
+
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">4</span>
+          <span class="tier-name">OLED evo</span>
+          <span class="tier-badge">דגל</span>
+        </div>
+        <p class="tier-highlight">מייסדת ה-OLED הצרכני - שחור מושלם וזוויות-צפייה ללא פשרות</p>
+        <p class="tier-explain">פאנל self-emissive (WOLED) עם שכבת "evo" שמעלה את הבהירות לעומת OLED בסיסי. הדגל האמיתי של אל.ג'י, עם הניסיון הרב ביותר בשוק ה-OLED.</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>שחור מושלם וניגודיות אינסופית</li>
+            <li>זוויות-צפייה מושלמות</li>
+            <li>תמיכה מלאה ב-Dolby Vision, הפורמט הנפוץ בסטרימינג</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>בהירות-שיא נמוכה יותר מ-Mini-LED מתקדם</li>
+            <li>מחיר פרימיום</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>קולנוע ביתי וחוויית-צפייה</span><span>חדר מוחשך / מבוקר-תאורה</span><span>צופים הרבה Netflix/Disney+ עם Dolby Vision</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="block brand-block tcl" id="tcl" style="--brand:#0f7a82;">
+  <div class="wrap">
+    <div class="brand-head">
+      <span class="brand-pill">TCL</span>
+    </div>
+    <p class="brand-tagline">TCL מתקדמת הכי מהר במונחי מפרט-מול-מחיר, עם Google TV פתוח ותמיכה בשני פורמטי ה-HDR המובילים גם יחד - יתרון שאף מותג אחר כאן לא מציע.</p>
+    <div class="brand-facts">
+      <div class="brand-fact"><span class="fact-label">מערכת הפעלה</span><span class="fact-value">Google TV</span></div>
+      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">HDR10+ וגם Dolby Vision</span></div>
+      <div class="brand-fact"><span class="fact-label">עיצוב ועיבוד</span><span class="fact-value">NXTVISION (מעבד AiPQ) · Game Master</span></div>
+    </div>
+
+    <div class="tier-list">
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">1</span>
+          <span class="tier-name">QLED</span>
+          <span class="tier-badge">כניסה</span>
+        </div>
+        <p class="tier-highlight">כניסה עם שכבת Quantum Dot מלאה - ערך-לכסף יוצא דופן</p>
+        <p class="tier-explain">מסך LCD עם שכבת נקודות-קוונטים כבר בדגמי הכניסה - רמת-צבע שמותגים אחרים שומרים לרמות גבוהות יותר, במחיר נגיש.</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>שכבת Quantum Dot כבר בכניסה</li>
+            <li>יחס מחיר-ביצועים מהטובים בשוק</li>
+            <li>Google TV עם ספריית-אפליקציות רחבה</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>תאורת-רקע בסיסית (בלי Mini-LED)</li>
+            <li>ניגודיות מוגבלת יחסית</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>תקציב חסכוני עם דרישת-צבע טוב</span><span>בית ראשון / דירה להשכרה</span><span>צפייה יומיומית כללית</span></div>
+      </article>
+
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">2</span>
+          <span class="tier-name">QD Mini-LED / Super QD Mini-LED</span>
+          <span class="tier-badge">בינוני-פרימיום</span>
+        </div>
+        <p class="tier-highlight">Quantum Dot + Mini-LED - ניגודיות ובהירות ברמת-פרימיום, במחיר-אמצע</p>
+        <p class="tier-explain">שילוב של שכבת קוונטים עם תאורת Mini-LED עתירת-אזורים; בגרסת ה-Super QD יש שיפור נוסף בהפרדת-הצבעים ובכמות אזורי-העמעום, לתמונה חדה וניגודית יותר.</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>ניגודיות ובהירות שמתחרות בדגמי-דגל של מותגים אחרים</li>
+            <li>תמיכה גם ב-HDR10+ וגם ב-Dolby Vision</li>
+            <li>תדר-רענון גבוה, טוב לגיימינג</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>עדיין לא ברמת RGB Mini-LED/OLED מבחינת טווח-צבעים ושחורים</li>
+            <li>גדלים ענקיים מעלים משמעותית את המחיר</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>ערך-לכסף מקסימלי ברמת-פרימיום</span><span>גיימרים עם תקציב מבוקר</span><span>מי שרוצה גמישות-HDR מלאה</span></div>
+      </article>
+
+      <article class="tier-card">
+        <div class="tier-card-head">
+          <span class="tier-rung">3</span>
+          <span class="tier-name">RGB Mini-LED</span>
+          <span class="tier-badge">דגל</span>
+        </div>
+        <p class="tier-highlight">תאורת-רקע מנקודות אדום/ירוק/כחול נפרדות - הדגל הצבעוני של TCL</p>
+        <p class="tier-explain">כמו ה-Micro RGB של סמסונג: תאורת-הרקע בנויה מנקודות-צבע נפרדות במקום לד-לבן+פילטר, לטווח-צבעים ובהירות מהמתקדמים בשוק ה-LCD.</p>
+        <div class="tier-cols">
+          <div class="tier-pros"><h4>יתרונות</h4><ul>
+            <li>טווח-צבעים מהרחבים ביותר בשוק</li>
+            <li>בהירות וניגודיות ברמה גבוהה מאוד</li>
+            <li>עדיין תומך גם ב-HDR10+ וגם ב-Dolby Vision</li>
+          </ul></div>
+          <div class="tier-cons"><h4>לשים לב</h4><ul>
+            <li>מחיר פרימיום</li>
+            <li>דגם חדש-יחסית בשוק</li>
+          </ul></div>
+        </div>
+        <div class="tier-tags"><span>המחפשים את המתקדם ביותר אצל TCL</span><span>חדרים מוארים עם דרישת-צבע וגם בהירות</span><span>תקציב גמיש עם העדפה ל-Google TV</span></div>
+      </article>
+    </div>
+
+    <p style="font-size:.85rem;color:var(--text-tertiary);margin-top:20px;">💡 <strong style="color:var(--text-secondary);">NXTVISION</strong> הוא קו-עיצוב ומעבד-תמונה (AiPQ) שמלווה כמה מהדגמים למעלה - כולל גרסאות "Pro" עם מראה-גלריה ומצב-אמנות למסך כבוי. זה לא רמת-פאנל נפרדת, אלא תוספת-עיצוב ועיבוד שיכולה להופיע בכל אחת מהדרגות שלמעלה.</p>
+  </div>
+</section>
+
+<section class="block" id="compare">
+  <div class="wrap">
+    <div class="block-head">
+      <span class="block-eyebrow">סיכום</span>
+      <h2>השוואה מהירה בין המותגים</h2>
+      <p>לעין-ציפור, לפני שממשיכים לקטלוג</p>
+    </div>
+    <div class="compare-scroll">
+      <table class="compare">
+        <thead>
+          <tr><th></th><th>SAMSUNG</th><th>LG</th><th>TCL</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>מערכת הפעלה</th><td>Tizen</td><td>webOS</td><td>Google TV</td></tr>
+          <tr><th>פורמט HDR</th><td>HDR10+</td><td>Dolby Vision</td><td>HDR10+ וגם Dolby Vision</td></tr>
+          <tr><th>חוזק בולט</th><td>בהירות + Quantum Dot + גיימינג מובנה</td><td>OLED מוביל + חוויית-צפייה קולנועית</td><td>ערך-לכסף + גמישות HDR</td></tr>
+          <tr><th>טווח מחירים</th><td>כניסה ועד פרימיום</td><td>אמצע ועד פרימיום</td><td>כניסה ועד פרימיום</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="guide-cta">
+  <div class="wrap">
+    <h2>מוכנים לבחור?</h2>
+    <p>עכשיו כשאתם מכירים את הטכנולוגיות - בואו נמצא לכם את הטלוויזיה והפתרון-התקנה שמתאימים בדיוק לחדר שלכם.</p>
+    <div class="ctas">
+      <a class="btn-accent" href="index.html#products">לקטלוג הטלוויזיות ⟵</a>
+      <a class="btn-ghost" id="finalWhatsappBtn" href="#" target="_blank" rel="noopener">📲 שאלו אותנו בוואטסאפ</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="brandmark" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="16" height="16" rx="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="7.7" cy="7.7" r="1.35" fill="var(--accent)"/><circle cx="16.3" cy="7.7" r="1.35" fill="var(--accent)"/><circle cx="7.7" cy="16.3" r="1.35" fill="var(--accent)"/><circle cx="16.3" cy="16.3" r="1.35" fill="var(--accent)"/></svg>
+        Master Mount
+      </a>
+      <p>התקנת טלוויזיה ביתית - מוגדרת ומתומחרת מראש.</p>
+    </div>
+    <div class="foot-links">
+      <a href="index.html#products">טלוויזיות למכירה</a>
+      <a href="index.html#configurator">מחשבון מחיר התקנה</a>
+      <a href="index.html#bundles">באנדלים</a>
+      <a id="footCallLink" href="#">התקשרו</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var BUSINESS = { whatsappNumber: "972526609971", phoneDisplay: "+972-52-660-9971" };
+  function genericWhatsappLink(text) {
+    return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent(text);
+  }
+  document.getElementById("topWhatsappBtn").href = genericWhatsappLink("שלום! אשמח לפרטים על התקנת טלוויזיה דרך Master Mount.");
+  document.getElementById("finalWhatsappBtn").href = genericWhatsappLink("שלום! קראתי את מדריך הטכנולוגיות ואשמח לשירות בבחירת טלוויזיה.");
+  document.getElementById("footCallLink").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
+  document.getElementById("footCallLink").textContent = BUSINESS.phoneDisplay;
+</script>
+
+</body>
+</html>
