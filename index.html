@@ -254,6 +254,98 @@
   .lead-ctas a, .lead-ctas button { flex: 1; justify-content: center; min-width: 160px; }
   .lead-fineprint { text-align: center; font-size: .78rem; color: var(--text-tertiary); margin-top: 14px; }
 
+  /* ---------------- "מודול-פרימיום" לתהליכי-האשף (config-shell משותף להתקנה+מעבר-דירה) - קבוע-
+     לגמרי, לא-תלוי בתמת-בהיר/כהה של האתר (אותו עיקרון-כבר-קיים ב-#configurator .block-head
+     למעלה) - פאנל-כהה-עשיר עם כרטיסי-בחירה לבנים שקופצים-בניגודיות-חדה מעליו. כל-סלקטור מוזח
+     תחת .config-shell כדי לכסות את שני-השימושים-הקיימים (#configurator, #moving) בלי-לגעת
+     בשום-קלאס-משותף-אחר (כמו .lead-form/.btn-ghost שגם-משמשים מחוץ-לאשפים). ---------------- */
+  .config-shell {
+    position: relative;
+    background: linear-gradient(165deg, #17234e 0%, #0d1730 52%, #05091c 100%);
+    border: 1px solid rgba(255,157,82,.22);
+    box-shadow: 0 30px 70px -30px rgba(3,6,18,.65), 0 0 0 1px rgba(255,255,255,.05) inset;
+  }
+  .config-shell::before {
+    content: ""; position: absolute; inset-inline: 0; top: 0; height: 4px;
+    background: linear-gradient(90deg, #f0872e, #5f8dfd);
+  }
+  .config-shell .config-top { border-bottom-color: rgba(255,255,255,.1); }
+  .config-shell .step-label { color: rgba(244,246,251,.55); }
+  .config-shell .progress-track { background: rgba(255,255,255,.14); }
+  .config-shell .progress-fill { background: linear-gradient(90deg, #ff9d52, #5f8dfd); }
+  .config-shell .running-price { color: #ff9d52; font-size: 1.55rem; }
+  .config-shell .linked-product-banner { background: rgba(255,157,82,.16); color: #ffd3a3; border-bottom-color: rgba(255,255,255,.1); }
+  .config-shell .step-question { color: #f4f6fb; }
+  .config-shell .wheel-lock-hint, .config-shell .multi-hint, .config-shell .photo-step-hint,
+  .config-shell .tbd-note, .config-shell .lead-fineprint { color: rgba(244,246,251,.55); }
+  .config-shell .sub-question { color: #d6dcec; }
+  .config-shell .photo-preview-wrap img { border-color: rgba(255,255,255,.16); }
+
+  /* הריבועים עצמם - כרטיסי-בחירה לבנים, מוגבהים בצל אמיתי מעל-הפאנל-הכהה (זו הניגודיות שהתבקשה) */
+  .config-shell .wheel-card, .config-shell .multi-chip, .config-shell .extra-row {
+    background: #ffffff; border-color: rgba(16,25,43,.07);
+    box-shadow: 0 12px 26px -14px rgba(3,6,18,.4);
+  }
+  .config-shell .wheel-card .wc-title, .config-shell .multi-chip .wc-title, .config-shell .extra-name { color: #10192b; }
+  .config-shell .wheel-card .wc-sub, .config-shell .multi-chip .wc-sub, .config-shell .extra-price { color: #57627a; }
+  .config-shell .mount-select-card .mount-thumb-wrap { background: #f4f6fb; border-color: #d8deea; }
+  .config-shell .mount-select-card .wc-sub { color: #2f5fce; }
+  .config-shell .mount-features { color: #57627a; }
+
+  .config-shell .wheel-card.active, .config-shell .multi-chip.active {
+    background: #2f5fce; border-color: #2f5fce;
+    box-shadow: 0 16px 34px -14px rgba(47,95,206,.55);
+  }
+  .config-shell .wheel-card.active .wc-title, .config-shell .multi-chip.active .wc-title { color: #ffffff; }
+  .config-shell .wheel-card.active .wc-sub, .config-shell .multi-chip.active .wc-sub { color: rgba(255,255,255,.82); }
+
+  .config-shell .wheel-card.locked-selected {
+    background: linear-gradient(155deg, #ffab63, #f0872e); border-color: #f0872e;
+    box-shadow: 0 18px 36px -14px rgba(240,135,46,.55);
+  }
+  .config-shell .wheel-card.locked-selected .wc-title { color: #241002; }
+  .config-shell .wheel-card.locked-selected .wc-sub { color: rgba(36,16,2,.72); }
+
+  .config-shell .wheel-arrow { background: #ffffff; border-color: rgba(16,25,43,.08); color: #10192b; box-shadow: 0 10px 22px -12px rgba(3,6,18,.45); }
+  .config-shell .wheel-arrow:hover { border-color: #2f5fce; color: #2f5fce; }
+
+  .config-shell .wall-other-input, .config-shell .lead-form input {
+    background: #ffffff; color: #10192b; border-color: rgba(16,25,43,.12);
+  }
+  .config-shell .wall-other-input::placeholder, .config-shell .lead-form input::placeholder { color: #8b93a5; }
+  .config-shell .lead-form input:focus { outline-color: #2f5fce; }
+
+  .config-shell .qty-btn { background: #eef1f7; border-color: #d8deea; color: #10192b; }
+  .config-shell .qty-btn:hover { border-color: #2f5fce; color: #2f5fce; }
+  .config-shell .qty-value { color: #10192b; }
+
+  .config-shell .config-nav { border-top-color: rgba(255,255,255,.1); }
+  .config-shell .btn-nav { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.22); color: #eef1f7; }
+  .config-shell .btn-nav:hover { border-color: #ff9d52; color: #ff9d52; }
+  .config-shell .btn-nav.primary {
+    background: linear-gradient(135deg, #4a78e6, #2f5fce); color: #ffffff; border-color: transparent;
+    box-shadow: 0 14px 28px -12px rgba(47,95,206,.55);
+  }
+  .config-shell .btn-ghost { border-color: rgba(255,255,255,.22); color: #eef1f7; }
+  .config-shell .btn-ghost:hover { border-color: #ff9d52; color: #ff9d52; }
+
+  .config-shell .summary-row { border-bottom-color: rgba(255,255,255,.1); color: #d6dcec; }
+  .config-shell .summary-row .val { color: rgba(244,246,251,.7); }
+  .config-shell .summary-row.total .val { color: #ff9d52; }
+
+  /* לוח-השנה (מעבר דירה, שלב 1-2) - אותה שפה: תאים לבנים על-הפאנל-הכהה, לא-רק-טקסט-בהיר-על-
+     כהה-כמעט-זהה כמו-שהיה-לפני-כן */
+  .config-shell .mini-cal-title { color: #f4f6fb; }
+  .config-shell .mini-cal-dow { color: rgba(244,246,251,.5); }
+  .config-shell .mini-cal-nav { background: #ffffff; border-color: rgba(16,25,43,.08); color: #10192b; }
+  .config-shell .mini-cal-nav:hover:not(:disabled) { border-color: #2f5fce; color: #2f5fce; }
+  .config-shell .mini-cal-cell { background: #ffffff; color: #10192b; box-shadow: 0 6px 14px -8px rgba(3,6,18,.35); }
+  .config-shell .mini-cal-cell:hover:not(.disabled):not(.selected) { background: #e8eefb; color: #2f5fce; }
+  .config-shell .mini-cal-cell.empty { background: transparent; box-shadow: none; }
+  .config-shell .mini-cal-cell.disabled { color: #b7bdca; background: rgba(255,255,255,.5); box-shadow: none; }
+  .config-shell .mini-cal-cell.selected { background: #2f5fce; color: #ffffff; }
+  .config-shell .mini-cal-picked { color: #d6dcec; }
+
   /* ---------------- bundles ---------------- */
   .bundle-card {
     position: absolute; top: 50%; left: 50%; width: 264px; min-height: 486px;
@@ -266,7 +358,7 @@
   .bundle-card.active { border-color: var(--premium); box-shadow: 0 14px 32px -12px color-mix(in srgb, var(--premium) 45%, transparent); }
   .bundle-card.product-card { min-height: 522px; margin-top: -261px; }
   .bundle-thumb-wrap { width: 100%; aspect-ratio: 4/3; border-radius: 12px; background: var(--surface); border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-  .bundle-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .bundle-thumb-wrap img { width: 100%; height: 100%; object-fit: contain; }
   .bundle-thumb-wrap .icon-fallback { width: 36%; opacity: .32; }
   .bundle-thumb-hint { font-size: .7rem; color: var(--text-tertiary); text-align: center; margin-top: -4px; }
   .bundle-brand { font-size: .74rem; letter-spacing: .06em; color: var(--text-tertiary); text-transform: uppercase; }
@@ -400,6 +492,10 @@
     .product-page-price { font-size: 1.6rem; }
     .moving-summary-row { flex-direction: column; align-items: flex-end; gap: 2px; }
     .mini-cal-title { font-size: .92rem; }
+    /* iOS Safari מגדיל-זום-אוטומטית על focus לשדה עם font-size מחושב מתחת ל-16px - כל
+       שדות-הטקסט (שם/טלפון בשלושת הטפסים + קלטי-טקסט-חופשי בקונפיגורטור) חוזרים ל-16px
+       רק במובייל, כדי לא לשנות את הגודל הקיים בדסקטופ */
+    .lead-form input, .wall-other-input { font-size: 16px; }
   }
 
   /* ---------------- moving-day flow (מעבר דירה) ---------------- */
@@ -438,7 +534,7 @@
     </div>
     <nav class="toplinks">
       <a href="#products">טלוויזיות למכירה</a>
-      <a href="#configurator">מחשבון מחיר התקנה</a>
+      <a href="#configurator">הזמנת התקנה מותאמת</a>
       <a href="#bundles">באנדלים</a>
       <a href="#moving">מעבר דירה</a>
       <a href="tv-technology-guide.html">מדריך טכנולוגיות</a>
@@ -1611,7 +1707,7 @@
   function updateCartWhatsappLink() {
     var name = document.getElementById("cartLeadName").value;
     var phone = document.getElementById("cartLeadPhone").value;
-    document.getElementById("cartWhatsappBtn").href = buildCartWhatsappLink(name, phone);
+    if (CONTACT_ACTIONS_ENABLED) { document.getElementById("cartWhatsappBtn").href = buildCartWhatsappLink(name, phone); }
     document.getElementById("cartMailtoBtn").href = buildCartMailtoLink(name, phone);
   }
   function openCartPanel() {
@@ -1644,11 +1740,17 @@
   function genericWhatsappLink() {
     return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent("שלום! אשמח לפרטים על התקנת טלוויזיה דרך Master Mount.");
   }
-  document.getElementById("topWhatsappBtn").href = genericWhatsappLink();
-  document.getElementById("finalCallBtn").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
-  document.getElementById("footCallLink").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
-  if (CONTACT_ACTIONS_ENABLED) { document.getElementById("footCallLink").textContent = BUSINESS.phoneDisplay; }
-  document.getElementById("productPageCall").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
+  /* טלפון/וואטסאפ חסומים-לגמרי-בכוונה (CONTACT_ACTIONS_ENABLED=false): לא-רק-קליק (המאזין-
+     החוסם-למעלה), אלא גם ה-href עצמו לעולם-לא-נכתב על האלמנטים - כדי שלא-יידלף מספר-הטלפון
+     גם דרך ריחוף-עכבר (שורת-התצוגה-בתחתית-הדפדפן מציגה href-נוכחי גם בלי-לחיצה). מייל - לא-
+     מושפע, ר' buildMailtoLink/ *MailtoBtn למטה - חשוף-תמיד בכוונה. */
+  if (CONTACT_ACTIONS_ENABLED) {
+    document.getElementById("topWhatsappBtn").href = genericWhatsappLink();
+    document.getElementById("finalCallBtn").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
+    document.getElementById("footCallLink").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
+    document.getElementById("footCallLink").textContent = BUSINESS.phoneDisplay;
+    document.getElementById("productPageCall").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
+  }
   function updateFinalWhatsapp() {
     var name = document.getElementById("leadName").value;
     var phone = document.getElementById("leadPhone").value;
@@ -1663,7 +1765,7 @@
       waHref = "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent(lines.join("\n"));
       mailtoHref = buildMailtoLink("פנייה חדשה דרך האתר - Master Mount", lines);
     }
-    document.getElementById("finalWhatsappBtn").href = waHref;
+    if (CONTACT_ACTIONS_ENABLED) { document.getElementById("finalWhatsappBtn").href = waHref; }
     document.getElementById("finalMailtoBtn").href = mailtoHref;
   }
   document.getElementById("leadName").addEventListener("input", updateFinalWhatsapp);
@@ -1731,7 +1833,7 @@
         '<div class="bundle-includes">כולל ' + bundleMountLabel(b) + '</div>' +
         '<div class="bundle-price-row"><span class="bundle-price">' + fmt(bundleTotal) + '</span></div>' +
         '<div class="bundle-cta-row">' +
-          '<a class="bundle-cta" href="' + bundleWhatsappLink(b, bundleTotal) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">בקשו הצעה לבאנדל הזה</a>' +
+          '<a class="bundle-cta" href="' + (CONTACT_ACTIONS_ENABLED ? bundleWhatsappLink(b, bundleTotal) : "#") + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">בקשו הצעה לבאנדל הזה</a>' +
           '<button type="button" class="bundle-cta-secondary" onclick="event.stopPropagation(); window.__openBundleModal(\'' + b.id + '\')">מפרט מלא ותמונות</button>' +
         '</div>' +
       '</div>';
@@ -1769,7 +1871,7 @@
             (b.bundleDiscountILS ? '<div class="row"><span>הנחת באנדל</span><span>-' + fmt(b.bundleDiscountILS) + '</span></div>' : '') +
             '<div class="row total"><span>סה"כ באנדל</span><span class="val">' + fmt(bundleTotal) + '</span></div>';
         })();
-    document.getElementById("bundleModalWhatsapp").href = bundleWhatsappLink(b, bundleTotal);
+    if (CONTACT_ACTIONS_ENABLED) { document.getElementById("bundleModalWhatsapp").href = bundleWhatsappLink(b, bundleTotal); }
     document.getElementById("bundleModalMailto").href = bundleMailtoLink(b, bundleTotal);
 
     document.getElementById("bundleModalOverlay").hidden = false;
@@ -2155,7 +2257,7 @@
     function update() {
       var name = document.getElementById("movingLeadName").value.trim();
       var phone = document.getElementById("movingLeadPhone").value.trim();
-      document.getElementById("movingWhatsappBtn").href = buildMovingWhatsappLink(name, phone);
+      if (CONTACT_ACTIONS_ENABLED) { document.getElementById("movingWhatsappBtn").href = buildMovingWhatsappLink(name, phone); }
       document.getElementById("movingMailtoBtn").href = buildMovingMailtoLink(name, phone);
     }
     document.getElementById("movingLeadName").addEventListener("input", update);
