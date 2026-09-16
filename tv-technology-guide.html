@@ -3582,8 +3582,8 @@ img {
   outline: none;
   padding: 7px 30px 7px 12px;
   padding-inline: 29px 12px;
-  font-size: .8rem;
-  transition: border-color .15s, width .15s;
+  font-size: 16px;
+  transition: border-color .15s, box-shadow .15s;
 }
 
 .topsearch-input::placeholder {
@@ -3592,7 +3592,7 @@ img {
 
 .topsearch-input:focus {
   border-color: var(--orange);
-  width: 216px;
+  box-shadow: 0 0 0 2px var(--orange);
 }
 
 .topsearch-input::-webkit-search-cancel-button {
@@ -3688,9 +3688,11 @@ img {
   .topsearch-input {
     width: 132px;
   }
+}
 
-  .topsearch-input:focus {
-    width: 160px;
+@media (width >= 980px) {
+  .topsearch-input {
+    font-size: .8rem;
   }
 }
 
