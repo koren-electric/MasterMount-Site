@@ -614,6 +614,7 @@
       <input type="tel" id="leadPhone" placeholder="טלפון" dir="ltr" style="text-align:right;">
       <div class="lead-ctas">
         <a class="btn-accent btn-whatsapp" id="finalWhatsappBtn" href="#" target="_blank" rel="noopener">📲 שלחו בוואטסאפ</a>
+        <a class="btn-ghost" id="finalMailtoBtn" href="#">✉️ שלחו במייל</a>
         <a class="btn-ghost" id="finalCallBtn" href="#">📞 התקשרו אלינו</a>
       </div>
       <p class="lead-fineprint">התשלום עצמו סוכם ומתבצע מחוץ לאתר, מול הצוות שמבצע את ההתקנה.</p>
@@ -636,6 +637,7 @@
       <a href="#bundles">באנדלים</a>
       <a href="tv-technology-guide.html">מדריך טכנולוגיות</a>
       <a id="footCallLink" href="#">התקשרו</a>
+      <a id="footEmailLink" href="mailto:mastermount@mastermount.co.il">mastermount@mastermount.co.il</a>
     </div>
   </div>
 </footer>
@@ -657,6 +659,7 @@
       <div class="bundle-modal-priceblock" id="bundleModalPriceBlock"></div>
       <div class="lead-ctas bundle-modal-ctas">
         <a class="btn-accent btn-whatsapp" id="bundleModalWhatsapp" href="#" target="_blank" rel="noopener">📲 בקשו הצעה לבאנדל הזה</a>
+        <a class="btn-ghost" id="bundleModalMailto" href="#">✉️ בקשו הצעה במייל</a>
       </div>
     </div>
   </div>
@@ -701,7 +704,7 @@
     <div class="lead-form cart-panel-lead-form" id="cartPanelLeadForm" hidden>
       <input type="text" id="cartLeadName" placeholder="שם מלא">
       <input type="tel" id="cartLeadPhone" placeholder="טלפון" dir="ltr" style="text-align:right;">
-      <div class="lead-ctas"><a class="btn-accent btn-whatsapp" id="cartWhatsappBtn" href="#" target="_blank" rel="noopener">📲 שלחו את כל העגלה בוואטסאפ</a></div>
+      <div class="lead-ctas"><a class="btn-accent btn-whatsapp" id="cartWhatsappBtn" href="#" target="_blank" rel="noopener">📲 שלחו את כל העגלה בוואטסאפ</a><a class="btn-ghost" id="cartMailtoBtn" href="#">✉️ שלחו במייל</a></div>
       <p class="lead-fineprint">התשלום סוכם ומתבצע מחוץ לאתר.</p>
     </div>
   </div>
@@ -711,7 +714,7 @@
 (function () {
   "use strict";
 
-  var BUSINESS = { whatsappNumber: "972526609971", phoneDisplay: "+972-52-660-9971" };
+  var BUSINESS = { whatsappNumber: "972526609971", phoneDisplay: "+972-52-660-9971", email: "mastermount@mastermount.co.il" };
   // זמנית (14.9.2026 סוג-שינוי, בקשת ברק 16.9.2026): מספר-הטלפון/וואטסאפ עדיין לא-מוצג/פעיל
   // באתר-החי בזמן-שהדומיין החדש עולה - הכפתורים נשארים גלויים (לא-הוסרו) אבל חסומים-משימוש.
   // להחזרה: לשנות ל-true בשורה הבאה.
@@ -721,6 +724,13 @@
     var link = e.target.closest('a[href^="https://wa.me/"], a[href^="tel:"]');
     if (link) { e.preventDefault(); e.stopPropagation(); }
   }, true);
+
+  /* מייל-לשירות-והזמנות (16.9.2026) - חלופה למייל לכל כפתור-WhatsApp ששולח הזמנה/פנייה.
+     mailto: לא-נחסם ע"י המאזין-החוסם-למעלה (שממוקד רק wa.me/tel), אז זמין תמיד ללא-תלות
+     ב-CONTACT_ACTIONS_ENABLED - זו בקשה נפרדת ומפורשת של ברק, לא תלויה בהחזרת הטלפון/וואטסאפ. */
+  function buildMailtoLink(subject, lines) {
+    return "mailto:" + BUSINESS.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(lines.join("\n"));
+  }
 
   var CATALOG = {
     installLocations: [
@@ -1551,7 +1561,7 @@
     document.getElementById("cartBadgeCount").textContent = cart.length;
     btn.classList.toggle("empty", cart.length === 0);
   }
-  function buildCartWhatsappLink(name, phone) {
+  function buildCartMessageLines(name, phone) {
     var lines = ["שלום! מעוניין/ת בהזמנה הבאה דרך Master Mount:", ""];
     cart.forEach(function (ci, idx) {
       lines.push("-- פריט " + (idx + 1) + ": " + ci.label + " --");
@@ -1566,7 +1576,13 @@
     if (itemsWithPhoto.length) {
       lines.push("", "⚠️ יש לצרף כאן את תמונות מיקום ההתקנה שהועלו באתר עבור: " + itemsWithPhoto.map(function (ci) { return ci.label; }).join(", ") + " - לא נשלחות אוטומטית.");
     }
-    return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent(lines.join("\n"));
+    return lines;
+  }
+  function buildCartWhatsappLink(name, phone) {
+    return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent(buildCartMessageLines(name, phone).join("\n"));
+  }
+  function buildCartMailtoLink(name, phone) {
+    return buildMailtoLink("הזמנה חדשה דרך האתר - Master Mount", buildCartMessageLines(name, phone));
   }
   function renderCartPanel() {
     var emptyEl = document.getElementById("cartPanelEmpty");
@@ -1596,6 +1612,7 @@
     var name = document.getElementById("cartLeadName").value;
     var phone = document.getElementById("cartLeadPhone").value;
     document.getElementById("cartWhatsappBtn").href = buildCartWhatsappLink(name, phone);
+    document.getElementById("cartMailtoBtn").href = buildCartMailtoLink(name, phone);
   }
   function openCartPanel() {
     renderCartPanel();
@@ -1635,16 +1652,19 @@
   function updateFinalWhatsapp() {
     var name = document.getElementById("leadName").value;
     var phone = document.getElementById("leadPhone").value;
-    var href;
+    var waHref, mailtoHref;
     if (cart.length) {
-      href = buildCartWhatsappLink(name, phone);
+      waHref = buildCartWhatsappLink(name, phone);
+      mailtoHref = buildCartMailtoLink(name, phone);
     } else {
       var lines = ["שלום! אשמח לפרטים על התקנת טלוויזיה דרך Master Mount."];
       if (name) lines.push("שם: " + name);
       if (phone) lines.push("טלפון: " + phone);
-      href = "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent(lines.join("\n"));
+      waHref = "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent(lines.join("\n"));
+      mailtoHref = buildMailtoLink("פנייה חדשה דרך האתר - Master Mount", lines);
     }
-    document.getElementById("finalWhatsappBtn").href = href;
+    document.getElementById("finalWhatsappBtn").href = waHref;
+    document.getElementById("finalMailtoBtn").href = mailtoHref;
   }
   document.getElementById("leadName").addEventListener("input", updateFinalWhatsapp);
   document.getElementById("leadPhone").addEventListener("input", updateFinalWhatsapp);
@@ -1689,6 +1709,10 @@
   function bundleWhatsappLink(b, total) {
     var text = encodeURIComponent("שלום! מעוניין/ת בבאנדל " + b.brand + " " + b.model + " (כולל התקנה) - מחיר: " + fmt(total) + ".");
     return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + text;
+  }
+  function bundleMailtoLink(b, total) {
+    return buildMailtoLink("בקשת הצעה לבאנדל " + b.brand + " " + b.model + " - Master Mount",
+      ["שלום! מעוניין/ת בבאנדל " + b.brand + " " + b.model + " (כולל התקנה) - מחיר: " + fmt(total) + "."]);
   }
   function bundleThumbHtml(b) {
     return b.imageUrl ? '<img src="' + b.imageUrl + '" alt="">' :
@@ -1746,6 +1770,7 @@
             '<div class="row total"><span>סה"כ באנדל</span><span class="val">' + fmt(bundleTotal) + '</span></div>';
         })();
     document.getElementById("bundleModalWhatsapp").href = bundleWhatsappLink(b, bundleTotal);
+    document.getElementById("bundleModalMailto").href = bundleMailtoLink(b, bundleTotal);
 
     document.getElementById("bundleModalOverlay").hidden = false;
     document.body.style.overflow = "hidden";
@@ -2072,13 +2097,14 @@
         '<input type="tel" id="movingLeadPhone" placeholder="טלפון" dir="ltr" style="text-align:right;">' +
         '<div class="lead-ctas">' +
           '<a class="btn-accent btn-whatsapp" id="movingWhatsappBtn" href="#" target="_blank" rel="noopener">📲 שלחו בוואטסאפ להמשך טיפול</a>' +
+          '<a class="btn-ghost" id="movingMailtoBtn" href="#">✉️ שלחו במייל</a>' +
         "</div>" +
         '<p class="lead-fineprint">נציג יחזור אליכם לחידוד הפרטים ולמתן הצעת מחיר מדויקת.</p>' +
       "</div>";
     return html;
   }
 
-  function buildMovingWhatsappLink(name, phone) {
+  function buildMovingMessageLines(name, phone) {
     var price = computeMovingPrice();
     var lines = ["שלום! אנחנו עוברים דירה ורוצים שירות בהעברת הטלוויזיות דרך Master Mount:", ""];
     lines.push("📅 תאריך המעבר: " + formatDateHe(MOVING.moveDate));
@@ -2116,7 +2142,13 @@
     lines.push("");
     if (name) lines.push("שם: " + name);
     if (phone) lines.push("טלפון: " + phone);
-    return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent(lines.join("\n"));
+    return lines;
+  }
+  function buildMovingWhatsappLink(name, phone) {
+    return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent(buildMovingMessageLines(name, phone).join("\n"));
+  }
+  function buildMovingMailtoLink(name, phone) {
+    return buildMailtoLink("בקשת שירות מעבר דירה - Master Mount", buildMovingMessageLines(name, phone));
   }
 
   function wireMovingSummaryEvents() {
@@ -2124,6 +2156,7 @@
       var name = document.getElementById("movingLeadName").value.trim();
       var phone = document.getElementById("movingLeadPhone").value.trim();
       document.getElementById("movingWhatsappBtn").href = buildMovingWhatsappLink(name, phone);
+      document.getElementById("movingMailtoBtn").href = buildMovingMailtoLink(name, phone);
     }
     document.getElementById("movingLeadName").addEventListener("input", update);
     document.getElementById("movingLeadPhone").addEventListener("input", update);
