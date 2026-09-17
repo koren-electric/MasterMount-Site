@@ -6181,6 +6181,21 @@ footer.site-foot a:hover {
     flex: none;
     width: 100%;
   }
+
+  .filter-chip-row {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  }
+
+  .product-filters .filter-check-chip {
+    font-size: .82rem;
+    padding: 7px 10px;
+  }
+
+  .filter-check-chip .filter-check-box {
+    width: 16px;
+    height: 16px;
+    font-size: .7rem;
+  }
 }
 
 .product-filters .filter-group-title {
@@ -6195,41 +6210,46 @@ footer.site-foot a:hover {
 }
 
 .filter-chip-row {
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 8px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 6px;
 }
 
 .filter-check-chip {
   cursor: pointer;
   font: inherit;
   text-align: right;
-  align-items: center;
-  gap: 6px;
-  width: auto;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
   min-width: 0;
   height: auto;
-  padding: 6px 10px;
+  padding: 4px 6px;
   display: inline-flex;
 }
 
+.filter-check-chip .wc-title {
+  overflow-wrap: break-word;
+  line-height: 1.15;
+}
+
 .product-filters .filter-check-chip {
-  font-size: .86rem;
+  font-size: .68rem;
 }
 
 .filter-check-chip .filter-check-box {
   border: 1.5px solid var(--border);
-  width: 17px;
-  height: 17px;
+  width: 12px;
+  height: 12px;
   color: var(--accent);
   background: var(--surface);
-  border-radius: 5px;
+  border-radius: 4px;
   flex: none;
   justify-content: center;
   align-items: center;
-  font-size: .72rem;
+  font-size: .58rem;
   line-height: 1;
+  margin-top: 1px;
   display: inline-flex;
 }
 
@@ -6315,17 +6335,6 @@ footer.site-foot a:hover {
   padding: 0;
   position: absolute;
   overflow: hidden;
-}
-
-@media (width <= 640px) {
-  .filter-check-chip {
-    padding: 7px 10px;
-    font-size: .86rem;
-  }
-
-  .filter-check-chip .wc-title {
-    font-size: .84rem;
-  }
 }
 
 .brandmark img {
@@ -8269,7 +8278,7 @@ function initMasterMount() {
   function multiChipHtml(group, value, label, active) {
     return '<button type="button" role="checkbox" aria-checked="' + (active ? "true" : "false") +
       '" class="multi-chip filter-check-chip' + (active ? " active" : "") +
-      '" data-group="' + group + '" data-value="' + value + '">' +
+      '" data-group="' + group + '" data-value="' + value + '" title="' + label + '">' +
       '<span class="filter-check-box" aria-hidden="true">' + (active ? "✓" : "") + '</span>' +
       '<span class="wc-title">' + label + '</span></button>';
   }
