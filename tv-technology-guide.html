@@ -6798,6 +6798,131 @@ footer.site-foot a:hover {
   }
 }
 
+.tvguide-page .basics-note ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  padding-inline-start: 20px;
+}
+
+.tvguide-page .basics-note li {
+  position: relative;
+  padding-inline-start: 18px;
+}
+
+.tvguide-page .basics-note li:before {
+  content: "•";
+  color: var(--accent);
+  font-weight: 800;
+  position: absolute;
+  inset-inline-start: 0;
+}
+
+.tvguide-page .quickpick-form {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  max-width: 720px;
+  margin: 0 auto 30px;
+}
+
+.tvguide-page .quickpick-q {
+  border: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.tvguide-page .quickpick-q legend {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 0;
+  font-family: Noto Sans Hebrew, sans-serif;
+  font-size: .98rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.tvguide-page .quickpick-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tvguide-page .quickpick-radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.tvguide-page .quickpick-chip {
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.tvguide-page .quickpick-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tvguide-page .quickpick-radio:checked + .quickpick-chip {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.tvguide-page .quickpick-radio:focus-visible + .quickpick-chip {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tvguide-page .quickpick-result {
+  background: var(--surface-2);
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.tvguide-page .quickpick-result-text {
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.tvguide-page .quickpick-result-text a {
+  color: var(--accent);
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.tvguide-page .quickpick-result-note {
+  color: var(--text-tertiary);
+  font-size: .82rem;
+}
+
+@media (width <= 640px) {
+  .tvguide-page .quickpick-chip {
+    padding: 7px 14px;
+    font-size: .84rem;
+  }
+}
+
 :root {
   --radius: .625rem;
   --background: oklch(100% 0 0);
@@ -7216,7 +7341,9 @@ footer.site-foot a:hover {
     <span class="guide-eyebrow">📺 מדריך צרכני</span>
     <h1>מדריך טכנולוגיות מסך: SAMSUNG · LG · TCL</h1>
     <p class="lede">בחירת טלוויזיה היא הרבה יותר מגודל ומחיר - הטכנולוגיה שמאחורי המסך היא מה שבאמת קובע איך התמונה תיראה בסלון שלכם. ריכזנו לכם את כל הטכנולוגיות של שלושת המותגים שאנחנו מוכרים, בשפה פשוטה, עם יתרונות, חסרונות והמלצה למי כל טכנולוגיה הכי מתאימה.</p>
+    <p style="font-size:.78rem;color:var(--text-tertiary);margin-top:10px;"><time datetime="2026-09">עודכן לאחרונה: ספטמבר 2026</time></p>
     <nav class="jump-nav">
+      <a href="#quickpick">התאמה מהירה</a>
       <a href="#basics">יסודות</a>
       <a href="#samsung">SAMSUNG</a>
       <a href="#lg">LG</a>
@@ -7226,46 +7353,100 @@ footer.site-foot a:hover {
   </div>
 </section>
 
+<section class="block" id="quickpick">
+  <div class="wrap">
+    <div class="block-head">
+      <span class="block-eyebrow">התאמה מהירה</span>
+      <h2>איזו טכנולוגיה מתאימה לכם?</h2>
+      <p>3 שאלות קצרות - בלי צורך לקרוא את כל המדריך קודם</p>
+    </div>
+    <div class="quickpick-form">
+      <fieldset class="quickpick-q">
+        <legend>כמה אור יש בחדר?</legend>
+        <div class="quickpick-options">
+          <input type="radio" name="qp-room" id="qp-room-bright" value="bright" class="quickpick-radio">
+          <label for="qp-room-bright" class="quickpick-chip">הרבה אור</label>
+          <input type="radio" name="qp-room" id="qp-room-medium" value="medium" class="quickpick-radio">
+          <label for="qp-room-medium" class="quickpick-chip">בינוני</label>
+          <input type="radio" name="qp-room" id="qp-room-dark" value="dark" class="quickpick-radio">
+          <label for="qp-room-dark" class="quickpick-chip">חדר מוחשך</label>
+        </div>
+      </fieldset>
+      <fieldset class="quickpick-q">
+        <legend>מה צופים בעיקר?</legend>
+        <div class="quickpick-options">
+          <input type="radio" name="qp-content" id="qp-content-streaming" value="streaming" class="quickpick-radio">
+          <label for="qp-content-streaming" class="quickpick-chip">סטרימינג וסרטים</label>
+          <input type="radio" name="qp-content" id="qp-content-sports" value="sports" class="quickpick-radio">
+          <label for="qp-content-sports" class="quickpick-chip">ספורט</label>
+          <input type="radio" name="qp-content" id="qp-content-gaming" value="gaming" class="quickpick-radio">
+          <label for="qp-content-gaming" class="quickpick-chip">גיימינג</label>
+          <input type="radio" name="qp-content" id="qp-content-general" value="general" class="quickpick-radio">
+          <label for="qp-content-general" class="quickpick-chip">צפייה כללית</label>
+        </div>
+      </fieldset>
+      <fieldset class="quickpick-q">
+        <legend>מה התקציב?</legend>
+        <div class="quickpick-options">
+          <input type="radio" name="qp-budget" id="qp-budget-economical" value="economical" class="quickpick-radio">
+          <label for="qp-budget-economical" class="quickpick-chip">חסכוני</label>
+          <input type="radio" name="qp-budget" id="qp-budget-medium" value="medium" class="quickpick-radio">
+          <label for="qp-budget-medium" class="quickpick-chip">בינוני</label>
+          <input type="radio" name="qp-budget" id="qp-budget-generous" value="generous" class="quickpick-radio">
+          <label for="qp-budget-generous" class="quickpick-chip">גמיש</label>
+        </div>
+      </fieldset>
+    </div>
+    <div class="quickpick-result" id="quickpickResult" aria-live="polite" hidden>
+      <p class="quickpick-result-text" id="quickpickResultText"></p>
+      <p class="quickpick-result-note">זו המלצה כללית. ההתאמה הסופית תלויה בדגם ובחדר.</p>
+    </div>
+  </div>
+</section>
+
 <section class="block" id="basics">
   <div class="wrap">
     <div class="block-head">
       <span class="block-eyebrow">לפני שמתחילים</span>
       <h2>יסודות: מה בכלל ההבדל בין כל המונחים האלה</h2>
-      <p>חמישה מושגי-בסיס שחוזרים אצל כל היצרנים, בשמות שונים - ברגע שהם ברורים, קל הרבה יותר להבין את מה שכתוב בהמשך המדריך לפי מותג.</p>
+      <p>חמישה מושגי בסיס שחוזרים אצל כל היצרנים, בשמות שונים - ברגע שהם ברורים, קל הרבה יותר להבין את מה שכתוב בהמשך המדריך לפי מותג.</p>
     </div>
     <div class="basics-grid">
       <div class="basics-card">
         <span class="b-num">1</span>
         <h3>LED (מסך LCD עם תאורת רקע)</h3>
         <p class="b-highlight">הבסיס של רוב הטלוויזיות: מסך LCD, מואר מאחור בנורות LED רגילות.</p>
-        <p class="b-explain">הפיקסלים עצמם לא מייצרים אור - הם רק חוסמים או מעבירים אור שמגיע מתאורת-רקע אחידה מאחורי המסך. זו הטכנולוגיה הבסיסית שעליה בנויות כל שאר הרמות שתראו בהמשך.</p>
+        <p class="b-explain">הפיקסלים עצמם לא מייצרים אור - הם רק חוסמים או מעבירים אור שמגיע מתאורת רקע אחידה מאחורי המסך. זו הטכנולוגיה הבסיסית שעליה בנויות כל שאר הרמות שתראו בהמשך.</p>
       </div>
       <div class="basics-card">
         <span class="b-num">2</span>
         <h3>QLED (שכבת Quantum Dot)</h3>
-        <p class="b-highlight">אותו LCD, עם שכבת נקודות-קוונטים שמעשירה את הצבע.</p>
+        <p class="b-highlight">אותו LCD, עם שכבת נקודות קוונטים שמעשירה את הצבע.</p>
         <p class="b-explain">שכבה דקה של גבישים זעירים שממירה את האור מהתאורה לצבעים נקיים ורוויים יותר. משפרת צבעוניות ובהירות, אבל לא משנה בעצמה את אופן התאורה.</p>
       </div>
       <div class="basics-card">
         <span class="b-num">3</span>
-        <h3>Mini-LED (שדרוג תאורת-הרקע)</h3>
+        <h3>Mini-LED (שדרוג תאורת הרקע)</h3>
         <p class="b-highlight">אלפי נורות LED זעירות במקום עשרות - שליטה מדויקת הרבה יותר בכל אזור.</p>
-        <p class="b-explain">ככל שיש יותר נקודות-תאורה עצמאיות, כך אפשר לעמעם כל אזור במסך בנפרד - שחורים עמוקים יותר לצד בהירות שיא. זהו שדרוג לתאורת-הרקע, ולכן אפשר למצוא אותו גם ב-QLED וגם בדגמים אחרים של כל אחד מהמותגים.</p>
+        <p class="b-explain">ככל שיש יותר נקודות תאורה עצמאיות, כך אפשר לעמעם כל אזור במסך בנפרד - שחורים עמוקים יותר לצד בהירות שיא. זהו שדרוג לתאורת הרקע, ולכן אפשר למצוא אותו גם ב-QLED וגם בדגמים אחרים של כל אחד מהמותגים.</p>
       </div>
       <div class="basics-card">
         <span class="b-num">4</span>
         <h3>OLED (מסך שמאיר את עצמו)</h3>
-        <p class="b-highlight">כל פיקסל הוא מקור-אור עצמאי - אין תאורת-רקע בכלל.</p>
-        <p class="b-explain">טכנולוגיה שונה לחלוטין: כשפיקסל צריך להיות שחור, הוא פשוט כבה. התוצאה - ניגודיות אינסופית וזוויות-צפייה מושלמות, במחיר של בהירות-שיא נמוכה יותר מדגמי ה-LCD המתקדמים.</p>
+        <p class="b-highlight">כל פיקסל הוא מקור אור עצמאי - אין תאורת רקע בכלל.</p>
+        <p class="b-explain">טכנולוגיה שונה לחלוטין: כשפיקסל צריך להיות שחור, הוא פשוט כבה. התוצאה - ניגודיות אינסופית וזוויות צפייה מושלמות, במחיר של בהירות שיא נמוכה יותר מדגמי ה-LCD המתקדמים. חשש קל לצריבה קיים גם כאן בתמונה סטטית ממושכת - בשימוש רגיל ומגוון הסיכון נמוך.</p>
       </div>
-      <div class="basics-card">
+      <div class="basics-card" id="basics-microled">
         <span class="b-num">5</span>
         <h3>Micro-LED מול "Micro RGB" / "RGB Mini-LED"</h3>
         <p class="b-highlight">שני שמות דומים - שתי טכנולוגיות שונות לגמרי.</p>
-        <p class="b-explain">Micro-LED האמיתי דומה ל-OLED: כל פיקסל הוא נורית-לד זעירה שמאירה בעצמה, בלי תאורת-רקע - אבל יקר ונדיר מאוד כרגע. "Micro RGB" (סמסונג) ו-"RGB Mini-LED" (TCL ואחרים) הם דווקא שדרוג לתאורת-הרקע של מסך LCD רגיל - נקודות אדום/ירוק/כחול זעירות במקום לד לבן אחיד. מרשים ומתקדם, אבל לא אותו דבר.</p>
+        <p class="b-explain">Micro-LED האמיתי דומה ל-OLED: כל פיקסל הוא נורית-לד זעירה שמאירה בעצמה, בלי תאורת רקע - אבל יקר ונדיר מאוד כרגע. "Micro RGB" (סמסונג) ו-"RGB Mini-LED" (TCL ואחרים) הם דווקא שדרוג לתאורת הרקע של מסך LCD רגיל - נקודות אדום/ירוק/כחול זעירות במקום לד לבן אחיד. מרשים ומתקדם, אבל לא אותו דבר.</p>
       </div>
       <div class="basics-note">
-        <strong>שני מושגים נוספים שכדאי להכיר:</strong> תוכן HDR מגיע עם "הוראות" לצבע ובהירות - <strong>HDR10</strong> הוא הבסיס שכל טלוויזיה תומכת בו, ו-<strong>HDR10+</strong> ו-<strong>Dolby Vision</strong> הם שני שדרוגים מתחרים שמתאימים את ההוראות לכל סצנה בנפרד. טלוויזיה תומכת רק במה שהיא תומכת - וזה משתנה בין המותגים (פירוט בכל מותג בהמשך). בנוסף, <strong>תדר-רענון גבוה</strong> (120Hz ומעלה, עם VRR ו-ALLM) חשוב בעיקר לגיימרים ולתוכן ספורט/אקשן מהיר - התמונה זזה בצורה חלקה יותר, בלי טשטוש-תנועה.
+        <strong>שני מושגים נוספים שכדאי להכיר:</strong> תוכן HDR מגיע עם "הוראות" לצבע ובהירות - <strong>HDR10</strong> הוא הבסיס שכל טלוויזיה תומכת בו, ו-<strong>HDR10+</strong> ו-<strong>Dolby Vision</strong> הם שני שדרוגים מתחרים שמתאימים את ההוראות לכל סצנה בנפרד. טלוויזיה תומכת רק במה שהיא תומכת - וזה משתנה בין המותגים (פירוט בכל מותג בהמשך). בנוסף, <strong>תדר רענון גבוה</strong> (120Hz ומעלה) חשוב בעיקר לגיימרים ולתוכן ספורט/אקשן מהיר - התמונה זזה בצורה חלקה יותר, בלי טשטוש תנועה. שני מנגנונים נלווים חשובים כאן: <strong>VRR</strong> (התאמת קצב הרענון למשחק, למניעת קרעים בתמונה) ו-<strong>ALLM</strong> (מעבר אוטומטי למצב משחק).
+      </div>
+      <div class="basics-note" id="idan-plus">
+        📡 רוצים לקלוט ערוצים בחינם? שידורי עידן+ (כאן 11, 12, 13 ועוד) נקלטים דרך אנטנה. ודאו שבטלוויזיה יש ממיר מובנה שתומך בתקן DVB-T2, ושיש לכם אנטנה מתאימה. <a href="https://www.rashut2.org.il/הפצת-שידורים/המדריך-להתחברות-עידןplus" target="_blank" rel="noopener">למדריך הרשמי של הרשות השנייה ←</a>
       </div>
     </div>
   </div>
@@ -7274,24 +7455,25 @@ footer.site-foot a:hover {
 <section class="block brand-block samsung" id="samsung" style="--brand:#1c3a63;">
   <div class="wrap">
     <div class="brand-head">
-      <span class="brand-pill">SAMSUNG</span>
+      <h2 class="brand-pill">SAMSUNG</h2>
     </div>
     <p class="brand-tagline">סמסונג מובילה בבהירות מסך, בטכנולוגיית Quantum Dot ובמערכת גיימינג עשירה שמובנית בתוך הטלוויזיה עצמה - בלי צורך בקונסולה חיצונית.</p>
     <div class="brand-facts">
       <div class="brand-fact"><span class="fact-label">מערכת הפעלה</span><span class="fact-value">Tizen (Gaming Hub מובנה)</span></div>
-      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">HDR10+ בלבד (לא Dolby Vision)</span></div>
+      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">HDR10+ (ללא Dolby Vision)</span></div>
       <div class="brand-fact"><span class="fact-label">גיימינג</span><span class="fact-value">Game Bar · ALLM · VRR מובנים</span></div>
     </div>
+    <p style="font-size:.85rem;color:var(--text-tertiary);margin-bottom:20px;">💡 בדגמי 2026 נוסף HDR10+ Advanced, שנתמך בחלק מהתכנים באמזון פריים וידאו.</p>
 
     <div class="tier-list">
-      <article class="tier-card">
+      <article class="tier-card" id="samsung-crystal-uhd">
         <div class="tier-card-head">
           <span class="tier-rung">1</span>
-          <span class="tier-name">Crystal UHD</span>
+          <h3 class="tier-name">Crystal UHD</h3>
           <span class="tier-badge">כניסה</span>
         </div>
         <p class="tier-highlight">כניסה חכמה ל-4K, במחיר הכי נגיש שיש למותג</p>
-        <p class="tier-explain">מסך LED עם רזולוציית 4K אמיתית ועיבוד-תמונה בסיסי, בלי שכבת ה-Quantum Dot של הדגמים שמעליו. הבחירה הפשוטה כשהתקציב הוא השיקול המרכזי.</p>
+        <p class="tier-explain">מסך LED עם רזולוציית 4K אמיתית ועיבוד תמונה בסיסי, בלי שכבת ה-Quantum Dot של הדגמים שמעליו. הבחירה הפשוטה כשהתקציב הוא השיקול המרכזי.</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>המחיר הנגיש ביותר במותג</li>
@@ -7306,36 +7488,36 @@ footer.site-foot a:hover {
         <div class="tier-tags"><span>חדר שני / חדר ילדים</span><span>תקציב חסכוני</span><span>צפייה יומיומית בסיסית</span></div>
       </article>
 
-      <article class="tier-card">
+      <article class="tier-card" id="samsung-qled">
         <div class="tier-card-head">
           <span class="tier-rung">2</span>
-          <span class="tier-name">QLED</span>
+          <h3 class="tier-name">QLED</h3>
           <span class="tier-badge">בינוני</span>
         </div>
-        <p class="tier-highlight">צבע עשיר ובהיר יותר, בזכות שכבת נקודות-הקוונטים</p>
+        <p class="tier-highlight">צבע עשיר ובהיר יותר, בזכות שכבת נקודות הקוונטים</p>
         <p class="tier-explain">אותו מסך LCD בבסיסו, אך עם שכבת Quantum Dot שמרחיבה משמעותית את טווח הצבעים ואת רמת הבהירות לעומת Crystal UHD.</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>צבעוניות עשירה ומדויקת</li>
             <li>בהירות טובה שמתמודדת עם אור יום</li>
-            <li>יחס מחיר-ביצועים אטרקטיבי</li>
+            <li>יחס מחיר ביצועים אטרקטיבי</li>
           </ul></div>
           <div class="tier-cons"><h4>לשים לב</h4><ul>
             <li>שחורים פחות עמוקים מ-OLED</li>
-            <li>עמעום-רקע כללי, לא מדויק כמו Neo QLED</li>
+            <li>עמעום רקע כללי, לא מדויק כמו Neo QLED</li>
           </ul></div>
         </div>
         <div class="tier-tags"><span>סלון עם הרבה אור טבעי</span><span>צפייה משפחתית כללית</span><span>שדרוג ראשון מ-LED רגיל</span></div>
       </article>
 
-      <article class="tier-card">
+      <article class="tier-card" id="samsung-neo-qled">
         <div class="tier-card-head">
           <span class="tier-rung">3</span>
-          <span class="tier-name">Neo QLED</span>
+          <h3 class="tier-name">Neo QLED</h3>
           <span class="tier-badge">פרימיום</span>
         </div>
         <p class="tier-highlight">תאורת Mini-LED = שחורים עמוקים יותר ובהירות שיא</p>
-        <p class="tier-explain">אותה שכבת Quantum Dot, עם תאורת-רקע Mini-LED שמאפשרת עמעום מדויק באלפי אזורים נפרדים - ניגודיות משמעותית טובה יותר ובהירות HDR גבוהה.</p>
+        <p class="tier-explain">אותה שכבת Quantum Dot, עם תאורת רקע Mini-LED שמאפשרת עמעום מדויק באלפי אזורים נפרדים - ניגודיות משמעותית טובה יותר ובהירות HDR גבוהה.</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>ניגודיות ובהירות מהטובות בשוק ה-LCD</li>
@@ -7344,54 +7526,55 @@ footer.site-foot a:hover {
           </ul></div>
           <div class="tier-cons"><h4>לשים לב</h4><ul>
             <li>מחיר גבוה יותר מ-QLED רגיל</li>
-            <li>עדיין לא שחור-מושלם כמו OLED, ייתכן "בלימינג" קל</li>
+            <li>עדיין לא שחור מושלם כמו OLED, ייתכן "בלימינג" (הילה בהירה סביב אובייקטים בהירים על רקע כהה) קל</li>
           </ul></div>
         </div>
-        <div class="tier-tags"><span>קולנוע ביתי בסלון מואר</span><span>גיימרים</span><span>מי שרוצה כמעט-הכל בלי לעבור ל-OLED</span></div>
+        <div class="tier-tags"><span>קולנוע ביתי בסלון מואר</span><span>גיימרים</span><span>מי שרוצה כמעט הכל בלי לעבור ל-OLED</span></div>
       </article>
 
-      <article class="tier-card">
+      <article class="tier-card" id="samsung-oled">
         <div class="tier-card-head">
           <span class="tier-rung">4</span>
-          <span class="tier-name">OLED (QD-OLED)</span>
+          <h3 class="tier-name">OLED</h3>
           <span class="tier-badge">פרימיום</span>
         </div>
         <p class="tier-highlight">כל פיקסל דולק בעצמו - שחור אמיתי, בכל זווית צפייה</p>
-        <p class="tier-explain">טכנולוגיה שונה לגמרי מ-LCD: אין תאורת-רקע בכלל, וכל פיקסל יכול לכבות באופן מוחלט. סמסונג משתמשת בפאנל QD-OLED משלה, עם שכבת קוונטים שמוסיפה צבעוניות ובהירות מעבר ל-OLED המסורתי.</p>
+        <p class="tier-explain">טכנולוגיה שונה לגמרי מ-LCD: אין תאורת רקע בכלל, וכל פיקסל יכול לכבות באופן מוחלט. חלק מדגמי ה-OLED של סמסונג מבוססים על פאנל QD-OLED, עם שכבת קוונטים שמוסיפה צבעוניות ובהירות.</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>שחור מושלם וניגודיות אינסופית</li>
-            <li>זוויות-צפייה מושלמות מכל מקום בסלון</li>
+            <li>זוויות צפייה מושלמות מכל מקום בסלון</li>
             <li>תמונה קולנועית ברמה הגבוהה ביותר</li>
           </ul></div>
           <div class="tier-cons"><h4>לשים לב</h4><ul>
-            <li>בהירות-שיא נמוכה במעט מ-Neo QLED (פחות אידיאלי מול חלון גדול)</li>
+            <li>בהירות שיא נמוכה במעט מ-Neo QLED (פחות אידיאלי מול חלון גדול)</li>
             <li>מחיר פרימיום</li>
+            <li>חשש לצריבה: תמונה סטטית שמוצגת שעות רבות (לוגו ערוץ, סרגל משחק) עלולה להשאיר סימן קבוע. בשימוש רגיל ומגוון הסיכון נמוך.</li>
           </ul></div>
         </div>
-        <div class="tier-tags"><span>חדר צפייה מוחשך / מבוקר-תאורה</span><span>קולנוע ביתי ברמה הגבוהה</span><span>חובבי איכות תמונה על פני הכל</span></div>
+        <div class="tier-tags"><span>חדר צפייה מוחשך / מבוקר תאורה</span><span>קולנוע ביתי ברמה הגבוהה</span><span>חובבי איכות תמונה על פני הכל</span></div>
       </article>
 
-      <article class="tier-card">
+      <article class="tier-card" id="samsung-micro-rgb">
         <div class="tier-card-head">
           <span class="tier-rung">5</span>
-          <span class="tier-name">Micro RGB</span>
-          <span class="tier-badge">דגל 2026</span>
+          <h3 class="tier-name">Micro RGB</h3>
+          <span class="tier-badge">דגל</span>
         </div>
-        <p class="tier-highlight">שלושה צבעי-לד עצמאיים בכל נקודת-תאורה - הדור הבא של ה-LCD</p>
-        <p class="tier-explain">הדגם הכי חדש של סמסונג: תאורת-הרקע בנויה מנקודות אדום/ירוק/כחול זעירות ונפרדות, במקום לד לבן עם פילטר צבע - טווח-צבעים עצום ובהירות יוצאת דופן. חשוב להבהיר: זו עדיין טכנולוגיית LCD עם תאורת-רקע, לא Micro-LED האמיתי (ר' הסבר ב"יסודות" למעלה).</p>
+        <p class="tier-highlight">שלושה צבעי לד עצמאיים בכל נקודת תאורה - הדור הבא של ה-LCD</p>
+        <p class="tier-explain">הטכנולוגיה המתקדמת ביותר של סמסונג ב-LCD. הושקה ב-2025 במסך 115 אינץ', ובסדרת 2026 זמינה גם בגדלים ביתיים: 55, 65, 75, 85, 100 ו-115 אינץ'. תאורת רקע בנויה מנקודות אדום/ירוק/כחול זעירות ונפרדות, במקום לד לבן עם פילטר צבע - טווח צבעים עצום ובהירות יוצאת דופן (<a href="#basics-microled">מה ההבדל מ-Micro-LED? ←</a>).</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
-            <li>טווח הצבעים הרחב ביותר שסמסונג הציעה אי-פעם</li>
+            <li>טווח הצבעים הרחב ביותר שסמסונג הציעה אי פעם</li>
             <li>בהירות מהגבוהות בשוק</li>
             <li>ניגודיות משופרת לעומת Neo QLED</li>
           </ul></div>
           <div class="tier-cons"><h4>לשים לב</h4><ul>
             <li>מחיר פרימיום גבוה</li>
-            <li>טכנולוגיה חדשה יחסית בשוק</li>
+            <li>טכנולוגיה חדשה יחסית, עם מבחר דגמים מצומצם</li>
           </ul></div>
         </div>
-        <div class="tier-tags"><span>המחפשים את המתקדם ביותר ב-LCD</span><span>חדרים מוארים עם דרישת-בהירות גבוהה</span><span>תקציב גמיש</span></div>
+        <div class="tier-tags"><span>המחפשים את המתקדם ביותר ב-LCD</span><span>חדרים מוארים עם דרישת בהירות גבוהה</span><span>תקציב גמיש</span></div>
       </article>
     </div>
   </div>
@@ -7400,24 +7583,24 @@ footer.site-foot a:hover {
 <section class="block brand-block lg" id="lg" style="--brand:#a8264a;">
   <div class="wrap">
     <div class="brand-head">
-      <span class="brand-pill">LG</span>
+      <h2 class="brand-pill">LG</h2>
     </div>
-    <p class="brand-tagline">אל.ג'י המציאה את ה-OLED הצרכני וממשיכה להוביל בו - עם מערכת הפעלה נוחה ושלט Magic Remote שמצביע כמו עכבר.</p>
+    <p class="brand-tagline">LG היא מהמובילות הוותיקות בשוק ה-OLED - עם מערכת הפעלה נוחה ושלט Magic Remote שמצביע כמו עכבר.</p>
     <div class="brand-facts">
       <div class="brand-fact"><span class="fact-label">מערכת הפעלה</span><span class="fact-value">webOS (שלט Magic Remote)</span></div>
-      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">Dolby Vision בלבד (לא HDR10+)</span></div>
+      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">Dolby Vision (ללא HDR10+)</span></div>
       <div class="brand-fact"><span class="fact-label">מעבד</span><span class="fact-value">α (Alpha) AI Processor</span></div>
     </div>
 
     <div class="tier-list">
-      <article class="tier-card">
+      <article class="tier-card" id="lg-led">
         <div class="tier-card-head">
           <span class="tier-rung">1</span>
-          <span class="tier-name">LED</span>
+          <h3 class="tier-name">LED</h3>
           <span class="tier-badge">כניסה</span>
         </div>
-        <p class="tier-highlight">הבסיס הפשוט של אל.ג'י - LCD עם תאורת-רקע רגילה</p>
-        <p class="tier-explain">מסך LCD סטנדרטי בלי שכבות שיפור-צבע נוספות. הבחירה הכי משתלמת לצפייה כללית פשוטה.</p>
+        <p class="tier-highlight">הבסיס הפשוט של אל.ג'י - LCD עם תאורת רקע רגילה</p>
+        <p class="tier-explain">מסך LCD סטנדרטי בלי שכבות שיפור צבע נוספות. הבחירה הכי משתלמת לצפייה כללית פשוטה.</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>המחיר הנגיש ביותר במותג</li>
@@ -7432,17 +7615,17 @@ footer.site-foot a:hover {
         <div class="tier-tags"><span>חדר משני</span><span>תקציב חסכוני</span><span>צפייה בסיסית ללא דרישות מיוחדות</span></div>
       </article>
 
-      <article class="tier-card">
+      <article class="tier-card" id="lg-nanocell">
         <div class="tier-card-head">
           <span class="tier-rung">2</span>
-          <span class="tier-name">NanoCell</span>
+          <h3 class="tier-name">NanoCell</h3>
           <span class="tier-badge">בינוני</span>
         </div>
         <p class="tier-highlight">שכבת ננו-חלקיקים שמנקה גוונים ומדייקת את הצבע</p>
-        <p class="tier-explain">שכבת סינון עדינה שמסננת גוונים "לא נקיים" מהאור, לצבע מדויק יותר וזוויות-צפייה טובות יותר מ-LED רגיל - עדיין עם תאורת-רקע סטנדרטית (לא Mini-LED).</p>
+        <p class="tier-explain">שכבת סינון עדינה שמסננת גוונים "לא נקיים" מהאור, לצבע מדויק יותר וזוויות צפייה טובות יותר מ-LED רגיל - עדיין עם תאורת רקע סטנדרטית (לא Mini-LED).</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
-            <li>דיוק-צבע משופר משמעותית לעומת LED בסיסי</li>
+            <li>דיוק צבע משופר משמעותית לעומת LED בסיסי</li>
             <li>זוויות צפייה טובות יותר</li>
             <li>מחיר סביר</li>
           </ul></div>
@@ -7451,51 +7634,52 @@ footer.site-foot a:hover {
             <li>לא מתאים לחדר מואר מאוד</li>
           </ul></div>
         </div>
-        <div class="tier-tags"><span>סלון ביתי רגיל</span><span>צפייה משפחתית</span><span>שדרוג-צבע בלי לשלם על Mini-LED</span></div>
+        <div class="tier-tags"><span>סלון ביתי רגיל</span><span>צפייה משפחתית</span><span>שדרוג צבע בלי לשלם על Mini-LED</span></div>
       </article>
 
-      <article class="tier-card">
+      <article class="tier-card" id="lg-qned-evo">
         <div class="tier-card-head">
           <span class="tier-rung">3</span>
-          <span class="tier-name">QNED evo</span>
+          <h3 class="tier-name">QNED evo</h3>
           <span class="tier-badge">פרימיום</span>
         </div>
-        <p class="tier-highlight">Quantum Dot + NanoCell + Mini-LED ביחד - הדגל של ה-LCD אצל אל.ג'י</p>
-        <p class="tier-explain">משלב את שכבת ה-NanoCell עם נקודות-קוונטים ותאורת Mini-LED עתירת-אזורי-עמעום - השילוב הכי מתקדם שאל.ג'י מציעה מחוץ ל-OLED, כולל מסכים ענקיים במיוחד.</p>
+        <p class="tier-highlight">תאורת Mini-LED וטכנולוגיית צבע מתקדמת: הדגל של ה-LCD אצל LG</p>
+        <p class="tier-explain">תאורת Mini-LED עם אזורי עמעום רבים, יחד עם טכנולוגיית הצבע של LG (Dynamic QNED Color) שמרחיבה את טווח הצבעים. זה השילוב המתקדם ביותר ש-LG מציעה מחוץ ל-OLED, כולל מסכים בגדלים גדולים במיוחד.</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>ניגודיות ובהירות גבוהות משמעותית מ-NanoCell</li>
             <li>מסכים בגדלים ענקיים</li>
-            <li>מעבד AI חזק (α8) לתמונה וקול</li>
+            <li>מעבד AI מתקדם לתמונה וקול (משתנה לפי דגם)</li>
           </ul></div>
           <div class="tier-cons"><h4>לשים לב</h4><ul>
             <li>מחיר גבוה יחסית</li>
-            <li>עדיין לא שחור-מושלם כמו OLED</li>
+            <li>עדיין לא שחור מושלם כמו OLED</li>
           </ul></div>
         </div>
-        <div class="tier-tags"><span>מסך ענק לסלון מרווח</span><span>אור-יום עם דרישת ניגודיות טובה</span><span>ספורט/גיימינג במסך גדול</span></div>
+        <div class="tier-tags"><span>מסך ענק לסלון מרווח</span><span>אור יום עם דרישת ניגודיות טובה</span><span>ספורט/גיימינג במסך גדול</span></div>
       </article>
 
-      <article class="tier-card">
+      <article class="tier-card" id="lg-oled-evo">
         <div class="tier-card-head">
           <span class="tier-rung">4</span>
-          <span class="tier-name">OLED evo</span>
+          <h3 class="tier-name">OLED evo</h3>
           <span class="tier-badge">דגל</span>
         </div>
-        <p class="tier-highlight">מייסדת ה-OLED הצרכני - שחור מושלם וזוויות-צפייה ללא פשרות</p>
-        <p class="tier-explain">פאנל self-emissive (WOLED) עם שכבת "evo" שמעלה את הבהירות לעומת OLED בסיסי. הדגל האמיתי של אל.ג'י, עם הניסיון הרב ביותר בשוק ה-OLED.</p>
+        <p class="tier-highlight">הניסיון הרב ביותר ב-OLED - שחור מושלם וזוויות צפייה ללא פשרות</p>
+        <p class="tier-explain">פאנל self-emissive/WOLED (פאנל שכל פיקסל בו מאיר בעצמו) עם שכבת "evo" שמעלה את הבהירות לעומת OLED בסיסי. הדגל האמיתי של אל.ג'י.</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>שחור מושלם וניגודיות אינסופית</li>
-            <li>זוויות-צפייה מושלמות</li>
+            <li>זוויות צפייה מושלמות</li>
             <li>תמיכה מלאה ב-Dolby Vision, הפורמט הנפוץ בסטרימינג</li>
           </ul></div>
           <div class="tier-cons"><h4>לשים לב</h4><ul>
-            <li>בהירות-שיא נמוכה יותר מ-Mini-LED מתקדם</li>
+            <li>בהירות שיא נמוכה יותר מ-Mini-LED מתקדם</li>
             <li>מחיר פרימיום</li>
+            <li>חשש לצריבה: תמונה סטטית שמוצגת שעות רבות (לוגו ערוץ, סרגל משחק) עלולה להשאיר סימן קבוע. בשימוש רגיל ומגוון הסיכון נמוך.</li>
           </ul></div>
         </div>
-        <div class="tier-tags"><span>קולנוע ביתי וחוויית-צפייה</span><span>חדר מוחשך / מבוקר-תאורה</span><span>צופים הרבה Netflix/Disney+ עם Dolby Vision</span></div>
+        <div class="tier-tags"><span>קולנוע ביתי וחוויית צפייה</span><span>חדר מוחשך / מבוקר תאורה</span><span>צופים הרבה Netflix/Disney+ עם Dolby Vision</span></div>
       </article>
     </div>
   </div>
@@ -7504,9 +7688,9 @@ footer.site-foot a:hover {
 <section class="block brand-block tcl" id="tcl" style="--brand:#0f7a82;">
   <div class="wrap">
     <div class="brand-head">
-      <span class="brand-pill">TCL</span>
+      <h2 class="brand-pill">TCL</h2>
     </div>
-    <p class="brand-tagline">TCL מתקדמת הכי מהר במונחי מפרט-מול-מחיר, עם Google TV פתוח ותמיכה בשני פורמטי ה-HDR המובילים גם יחד - יתרון שאף מותג אחר כאן לא מציע.</p>
+    <p class="brand-tagline">TCL מתקדמת הכי מהר במונחי מפרט מול מחיר, עם Google TV פתוח ותמיכה בשני פורמטי ה-HDR המובילים גם יחד - יתרון שאין לשני המותגים האחרים במדריך.</p>
     <div class="brand-facts">
       <div class="brand-fact"><span class="fact-label">מערכת הפעלה</span><span class="fact-value">Google TV</span></div>
       <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">HDR10+ וגם Dolby Vision</span></div>
@@ -7514,83 +7698,93 @@ footer.site-foot a:hover {
     </div>
 
     <div class="tier-list">
-      <article class="tier-card">
+      <article class="tier-card" id="tcl-qled">
         <div class="tier-card-head">
           <span class="tier-rung">1</span>
-          <span class="tier-name">QLED</span>
+          <h3 class="tier-name">QLED</h3>
           <span class="tier-badge">כניסה</span>
         </div>
-        <p class="tier-highlight">כניסה עם שכבת Quantum Dot מלאה - ערך-לכסף יוצא דופן</p>
-        <p class="tier-explain">מסך LCD עם שכבת נקודות-קוונטים כבר בדגמי הכניסה - רמת-צבע שמותגים אחרים שומרים לרמות גבוהות יותר, במחיר נגיש.</p>
+        <p class="tier-highlight">כניסה עם שכבת Quantum Dot מלאה - ערך לכסף יוצא דופן</p>
+        <p class="tier-explain">מסך LCD עם שכבת נקודות קוונטים כבר בדגמי הכניסה - רמת צבע שמותגים אחרים שומרים לרמות גבוהות יותר, במחיר נגיש.</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>שכבת Quantum Dot כבר בכניסה</li>
-            <li>יחס מחיר-ביצועים מהטובים בשוק</li>
-            <li>Google TV עם ספריית-אפליקציות רחבה</li>
+            <li>יחס מחיר ביצועים מהטובים בשוק</li>
+            <li>Google TV עם ספריית אפליקציות רחבה</li>
           </ul></div>
           <div class="tier-cons"><h4>לשים לב</h4><ul>
-            <li>תאורת-רקע בסיסית (בלי Mini-LED)</li>
+            <li>תאורת רקע בסיסית (בלי Mini-LED)</li>
             <li>ניגודיות מוגבלת יחסית</li>
           </ul></div>
         </div>
-        <div class="tier-tags"><span>תקציב חסכוני עם דרישת-צבע טוב</span><span>בית ראשון / דירה להשכרה</span><span>צפייה יומיומית כללית</span></div>
+        <div class="tier-tags"><span>תקציב חסכוני עם דרישת צבע טוב</span><span>בית ראשון / דירה להשכרה</span><span>צפייה יומיומית כללית</span></div>
       </article>
 
-      <article class="tier-card">
+      <article class="tier-card" id="tcl-qd-mini-led">
         <div class="tier-card-head">
           <span class="tier-rung">2</span>
-          <span class="tier-name">QD Mini-LED / Super QD Mini-LED</span>
-          <span class="tier-badge">בינוני-פרימיום</span>
+          <h3 class="tier-name">QD Mini-LED / Super QD Mini-LED</h3>
+          <span class="tier-badge">בינוני פרימיום</span>
         </div>
-        <p class="tier-highlight">Quantum Dot + Mini-LED - ניגודיות ובהירות ברמת-פרימיום, במחיר-אמצע</p>
-        <p class="tier-explain">שילוב של שכבת קוונטים עם תאורת Mini-LED עתירת-אזורים; בגרסת ה-Super QD יש שיפור נוסף בהפרדת-הצבעים ובכמות אזורי-העמעום, לתמונה חדה וניגודית יותר.</p>
+        <p class="tier-highlight">Quantum Dot + Mini-LED - ניגודיות ובהירות ברמת פרימיום, במחיר אמצע</p>
+        <p class="tier-explain">שילוב של שכבת קוונטים עם תאורת Mini-LED עתירת אזורים; בגרסת ה-Super QD יש שיפור נוסף בהפרדת הצבעים ובכמות אזורי העמעום, לתמונה חדה וניגודית יותר.</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
-            <li>ניגודיות ובהירות שמתחרות בדגמי-דגל של מותגים אחרים</li>
+            <li>ניגודיות ובהירות שמתחרות בדגמי דגל של מותגים אחרים</li>
             <li>תמיכה גם ב-HDR10+ וגם ב-Dolby Vision</li>
-            <li>תדר-רענון גבוה, טוב לגיימינג</li>
+            <li>תדר רענון גבוה, טוב לגיימינג</li>
           </ul></div>
           <div class="tier-cons"><h4>לשים לב</h4><ul>
-            <li>עדיין לא ברמת RGB Mini-LED/OLED מבחינת טווח-צבעים ושחורים</li>
+            <li>עדיין לא ברמת RGB Mini-LED/OLED מבחינת טווח צבעים ושחורים</li>
             <li>גדלים ענקיים מעלים משמעותית את המחיר</li>
           </ul></div>
         </div>
-        <div class="tier-tags"><span>ערך-לכסף מקסימלי ברמת-פרימיום</span><span>גיימרים עם תקציב מבוקר</span><span>מי שרוצה גמישות-HDR מלאה</span></div>
+        <div class="tier-tags"><span>ערך לכסף מקסימלי ברמת פרימיום</span><span>גיימרים עם תקציב מבוקר</span><span>מי שרוצה גמישות HDR מלאה</span></div>
       </article>
 
-      <article class="tier-card">
+      <article class="tier-card" id="tcl-rgb-mini-led">
         <div class="tier-card-head">
           <span class="tier-rung">3</span>
-          <span class="tier-name">RGB Mini-LED</span>
-          <span class="tier-badge">דגל</span>
+          <h3 class="tier-name">RGB Mini-LED</h3>
+          <span class="tier-badge">בקרוב בישראל</span>
         </div>
-        <p class="tier-highlight">תאורת-רקע מנקודות אדום/ירוק/כחול נפרדות - הדגל הצבעוני של TCL</p>
-        <p class="tier-explain">כמו ה-Micro RGB של סמסונג: תאורת-הרקע בנויה מנקודות-צבע נפרדות במקום לד-לבן+פילטר, לטווח-צבעים ובהירות מהמתקדמים בשוק ה-LCD.</p>
+        <p class="tier-highlight">תאורת רקע מנקודות אדום/ירוק/כחול נפרדות - הדגל הצבעוני של TCL</p>
+        <p class="tier-explain">תאורת רקע מנקודות צבע נפרדות במקום לד-לבן+פילטר, בדומה ל-Micro RGB של סמסונג (<a href="#basics-microled">מה ההבדל מ-Micro-LED? ←</a>). הטכנולוגיה הוכרזה בתערוכת IFA 2026 - סדרה זו צפויה להגיע לישראל (בשם Q7D, בגדלים 65 עד 98 אינץ'). מועד זמינות טרם פורסם.</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
-            <li>טווח-צבעים מהרחבים ביותר בשוק</li>
+            <li>טווח צבעים מהרחבים ביותר בשוק</li>
             <li>בהירות וניגודיות ברמה גבוהה מאוד</li>
             <li>עדיין תומך גם ב-HDR10+ וגם ב-Dolby Vision</li>
           </ul></div>
           <div class="tier-cons"><h4>לשים לב</h4><ul>
             <li>מחיר פרימיום</li>
-            <li>דגם חדש-יחסית בשוק</li>
+            <li>דגם חדש יחסית בשוק</li>
           </ul></div>
         </div>
-        <div class="tier-tags"><span>המחפשים את המתקדם ביותר אצל TCL</span><span>חדרים מוארים עם דרישת-צבע וגם בהירות</span><span>תקציב גמיש עם העדפה ל-Google TV</span></div>
+        <div class="tier-tags"><span>המחפשים את המתקדם ביותר אצל TCL</span><span>חדרים מוארים עם דרישת צבע וגם בהירות</span><span>תקציב גמיש עם העדפה ל-Google TV</span></div>
       </article>
+      <!-- TODO: לאשר מול המלאי אם להשאיר את כרטיס TCL RGB Mini-LED (בקרוב בישראל) או להסיר אותו. -->
     </div>
 
-    <p style="font-size:.85rem;color:var(--text-tertiary);margin-top:20px;">💡 <strong style="color:var(--text-secondary);">NXTVISION</strong> הוא קו-עיצוב ומעבד-תמונה (AiPQ) שמלווה כמה מהדגמים למעלה - כולל גרסאות "Pro" עם מראה-גלריה ומצב-אמנות למסך כבוי. זה לא רמת-פאנל נפרדת, אלא תוספת-עיצוב ועיבוד שיכולה להופיע בכל אחת מהדרגות שלמעלה.</p>
+    <p style="font-size:.85rem;color:var(--text-tertiary);margin-top:20px;">💡 <strong style="color:var(--text-secondary);">NXTVISION</strong> הוא קו עיצוב ומעבד תמונה של TCL שמופיע בחלק מהדגמים. זו לא רמת פאנל נפרדת.</p>
   </div>
 </section>
 
 <section class="block" id="compare">
   <div class="wrap">
+    <div class="basics-note" style="margin-bottom:36px;">
+      <strong>חשוב לדעת לפני קנייה:</strong>
+      <ul>
+        <li>אחריות: מוצרי חשמל חדשים שמחירם מעל 150 ₪ מחויבים באחריות של שנה לפחות לפי תקנות הגנת הצרכן. אצלנו: [TODO: תקופת אחריות ושם היבואן הרשמי לכל מותג]</li>
+        <li>ביטול עסקה: לצרכן יש זכות לבטל רכישה בתנאים הקבועים בחוק הגנת הצרכן. [TODO: נוסח מדיניות ביטול, לאישור יועץ משפטי]</li>
+        <li>קליטת ערוצים: ראו <a href="#idan-plus">תיבת עידן+ למעלה</a>.</li>
+      </ul>
+      <p style="margin-top:10px;font-size:.8rem;">מקור מלא: [TODO: קישור לאתר הרשות להגנת הצרכן]</p>
+    </div>
     <div class="block-head">
       <span class="block-eyebrow">סיכום</span>
       <h2>השוואה מהירה בין המותגים</h2>
-      <p>לעין-ציפור, לפני שממשיכים לקטלוג</p>
+      <p>לעין ציפור, לפני שממשיכים לקטלוג</p>
     </div>
     <div class="compare-scroll">
       <table class="compare">
@@ -7600,8 +7794,9 @@ footer.site-foot a:hover {
         <tbody>
           <tr><th>מערכת הפעלה</th><td>Tizen</td><td>webOS</td><td>Google TV</td></tr>
           <tr><th>פורמט HDR</th><td>HDR10+</td><td>Dolby Vision</td><td>HDR10+ וגם Dolby Vision</td></tr>
-          <tr><th>חוזק בולט</th><td>בהירות + Quantum Dot + גיימינג מובנה</td><td>OLED מוביל + חוויית-צפייה קולנועית</td><td>ערך-לכסף + גמישות HDR</td></tr>
-          <tr><th>טווח מחירים</th><td>כניסה ועד פרימיום</td><td>אמצע ועד פרימיום</td><td>כניסה ועד פרימיום</td></tr>
+          <tr><td></td><td colspan="3" style="font-size:.8rem;color:var(--text-tertiary);font-weight:400;">כל הטלוויזיות תומכות גם ב-HDR10 וב-HLG הבסיסיים.</td></tr>
+          <tr><th>חוזק בולט</th><td>בהירות + Quantum Dot + גיימינג מובנה</td><td>OLED מוביל + חוויית צפייה קולנועית</td><td>ערך לכסף + גמישות HDR</td></tr>
+          <!-- TODO: אם ארצה בעתיד טווח מחירים בשקלים, להחזיר את שורת "טווח מחירים" שהוסרה כאן. -->
         </tbody>
       </table>
     </div>
@@ -7611,11 +7806,12 @@ footer.site-foot a:hover {
 <section class="guide-cta">
   <div class="wrap">
     <h2>מוכנים לבחור?</h2>
-    <p>עכשיו כשאתם מכירים את הטכנולוגיות - בואו נמצא לכם את הטלוויזיה והפתרון-התקנה שמתאימים בדיוק לחדר שלכם.</p>
+    <p>עכשיו כשאתם מכירים את הטכנולוגיות - בואו נמצא לכם את הטלוויזיה והפתרון להתקנה שמתאימים בדיוק לחדר שלכם.</p>
     <div class="ctas">
       <a class="btn-accent" href="index.html#products">לקטלוג הטלוויזיות ⟵</a>
       <a class="btn-ghost" id="finalWhatsappBtn" href="#" target="_blank" rel="noopener">📲 שאלו אותנו בוואטסאפ</a>
     </div>
+    <p style="font-size:.88rem;color:var(--text-tertiary);margin-top:18px;">כבר יודעים איזה מסך? בדקו כמה תעלה <a href="installation.html">התקנה על הקיר ←</a></p>
   </div>
 </section>
 
@@ -7649,6 +7845,64 @@ var BUSINESS = { whatsappNumber: "972526609971", phoneDisplay: "+972-52-660-9971
   document.getElementById("finalWhatsappBtn").href = genericWhatsappLink("שלום! קראתי את מדריך הטכנולוגיות ואשמח לשירות בבחירת טלוויזיה.");
   document.getElementById("footCallLink").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
   document.getElementById("footCallLink").textContent = BUSINESS.phoneDisplay;
+  wireQuickpick();
+}
+
+function computeQuickpickRecommendation(room, content, budget) {
+  var options;
+  if (budget === "generous") {
+    if (room === "bright") {
+      options = [
+        { label: "Neo QLED", href: "#samsung-neo-qled" },
+        { label: "QNED evo", href: "#lg-qned-evo" },
+        { label: "Micro RGB", href: "#samsung-micro-rgb" }
+      ];
+    } else {
+      options = [
+        { label: "LG OLED evo", href: "#lg-oled-evo" },
+        { label: "SAMSUNG OLED", href: "#samsung-oled" }
+      ];
+    }
+  } else if (budget === "medium") {
+    options = [
+      { label: "TCL QD Mini-LED", href: "#tcl-qd-mini-led" },
+      { label: "SAMSUNG QLED", href: "#samsung-qled" }
+    ];
+  } else {
+    options = [
+      { label: "TCL QLED", href: "#tcl-qled" },
+      { label: "SAMSUNG Crystal UHD", href: "#samsung-crystal-uhd" },
+      { label: "LG LED", href: "#lg-led" }
+    ];
+  }
+  var linksHtml = options.map(function (o) {
+    return '<a href="' + o.href + '">' + o.label + '</a>';
+  }).join(" / ");
+  var text = "מתאים לכם: " + linksHtml;
+  if (content === "gaming") {
+    text += ". שימו לב: לגיימינג חפשו 120Hz ומעלה עם VRR ו-ALLM.";
+  }
+  return text;
+}
+
+function wireQuickpick() {
+  var radios = document.querySelectorAll(".quickpick-radio");
+  var resultBox = document.getElementById("quickpickResult");
+  var resultText = document.getElementById("quickpickResultText");
+  function update() {
+    var room = document.querySelector('input[name="qp-room"]:checked');
+    var content = document.querySelector('input[name="qp-content"]:checked');
+    var budget = document.querySelector('input[name="qp-budget"]:checked');
+    if (!room || !content || !budget) {
+      resultBox.hidden = true;
+      return;
+    }
+    resultText.innerHTML = computeQuickpickRecommendation(room.value, content.value, budget.value);
+    resultBox.hidden = false;
+  }
+  for (var i = 0; i < radios.length; i++) {
+    radios[i].addEventListener("change", update);
+  }
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initTvGuide); else initTvGuide();
