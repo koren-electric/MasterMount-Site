@@ -4611,6 +4611,33 @@ section.block {
   font-size: .78rem;
 }
 
+.order-review-notice {
+  align-items: flex-start;
+  gap: 10px;
+  background: linear-gradient(135deg, #ea5b2426, #ff8a5217);
+  border: 1px solid #ea5b2459;
+  border-radius: 12px;
+  margin-top: 20px;
+  padding: 14px 18px;
+  display: flex;
+}
+
+.order-review-notice svg {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  color: var(--brand-orange-2);
+  margin-top: 1px;
+}
+
+.order-review-notice p {
+  color: #fff;
+  font-size: .95rem;
+  font-weight: 700;
+  line-height: 1.55;
+  margin: 0;
+}
+
 .config-shell {
   background: linear-gradient(165deg, #242c34 0%, #1a2127 52%, #12171b 100%);
   border: 1px solid #ea5b2438;
@@ -7867,6 +7894,7 @@ function initInstallation() {
       }).join("") +
       (built.hasTbdExtra ? '<div class="summary-row"><span class="tbd-note">מחיר כבלי HDMI יימסר בהמשך ואינו כלול בסכום המוצג</span></div>' : '') +
       '<div class="summary-row total"><span>סה"כ' + (product ? " (כולל הטלוויזיה)" : "") + '</span><span class="val">' + formatItemTotal(itemTotal, p.isCustomQuote) + '</span></div></div>' +
+      '<div class="order-review-notice"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"></circle><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg><p>הצוות שלנו יבדוק את בקשתכם לוודא את תקינות ההזמנה, במידה וימצאו אי התאמות נעדכן אתכם בהקדם.</p></div>' +
       '<div class="lead-ctas"><button type="button" class="btn-accent" id="addToCartBtn">🛒 הוסיפו לעגלה</button></div>' +
       '<p class="lead-fineprint">אפשר להוסיף עוד טלוויזיה/התקנה לעגלה לפני שליחת הכל בהודעה אחת.</p>';
 
