@@ -3306,7 +3306,7 @@
 :root:root {
   --lightningcss-light: initial;
   --lightningcss-dark: ;
-  color-scheme: light dark;
+  color-scheme: light;
   --bg: #faf9f6;
   --surface: #fff;
   --surface-2: #f1efe9;
@@ -3328,40 +3328,6 @@
   --accent-soft: var(--blue-soft);
   --premium: var(--orange);
   --premium-soft: var(--orange-soft);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:root {
-    --lightningcss-light: ;
-    --lightningcss-dark: initial;
-  }
-
-  :root:root:not([data-theme="light"]) {
-    --lightningcss-light: ;
-    --lightningcss-dark: initial;
-    color-scheme: dark;
-    --bg: #14181c;
-    --surface: #1c2228;
-    --surface-2: #252c33;
-    --border: #333c45;
-    --text-primary: #f3f4f6;
-    --text-secondary: #aeb6be;
-    --text-tertiary: #7e878f;
-    --blue: #e7eaed;
-    --blue-ink: #14181c;
-    --blue-soft: #232a31;
-    --blue-deep: #e7eaed;
-    --orange: #ff6f3c;
-    --orange-ink: #1a0e07;
-    --orange-soft: #35211a;
-    --shadow: 0 1px 2px #00000073, 0 24px 50px -20px #000000bf;
-    --dot: #2a323a;
-    --accent: var(--blue);
-    --accent-ink: var(--blue-ink);
-    --accent-soft: var(--blue-soft);
-    --premium: var(--orange);
-    --premium-soft: var(--orange-soft);
-  }
 }
 
 :root:root[data-theme="dark"] {
@@ -6364,16 +6330,6 @@ footer.site-foot a:hover {
 
 .logo-on-dark {
   display: none !important;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .logo-on-light {
-    display: none !important;
-  }
-
-  :root:not([data-theme="light"]) .logo-on-dark {
-    display: block !important;
-  }
 }
 
 [data-theme="dark"] .logo-on-light {
