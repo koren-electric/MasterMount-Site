@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>החזרת ציוד חשמלי ואלקטרוני וסוללות - Master Mount</title>
+<link rel="stylesheet" href="./shared-legal-page.css" />
+<style>
+  .legal-page-main { max-width: 820px; margin: 0 auto; padding: 48px 24px 80px; }
+  .legal-page-main h1 { font-size: 1.9rem; margin-bottom: 8px; color: var(--text-primary); }
+  .legal-page-main h2 { font-size: 1.25rem; margin-top: 32px; margin-bottom: 10px; color: var(--text-primary); }
+  .legal-page-main p, .legal-page-main li { color: var(--text-secondary); line-height: 1.7; font-size: .95rem; }
+  .legal-page-main ul { padding-inline-start: 22px; margin: 10px 0; }
+  .legal-page-updated { color: var(--text-tertiary); font-size: .82rem; margin-bottom: 28px; }
+  .brandmark-text { font-weight: 800; font-size: 1.15rem; color: var(--text-primary); text-decoration: none; }
+  .site-foot .brandmark-text { color: inherit; }
+  body { background: var(--bg); }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+<header>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brandmark-text" href="./index.html">Master Mount</a>
+    <nav class="toplinks" aria-label="ניווט ראשי">
+      <a href="./installation.html">מחשבון מחיר התקנה</a>
+      <a href="./index.html#products">טלוויזיות למכירה</a>
+      <a href="./index.html#bundles">באנדלים</a>
+      <a href="./tv-technology-guide.html">מדריך טכנולוגיות</a>
+      <a href="./index.html#contact">יצירת קשר</a>
+    </nav>
+  </div>
+</div>
+</header>
+
+<main class="legal-page-main" id="main-content" tabindex="-1">
+  <h1>החזרת ציוד חשמלי ואלקטרוני וסוללות</h1>
+  <p class="legal-page-updated">עודכן לאחרונה: <span id="legalLastUpdated"></span></p>
+
+  <p>בהתאם לחוק לטיפול סביבתי בציוד חשמלי ואלקטרוני ובסוללות, התשע"ב-2012, אתם רשאים להחזיר
+  אלינו ציוד חשמלי, אלקטרוני וסוללות ישנים - ללא עלות וללא תלות ברכישת מוצר חדש.</p>
+
+  <h2>איך מחזירים</h2>
+  <ul>
+    <li>ניתן ליצור עמנו קשר (פרטים למטה) לתיאום החזרת הציוד הישן.</li>
+    <li>בעת התקנת טלוויזיה חדשה על ידי הצוות שלנו, ניתן לבקש מראש לקחת עמכם ציוד ישן להשלכה
+    מסודרת.</li>
+    <li>ההחזרה אינה כרוכה בתשלום, וזמינה גם ללא רכישת מוצר חדש במקביל.</li>
+  </ul>
+
+  <h2>היקף וסייגים</h2>
+  <p>ההחזרה חלה על ציוד חשמלי ואלקטרוני ביתי וסוללות, בכפוף לתנאים ולהיקפים הקבועים בחוק
+  ובתקנותיו. אנו רשאים להגביל את כמות הפריטים המוחזרים בפנייה בודדת בהתאם למגבלות סבירות.</p>
+
+  <h2>יצירת קשר</h2>
+  <p id="legalContactLine"></p>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="brandmark-text" href="./index.html">Master Mount</a>
+      <p>התקנת טלוויזיה ביתית - מוגדרת ומתומחרת מראש.</p>
+    </div>
+    <div class="foot-links">
+      <a href="./index.html#products">טלוויזיות למכירה</a>
+      <a href="./installation.html">מחשבון מחיר התקנה</a>
+      <a href="./index.html#bundles">באנדלים</a>
+      <a id="footCallLink" href="#">התקשרו</a>
+    </div>
+    <div class="foot-links">
+      <a href="./terms-of-use.html">תנאי שימוש</a>
+      <a href="./privacy-policy.html">מדיניות פרטיות</a>
+      <a href="./cancellation-policy.html">מדיניות ביטולים והחזרות</a>
+      <a href="./accessibility-statement.html">הצהרת נגישות</a>
+      <a href="./weee-returns.html">החזרת ציוד חשמלי ואלקטרוני וסוללות</a>
+      <a href="#" id="cookieSettingsLink">הגדרות עוגיות</a>
+    </div>
+  </div>
+</footer>
+<script src="./cookie-consent.js"></script>
+
+<script src="./business-config.js"></script>
+<script>
+  (function () {
+    var biz = window.BUSINESS_CONFIG || {};
+    document.getElementById("legalLastUpdated").textContent = biz.lastUpdated || "";
+    var callEl = document.getElementById("footCallLink");
+    if (callEl && biz.phone) {
+      callEl.href = "tel:" + (biz.formatPhoneForTel ? biz.formatPhoneForTel(biz.phone) : biz.phone);
+      callEl.textContent = biz.phone;
+    }
+    var contactEl = document.getElementById("legalContactLine");
+    if (contactEl) {
+      var parts = [];
+      if (biz.phone) parts.push(biz.phone);
+      if (biz.email) parts.push(biz.email);
+      contactEl.textContent = parts.length ? parts.join(" · ") : "";
+    }
+  })();
+</script>
+</body>
+</html>
