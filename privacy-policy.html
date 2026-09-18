@@ -47,6 +47,9 @@
     <li>פרטי יצירת קשר שאתם מוסרים ביוזמתכם: שם, מספר טלפון, כתובת מייל, וכתובת ההתקנה (במידה ונמסרה).</li>
     <li>פרטי הפנייה עצמה: תרחיש ההתקנה שבחרתם במחשבון, דגם הטלוויזיה, ותוכן ההודעה שכתבתם.</li>
     <li>נתוני שימוש טכניים בסיסיים באתר (למשל דרך עוגיות אנליטיות, ראו סעיף 6) - רק לאחר קבלת הסכמתכם.</li>
+    <li>תמונה של מיקום ההתקנה המיועד, במידה ובחרתם לצרף אחת דרך מחשבון ההתקנה (אופציונלי בלבד).
+    התמונה אינה נשמרת בשרת או במאגר של Master Mount - היא מוצגת רק כתצוגה מקדימה בדפדפן שלכם,
+    ומועברת אלינו רק אם תבחרו לצרף אותה ידנית להודעת הוואטסאפ שאתם שולחים.</li>
   </ul>
 
   <h2>2. מטרת השימוש במידע</h2>
@@ -58,8 +61,8 @@
   או לתאם את ההתקנה/המכירה.</p>
 
   <h2>4. מי אחראי על המידע (בעל השליטה במאגר)</h2>
-  <p>האחראי על המידע הנאסף הוא <span id="legalBizName2"></span>, מספר עוסק <span id="legalBizId"></span>.
-  לפניות בנושא פרטיות ניתן ליצור קשר בפרטים המפורטים בסעיף 8.</p>
+  <p id="legalControllerLine"></p>
+  <p>לפניות בנושא פרטיות ניתן ליצור קשר בפרטים המפורטים בסעיף 8.</p>
 
   <h2>5. זכות עיון ותיקון</h2>
   <p>על פי חוק הגנת הפרטיות, זכותכם לעיין במידע שנשמר עליכם אצלנו, ולבקש לתקן או למחוק מידע שאינו
@@ -114,10 +117,14 @@
   (function () {
     var biz = window.BUSINESS_CONFIG || {};
     document.getElementById("legalLastUpdated").textContent = biz.lastUpdated || "";
-    var name = biz.bizField ? biz.bizField("legalName", "שם העוסק") : "";
+    var hasLegalName = biz.legalName && String(biz.legalName).trim();
+    var name = hasLegalName ? biz.bizField("legalName", "שם העוסק") : "Master Mount";
     document.getElementById("legalBizName").textContent = name;
-    document.getElementById("legalBizName2").textContent = name;
-    document.getElementById("legalBizId").textContent = biz.bizField ? biz.bizField("businessId", "מספר עוסק") : "";
+    var businessIdVal = biz.businessId && String(biz.businessId).trim();
+    var controllerLine = "האחראי על המידע הנאסף הוא " + name +
+      (businessIdVal ? ", מספר עוסק " + businessIdVal : "") + ".";
+    var controllerEl = document.getElementById("legalControllerLine");
+    if (controllerEl) controllerEl.textContent = controllerLine;
     var callEl = document.getElementById("footCallLink");
     if (callEl && biz.phone) {
       callEl.href = "tel:" + (biz.formatPhoneForTel ? biz.formatPhoneForTel(biz.phone) : biz.phone);

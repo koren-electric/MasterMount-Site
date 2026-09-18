@@ -52,7 +52,7 @@
       '<a href="./privacy-policy.html" style="color:#fff;text-decoration:underline;">מדיניות פרטיות</a></span>' +
       '<span style="display:flex;gap:10px;flex:0 0 auto;">' +
       '<button type="button" id="mmCookieDecline" style="padding:9px 18px;border-radius:8px;border:1px solid #fff;background:transparent;color:#fff;font-size:.85rem;cursor:pointer;">דחייה</button>' +
-      '<button type="button" id="mmCookieAccept" style="padding:9px 18px;border-radius:8px;border:1px solid #fff;background:#fff;color:#20272e;font-size:.85rem;font-weight:700;cursor:pointer;">אישור</button>' +
+      '<button type="button" id="mmCookieAccept" style="padding:9px 18px;border-radius:8px;border:1px solid #fff;background:#fff;color:#20272e;font-size:.85rem;cursor:pointer;">אישור</button>' +
       "</span></div>"
     );
   }
