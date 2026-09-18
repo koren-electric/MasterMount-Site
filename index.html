@@ -3914,7 +3914,7 @@ img {
 }
 
 .hero-slide.moving {
-  background: #241a12;
+  background: #f1efe9;
 }
 
 .hero-slide.bundle {
@@ -3930,8 +3930,23 @@ img {
   display: none;
 }
 
+.process-banner.moving.hero-slide {
+  flex-direction: row-reverse;
+}
+
 .process-banner.moving .process-banner-strip-img {
-  object-position: center 40%;
+  position: static;
+  inset: auto;
+  flex: 0 0 44%;
+  width: 44%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: #f4f2ee;
+}
+
+.process-banner.moving.hero-slide .process-banner-text {
+  padding-inline-end: 26px;
 }
 
 .process-banner.bundle .process-banner-strip-img {
