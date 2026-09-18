@@ -82,6 +82,8 @@
 
   function vatNote(opts) {
     var includeShipping = opts && opts.includeShipping;
+    var includeInstallation = opts && opts.includeInstallation;
+    if (includeInstallation) return "המחיר כולל מע\"מ והתקנה";
     return includeShipping
       ? "המחיר כולל מע\"מ והובלה עד הבית"
       : "המחיר כולל מע\"מ";
