@@ -4409,7 +4409,7 @@ section.block {
 
 .flat-track {
   gap: 14px;
-  padding: 4px 2px 10px;
+  padding: 20px 2px 10px;
   display: flex;
 }
 
@@ -4516,13 +4516,13 @@ section.block {
    תמה) עם border+shadow כדי שיישאר קריא גם על רקע-כרטיס-בהיר (ר' דיון-CX). */
 .flat-card-brand-logo {
   position: absolute;
-  top: -9px;
+  top: -14px;
   inset-inline-start: 10px;
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 1px 4px #00000026;
-  padding: 3px 7px;
+  padding: 5px 10px;
   display: flex;
   align-items: center;
   z-index: 2;
@@ -4530,8 +4530,10 @@ section.block {
 
 .flat-card-brand-logo img {
   display: block;
-  height: 13px;
+  height: 22px;
   width: auto;
+  max-width: 92px;
+  object-fit: contain;
 }
 
 /* "לרכישה" - תג דקורטיבי-בלבד (לא כפתור נפרד - הכרטיס-כולו נשאר ה-target הלחיץ היחיד, כדי
@@ -4575,7 +4577,17 @@ section.block {
   }
 
   .flat-card-brand-logo img {
-    height: 11px;
+    height: 16px;
+    max-width: 72px;
+  }
+
+  /* כרטיס עם תג "מומלץ" (53px) בכרטיס-מובייל-של-150px: הלוגו-הרחב (SAMSUNG) היה נוגע בתג - צמצום נקודתי רק לכרטיסים האלה, בלי-לשנות-את-גודל-התג-עצמו (נגישות, .72rem). */
+  .flat-card:has(.best-seller-badge) .flat-card-brand-logo {
+    padding: 4px 6px;
+  }
+
+  .flat-card:has(.best-seller-badge) .flat-card-brand-logo img {
+    max-width: 56px;
   }
 
   .flat-arrow {
