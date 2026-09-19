@@ -7580,21 +7580,21 @@ function initMovingDay() {
   var MOVING_SIZE_OPTIONS = CATALOG.sizeTiers.map(function (t) { return { id: t.id, label: t.label }; });
   /* מחירי-מעבר-דירה עצמאיים לגמרי ממחירי-ההתקנה-הראשונית ב-CATALOG (אותם גדלים/מיקומים, סכומים
      שונים - שירות-העברה, לא התקנה-חדשה) */
-  var MOVING_SIZE_PRICES = { t1: 0, t2: 50, t3: 70, t4: 100, t5: 180 };
-  var MOVING_SCREEN_COUNT_PRICES = { 1: 140, 2: 270, 3: 400, 4: 500, 5: 575, max: 690 };
+  var MOVING_SIZE_PRICES = { t1: 50, t2: 70, t3: 100, t4: 140, t5: 220 };
+  var MOVING_SCREEN_COUNT_PRICES = { 1: 130, 2: 260, 3: 380, 4: 480, 5: 550, max: 650 };
   var MOVING_CURRENT_MOUNT_OPTIONS = [
-    { id: "wall", label: "תלוי על מתקן קיר", priceILS: 70 },
-    { id: "other", label: "מתקן אחר", priceILS: 70 },
-    { id: "legs", label: "מונח על רגליות הטלוויזיה", priceILS: 0 }
+    { id: "wall", label: "תלוי על מתקן קיר", priceILS: 90 },
+    { id: "other", label: "מתקן אחר", priceILS: 90 },
+    { id: "legs", label: "מונח על רגליות הטלוויזיה", priceILS: 40 }
   ];
-  var MOVING_SAME_MOUNT_PRICE = 70;
+  var MOVING_SAME_MOUNT_PRICE = 90;
   var MOVING_NEW_MOUNT_OPTIONS = [
     { id: "existing_mount", label: "יש מתקן חדש ברשותי שמתאים למסך", priceILS: 90 },
     { id: "wall", label: "התקנה על קיר", priceILS: 90 },
     { id: "table", label: "התקנה שולחנית סטנדרטית", priceILS: 40 },
-    { id: "cart", label: "התקנה על עגלה ניידת", priceILS: 120 },
-    { id: "floor_pole", label: "התקנה על עמוד רצפתי סטטי", priceILS: 140 },
-    { id: "ceiling", label: "התקנה מהתקרה (עד גובה 3 מטר)", priceILS: 180 },
+    { id: "cart", label: "התקנה על עגלה ניידת", priceILS: 130 },
+    { id: "floor_pole", label: "התקנה על עמוד רצפתי סטטי", priceILS: 130 },
+    { id: "ceiling", label: "התקנה מהתקרה (עד גובה 3 מטר)", priceILS: 260 },
     { id: "special", label: "התקנות מיוחדות", priceILS: null }
   ];
   var MOVING_STORAGE_OPTIONS = [
