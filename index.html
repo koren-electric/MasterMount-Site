@@ -4483,30 +4483,47 @@ section.block {
    כ-p.badges = ["officialImporter","mmWarranty"]. רכיב HTML/CSS (לא תמונה) כדי לרשת את גופני-האתר
    ולהישאר חד בכל גודל. גודל נשלט ע"י --mm-badge-size (כרטיס: 56px, שניים יחד: 48px, דף-מוצר: 92px). */
 .mm-badges {
-  --mm-badge-size: 56px;
+  /* כרטיס (20.9.2026, בקשת ברק): עיגול קטן, ישירות מתחת ללוגו-המותג וצמוד לקצה-הימני של הכרטיס
+     (הלוגו יושב ב-inset-inline-start = ימין; הסימן הוא ילד-ישיר של .flat-card ולא של התמונה, כדי לא להיחתך).
+     שניים יחד - בעמודה. --mm-k = יחס-גופן (בקטן צריך יחס גדול יותר כדי להישאר קריא). */
+  --mm-badge-size: 34px;
+  --mm-k: .27;
   position: absolute;
-  top: 6px;
-  left: 6px;
+  top: 24px;
+  right: 6px;
+  left: auto;
   display: flex;
-  gap: 4px;
+  flex-direction: column;
+  gap: 3px;
   z-index: 2;
   pointer-events: none;
   direction: ltr;
 }
 
 .mm-badges.mm-badges-two {
-  --mm-badge-size: 48px;
+  --mm-badge-size: 31px;
 }
 
+/* דף מוצר - נשאר גדול, בפינה שמאלית-עליונה של התמונה (לא שונה) */
 .mm-badges.mm-badges-lg {
   --mm-badge-size: 92px;
+  --mm-k: .215;
   top: 10px;
   left: 10px;
+  right: auto;
+  flex-direction: row;
   gap: 8px;
 }
 
 .mm-badges.mm-badges-lg.mm-badges-two {
   --mm-badge-size: 84px;
+}
+
+/* מובייל: לוגו-המותג קטן יותר (16px) - הסימן עולה בהתאם */
+@media (width <= 640px) {
+  .flat-card .mm-badges {
+    top: 18px;
+  }
 }
 
 .mm-badge {
@@ -4522,7 +4539,7 @@ section.block {
   justify-content: center;
   align-items: center;
   font-family: Noto Sans Hebrew, sans-serif;
-  font-size: calc(var(--mm-badge-size) * .215);
+  font-size: calc(var(--mm-badge-size) * var(--mm-k, .215));
   font-weight: 800;
   line-height: 1.02;
   display: flex;
@@ -4544,7 +4561,7 @@ section.block {
 .mm-badge-warranty .mm-badge-en {
   color: #ff9a6b;
   font-family: Big Shoulders Display, Noto Sans Hebrew, sans-serif;
-  font-size: calc(var(--mm-badge-size) * .2);
+  font-size: calc(var(--mm-badge-size) * var(--mm-k, .215) * .93);
   letter-spacing: .06em;
   margin-top: 1px;
   font-weight: 800;
@@ -4553,7 +4570,7 @@ section.block {
 }
 
 .mm-badge-warranty .mm-badge-he {
-  font-size: calc(var(--mm-badge-size) * .22);
+  font-size: calc(var(--mm-badge-size) * var(--mm-k, .215) * 1.02);
   margin-bottom: 1px;
 }
 
@@ -7964,6 +7981,7 @@ function initMasterMount() {
         title: "טלוויזיה חכמה 43\" SAMSUNG UHD סמסונג דגם UE43U8000H", priceILS: 1550, imageUrl: "assets/products/product_5.jpg", imageUrlWebp: "assets/products/product_5.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
         badges: ["officialImporter"],
+        bestSeller: true,
         keyFeatures: ["Crystal Processor 4K - שדרוג תמונה וסאונד ברזולוציית 4K אמיתית", "HDR10+ - ניגודיות ופירוט משופרים באזורים כהים ובהירים כאחד", "Gaming Hub - גישה למשחקי ענן ללא קונסולה, עם VRR ו-ALLM", "מערכת הפעלה Tizen עם Samsung TV Plus - בידור וסטרימינג ללא הגבלה"],
         fullSpecSections: [
           { heading: "איכות תמונה", items: ["Crystal Processor 4K - מעבד תמונה המשפר את איכות התמונה והצליל", "4K Upscaling - שדרוג תוכן לרזולוציית 4K, לתמונה ברורה ומפורטת יותר", "PurColour - צבעים טבעיים ועשירים ומדויקים יותר", "Colour Booster - משפר את הבעת הצבעים ומעצים סצנות לחוויה חיה ודינמית", "HDR עם HDR10+ - אופטימיזציה דינמית של סצנות, לעומק ופירוט באזורים כהים ובהירים", "Mega Contrast, UHD Dimming ו-Contrast Enhancer - שליטה מתקדמת בתאורה ובניגודיות", "Motion Xcelerator - שיפור חלקות בתנועה", "Filmmaker Mode - צפייה בתוכן כפי שיוצריו התכוונו"] },
@@ -8033,6 +8051,7 @@ function initMasterMount() {
         title: "טלוויזיה חכמה 43\" LG QNED AI MINI LED 4K אל ג'י דגם 43QNED70B6T", priceILS: 1750, imageUrl: "assets/products/product_10.jpg", imageUrlWebp: "assets/products/product_10.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
         badges: ["officialImporter"],
+        bestSeller: true,
         keyFeatures: ["Dynamic QNED Color - נפח צבע 100% ובינה מלאכותית לצבעים חיים ומדויקים", "QNED MiniLED עם עמעום מקומי מתקדם - ניגודיות גבוהה ופירוט חד גם בסצנות כהות", "מעבד Alpha 7 AI 4K דור 9 - תמונה וסאונד ברורים וחדים", "webOS Re:New Program - עד 4 שנות שדרוגים על פני תקופה של 5 שנים"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["Dynamic QNED Color - נפח צבע של 100% ובינה מלאכותית מהדור הבא, לצבעים חיים ומדויקים וחוויית צפייה סוחפת", "QNED MiniLED - הבהרת גוונים לבנים והכהיית גוונים שחורים לתמונה באיכות גבוהה, עם אזורי עמעום ייחודיים לניגודיות גבוהה במיוחד", "מעבד AI 4K אלפא 7 דור 9 - תמונה וסאונד ברורים וחדים", "webOS Re:New Program - 4 שנות שדרוגים על פני תקופה של 5 שנים", "דירוג אנרגטי F"] },
@@ -8050,6 +8069,7 @@ function initMasterMount() {
         title: "טלוויזיה חכמה 43\" TCL QLED טי.סי.אל דגם 43S5K", priceILS: 1320, imageUrl: "assets/products/product_11.jpg", imageUrlWebp: "assets/products/product_11.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
         badges: ["officialImporter"],
+        bestSeller: true,
         keyFeatures: ["טכנולוגיית QLED עם נקודות קוונטיות - צבעים חזקים ומדויקים כמו בחיים האמיתיים", "מסך Full HD - תמונה מפורטת פי 2 ממסך HD רגיל", "תמיכה ב-HDR10 עם ניתוח תמונה חכם והתאמה דינמית לשיפור הניגודיות", "מערכת הפעלה Google TV"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["נקודות קוונטיות צבעוניות - שילוב חומרים קוונטיים בקנה-מידה ננו עם חומרים אורגניים בשכבות מרובות, לצבעים יוצאי דופן ותכונות אופטיות חסרות תקדים", "בהירות מוגברת המאירה פרטים עדינים, לחוויית צפייה סוחפת ומציאותית", "חלוצה בטכנולוגיית נקודות קוונטיות - TCL עם 2,485 פטנטים בתחום ה-QLED וצוות של כ-100 מומחים במעבדת Quantum Dot בינלאומית", "מסך Full HD - תמונה מציאותית ומפורטת פי 200% ממסך HD רגיל, חושפת פרטים נסתרים", "תמיכה בפענוח תכנים בפורמט HDR10, עם ניתוח חכם של תמונות והתאמה דינמית של אות התמונה לשיפור הניגודיות"] },
@@ -9481,8 +9501,11 @@ function initMasterMount() {
     return p.imageUrl ? catalogImgHtml(p.imageUrl, p.imageUrlWebp, "") :
       '<svg class="icon-fallback" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M9 20h6M12 17v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
   }
-  /* ================= BEST SELLERS (דינמי - עריכת הרשימה כאן בלבד משנה מי מסומן) ================= */
-  var BEST_SELLER_PRODUCT_IDS = ["product_5", "product_10", "product_11"];
+  /* ================= BEST SELLERS ================= */
+  /* (20.9.2026) הבחירה עברה ללוח-הניהול: תיבת "מומלץ" על המוצר -> bestSeller: true בקטלוג (סנכרון).
+     הרשימה הקבועה (product_5/10/11) רוקנה - כדי שביטול הסימון בדשבורד באמת יסיר את "מומלץ" מהאתר.
+     שלושת המוצרים הקודמים סומנו ב"מומלץ" בדשבורד. אפשר להשאיר מזהים כאן רק כחריג-קוד מכוון. */
+  var BEST_SELLER_PRODUCT_IDS = [];
   function isBestSeller(p) {
     if (p && p.bestSeller === true) return true;               /* אפשר גם לסמן ישירות על המוצר */
     return BEST_SELLER_PRODUCT_IDS.indexOf(p && p.id) >= 0;
@@ -9539,7 +9562,8 @@ function initMasterMount() {
     return '<div class="flat-card" role="button" tabindex="0" aria-label="' + __productCardLabel + '" onclick="this.focus();window.__openProductPage(\'' + p.id + '\')" onkeydown="if(event.key===&quot;Enter&quot;||event.key===&quot; &quot;){event.preventDefault();window.__openProductPage(\'' + p.id + '\')}">' +
       (isBestSeller(p) ? '<span class="best-seller-badge">מומלץ</span>' : '') +
       brandLogoChipHtml(p.brand) +
-      '<div class="flat-card-thumb">' + productThumbHtml(p) + productBadgesHtml(p) + '</div>' +
+      productBadgesHtml(p) +
+      '<div class="flat-card-thumb">' + productThumbHtml(p) + '</div>' +
       '<div class="flat-card-title">' + (p.title || (p.brand + ' ' + p.model)) + '</div>' +
       '<div class="flat-card-sub">' + productSub + '</div>' +
       '<div class="flat-card-price">' + fmt(p.priceILS) + '</div>' +
