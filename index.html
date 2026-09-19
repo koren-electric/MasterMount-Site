@@ -4627,15 +4627,32 @@ section.block {
   }
 }
 
-.mm-badges.mm-badges-modal {
-  --mm-badge-size: 96px;
-  top: 12px;
-  right: 14px;
+/* חלון פרטי באנדל (20.9.2026, בקשת ברק: "שיראה כמו בטלוויזיות"): אותו מבנה כמו דף המוצר. הסימנים
+   (יבואן רשמי אם סומן, ואחריות Master Mount תמיד) יושבים על הרקע הלבן מימין לתיבת-התמונה, לא על התמונה -
+   אותה נוסחת-מיקום כמו .mm-badges-page (הסימן הוא ילד-ישיר של .bundle-modal, שהיא position:relative). */
+.mm-badges.mm-badges-bundle-page {
+  --mm-badge-size: 92px;
+  --mm-k: .215;
+  top: 24px;
+  right: calc((100% - min(50%, 380px)) / 4 - var(--mm-badge-size) / 2);
   left: auto;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.bundle-modal-media {
-  position: relative;
+.mm-badges.mm-badges-bundle-page.mm-badges-two {
+  --mm-badge-size: 84px;
+}
+
+@media (width <= 640px) {
+  .mm-badges.mm-badges-bundle-page {
+    --mm-badge-size: 64px;
+  }
+
+  .mm-badges.mm-badges-bundle-page.mm-badges-two {
+    --mm-badge-size: 52px;
+    gap: 4px;
+  }
 }
 
 .flat-card-title {
@@ -5517,32 +5534,32 @@ section.block {
   backdrop-filter: blur(3px);
   z-index: 200;
   background: #0000009e;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  display: flex;
+  padding: 26px 16px 60px;
+  display: block;
   position: fixed;
   inset: 0;
+  overflow-y: auto;
 }
 
 .bundle-modal-overlay[hidden] {
   display: none;
 }
 
+/* אותו מבנה כמו .product-page (רוחב 760px, הגלילה בשכבה החיצונית) - כדי שחלון הבאנדל ייראה כמו דף הטלוויזיה */
 .bundle-modal {
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  border-radius: 20px;
+  border-radius: 22px;
   width: 100%;
-  max-width: 560px;
-  max-height: 88vh;
+  max-width: 760px;
+  margin: 0 auto;
   position: relative;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .bundle-modal-close {
-  top: 14px;
+  top: 16px;
   border: 1px solid var(--border);
   background: var(--surface-2);
   /* הנגשה: אזור-מגע היה 34x34px, הוגדל ל-44x44px (המינימום הנדרש) */
@@ -5556,7 +5573,7 @@ section.block {
   font-size: 1rem;
   display: flex;
   position: absolute;
-  inset-inline-end: 14px;
+  inset-inline-end: 16px;
 }
 
 .bundle-modal-close:hover {
@@ -5568,15 +5585,19 @@ section.block {
   /* יחס 3:2 (במקום 16:10 הישן) - קרוב-משמעותית ליחס-הרוחב/גובה האמיתי של תמונות-הטלוויזיה
      (נמדד בפועל: ~1.49-1.65) - עם object-fit:contain (במקום cover) לעולם לא-חותך תמונת-מוצר
      אמיתית, רק ממזער-letterbox (ר' דיון-פרופורציות-תמונה, 18.9.2026). */
+  /* (20.9.2026) כמו .product-page-media: תיבה ממורכזת ברוחב 50% (עד 380px) עם שוליים לבנים משני הצדדים */
   aspect-ratio: 3 / 2;
   background: var(--surface-2);
-  border-bottom: 1px solid var(--border);
-  border-radius: 20px 20px 0 0;
+  border: 1px solid var(--border);
+  border-radius: 14px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  width: 100%;
+  width: 50%;
+  max-width: 380px;
+  margin: 24px auto 0;
+  position: relative;
   display: flex;
   overflow: hidden;
 }
@@ -5598,26 +5619,27 @@ section.block {
 }
 
 .bundle-modal-body {
-  padding: 24px 26px 28px;
+  padding: 26px 30px 34px;
 }
 
 .bundle-modal-brand {
   letter-spacing: .08em;
   color: var(--text-tertiary);
   text-transform: uppercase;
-  margin-bottom: 4px;
-  font-size: .78rem;
+  margin-bottom: 6px;
+  font-size: .8rem;
 }
 
 .bundle-modal-title {
-  margin-bottom: 6px;
-  font-size: 1.4rem;
+  margin-bottom: 10px;
+  font-size: 1.55rem;
+  line-height: 1.35;
 }
 
 .bundle-modal-screentype {
   color: var(--text-secondary);
   margin-bottom: 18px;
-  font-size: .88rem;
+  font-size: .92rem;
 }
 
 .bundle-modal-description {
@@ -9492,6 +9514,7 @@ function initMasterMount() {
     var __bundleCardLabel = ("פתיחת פרטי הבאנדל: " + b.brand + " " + b.model).replace(/"/g, "&quot;");
     return '<div class="flat-card" role="button" tabindex="0" aria-label="' + __bundleCardLabel + '" onclick="this.focus();window.__openBundleModal(\'' + b.id + '\')" onkeydown="if(event.key===&quot;Enter&quot;||event.key===&quot; &quot;){event.preventDefault();window.__openBundleModal(\'' + b.id + '\')}">' +
       brandLogoChipHtml(b.brand) +
+      bundleCardImporterHtml(b) +
       warrantyBadgeHtml("mm-badges-bundle") +
       '<div class="flat-card-thumb">' + bundleThumbHtml(b) + '</div>' +
       '<div class="flat-card-title">' + bundleTitle + '</div>' +
@@ -9521,7 +9544,11 @@ function initMasterMount() {
     document.getElementById("bundleModalMedia").innerHTML = b.imageUrl
       ? catalogImgHtml(b.imageUrl, b.imageUrlWebp, String(b.brand + " " + (b.name || b.model)).replace(/"/g, "&quot;"))
       : bundleThumbHtml(b) + '<span class="media-hint">תמונות מוצר אמיתיות יתווספו בקרוב</span>';
-    document.getElementById("bundleModalMedia").insertAdjacentHTML("beforeend", warrantyBadgeHtml("mm-badges-modal"));
+    /* הסימנים הם ילד-ישיר של .bundle-modal (לא של תיבת-התמונה, שהיא overflow:hidden) - כמו בדף המוצר */
+    var __bundleModalBox = document.getElementById("bundleModalMedia").parentNode;
+    var __oldBundleBadges = __bundleModalBox.querySelector(".mm-badges-bundle-page");
+    if (__oldBundleBadges) __oldBundleBadges.remove();
+    document.getElementById("bundleModalMedia").insertAdjacentHTML("afterend", bundleModalBadgesHtml(b));
     document.getElementById("bundleModalBrand").textContent = b.brand;
     document.getElementById("bundleModalTitle").textContent = b.name || b.model;
     document.getElementById("bundleModalScreenType").textContent = (b.screenType ? b.screenType + " · " : "") + b.sizeInches + '"';
@@ -9573,7 +9600,25 @@ function initMasterMount() {
   /* חשוב: warrantyBadgeHtml נקראת כבר בבניית קרוסלת-הבאנדלים (לפני שורת ה-var של MM_BADGE_DEFS),
      ולכן היא לא נשענת עליו - התוכן כתוב כאן ישירות (הפונקציה עצמה עוברת hoisting, ה-var לא). */
   function warrantyBadgeHtml(placeCls) {
-    return '<div class="mm-badges ' + placeCls + '"><span class="mm-badge mm-badge-warranty" role="img" aria-label="אחריות Master Mount על ההתקנה"><span aria-hidden="true" style="display:contents"><span class="mm-w-he">אחריות</span><span class="mm-w-sticker"><i></i></span><span class="mm-w-sub">על ההתקנה</span></span></span></div>';
+    return '<div class="mm-badges ' + placeCls + '">' + warrantySealSpan() + '</div>';
+  }
+  function warrantySealSpan() {
+    return '<span class="mm-badge mm-badge-warranty" role="img" aria-label="אחריות Master Mount על ההתקנה"><span aria-hidden="true" style="display:contents"><span class="mm-w-he">אחריות</span><span class="mm-w-sticker"><i></i></span><span class="mm-w-sub">על ההתקנה</span></span></span>';
+  }
+  /* "יבואן רשמי" על באנדל (אם סומן בלוח הניהול: b.badges = ["officialImporter"]). גם כאן - בלי MM_BADGE_DEFS. */
+  function bundleHasImporter(b) {
+    return !!(b && b.badges && b.badges.indexOf("officialImporter") >= 0);
+  }
+  function importerSealSpan() {
+    return '<span class="mm-badge mm-badge-importer" role="img" aria-label="יבואן רשמי"><span aria-hidden="true" style="display:contents"><span>יבואן</span><span>רשמי</span></span></span>';
+  }
+  function bundleCardImporterHtml(b) {
+    return bundleHasImporter(b) ? '<div class="mm-badges">' + importerSealSpan() + '</div>' : "";
+  }
+  /* חלון פרטי באנדל: הסימנים על הרקע הלבן מימין לתמונה (כמו דף המוצר של טלוויזיה) */
+  function bundleModalBadgesHtml(b) {
+    var two = bundleHasImporter(b);
+    return '<div class="mm-badges mm-badges-bundle-page' + (two ? ' mm-badges-two' : '') + '">' + (two ? importerSealSpan() : '') + warrantySealSpan() + '</div>';
   }
   function productBadgesHtml(p, lg) {
     var list = ((p && p.badges) || []).filter(function (k) { return MM_BADGE_DEFS[k] && k !== "mmWarranty"; });
