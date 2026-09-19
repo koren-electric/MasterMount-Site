@@ -4257,6 +4257,89 @@ section.block {
   padding: 18px;
 }
 
+/* סימן "אחריות Master Mount על ההתקנה" על מתקני-התליה (עיצוב סופי, אושר 19.9.2026).
+   עיגול פחם, "אחריות" למעלה, מדבקה לבנה עם המילה MASTER MOUNT שנחתכה מקובץ הלוגו
+   (assets/site/mm-wordmark.png, רקע שקוף, יחס 520x47) ומתחתיה "על ההתקנה" בכתום-בהיר. המדבקה רחבה
+   מהעיגול (118%) ויוצאת מגבולותיו בכוונה, מוטה ב-4 מעלות. מופיע על כל מתקני-התליה ועל הבאנדלים,
+   לעולם לא על טלוויזיות למכירה. כל המידות יחסיות ל---mm-badge-size. קריא מ-72px ומעלה.
+   בכרטיס - "חותם" בפינה השמאלית-עליונה (ריפוד-המסלול כאן רק 6px, לכן top:-4px ולא יותר). */
+.mm-badges {
+  --mm-badge-size: 78px;
+  position: absolute;
+  top: -4px;
+  left: 6px;
+  z-index: 2;
+  pointer-events: none;
+  direction: ltr;
+  display: flex;
+}
+
+.mm-badge {
+  width: var(--mm-badge-size);
+  height: var(--mm-badge-size);
+  color: #fff;
+  text-align: center;
+  direction: rtl;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  flex: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Noto Sans Hebrew, sans-serif;
+  font-weight: 800;
+  line-height: 1.02;
+  display: flex;
+  box-shadow: 0 2px 7px #00000038, inset 0 0 0 2px #ffffff33;
+}
+
+.mm-badge span {
+  display: block;
+}
+
+.mm-badge-warranty {
+  background: radial-gradient(circle at 32% 24%, #2f3944, #171d23 80%);
+}
+
+.mm-badge-warranty .mm-w-he {
+  font-size: calc(var(--mm-badge-size) * .155);
+  line-height: 1;
+}
+
+.mm-badge-warranty .mm-w-sticker {
+  width: calc(var(--mm-badge-size) * 1.18);
+  margin-block: calc(var(--mm-badge-size) * .05);
+  padding: calc(var(--mm-badge-size) * .035) calc(var(--mm-badge-size) * .05);
+  background: #fff;
+  border-radius: calc(var(--mm-badge-size) * .035);
+  box-shadow: 0 3px 6px #00000066, 0 0 0 1px #0000001f;
+  transform: rotate(-4deg);
+  position: relative;
+  z-index: 2;
+}
+
+.mm-badge-warranty .mm-w-sticker i {
+  display: block;
+  width: 100%;
+  aspect-ratio: 520 / 47;
+  background: url("assets/site/mm-wordmark.png") center / 100% 100% no-repeat;
+}
+
+.mm-badge-warranty .mm-w-sub {
+  font-size: calc(var(--mm-badge-size) * .102);
+  line-height: 1;
+  color: #ff9a6b;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+
+@media (width <= 640px) {
+  .mm-badges {
+    --mm-badge-size: 66px;
+    top: -4px;
+  }
+}
+
 @media (width <= 640px) {
   .flat-card {
     width: 160px;
@@ -8063,6 +8146,7 @@ function initInstallation() {
                 '<ul class="mount-features" id="' + toggleId + '" hidden>' + restFeatures.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>'
               : '';
             return '<div class="flat-card mount-select-card">' +
+              '<div class="mm-badges"><span class="mm-badge mm-badge-warranty" role="img" aria-label="אחריות Master Mount על ההתקנה"><span aria-hidden="true" style="display:contents"><span class="mm-w-he">אחריות</span><span class="mm-w-sticker"><i></i></span><span class="mm-w-sub">על ההתקנה</span></span></span></div>' +
               '<div class="mount-thumb-wrap">' + thumbHtml + '</div>' +
               '<div class="wc-title">' + it.title + '</div>' +
               fitHtml +

@@ -4568,24 +4568,74 @@ section.block {
   background: radial-gradient(circle at 32% 24%, #e8571d, #c9450f 78%);
 }
 
+/* "אחריות Master Mount על ההתקנה" (עיצוב סופי, אושר 19.9.2026): עיגול פחם, "אחריות" למעלה,
+   מדבקה לבנה עם המילה MASTER MOUNT שנחתכה מקובץ הלוגו (assets/site/mm-wordmark.png, רקע שקוף, יחס 520x47)
+   ומתחתיה "על ההתקנה" בכתום-בהיר. המדבקה רחבה מהעיגול (118%) ויוצאת מגבולותיו בכוונה, מוטה ב-4 מעלות.
+   מופיע אך ורק על באנדלים ועל מתקני-תליה - לעולם לא על טלוויזיות למכירה (productBadgesHtml מסנן אותו).
+   כל המידות יחסיות ל---mm-badge-size. קריא מ-72px ומעלה. */
 .mm-badge-warranty {
   background: radial-gradient(circle at 32% 24%, #2f3944, #171d23 80%);
+  overflow: visible;
 }
 
-.mm-badge-warranty .mm-badge-en {
+.mm-badge-warranty .mm-w-he {
+  font-size: calc(var(--mm-badge-size) * .155);
+  line-height: 1;
+}
+
+.mm-badge-warranty .mm-w-sticker {
+  width: calc(var(--mm-badge-size) * 1.18);
+  margin-block: calc(var(--mm-badge-size) * .05);
+  padding: calc(var(--mm-badge-size) * .035) calc(var(--mm-badge-size) * .05);
+  background: #fff;
+  border-radius: calc(var(--mm-badge-size) * .035);
+  box-shadow: 0 3px 6px #00000066, 0 0 0 1px #0000001f;
+  transform: rotate(-4deg);
+  position: relative;
+  z-index: 2;
+}
+
+.mm-badge-warranty .mm-w-sticker i {
+  display: block;
+  width: 100%;
+  aspect-ratio: 520 / 47;
+  background: url("assets/site/mm-wordmark.png") center / 100% 100% no-repeat;
+}
+
+.mm-badge-warranty .mm-w-sub {
+  font-size: calc(var(--mm-badge-size) * .102);
+  line-height: 1;
   color: #ff9a6b;
-  font-family: Big Shoulders Display, Noto Sans Hebrew, sans-serif;
-  font-size: calc(var(--mm-badge-size) * var(--mm-k, .215) * .93);
-  letter-spacing: .06em;
-  margin-top: 1px;
-  font-weight: 800;
-  line-height: .98;
-  direction: ltr;
+  font-weight: 700;
+  letter-spacing: .01em;
 }
 
-.mm-badge-warranty .mm-badge-he {
-  font-size: calc(var(--mm-badge-size) * var(--mm-k, .215) * 1.02);
-  margin-bottom: 1px;
+/* מיקומי הסימן על באנדלים: כרטיס - "חותם" בפינה השמאלית-עליונה של הכרטיס, בולט מעט כלפי מעלה
+   לתוך ריפוד-המסלול (20px), לא לצדדים (שם הקרוסלה חותכת). חלון-הפרטים - בפינה הימנית-עליונה של
+   התמונה (כפתור-הסגירה יושב בשמאל). */
+.mm-badges.mm-badges-bundle {
+  --mm-badge-size: 72px;
+  top: -14px;
+  right: auto;
+  left: 6px;
+}
+
+@media (width <= 640px) {
+  .mm-badges.mm-badges-bundle {
+    --mm-badge-size: 62px;
+    top: -12px;
+  }
+}
+
+.mm-badges.mm-badges-modal {
+  --mm-badge-size: 96px;
+  top: 12px;
+  right: 14px;
+  left: auto;
+}
+
+.bundle-modal-media {
+  position: relative;
 }
 
 .flat-card-title {
@@ -9428,6 +9478,7 @@ function initMasterMount() {
     var __bundleCardLabel = ("פתיחת פרטי הבאנדל: " + b.brand + " " + b.model).replace(/"/g, "&quot;");
     return '<div class="flat-card" role="button" tabindex="0" aria-label="' + __bundleCardLabel + '" onclick="this.focus();window.__openBundleModal(\'' + b.id + '\')" onkeydown="if(event.key===&quot;Enter&quot;||event.key===&quot; &quot;){event.preventDefault();window.__openBundleModal(\'' + b.id + '\')}">' +
       brandLogoChipHtml(b.brand) +
+      warrantyBadgeHtml("mm-badges-bundle") +
       '<div class="flat-card-thumb">' + bundleThumbHtml(b) + '</div>' +
       '<div class="flat-card-title">' + bundleTitle + '</div>' +
       bundleSub +
@@ -9456,6 +9507,7 @@ function initMasterMount() {
     document.getElementById("bundleModalMedia").innerHTML = b.imageUrl
       ? catalogImgHtml(b.imageUrl, b.imageUrlWebp, String(b.brand + " " + (b.name || b.model)).replace(/"/g, "&quot;"))
       : bundleThumbHtml(b) + '<span class="media-hint">תמונות מוצר אמיתיות יתווספו בקרוב</span>';
+    document.getElementById("bundleModalMedia").insertAdjacentHTML("beforeend", warrantyBadgeHtml("mm-badges-modal"));
     document.getElementById("bundleModalBrand").textContent = b.brand;
     document.getElementById("bundleModalTitle").textContent = b.name || b.model;
     document.getElementById("bundleModalScreenType").textContent = (b.screenType ? b.screenType + " · " : "") + b.sizeInches + '"';
@@ -9500,10 +9552,17 @@ function initMasterMount() {
      מהאיור, aria-hidden), כדי שלא יוקרא-פעמיים/יקטע-לשני-חלקים. lg=true לדף-המוצר (גדול). */
   var MM_BADGE_DEFS = {
     officialImporter: { cls: "mm-badge-importer", label: "יבואן רשמי", inner: '<span>יבואן</span><span>רשמי</span>' },
-    mmWarranty: { cls: "mm-badge-warranty", label: "אחריות Master Mount", inner: '<span class="mm-badge-he">אחריות</span><span class="mm-badge-en">MASTER</span><span class="mm-badge-en">MOUNT</span>' }
+    mmWarranty: { cls: "mm-badge-warranty", label: "אחריות Master Mount על ההתקנה", inner: '<span class="mm-w-he">אחריות</span><span class="mm-w-sticker"><i></i></span><span class="mm-w-sub">על ההתקנה</span>' }
   };
+  /* סימן האחריות שייך אך ורק לבאנדלים ולמתקני-תליה. productBadgesHtml משמש רק לטלוויזיות למכירה,
+     ולכן mmWarranty מסונן ממנו תמיד, גם אם הוא הגיע בטעות בנתוני-המוצר. */
+  /* חשוב: warrantyBadgeHtml נקראת כבר בבניית קרוסלת-הבאנדלים (לפני שורת ה-var של MM_BADGE_DEFS),
+     ולכן היא לא נשענת עליו - התוכן כתוב כאן ישירות (הפונקציה עצמה עוברת hoisting, ה-var לא). */
+  function warrantyBadgeHtml(placeCls) {
+    return '<div class="mm-badges ' + placeCls + '"><span class="mm-badge mm-badge-warranty" role="img" aria-label="אחריות Master Mount על ההתקנה"><span aria-hidden="true" style="display:contents"><span class="mm-w-he">אחריות</span><span class="mm-w-sticker"><i></i></span><span class="mm-w-sub">על ההתקנה</span></span></span></div>';
+  }
   function productBadgesHtml(p, lg) {
-    var list = ((p && p.badges) || []).filter(function (k) { return MM_BADGE_DEFS[k]; });
+    var list = ((p && p.badges) || []).filter(function (k) { return MM_BADGE_DEFS[k] && k !== "mmWarranty"; });
     if (!list.length) return "";
     return '<div class="mm-badges' + (lg ? " mm-badges-page" : "") +(list.length > 1 ? " mm-badges-two" : "") + '">' +
       list.map(function (k) {
