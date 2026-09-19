@@ -3378,6 +3378,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 76px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3440,6 +3441,20 @@ img {
   background: var(--bg);
   position: sticky;
   top: 0;
+}
+
+/* The sticky element must be the header itself: .topbar sits inside a <header> of equal height,
+   so sticky on .topbar alone had no room to travel and the bar scrolled away. */
+header {
+  z-index: 30;
+  position: sticky;
+  top: 0;
+}
+
+/* Here <header class=topbar> sits in an untyled wrapper div that ends ~1400px down the page, which capped
+   how far the sticky bar could travel. Removing the wrapper's box lets the bar stick for the whole page. */
+div:has(> header.topbar) {
+  display: contents;
 }
 
 @supports (color: color-mix(in lab, red, red)) {

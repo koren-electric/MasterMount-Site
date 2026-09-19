@@ -3392,6 +3392,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 76px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3452,6 +3453,14 @@ img {
 .topbar {
   z-index: 30;
   background: var(--bg);
+  position: sticky;
+  top: 0;
+}
+
+/* The sticky element must be the header itself: .topbar sits inside a <header> of equal height,
+   so sticky on .topbar alone had no room to travel and the bar scrolled away. */
+header {
+  z-index: 30;
   position: sticky;
   top: 0;
 }
