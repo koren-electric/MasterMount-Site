@@ -4504,19 +4504,33 @@ section.block {
   --mm-badge-size: 31px;
 }
 
-/* דף מוצר - נשאר גדול, בפינה שמאלית-עליונה של התמונה (לא שונה) */
-.mm-badges.mm-badges-lg {
+/* דף מוצר (20.9.2026, בקשת ברק): הסימן לא על התמונה עצמה אלא על הרקע הלבן שמימין לתיבת-התמונה
+   (התמונה ממורכזת ברוחב min(50%, 380px), נשארים משני הצדדים שוליים לבנים). הוא ילד-ישיר של
+   .product-page (לא של תיבת-התמונה, שהיא overflow:hidden), ממורכז אופקית בשוליים הימניים,
+   מיושר לראש התיבה (24px = margin-top שלה). שניים יחד - בעמודה. */
+.mm-badges.mm-badges-page {
   --mm-badge-size: 92px;
   --mm-k: .215;
-  top: 10px;
-  left: 10px;
-  right: auto;
-  flex-direction: row;
-  gap: 8px;
+  top: 24px;
+  right: calc((100% - min(50%, 380px)) / 4 - var(--mm-badge-size) / 2);
+  left: auto;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.mm-badges.mm-badges-lg.mm-badges-two {
+.mm-badges.mm-badges-page.mm-badges-two {
   --mm-badge-size: 84px;
+}
+
+@media (width <= 640px) {
+  .mm-badges.mm-badges-page {
+    --mm-badge-size: 64px;
+  }
+
+  .mm-badges.mm-badges-page.mm-badges-two {
+    --mm-badge-size: 52px;
+    gap: 4px;
+  }
 }
 
 /* מובייל: לוגו-המותג קטן יותר (16px) - הסימן עולה בהתאם */
@@ -9491,7 +9505,7 @@ function initMasterMount() {
   function productBadgesHtml(p, lg) {
     var list = ((p && p.badges) || []).filter(function (k) { return MM_BADGE_DEFS[k]; });
     if (!list.length) return "";
-    return '<div class="mm-badges' + (lg ? " mm-badges-lg" : "") + (list.length > 1 ? " mm-badges-two" : "") + '">' +
+    return '<div class="mm-badges' + (lg ? " mm-badges-page" : "") +(list.length > 1 ? " mm-badges-two" : "") + '">' +
       list.map(function (k) {
         var d = MM_BADGE_DEFS[k];
         return '<span class="mm-badge ' + d.cls + '" role="img" aria-label="' + d.label + '"><span aria-hidden="true" style="display:contents">' + d.inner + '</span></span>';
@@ -9830,9 +9844,15 @@ function initMasterMount() {
 
     /* הנגשה (WCAG 1.1.1): alt תיאורי (לא ריק) לתמונת-המוצר הראשית בדף-הפריט - נשאב מ-p.title
        (כבר כולל מותג/דגם/גודל, אותו טקסט שכבר מוצג ב-productPageTitle) - לא-מומצא. */
-    document.getElementById("productPageMedia").innerHTML = (p.imageUrl
+    var __ppMedia = document.getElementById("productPageMedia");
+    __ppMedia.innerHTML = (p.imageUrl
       ? catalogImgHtml(p.imageUrl, p.imageUrlWebp, String(p.title || (p.brand + " " + p.model)).replace(/"/g, "&quot;"))
-      : productThumbHtml(p)) + productBadgesHtml(p, true);
+      : productThumbHtml(p));
+    /* סימני-מוצר: אחים של תיבת-התמונה (על הרקע הלבן של הדף), לא בתוכה - מסירים את הקודם בכל פתיחה */
+    var __ppOldBadges = __ppMedia.parentNode.querySelector(".mm-badges-page");
+    if (__ppOldBadges) __ppOldBadges.remove();
+    var __ppBadges = productBadgesHtml(p, true);
+    if (__ppBadges) __ppMedia.insertAdjacentHTML("afterend", __ppBadges);
     document.getElementById("productPageBrand").textContent = p.brand;
     document.getElementById("productPageTitle").textContent = p.title;
     document.getElementById("productPageMeta").textContent = (p.screenType ? p.screenType + " · " : "") + (p.sizeInches ? p.sizeInches + '"' : "");
