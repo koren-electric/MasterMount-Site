@@ -4007,6 +4007,20 @@ section.block {
   overflow: hidden;
 }
 
+/* Same proportions as the installation-order page: the flow box sits in its own full-width section (max 1600px). */
+#moving {
+  padding-bottom: 20px;
+}
+
+#movingFlow {
+  padding-top: 14px;
+}
+
+#movingFlow .wrap {
+  max-width: 1600px;
+  padding-inline: 0;
+}
+
 #configurator {
   background-image: url("assets/site/configurator-bg.jpg");
   background-position: center;
@@ -7398,6 +7412,11 @@ fieldset.step-fieldset legend {
         <ul id="movingExclusionsList" style="margin:0;padding-inline-start:20px;font-size:.83rem;color:#55606b;line-height:1.6;"></ul>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="block" id="movingFlow">
+  <div class="wrap">
     <div class="config-shell">
       <div class="config-top">
         <span class="step-label" id="movingStepLabel">שלב 1</span>
