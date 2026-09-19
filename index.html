@@ -4463,6 +4463,7 @@ section.block {
   align-items: center;
   width: 100%;
   display: flex;
+  position: relative;
   overflow: hidden;
 }
 
@@ -4475,6 +4476,85 @@ section.block {
 .flat-card-thumb .icon-fallback {
   opacity: .32;
   width: 36%;
+}
+
+/* סימני-מוצר עגולים (19.9.2026, בקשת ברק) - "יבואן רשמי" (כתום) ו"אחריות Master Mount" (פחם+כתום).
+   מופעלים פר-מוצר מלוח-הניהול (שדות badgeOfficialImporter / badgeMmWarranty), מגיעים לאתר בסנכרון
+   כ-p.badges = ["officialImporter","mmWarranty"]. רכיב HTML/CSS (לא תמונה) כדי לרשת את גופני-האתר
+   ולהישאר חד בכל גודל. גודל נשלט ע"י --mm-badge-size (כרטיס: 56px, שניים יחד: 48px, דף-מוצר: 92px). */
+.mm-badges {
+  --mm-badge-size: 56px;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  display: flex;
+  gap: 4px;
+  z-index: 2;
+  pointer-events: none;
+  direction: ltr;
+}
+
+.mm-badges.mm-badges-two {
+  --mm-badge-size: 48px;
+}
+
+.mm-badges.mm-badges-lg {
+  --mm-badge-size: 92px;
+  top: 10px;
+  left: 10px;
+  gap: 8px;
+}
+
+.mm-badges.mm-badges-lg.mm-badges-two {
+  --mm-badge-size: 84px;
+}
+
+.mm-badge {
+  width: var(--mm-badge-size);
+  height: var(--mm-badge-size);
+  color: #fff;
+  text-align: center;
+  direction: rtl;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  flex: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Noto Sans Hebrew, sans-serif;
+  font-size: calc(var(--mm-badge-size) * .215);
+  font-weight: 800;
+  line-height: 1.02;
+  display: flex;
+  box-shadow: 0 2px 7px #00000038, inset 0 0 0 2px #ffffff33;
+}
+
+.mm-badge span {
+  display: block;
+}
+
+.mm-badge-importer {
+  background: radial-gradient(circle at 32% 24%, #e8571d, #c9450f 78%);
+}
+
+.mm-badge-warranty {
+  background: radial-gradient(circle at 32% 24%, #2f3944, #171d23 80%);
+}
+
+.mm-badge-warranty .mm-badge-en {
+  color: #ff9a6b;
+  font-family: Big Shoulders Display, Noto Sans Hebrew, sans-serif;
+  font-size: calc(var(--mm-badge-size) * .2);
+  letter-spacing: .06em;
+  margin-top: 1px;
+  font-weight: 800;
+  line-height: .98;
+  direction: ltr;
+}
+
+.mm-badge-warranty .mm-badge-he {
+  font-size: calc(var(--mm-badge-size) * .22);
+  margin-bottom: 1px;
 }
 
 .flat-card-title {
@@ -5599,6 +5679,7 @@ section.block {
   width: 50%;
   max-width: 380px;
   margin: 24px auto 0;
+  position: relative;
   display: flex;
   overflow: hidden;
 }
@@ -7816,15 +7897,15 @@ function initMasterMount() {
     installLocations: [
       { id: "wall", name: "התקנה על קיר", priceILS: 190 },
       { id: "table", name: "התקנה שולחנית סטנדרטית", priceILS: 120 },
-      { id: "cart", name: "התקנה על עגלה ניידת", priceILS: 190 },
-      { id: "floor_pole", name: "התקנה על עמוד ריצפתי סטטי", priceILS: 250 },
-      { id: "ceiling", name: "התקנה מהתקרה", priceILS: 220 },
+      { id: "cart", name: "התקנה על עגלה ניידת", priceILS: 180 },
+      { id: "floor_pole", name: "התקנה על עמוד ריצפתי סטטי", priceILS: 220 },
+      { id: "ceiling", name: "התקנה מהתקרה", priceILS: 260 },
       { id: "special", name: "התקנות מיוחדות", priceILS: null }
     ],
     sizeTiers: [
-      { id: "t1", label: "32\"-43\"", priceILS: 50 },
-      { id: "t2", label: "48\"-55\"", priceILS: 70 },
-      { id: "t3", label: "58\"-65\"", priceILS: 100 },
+      { id: "t1", label: "32\"-43\"", priceILS: 60 },
+      { id: "t2", label: "48\"-55\"", priceILS: 80 },
+      { id: "t3", label: "58\"-65\"", priceILS: 110 },
       { id: "t4", label: "70\"-86\"", priceILS: 170 },
       { id: "t5", label: "98\" ומעלה", priceILS: 250 }
     ],
@@ -7839,6 +7920,7 @@ function initMasterMount() {
       { id: "product_1", brand: "SAMSUNG", model: "UE32H5000F", sizeInches: 32, screenType: "LED HD",
         title: "טלוויזיה חכמה 32\" SAMSUNG HD סמסונג דגם UE32H5000F", priceILS: 980, imageUrl: "assets/products/product_1.jpg", imageUrlWebp: "assets/products/product_1.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["HDR - ניגודיות משופרת עם צבעים כהים עשירים וצבעים בהירים בוהקים", "PurColor - מגוון רחב של צבעים באיכות מיטבית לחוויה תוססת ונאמנה למציאות", "אבטחת Samsung Knox - הגנה רב-שכבתית על הנתונים הרגישים", "מערכת הפעלה Samsung Tizen OS"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["HDR - ניגודיות משופרת עם צבעים כהים עשירים וצבעים בהירים בוהקים", "אבטחת Samsung Knox - הפרטיות מוגנת בשכבות מרובות של תוכנה וחומרה, כולל חסימת אפליקציות זדוניות ואתרי פישינג", "OTS Lite - צליל וירטואלי סוחף שעוקב אחר הפעולה", "PurColor - צבעים מדויקים במיוחד היוצרים תמונה תוססת וחיה, מגוון רחב של צבעים באיכות מיטבית", "משפר ניגודיות - מפיח חיים בתמונות שטוחות על ידי התאמת הניגודיות, לעומק תמונה רב יותר", "מערכת הפעלה Samsung Tizen OS - אפליקציות ושירותים, כולל ניהול פעילויות יומיומיות עם Daily+", "Adaptive Sound (צליל מסתגל) - בינת שמע-רקע שממטבת את הצליל בהתבסס על ניתוח סצנות בזמן אמת", "מראה דק - עיצוב מינימליסטי ומלוטש שמשדרג את חלל הבית"] },
@@ -7849,6 +7931,7 @@ function initMasterMount() {
       { id: "product_2", brand: "LG", model: "32LQ630B6LA", sizeInches: 32, screenType: "LED Full HD",
         title: "טלוויזיה חכמה 32\" LED HD מבית LG אל ג'י דגם 32LQ630B6LA", priceILS: 1290, imageUrl: "assets/products/product_2.jpg", imageUrlWebp: "assets/products/product_2.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["טלוויזיה חכמה מבוססת בינה מלאכותית - מעבד alpha5 דור חמישי, webOS 22.0", "Full HD - צבעים עשירים וטבעיים", "ThinQ AI - בקרה קולית ותוכן מותאם אישית", "HDR10 Pro - שיפור צבע ובהירות בכל תמונה"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["טלוויזיה חכמה מבוססת בינה מלאכותית דוברת עברית, עם מעבד alpha5 דור חמישי ומערכת הפעלה webOS 22.0", "טלוויזיית Full HD מציגה צבעים עשירים, כדי שהתוכן יראה חי וטבעי", "מעבד הבינה המלאכותית alpha5 דור חמישי משפר את חוויית הצפייה הסוחפת", "ThinQ AI - מבקרה קולית ועד תוכן מותאם אישית, חוויה חכמה יותר", "הפרופיל שלי - התחברות נוחה לחשבון אישי וצפייה בתוכן מומלץ ומותאם אישית", "התראות ספורט - קבלת התראות לפני כל המשחקים החשובים ביותר", "HDR10 Pro - רמת הבהירות מותאמת לשיפור הצבע והבהירות בכל תמונה", "גיימינג בענן - תאימות מורחבת עם Google Stadia ו-GEFORCE Now", "אריזה ידידותית לסביבה - הדפסה בצבע אחד, קרטון הניתן למיחזור"] },
@@ -7858,6 +7941,7 @@ function initMasterMount() {
       { id: "product_3", brand: "TCL", model: "32S5K", sizeInches: 32, screenType: "QLED (Google TV)",
         title: "טלוויזיה חכמה טיסיאל TCL 32\" GOOGLE TV QLED דגם 32S5K", priceILS: 1040, imageUrl: "assets/products/product_3.jpg", imageUrlWebp: "assets/products/product_3.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED", "מערכת הפעלה Google TV", "תומך HDR10, HDR10+ ו-HLG לשיפור הניגודיות", "סאונד איכותי עם תמיכה בטכנולוגיית Dolby Audio"],
         fullSpecSections: [
           { heading: "איכות תמונה", items: ["צג בטכנולוגיית QLED", "רזולוציית מסך FHD 1920x1080, 60Hz", "ניגודיות 1:4000", "תומך HDR10, HDR10+, HLG", "זווית צפייה רחבה במיוחד - עד 178 מעלות"] },
@@ -7869,6 +7953,7 @@ function initMasterMount() {
       { id: "product_4", brand: "SAMSUNG", model: "UE43F6000F", sizeInches: 43, screenType: "LED FHD",
         title: "טלוויזיה 43\" SAMSUNG FHD סמסונג דגם UE43F6000F", priceILS: 1050, imageUrl: "assets/products/product_4.jpg", imageUrlWebp: "assets/products/product_4.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["רזולוציית Full HD - פי שניים מהבהירות של HD רגיל, לתמונה עשירה וברורה במיוחד", "PurColor - צבעים מכוונים בעדינות לתמונה תוססת ומציאותית", "משפר ניגודיות - עומק תמונה רב יותר עם התאמת ניגודיות לכל סצנה", "מערכת הפעלה Samsung Tizen - אפליקציות, Samsung TV Plus וניהול יומיומי עם Daily+"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["רזולוציית Full HD - פי שניים מהבהירות של טלוויזיית HD רגילה, לתוכניות וסרטים מציאותיים במיוחד", "PurColor - צבעים מכוונים בעדינות למגוון צבעים באיכות אופטימלית, לחוויה סוחפת ונאמנה למציאות", "משפר ניגודיות - מחייה תמונות שטוחות על ידי התאמת הניגודיות, לעומק תמונה רב יותר", "מערכת הפעלה Samsung Tizen - אפליקציות ושירותים, ערוצי טלוויזיה חיים וחינמיים עם Samsung TV Plus, וניהול פעילויות יומיומיות עם Daily+", "מראה דק ועיצוב ללא שוליים - מסגרת נטולה משלושה צדדים, למראה אלגנטי ומעודן שמשדרג את החלל", "OTS Lite - סאונד וירטואלי סוחף וסראונד תלת-ממדי שעוקב אחר האקשן על המסך", "HDR - טווח דינמי גבוה בין האזורים הבהירים לכהים, לספקטרום רחב של צבעים וניגודיות מבריקה"] },
@@ -7878,6 +7963,7 @@ function initMasterMount() {
       { id: "product_5", brand: "SAMSUNG", model: "UE43U8000H", sizeInches: 43, screenType: "LED (Crystal UHD)",
         title: "טלוויזיה חכמה 43\" SAMSUNG UHD סמסונג דגם UE43U8000H", priceILS: 1550, imageUrl: "assets/products/product_5.jpg", imageUrlWebp: "assets/products/product_5.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["Crystal Processor 4K - שדרוג תמונה וסאונד ברזולוציית 4K אמיתית", "HDR10+ - ניגודיות ופירוט משופרים באזורים כהים ובהירים כאחד", "Gaming Hub - גישה למשחקי ענן ללא קונסולה, עם VRR ו-ALLM", "מערכת הפעלה Tizen עם Samsung TV Plus - בידור וסטרימינג ללא הגבלה"],
         fullSpecSections: [
           { heading: "איכות תמונה", items: ["Crystal Processor 4K - מעבד תמונה המשפר את איכות התמונה והצליל", "4K Upscaling - שדרוג תוכן לרזולוציית 4K, לתמונה ברורה ומפורטת יותר", "PurColour - צבעים טבעיים ועשירים ומדויקים יותר", "Colour Booster - משפר את הבעת הצבעים ומעצים סצנות לחוויה חיה ודינמית", "HDR עם HDR10+ - אופטימיזציה דינמית של סצנות, לעומק ופירוט באזורים כהים ובהירים", "Mega Contrast, UHD Dimming ו-Contrast Enhancer - שליטה מתקדמת בתאורה ובניגודיות", "Motion Xcelerator - שיפור חלקות בתנועה", "Filmmaker Mode - צפייה בתוכן כפי שיוצריו התכוונו"] },
@@ -7892,6 +7978,7 @@ function initMasterMount() {
       { id: "product_6", brand: "SAMSUNG", model: "UE43M70H", sizeInches: 43, screenType: "Mini LED",
         title: "טלוויזיה חכמה 43\" SAMSUNG MINI LED סמסונג דגם UE43M70H", priceILS: 1790, imageUrl: "assets/products/product_6.jpg", imageUrlWebp: "assets/products/product_6.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Mini LED - שליטה מדויקת בבהירות ובניגודיות לתמונה עשירה ועמוקה", "Pure Spectrum Colour - גוונים טבעיים ומדויקים במיוחד", "Motion Xcelerator - תנועה חלקה וברורה, מותאם גם לגיימינג עם VRR ו-ALLM", "עיצוב MetalStream דק וחסר-שוליים"],
         fullSpecSections: [
           { heading: "איכות תמונה", items: ["Mini LED - נורות LED זעירות לשליטה מדויקת בבהירות ובניגודיות, לשחורים עמוקים ופרטים בהירים יותר", "Pure Spectrum Colour - שליטה באור ובצבע להצגת גוונים טבעיים, עשירים ומדויקים", "Mini LED Processor 4K - שדרוג תוכן שאינו 4K לחדות הקרובה ל-4K, בהתאמה לתוכן ולסביבה", "Mini LED HDR - ניגודיות ופירוט משופרים בהתאם לסצנה, עם שחורים עמוקים וצבעים מודגשים", "4K Upscaling - שדרוג תוכן לתמונה ברורה ומפורטת יותר"] },
@@ -7905,6 +7992,7 @@ function initMasterMount() {
       { id: "product_7", brand: "SAMSUNG", model: "QE43QN70H", sizeInches: 43, screenType: "Neo QLED",
         title: "טלוויזיה חכמה 43\" SAMSUNG QLED סמסונג דגם QE43QN70H", priceILS: 2390, imageUrl: "assets/products/product_7.jpg", imageUrlWebp: "assets/products/product_7.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["Quantum Mini LED - שליטה מדויקת בתאורה לפרטים, בהירות וניגודיות יוצאי דופן", "NQ4 AI Processor - עיבוד תמונה חכם סצנה אחר סצנה", "AI Football Mode ו-AI Gaming Optimiser - הגדרות אוטומטיות המותאמות לספורט וגיימינג", "Samsung Vision AI Companion - עוזר חכם לאינטראקציה טבעית עם הטלוויזיה"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["Quantum Mini LED - שליטה מדויקת באזורי התאורה לשיפור הפרטים, הבהירות והניגודיות", "NQ4 AI Processor - מעבד AI המשפר את התמונה על ידי עיבוד ושדרוג סצנה אחר סצנה", "4K Upscaling - שדרוג תוכן לרזולוציית 4K", "NQ HDR - שיפור הבהירות, הצבעים והניגודיות בהתאם לתוכן", "Color Booster Pro - ביטוי צבעים משופר לתמונה חיה ודינמית", "AI Customisation Mode - זיהוי סוג התוכן והתאמת הגדרות התמונה בהתאם", "Motion Xcelerator - חדות תנועה משופרת ותנועה חלקה יותר", "Samsung Vision AI Companion - עוזר חכם לאינטראקציה עם הטלוויזיה", "AI Football Mode - ניגודיות וצבעים משופרים בזמן צפייה במשחקי כדורגל", "OTS Lite - סאונד תלת-ממדי העוקב אחר הפעולה על המסך", "Q-Symphony - שילוב רמקולי הטלוויזיה עם מקרן קול תואם", "Adaptive Sound+ ו-AI Sound Controller - התאמת הסאונד לתוכן ולסביבה, כולל שליטה בקולות ואפקטים", "Gaming Hub ו-AI Gaming Optimiser - גישה למשחקי ענן עם הגדרות תמונה המותאמות אוטומטית לסוג המשחק", "עיצוב AirSlim - מבנה דק במיוחד"] },
@@ -7914,6 +8002,7 @@ function initMasterMount() {
       { id: "product_8", brand: "LG", model: "43NU840B6LA", sizeInches: 43, screenType: "NanoCell (NANO UHD)",
         title: "טלוויזיה חכמה 43\" LG NANO UHD AI אל ג'י דגם 43NU840B6LA", priceILS: 1590, imageUrl: "assets/products/product_8.jpg", imageUrlWebp: "assets/products/product_8.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מסך NANO UHD ברזולוציית 4K - צבעים עשירים ופרטים חדים לסרטים, סדרות ומשחקים", "מעבד Alpha 7 AI 4K דור 9 - שדרוג תכנים ל-4K ושיפור תמונה וסאונד בזמן אמת", "מערכת הפעלה webOS 26 - ממשק חכם, עד 5 שנות שדרוגים", "AI Sound Pro - סאונד וירטואלי 9.1.2 ערוצים לחוויית שמע עשירה"],
         fullSpecSections: [
           { heading: "SMART TV", items: ["מערכת הפעלה webOS 26 - ממשק נוח ואינטואיטיבי עם התחייבות לעדכוני גרסה למשך 5 שנים", "מסך הבית מחולק לכרטיסיות נושא חכמות - גישה מהירה לאפליקציות, משחקים, מוזיקה, ספורט ושליטה בבית חכם", "חנות אפליקציות רחבה עם תמיכה בשירותי סטרימינג פופולריים, דפדפן אינטרנט מובנה וחיבור WiFi", "השלט החכם של LG תומך בחיפוש ובפקודות קוליות בעברית, ויכול לשלוט גם בממיר ובמערכות סאונד תומכות", "תמיכה בשיקוף מהטלפון, חיבור אלחוטי למחשב אישי והתראות ספורט מותאמות לקבוצות אהודות"] },
@@ -7927,6 +8016,7 @@ function initMasterMount() {
       { id: "product_9", brand: "LG", model: "43NU850B6LA", sizeInches: 43, screenType: "NanoCell (NANO UHD)",
         title: "טלוויזיה חכמה 43 אינץ' LG NANO UHD AI NU85 אל ג'י דגם 43NU850B6LA", priceILS: 1690, imageUrl: "assets/products/product_8.jpg", imageUrlWebp: "assets/products/product_8.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["Nano Detail Enhancer - עומק ומרקם משופרים לתמונת 4K מציאותית יותר", "AI Hub עם חוויות-AI מתקדמות מבוססות Google Gemini ו-Microsoft Copilot, מאובטח ב-LG Shield", "מעבד Alpha 7 AI דור 9 - אופטימיזציית תמונה וסאונד לפי ז'אנר והעדפות אישיות", "AI Sound Pro - סאונד וירטואלי 9.1.2 ערוצים"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["Nano Detail Enhancer - משפר את המרקם והעומק לקבלת תמונת 4K מציאותית יותר", "Linear Flow Design - גימור מעודן ומוצק שנועד להחמיא לחלל", "מערכת webOS זוכת פרסים עם AI Experiences מתקדמות, מופעלות על ידי Google Gemini ו-Microsoft Copilot", "AI Hub - חוויה חכמה ומותאמת אישית, מאובטחת על ידי LG Shield", "LG Channels - גישה למגוון רחב של תוכן חי ולפי דרישה"] },
@@ -7942,6 +8032,7 @@ function initMasterMount() {
       { id: "product_10", brand: "LG", model: "43QNED70B6T", sizeInches: 43, screenType: "QNED MiniLED",
         title: "טלוויזיה חכמה 43\" LG QNED AI MINI LED 4K אל ג'י דגם 43QNED70B6T", priceILS: 1750, imageUrl: "assets/products/product_10.jpg", imageUrlWebp: "assets/products/product_10.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["Dynamic QNED Color - נפח צבע 100% ובינה מלאכותית לצבעים חיים ומדויקים", "QNED MiniLED עם עמעום מקומי מתקדם - ניגודיות גבוהה ופירוט חד גם בסצנות כהות", "מעבד Alpha 7 AI 4K דור 9 - תמונה וסאונד ברורים וחדים", "webOS Re:New Program - עד 4 שנות שדרוגים על פני תקופה של 5 שנים"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["Dynamic QNED Color - נפח צבע של 100% ובינה מלאכותית מהדור הבא, לצבעים חיים ומדויקים וחוויית צפייה סוחפת", "QNED MiniLED - הבהרת גוונים לבנים והכהיית גוונים שחורים לתמונה באיכות גבוהה, עם אזורי עמעום ייחודיים לניגודיות גבוהה במיוחד", "מעבד AI 4K אלפא 7 דור 9 - תמונה וסאונד ברורים וחדים", "webOS Re:New Program - 4 שנות שדרוגים על פני תקופה של 5 שנים", "דירוג אנרגטי F"] },
@@ -7958,6 +8049,7 @@ function initMasterMount() {
       { id: "product_11", brand: "TCL", model: "43S5K", sizeInches: 43, screenType: "QLED (Google TV)",
         title: "טלוויזיה חכמה 43\" TCL QLED טי.סי.אל דגם 43S5K", priceILS: 1320, imageUrl: "assets/products/product_11.jpg", imageUrlWebp: "assets/products/product_11.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית QLED עם נקודות קוונטיות - צבעים חזקים ומדויקים כמו בחיים האמיתיים", "מסך Full HD - תמונה מפורטת פי 2 ממסך HD רגיל", "תמיכה ב-HDR10 עם ניתוח תמונה חכם והתאמה דינמית לשיפור הניגודיות", "מערכת הפעלה Google TV"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["נקודות קוונטיות צבעוניות - שילוב חומרים קוונטיים בקנה-מידה ננו עם חומרים אורגניים בשכבות מרובות, לצבעים יוצאי דופן ותכונות אופטיות חסרות תקדים", "בהירות מוגברת המאירה פרטים עדינים, לחוויית צפייה סוחפת ומציאותית", "חלוצה בטכנולוגיית נקודות קוונטיות - TCL עם 2,485 פטנטים בתחום ה-QLED וצוות של כ-100 מומחים במעבדת Quantum Dot בינלאומית", "מסך Full HD - תמונה מציאותית ומפורטת פי 200% ממסך HD רגיל, חושפת פרטים נסתרים", "תמיכה בפענוח תכנים בפורמט HDR10, עם ניתוח חכם של תמונות והתאמה דינמית של אות התמונה לשיפור הניגודיות"] },
@@ -7967,6 +8059,7 @@ function initMasterMount() {
       { id: "product_12", brand: "SAMSUNG", model: "UE50U8000H", sizeInches: 50, screenType: "LED (Crystal UHD)",
         title: "טלוויזיה חכמה 50\" SAMSUNG UHD סמסונג דגם UE50U8000H", priceILS: 1920, imageUrl: "assets/products/product_12.jpg", imageUrlWebp: "assets/products/product_12.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מעבד Crystal Processor 4K - שדרוג תמונה וסאונד ברזולוציית 4K אמיתית", "PurColour - צבעים טבעיים ועשירים, עם HDR10+ לעומק ופירוט משופרים", "Motion Xcelerator לשיפור החלקות בתנועה, Filmmaker Mode ומצב כדורגל ייעודי", "מערכת הפעלה Tizen Smart TV עם Gaming Hub, VRR ו-ALLM"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מעבד Crystal Processor 4K לשיפור איכות התמונה והצליל", "שדרוג תמונה ל-4K באמצעות 4K Upscaling", "טכנולוגיית PurColour להצגת צבעים טבעיים ועשירים", "משפר צבעים Colour Booster להעצמת הבעת הצבעים", "HDR עם HDR10+ לשיפור העומק והפירוט בתמונה", "Mega Contrast לשיפור הניגודיות, UHD Dimming לשליטה בתאורה ובניגודיות", "Contrast Enhancer לשיפור עומק התמונה", "Motion Xcelerator לשיפור החלקות בתנועה", "Filmmaker Mode לצפייה בתוכן כפי שיוצריו התכוונו", "מצב כדורגל עם הגדרות תמונה ושמע המותאמות לצפייה במשחקים", "Samsung Vision AI Companion", "מערכת הפעלה Tizen Smart TV, Samsung TV Plus, Samsung Knox Security", "Gaming Hub, SmartThings, Apple AirPlay, Google Cast, Bixby", "תמיכה ב-VRR, Auto Game Mode (ALLM), HGiG", "Q-Symphony, Object Tracking Sound Lite"] },
@@ -7982,6 +8075,7 @@ function initMasterMount() {
       { id: "product_13", brand: "SAMSUNG", model: "UE50M70H", sizeInches: 50, screenType: "Mini LED",
         title: "טלוויזיה חכמה 50\" SAMSUNG MINI LED סמסונג דגם UE50M70H", priceILS: 2190, imageUrl: "assets/products/product_13.jpg", imageUrlWebp: "assets/products/product_13.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Mini LED עם מעבד Mini LED Processor 4K לשליטה מדויקת בבהירות ובניגודיות", "Pure Spectrum Colour ו-HDR10+ לגוונים טבעיים ועשירים, עם Supreme Mini LED Dimming", "Samsung Vision AI Companion ומערכת הפעלה Tizen Smart TV, כולל Gaming Hub ו-VRR", "עיצוב MetalStream דק עם מסגרת 3 Bezel-less וגב מסודר לכבלים"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["טכנולוגיית Mini LED", "רזולוציית 4K UHD - 3840 x 2160", "מעבד Mini LED Processor 4K", "טכנולוגיית Pure Spectrum Colour", "טכנולוגיית Mini LED HDR", "טכנולוגיית Supreme Mini LED Dimming", "טכנולוגיית Contrast Enhancer", "טכנולוגיית 4K Upscaling, Colour Booster, Motion Xcelerator", "תמיכה ב-HDR10+, Filmmaker Mode", "Samsung Vision AI Companion", "מערכת הפעלה Tizen Smart TV, Samsung Gaming Hub", "תמיכה ב-VRR, ALLM, HGiG", "Object Tracking Sound Lite, Adaptive Sound, Q-Symphony", "Samsung Knox Security, SmartThings, AI Energy Mode", "Samsung TV Plus, Apple AirPlay, Google Cast, Karaoke"] },
@@ -7996,6 +8090,7 @@ function initMasterMount() {
       { id: "product_14", brand: "SAMSUNG", model: "QE50QN70H", sizeInches: 50, screenType: "Neo QLED",
         title: "טלוויזיה חכמה 50\" SAMSUNG QLED סמסונג דגם QE50QN70H", priceILS: 2840, imageUrl: "assets/products/product_14.jpg", imageUrlWebp: "assets/products/product_14.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Quantum Mini LED עם מעבד NQ4 AI Processor לשיפור התמונה סצנה אחר סצנה", "NQ HDR ו-HDR10+ Adaptive לניגודיות וצבעים מדויקים, עם Color Booster Pro", "AI Football Mode, AI Gaming Optimiser ו-Gaming Hub לחוויית ספורט וגיימינג משופרת", "Samsung Vision AI Companion, עיצוב AirSlim דק במיוחד ומערכת הפעלה Tizen Smart TV"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך 50 אינץ'", "רזולוציית 4K UHD 3840x2160", "טכנולוגיית Quantum Mini LED", "מעבד NQ4 AI Processor", "4K Upscaling", "NQ HDR, HDR10+ Adaptive", "Color Booster Pro", "Supreme Mini LED Dimming", "Motion Xcelerator", "Samsung Vision AI Companion", "AI Customisation Mode, AI Football Mode, AI Gaming Optimiser", "Gaming Hub", "Q-Symphony, OTS Lite, Adaptive Sound+", "מערכת הפעלה Tizen Smart TV"] },
@@ -8008,6 +8103,7 @@ function initMasterMount() {
       { id: "product_15", brand: "LG", model: "50NU850B6LA", sizeInches: 50, screenType: "LED (NANO UHD)",
         title: "טלוויזיה חכמה 50\" LG NANO UHD AI NU85 אל ג'י דגם 50NU850B6LA", priceILS: 1990, imageUrl: "assets/products/product_15.jpg", imageUrlWebp: "assets/products/product_15.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["צבעים טהורים בשילוב פרטים מדהימים בזכות טכנולוגיית NANO UHD", "מעבד AI 4K אלפא 7 דור 9 לתמונה וצליל ברורים וחדים יותר", "תוכנית webOS Re:New Program המבטיחה עד 5 שנים של שדרוגים", "שדרוג תוכן לאיכות 4K באמצעות בינה מלאכותית"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["צבעים טהורים בשילוב פרטים מדהימים", "מעבד AI 4K אלפא 7 דור 9 לתמונה וצליל ברורים וחדים יותר", "תוכנית webOS Re:New Program מבטיחה עד 5 שנים של שדרוגים", "שדרוג תוכן לאיכות 4K באמצעות בינה מלאכותית"] },
@@ -8024,6 +8120,7 @@ function initMasterMount() {
       { id: "product_16", brand: "LG", model: "50QNED70B6T", sizeInches: 50, screenType: "QNED (Mini LED)",
         title: "טלוויזיה חכמה 50\" LG QNED AI QNED70 MINI LED אל ג'י דגם 50QNED70B6T", priceILS: 2140, imageUrl: "assets/products/product_16.jpg", imageUrlWebp: "assets/products/product_16.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["צבעים חיים ומדויקים בזכות טכנולוגיית Dynamic QNED Color עם נפח צבע 100%", "פירוט חד ומדויק עם טכנולוגיית MiniLED ועמעום מקומי מתקדם", "מעבד AI 4K אלפא 7 דור 9 לתמונה וצליל ברורים וחדים", "תוכנית webOS Re:New Program המבטיחה 4 שנים של שדרוגים על פני תקופה של 5 שנים"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["צבעים חיים ומדויקים הודות לטכנולוגיית Dynamic QNED color", "פירוט חד ומדויק עם טכנולוגיית MiniLED ועמעום מקומי מתקדם", "מעבד AI 4K אלפא 7 דור 9 לתמונה וצליל ברורים וחדים", "תוכנית webOS Re:New Program - מבטיחה 4 שנים של שדרוגים על פני תקופה של 5 שנים"] },
@@ -8041,6 +8138,7 @@ function initMasterMount() {
       { id: "product_17", brand: "TCL", model: "50S5K", sizeInches: 50, screenType: "QLED (Google TV)",
         title: "טלוויזיה חכמה 50\" TCL QLED טי.סי.אל דגם 50S5K", priceILS: 1330, imageUrl: "assets/products/product_17.jpg", imageUrlWebp: "assets/products/product_17.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["טלוויזיה חכמה QLED עם מערכת הפעלה Google TV, פאנל VA ועיצוב Slim Design דק ואלגנטי", "טכנולוגיית צבעים קוונטיים להרחבת טווח הצבעים, עם תמיכה ב-HDR10+ ו-HLG", "Google Cast מובנה לשידור מהטלפון למסך, ופרופיל ייעודי לילדים (Kid's Profile)", "תמיכה בשמע Dolby Audio עם הספק שמע 2x10W"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["סדרה S5K", "גודל מסך 50 אינץ'", "טלוויזיה חכמה QLED עם מערכת הפעלה Google TV", "טכנולוגיית תצוגה QLED / LCD", "פאנל VA", "עיצוב Slim Design - מסגרת דקה ואלגנטית"] },
@@ -8053,6 +8151,7 @@ function initMasterMount() {
       { id: "product_18", brand: "TCL", model: "50C6K", sizeInches: 50, screenType: "QLED Mini LED",
         title: "טלוויזיה חכמה 50\" TCL 4K MINI LED טי.סי.אל דגם 50C6K", priceILS: 2490, imageUrl: "assets/products/product_18.jpg", imageUrlWebp: "assets/products/product_18.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מסך QLED Mini LED עם 512 אזורי עמעום נפרדים (FALD) ועוצמת הארה HDR עד 1000nits", "קצב רענון תמונה עד 144Hz ומעבד תמונה AiPQ Pro, תומך HDR10+, Dolby Vision IQ, IMAX Enhanced ו-HLG", "מערכת סאונד ONKYO 2.1Ch בעוצמה כוללת של 40W עם תמיכה ב-Dolby Atmos ו-DTS Virtual:X", "מערכת הפעלה Google TV, זווית צפייה רחבה עד 178° ותמיכה ב-AMD FreeSync Pro"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך בטכנולוגיית QLED Mini LED", "מערכת הפעלה Google TV", "קצב רענון תמונה 144Hz", "עמעום מדויק עד 512 אזורי תאורה נפרדים (FALD)", "עוצמת הארה HDR 1000nits", "מערכת סאונד ONKYO 2.1Ch בעוצמה כוללת של 40W", "מעבד תמונה AiPQ Pro", "תומך HDR10+, Dolby Vision IQ, IMAX Enhanced, HLG", "צג מתקדם בטכנולוגיית HVA", "זווית צפייה רחבה במיוחד - עד 178°", "מסך דק בעיצוב מודרני ללא מסגרת"] },
@@ -8066,6 +8165,7 @@ function initMasterMount() {
       { id: "product_19", brand: "LG", model: "55QNED70B6T", sizeInches: 55, screenType: "QNED",
         title: "טלוויזיה חכמה \"LG QNED AI MINI LED 4K 55 אל ג`י דגם 55QNED70B6T", priceILS: 2550, imageUrl: "assets/products/product_19.jpg", imageUrlWebp: "assets/products/product_19.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["צבעים חיים ומדויקים", "עמעום מקומי מתקדם", "בינה מלאכותית מהדור הבא", "טכנולוגיית תצוגה משופרת"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["צבעים חיים ומדויקים הודות לטכנולוגיית Dynamic QNED color", "פירוט חד ומדויק עם טכנולוגיית MiniLED ועמעום מקומי מתקדם", "מעבד AI 4K אלפא 7 דור 9 לתמונה וצליל ברורים וחדים", "תוכנית webOS Re:New Program מבטיחה 4 שנים", "של שדרוגים על פני תקופה של 5 שנים", "דירוג אנרגטי E"] },
@@ -8086,6 +8186,7 @@ function initMasterMount() {
       { id: "product_20", brand: "SAMSUNG", model: "UE55U8000H", sizeInches: 55, screenType: "UHD",
         title: "טלוויזיה חכמה \"55 SAMSUNG UHD סמסונג דגם UE55U8000H", priceILS: 1940, imageUrl: "assets/products/product_20.jpg", imageUrlWebp: "assets/products/product_20.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מעבד Crystal Processor 4K", "משפר צבעים להעצמת הבעת הצבעים", "סוג מוצר LED", "HDR10+ תמיכה"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מעבד Crystal Processor 4K", "לשיפור איכות התמונה והצליל", "שדרוג תמונה ל־4K באמצעות 4K Upscaling", "טכנולוגיית PurColour להצגת צבעים טבעיים ועשירים", "משפר צבעים להעצמת הבעת הצבעים", "HDR עם HDR10+ לשיפור העומק והפירוט בתמונה", "Mega Contrast לשיפור הניגודיות", "UHD Dimming לשליטה בתאורה ובניגודיות", "Contrast Enhancer לשיפור עומק התמונה", "Motion Xcelerator לשיפור החלקות בתנועה", "Filmmaker Mode לצפייה בתוכן כפי שיוצריו התכוונו", "מצב כדורגל עם הגדרות תמונה ושמע המותאמות לצפייה במשחקים", "Samsung Vision AI Companion", "מערכת הפעלה Tizen™ Smart TV", "Samsung TV Plus", "Samsung Knox Security", "Gaming Hub", "SmartThings", "Apple AirPlay", "Google Cast", "Bixby", "תמיכה ב־VRR", "Auto Game Mode (ALLM)", "HGiG", "Q-Symphony", "Object Tracking Sound Lite"] },
@@ -8102,6 +8203,7 @@ function initMasterMount() {
       { id: "product_21", brand: "TCL", model: "55P7L", sizeInches: 55, screenType: "QLED",
         title: "טלוויזיה חכמה \"55 TCL QLED טי.סי.אל דגם 55P7L", priceILS: 2350, imageUrl: "assets/products/product_21.jpg", imageUrlWebp: "assets/products/product_21.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED 4K", "מערכת הפעלה Google TV", "זווית צפייה רחבה במיוחד עד 178°", "מסך דק בעיצוב מודרני"],
         fullSpecSections: [
           { heading: "מסך בטכנולוגיית QLED 4K", items: ["מערכת הפעלה Google TV", "מעבד תמונה AiPQ", "תומך HDR10+ ,HLG ,HDR ,Dolby Vision", "צג מתקדם בטכנולוגיית HVA", "זווית צפייה רחבה במיוחד - עד 178°", "TCL AI מזהה, מתאים ומשפר את התמונה בזמן אמת", "מסך דק בעיצוב מודרני"] },
@@ -8115,6 +8217,7 @@ function initMasterMount() {
       { id: "product_22", brand: "LG", model: "55NU850B6LA", sizeInches: 55, screenType: "NANO CELL UHD",
         title: "טלוויזיה חכמה 55 אינץ LG NANO UHD AI NU85 אל ג`י דגם 55NU850B6LA", priceILS: 1980, imageUrl: "assets/products/product_22.jpg", imageUrlWebp: "assets/products/product_22.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["צבעים טהורים בשילוב פרטים מדהימים", "מעבד AI 4K אלפא 7 דור 9", "תוכנית  webOS Re:New Program", "שדרוג תוכן לאיכות 4K באמצעות בינה מלאכותית"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["צבעים טהורים בשילוב פרטים מדהימים", "מעבד AI 4K אלפא 7 דור 9 לתמונה וצליל ברורים וחדים יותר", "תוכנית webOS Re:New Program מבטיחה עד 5 שנים של שדרוגים", "שדרוג תוכן לאיכות 4K באמצעות בינה מלאכותית"] },
@@ -8135,6 +8238,7 @@ function initMasterMount() {
       { id: "product_23", brand: "SAMSUNG", model: "UE55M70H", sizeInches: 55, screenType: "QLED MINI LED",
         title: "טלוויזיה חכמה \"55 SAMSUNG MINI LED סמסונג דגם UE55M70H", priceILS: 2390, imageUrl: "assets/products/product_23.jpg", imageUrlWebp: "assets/products/product_23.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Mini LED", "חוויית צפייה חכמה", "רזולוציה 3840 × 2160", "קצב רענון 50Hz"],
         fullSpecSections: [
           { heading: "טכנולוגיית Mini LED", items: ["רזולוציית 4K UHD - 3840 × 2160", "מעבד Mini LED Processor 4K", "טכנולוגיית Pure Spectrum Colour", "טכנולוגיית Mini LED HDR", "טכנולוגיית Supreme Mini LED Dimming", "טכנולוגיית Contrast Enhancer", "טכנולוגיית 4K Upscaling", "טכנולוגיית Colour Booster", "טכנולוגיית Motion Xcelerator", "תמיכה ב־HDR10+", "Filmmaker Mode", "Samsung Vision AI Companion", "מערכת הפעלה Tizen Smart TV", "Samsung Gaming Hub", "תמיכה ב־VRR", "תמיכה ב־ALLM", "תמיכה ב־HGiG", "Object Tracking Sound Lite", "Adaptive Sound", "Q-Symphony", "Samsung Knox Security", "SmartThings", "AI Energy Mode", "Samsung TV Plus", "Apple AirPlay", "Google Cast", "Karaoke"] },
@@ -8150,6 +8254,7 @@ function initMasterMount() {
       { id: "product_24", brand: "TCL", model: "55P8K", sizeInches: 55, screenType: "QLED",
         title: "טלוויזיה חכמה \"55 TCL QLED טי.סי.אל דגם 55P8K", priceILS: 2280, imageUrl: "assets/products/product_24.jpg", imageUrlWebp: "assets/products/product_24.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED 4K", "מערכת הפעלה Google TV", "זווית צפייה רחבה במיוחד עד 178°", "מסך דק בעיצוב מודרני"],
         fullSpecSections: [
           { heading: "מסך בטכנולוגיית QLED 4K", items: ["מערכת הפעלה Google TV", "קצב רענון תמונה 144Hz", "מערכת סאונד עוצמתית ONKYO 2.1Ch בעוצמה כוללת של עד 40W", "מעבד תמונה AiPQ Pro", "תומך HDR10+, HLG, HDR ,Dolby Vision", "צג מתקדם בטכנולוגיית HVA", "זווית צפייה רחבה במיוחד עד 178°", "מסך דק בעיצוב מודרני"] },
@@ -8167,6 +8272,7 @@ function initMasterMount() {
       { id: "product_25", brand: "SAMSUNG", model: "UE55M80H", sizeInches: 55, screenType: "MINI LED",
         title: "טלוויזיה חכמה \"55 SAMSUNG MINI LED סמסונג דגם UE55M80H", priceILS: 2390, imageUrl: "assets/products/product_25.jpg", imageUrlWebp: "assets/products/product_25.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["סוג מוצר LED", "טכנולוגיית תצוגה Mini LED", "HDR Mini LED HDR", "עיצוב MetalStream במראה דק ומודרני"],
         fullSpecSections: [
           { heading: "טכנולוגיית Mini LED לשליטה מדויקת בבהירות ובניגודיות", items: ["מעבד NQ4 AI Gen2 עם 20 רשתות עצביות", "לשיפור תמונה, צבע, ניגודיות, תנועה ושמע", "4K AI Upscaling לשדרוג תכנים לרזולוציית 4K", "Mini LED HDR לשיפור הניגודיות והפרטים", "HDR10+ לשיפור טווח הצבעים והניגודיות", "Auto HDR Remastering לשדרוג תכני SDR למראה דמוי HDR", "Pure Spectrum Colour להצגת צבעים טבעיים ועשירים", "Colour Booster Pro לשיפור צבעים באמצעות AI", "Real Depth Enhancer לשיפור תחושת העומק בתמונה", "AI Customisation Mode להתאמת הגדרות התמונה בהתאם לתוכן", "Motion Xcelerator 144Hz לתנועה חלקה במיוחד", "קצב רענון 144Hz VRR", "קצב רענון טבעי 100Hz", "DLG 240Hz", "Samsung Vision AI Companion", "AI Football Mode לשיפור ניגודיות וצבע בזמן צפייה בכדורגל", "AI Sound Controller לשליטה נפרדת בקולות ובאפקטים", "Adaptive Sound+ להתאמת השמע לתוכן ולסביבה", "Object Tracking Sound Lite", "Q-Symphony לסנכרון בין רמקולי הטלוויזיה לסאונדבר תואם", "מערכת Tizen™ Smart TV", "Samsung TV Plus", "Samsung Knox Security", "SmartThings Hub", "Art Store", "Generative Wallpaper", "Now Brief", "Gaming Hub", "AI Gaming Optimiser", "FreeSync Premium", "Game Bar", "Super Ultra Wide Game View", "VRR", "HGiG"] },
@@ -8184,6 +8290,7 @@ function initMasterMount() {
       { id: "product_26", brand: "SAMSUNG", model: "QE55QN70H", sizeInches: 55, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"55 SAMSUNG QLED סמסונג דגם QE55QN70H", priceILS: 2990, imageUrl: "assets/products/product_26.jpg", imageUrlWebp: "assets/products/product_26.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["Quantum Mini LED שליטה מדויקת באזורי התאורה", "רזולוציית 4K UHD ‏3840×2160", "מעבד NQ4 AI Processor", "AirSlim עיצוב דק במיוחד"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך 55 אינץ'", "רזולוציית 4K UHD ‏3840×2160", "טכנולוגיית Quantum Mini LED", "מעבד NQ4 AI Processor", "4K Upscaling", "NQ HDR", "HDR10+ Adaptive", "Color Booster Pro", "Supreme Mini LED Dimming", "Motion Xcelerator", "Samsung Vision AI Companion", "AI Customisation Mode", "AI Football Mode", "AI Gaming Optimiser", "Gaming Hub", "Q-Symphony", "OTS Lite", "Adaptive Sound+", "מערכת הפעלה Tizen Smart TV"] },
@@ -8196,6 +8303,7 @@ function initMasterMount() {
       { id: "product_27", brand: "TCL", model: "55P8L", sizeInches: 55, screenType: "QD Mini-LED",
         title: "טלוויזיה חכמה \"55 TCL QD-MINI LED טי.סי.אל דגם 55P8L", priceILS: 2640, imageUrl: "assets/products/product_27.jpg", imageUrlWebp: "assets/products/product_27.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["פאנל HVA", "קצב רענון טבעי 144Hz", "תמיכה ב־4K 144Hz", "מערכת שמע 2.0 ערוצים"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך 55 אינץ' ברזולוציית 4K UHD", "טכנולוגיית QD-Mini LED Dimming", "טכנולוגיית QLED", "פאנל HVA", "קצב רענון טבעי 144Hz", "תמיכה ב־4K 144Hz", "288Hz VRR Game Accelerator דרך HDMI 1 ו־2", "מעבד AiPQ עם AI Clarity, AI Motion ו־AI HDR", "Google TV", "TCL AI", "מרחב צבעים 93% DCI-P3", "DTS Virtual:X", "Dolby Atmos", "מערכת שמע 2.0 ערוצים", "עיצוב Slim & Uni-body"] },
@@ -8207,6 +8315,7 @@ function initMasterMount() {
       { id: "product_28", brand: "SAMSUNG", model: "QE55QN80H", sizeInches: 55, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"55 SAMSUNG MINI LED סמסונג דגם QE55QN80H", priceILS: 3838, imageUrl: "assets/products/product_28.jpg", imageUrlWebp: "assets/products/product_28.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["שליטה מדויקת בתמונה", "SmartThings תמיכה בבית חכם", "עיצוב דק ואלגנטי", "סוג מוצר Neo QLED"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["Quantum Mini LED", "רזולוציית 4K UHD ‏3840×2160", "מעבד NQ4 AI Gen2", "Motion Xcelerator 144Hz", "100% נפח צבע", "NQ HDR+", "4K AI Upscaling", "Samsung Vision AI", "AI HDR Remastering", "Dolby Atmos", "FreeSync Premium Pro", "Wi-Fi 6E", "Tizen Smart TV"] },
@@ -8220,6 +8329,7 @@ function initMasterMount() {
       { id: "product_29", brand: "LG", model: "55MRGB85B6C", sizeInches: 55, screenType: "MRGB",
         title: "טלוויזיה חכמה \"55 LG MINI RGB EVO AI אל ג`י דגם 55MRGB85B6C", priceILS: 3340, imageUrl: "assets/products/product_29.jpg", imageUrlWebp: "assets/products/product_29.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["גודל מסך 55 אינץ'", "סוג תצוגה Mini RGB evo AI", "רזולוציה 4K Ultra HD", "מעבד α8 AI 4K Gen3"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך Mini RGB evo AI בגודל 55 אינץ'", "רזולוציית 4K Ultra HD", "מעבד α8 AI 4K Gen3", "100% כיסוי צבע כפול (DCI-P3 ו-Adobe RGB)", "AI Picture Pro לשיפור איכות התמונה", "AI HDR Remastering לשדרוג תוכן SDR ל-HDR", "מערכת הפעלה webOS", "AI Hub לחוויית שימוש מותאמת אישית", "תמיכה ב-Google Gemini וב-Microsoft Copilot", "תוכנית webOS Re לעדכוני מערכת", "דירוג אנרגטי E"] },
@@ -8229,6 +8339,7 @@ function initMasterMount() {
       { id: "product_30", brand: "TCL", model: "55C7L", sizeInches: 55, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה 55\" TCL 4K SQD-MINI LED טי.סי.אל דגם 55C7L", priceILS: 4290, imageUrl: "assets/products/product_30.jpg", imageUrlWebp: "assets/products/product_30.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["עוצמת הארה גבוהה", "מעבד בינה מלאכותית", "יציאת שמע דיגיטלית", "טכנולוגיות גיימינג מתקדמות"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["טכנולוגיית Super QD (QLED) פורצת הדרך של TCL", "מגדירה מחדש את חוויית הצפייה עם צבעים מדויקים יותר", "בהירות עוצמתית ושליטה חכמה באור לכל פרט בתמונה", "צבעים טהורים ומדויקים יותר,בהירות עוצמתית", "לכל סצנה ,נפח צבע רחב יותר (Wide Color Gamut)", "שליטה מתקדמת באור להפחתת הילות וחוויית HDR עשירה ומלאת פרטים", "טכנולוגיית Ultra Color Filter מרחיבה את מגוון הצבעים ב־33%", "ומאפשרת הצגת צבעים עשירים, חיים ומדויקים", "טכנולוגיית Super QD מספקת שיפור של עד 69% בדיוק הצבעים", "לקבלת תמונה טבעית, מדויקת ועשירה יותר", "טכנולוגייתMiniLED המאפשרת תמונה בהירה ומציאותית יותר", "בזכות מספר גבוה יותר של נורות לד זעירות ומספר יחסי גבוה יותר של אזורי תאורה", "עמעום מדויק עם אזורי תאורה נפרדים (Full Array Local Dimming zones)", "המבטיחים תמונה בקונטרסט גבוה, ללא הילה ובצבעים עמוקים ומדויקים"] },
@@ -8242,6 +8353,7 @@ function initMasterMount() {
       { id: "product_31", brand: "SAMSUNG", model: "QE55LS03H", sizeInches: 55, screenType: "QLED",
         title: "טלוויזיה חכמה \"55 SAMSUNG THE FRAME QLED סמסונג דגם QE55LS03H", priceILS: 4280, imageUrl: "assets/products/product_31.jpg", imageUrlWebp: "assets/products/product_31.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["עיצוב מסגרת מודרני המשתלב בחלל", "רזולוציית 4K UHD ‏3840×2160", "מערכת הפעלה Tizen Smart TV", "FreeSync Premium"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך QLED בגודל 55 אינץ'", "רזולוציית 4K UHD ‏3840×2160", "קצב רענון 144Hz עם תמיכה ב-VRR", "Glare Free להפחתת השתקפויות", "מעבד NQ4 AI Gen2", "שדרוג 4K באמצעות AI", "Quantum HDR ו-HDR10+", "מצב אומנות The Frame", "Art Store", "Samsung Vision AI Companion", "מערכת הפעלה Tizen™ Smart TV", "FreeSync Premium", "One Connect Box", "דירוג אנרגטי F"] },
@@ -8254,6 +8366,7 @@ function initMasterMount() {
       { id: "product_32", brand: "TCL", model: "55A300", sizeInches: 55, screenType: "QLED",
         title: "טלוויזיה חכמה \"55 QLED כולל סאונד בר TCL טי.סי.אל דגם 55A300 PRO", priceILS: 5590, imageUrl: "assets/products/product_32.jpg", imageUrlWebp: "assets/products/product_32.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED 4K", "עיצוב ייחודי מסך בגימור מט המונע השתקפויות", "מערכת ההפעלה הטובה בעולם של Google TV", "סאונד בר בעוצמה של 230W"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך בטכנולוגיית QLED 4K", "עיצוב ייחודי מסך בגימור מט המונע השתקפויות", "מדף מעוצב בגב המסך הניתן לפירוק", "כולל מתקן קיר עבור הטלוויזיה והסאונד", "מערכת ההפעלה הטובה בעולם של Google TV", "המאפשרת הורדת אינספור אפליקציות", "בהן גם Yes, פרטנר TV, HOT, סלקום TV וצפייה בהן ללא שלט וממיר נוספים", "AI ART: תוכן מותאם אישית", "מערכת סאונד מבית Bang & Olufsen (B&O)", "הכוללת סאונד בר בעוצמה של 230W", "3.1.2 ערוצי שמע", "תומך Dolby Vision IQ & HDR10+", "זווית צפייה רחבה במיוחד עד 178 מעלות", "מסגרת ניתנת להחלפה (מסגרת נוספת אינה כלולה במוצר)", "מסך דק ומעוצב, תצוגת מט ללא השתקפויות", "מסגרת מגנטית דקה ושטוחה הניתנת להחלפה", "אפליקציה מיוחדת המאפשרת הקרנת אומנות/תמונות בזמן כיבוי הטלוויזיה", "ניהול כבלים לסידור אסתטי"] },
@@ -8269,6 +8382,7 @@ function initMasterMount() {
       { id: "product_33", brand: "LG", model: "OLED55C66LA", sizeInches: 55, screenType: "OLED",
         title: "טלוויזיה חכמה 55 אינץ` LG OLED אל ג`י דגם OLED55C66LA", priceILS: 5390, imageUrl: "assets/products/product_33.jpg", imageUrlWebp: "assets/products/product_33.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מעבד אלפא 11 AI 4K לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות", "צבע שחור מוחלט וצבעוניות מושלמת", "תמונה וצליל משופרים מבוססי בינה מלאכותית"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מעבד אלפא 11 AI 4K  לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות Brightness Booster", "צבע שחור מוחלט וצבעוניות מושלמת", "webOS Re:New Program ‏תוכנית המבטיחה 4 שנים", "של שדרוגים על פני תקופה של 5 שנים", "AI Picture, AI Sound תמונה וצליל משופרים", "מבוססי בינה מלאכותית מופעלים ע\"י מעבד אלפא 11"] },
@@ -8293,6 +8407,7 @@ function initMasterMount() {
       { id: "product_34", brand: "SAMSUNG", model: "QE55S85H", sizeInches: 55, screenType: "OLED",
         title: "טלוויזיה חכמה \"55 SAMSUNG OLED 4K סמסונג דגם QE55S85H", priceILS: 5190, imageUrl: "assets/products/product_34.jpg", imageUrlWebp: "assets/products/product_34.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["פיקסלים בתאורה עצמית", "מעבד תמונה חכם NQ4 AI Gen2 המבוסס על בינה מלאכותית", "שיפור אוטומטי של תכנים לרזולוציית 4K", "עיצוב דק עם מסגרת מינימלית בארבעת צדי המסך"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך OLED בגודל 55 אינץ' וברזולוציית 4K", "פיקסלים בתאורה עצמית לקבלת שחור עמוק וניגודיות גבוהה", "מעבד תמונה חכם NQ4 AI Gen2 המבוסס על בינה מלאכותית", "שיפור אוטומטי של תכנים לרזולוציית 4K", "שיפור חכם של תמונות באיכות SDR לרמת HDR", "התאמה חכמה של הגדרות התמונה בהתאם לתוכן המוצג", "שיפור והעשרת הצבעים באמצעות בינה מלאכותית", "תמיכה בתקן PANTONE להצגת צבעים מדויקת", "שיפור תחושת העומק והניגודיות בתמונה", "זווית צפייה רחבה", "ציפוי להפחתת השתקפויות על המסך", "קצב רענון של 120Hz לחוויית צפייה חלקה", "תמיכה במשחקים ברזולוציית 4K בקצב של עד 120Hz", "תמיכה בטכנולוגיות NVIDIA G-SYNC ו-AMD FreeSync Premium", "התאמה אוטומטית של הגדרות התמונה למשחק באמצעות בינה מלאכותית", "סרגל משחקים עם מידע והגדרות משחק בזמן אמת", "מערכת שמע בהספק כולל של 20W", "תמיכה בצליל היקפי Dolby Atmos", "מעקב אחר אובייקטים באמצעות מערכת OTS Lite", "התאמה אוטומטית של הצליל לסוג התוכן", "שיפור ברור של עוצמת הדיבור והקולות", "סנכרון בין רמקולי הטלוויזיה למקרן קול תואם באמצעות Q-Symphony", "מערכת הפעלה חכמה Tizen", "שליטה קולית באמצעות Bixby", "תמיכה ב-SmartThings וב-Matter", "תמיכה ב-Apple AirPlay וב-Google Cast", "חיבור אלחוטי באמצעות Wi-Fi 6E", "Bluetooth בגרסה 5.3", "מערכת אבטחה Samsung Knox", "תמיכה בחיבור מצלמת רשת", "עיצוב דק עם מסגרת מינימלית בארבעת צדי המסך", "מעמד בעיצוב ליניארי פשוט בצבע שחור"] },
@@ -8317,6 +8432,7 @@ function initMasterMount() {
       { id: "product_35", brand: "SAMSUNG", model: "MRE55R85H", sizeInches: 55, screenType: "RGB Mini-LED",
         title: "טלוויזיה חכמה \"55 SAMSUNG MICRO RGB סמסונג דגם MRE55R85H", priceILS: 5940, imageUrl: "assets/products/product_35.jpg", imageUrlWebp: "assets/products/product_35.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["עיצוב Monolith Edge", "תאורת LED אחורית RGB", "רזולוציה 3840 × 2160", "שדרוג תמונה 4K AI Upscaling"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["גודל מסך 55 אינץ'", "טכנולוגיית Micro RGB", "Micro RGB AI Engine", "Micro RGB Precision Color 100", "Samsung Vision AI Companion", "רזולוציית 4K", "קצב רענון עד 144Hz", "Micro RGB HDR+", "4K AI Upscaling", "Motion Xcelerator 144Hz", "Dolby Atmos", "OTS Lite"] },
@@ -8327,6 +8443,7 @@ function initMasterMount() {
       { id: "product_36", brand: "SAMSUNG", model: "QE55LS03HW", sizeInches: 55, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"55 SAMSUNG THE FRAME PRO QLED סמסונג דגם QE55LS03HW", priceILS: 5990, imageUrl: "assets/products/product_36.jpg", imageUrlWebp: "assets/products/product_36.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["סוג תצוגה Neo QLED", "עיצוב מסגרת מודרני", "רזולוציה 3840×2160", "קצב רענון 144Hz"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך Neo QLED בגודל 55 אינץ'", "רזולוציית 4K UHD ‏3840×2160", "קצב רענון 144Hz עם תמיכה ב-VRR", "Glare Free להפחתת השתקפויות", "מעבד NQ4 AI Gen3", "שדרוג 4K AI Pro", "Quantum Matrix Technology Slim", "Neo Quantum HDR", "HDR10+", "מצב אומנות The Frame", "Art Store", "Samsung Vision AI Companion", "מערכת הפעלה Tizen™ Smart TV", "FreeSync Premium Pro", "Wireless One Connect", "דירוג אנרגטי F"] },
@@ -8339,6 +8456,7 @@ function initMasterMount() {
       { id: "product_37", brand: "SAMSUNG", model: "UE65U8000H", sizeInches: 65, screenType: "Crystal-UHD",
         title: "טלוויזיה חכמה \"65 SAMSUNG UHD סמסונג דגם UE65U8000H", priceILS: 2550, imageUrl: "assets/products/product_37.jpg", imageUrlWebp: "assets/products/product_37.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מעבד Crystal Processor 4K", "משפר צבעים להעצמת הבעת הצבעים", "סוג מוצר LED", "HDR10+ תמיכה"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מעבד Crystal Processor 4K", "לשיפור איכות התמונה והצליל", "שדרוג תמונה ל־4K באמצעות 4K Upscaling", "טכנולוגיית PurColour להצגת צבעים טבעיים ועשירים", "משפר צבעים להעצמת הבעת הצבעים", "HDR עם HDR10+ לשיפור העומק והפירוט בתמונה", "Mega Contrast לשיפור הניגודיות", "UHD Dimming לשליטה בתאורה ובניגודיות", "Contrast Enhancer לשיפור עומק התמונה", "Motion Xcelerator לשיפור החלקות בתנועה", "Filmmaker Mode לצפייה בתוכן כפי שיוצריו התכוונו", "מצב כדורגל עם הגדרות תמונה ושמע המותאמות לצפייה במשחקים", "Samsung Vision AI Companion", "מערכת הפעלה Tizen™ Smart TV", "Samsung TV Plus", "Samsung Knox Security", "Gaming Hub", "SmartThings", "Apple AirPlay", "Google Cast", "Bixby", "תמיכה ב־VRR", "Auto Game Mode (ALLM)", "HGiG", "Q-Symphony", "Object Tracking Sound Lite"] },
@@ -8356,6 +8474,7 @@ function initMasterMount() {
       { id: "product_38", brand: "LG", model: "65NU850B6LA", sizeInches: 65, screenType: "NanoCell",
         title: "טלוויזיה חכמה \"65 LG NANO UHD AI אל ג`י דגם 65NU850B6LA", priceILS: 2250, imageUrl: "assets/products/product_38.jpg", imageUrlWebp: "assets/products/product_38.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["Nano Detail Enhancer מנתח כל פריים כדי לשפר את הניגודיות", "טכנולוגיית Upscaling (הגדלת רזולוציה) 4K", "צליל היקפי סוחף עם Virtual 9.1.2 Ch", "מעבד alpha 7 AI 4K Gen9"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["Nano Detail Enhancer מנתח כל פריים כדי לשפר את הניגודיות, הפרטים והבהירות ברמת הננו (nano).", "אלגוריתמים מתוחכמים של Upscaling (הגדלת רזולוציה) מביאים את הרזולוציה עד ל-4K.", "צפו בתוכן האהוב עליכם באיכות חדה יותר וטובה יותר"] },
@@ -8382,6 +8501,7 @@ function initMasterMount() {
       { id: "product_39", brand: "SAMSUNG", model: "UE65M70H", sizeInches: 65, screenType: "Mini-LED",
         title: "טלוויזיה חכמה \"65 SAMSUNG MINI LED סמסונג דגם UE65M70H", priceILS: 2589, imageUrl: "assets/products/product_39.jpg", imageUrlWebp: "assets/products/product_39.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Mini LED", "חוויית צפייה חכמה", "רזולוציה 3840 × 2160", "קצב רענון 50Hz"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["טכנולוגיית Mini LED", "רזולוציית 4K UHD - 3840 × 2160", "מעבד Mini LED Processor 4K", "טכנולוגיית Pure Spectrum Colour", "טכנולוגיית Mini LED HDR", "טכנולוגיית Supreme Mini LED Dimming", "טכנולוגיית Contrast Enhancer", "טכנולוגיית 4K Upscaling", "טכנולוגיית Colour Booster", "טכנולוגיית Motion Xcelerator", "תמיכה ב־HDR10+", "Filmmaker Mode", "Samsung Vision AI Companion", "מערכת הפעלה Tizen Smart TV", "Samsung Gaming Hub", "תמיכה ב־VRR", "תמיכה ב־ALLM", "תמיכה ב־HGiG", "Object Tracking Sound Lite", "Adaptive Sound", "Q-Symphony", "Samsung Knox Security", "SmartThings", "AI Energy Mode", "Samsung TV Plus", "Apple AirPlay", "Google Cast", "Karaoke"] },
@@ -8397,6 +8517,7 @@ function initMasterMount() {
       { id: "product_40", brand: "TCL", model: "65P6L", sizeInches: 65, screenType: "LED",
         title: "טלוויזיה חכמה \"65 TCL UHD טי.סי.אל דגם 65P6L", priceILS: 2480, imageUrl: "assets/products/product_40.jpg", imageUrlWebp: "assets/products/product_40.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית 4K UHD DLED TV", "מערכת הפעלה Google TV", "צג מתקדם בטכנולוגיית HVA", "זווית צפייה רחבה במיוחד עד 178°"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך בטכנולוגיית 4K UHD DLED TV", "מערכת הפעלה Google TV", "סאונד איכותי כולל תמיכה בטכנולוגיית Dolby Vision", "מעבד תמונה AiPQ", "תומך HDR10, HLG", "צג מתקדם בטכנולוגיית HVA", "זווית צפייה רחבה במיוחד עד 178°", "מסך בעיצוב מינימליסטי"] },
@@ -8411,6 +8532,7 @@ function initMasterMount() {
       { id: "product_41", brand: "LG", model: "65QNED70B6T", sizeInches: 65, screenType: "QNED + Mini-LED",
         title: "טלוויזיה חכמה 65 אינץ` LG QNED AI QNED70 MINI LED אל ג`י דגם 65QNED70B6T", priceILS: 2690, imageUrl: "assets/products/product_41.jpg", imageUrlWebp: "assets/products/product_41.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["צבעים חיים ומדויקים", "פירוט חד ומדויק עם טכנולוגיית MiniLED", "מעבד AI 4K אלפא 7 דור 9", "תוכנית  webOS Re:New Program"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["צבעים חיים ומדויקים הודות לטכנולוגיית Dynamic QNED color", "פירוט חד ומדויק עם טכנולוגיית MiniLED ועמעום מקומי מתקדם", "מעבד AI 4K אלפא 7 דור 9 לתמונה וצליל ברורים וחדים", "תוכנית webOS Re:New Program", "מבטיחה 4 שנים של שדרוגים על פני תקופה של 5 שנים"] },
@@ -8434,6 +8556,7 @@ function initMasterMount() {
       { id: "product_42", brand: "TCL", model: "65P7L", sizeInches: 65, screenType: "QLED",
         title: "טלוויזיה חכמה \"65 TCL QLED טי.סי.אל דגם 65P7L", priceILS: 2690, imageUrl: "assets/products/product_42.jpg", imageUrlWebp: "assets/products/product_42.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED 4K", "מערכת הפעלה Google TV", "זווית צפייה רחבה במיוחד עד 178°", "מסך דק בעיצוב מודרני"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך בטכנולוגיית QLED 4K", "מערכת הפעלה Google TV", "מעבד תמונה AiPQ", "תומך HDR10+ ,HLG ,HDR ,Dolby Vision", "צג מתקדם בטכנולוגיית HVA", "זווית צפייה רחבה במיוחד - עד 178°", "TCL AI מזהה, מתאים ומשפר את התמונה בזמן אמת", "מסך דק בעיצוב מודרני"] },
@@ -8447,6 +8570,7 @@ function initMasterMount() {
       { id: "product_43", brand: "SAMSUNG", model: "UE65M80H", sizeInches: 65, screenType: "Mini-LED",
         title: "טלוויזיה חכמה \"65 SAMSUNG MINI LED סמסונג דגם UE65M80H", priceILS: 2550, imageUrl: "assets/products/product_43.jpg", imageUrlWebp: "assets/products/product_43.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["סוג מוצר LED", "טכנולוגיית תצוגה Mini LED", "HDR Mini LED HDR", "עיצוב MetalStream במראה דק ומודרני"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["טכנולוגיית Mini LED לשליטה מדויקת בבהירות ובניגודיות", "מעבד NQ4 AI Gen2 עם 20 רשתות עצביות", "לשיפור תמונה, צבע, ניגודיות, תנועה ושמע", "4K AI Upscaling לשדרוג תכנים לרזולוציית 4K", "Mini LED HDR לשיפור הניגודיות והפרטים", "HDR10+ לשיפור טווח הצבעים והניגודיות", "Auto HDR Remastering לשדרוג תכני SDR למראה דמוי HDR", "Pure Spectrum Colour להצגת צבעים טבעיים ועשירים", "Colour Booster Pro לשיפור צבעים באמצעות AI", "Real Depth Enhancer לשיפור תחושת העומק בתמונה", "AI Customisation Mode להתאמת הגדרות התמונה בהתאם לתוכן", "Motion Xcelerator 144Hz לתנועה חלקה במיוחד", "קצב רענון 144Hz VRR", "קצב רענון טבעי 100Hz", "DLG 240Hz", "Samsung Vision AI Companion", "AI Football Mode לשיפור ניגודיות וצבע בזמן צפייה בכדורגל", "AI Sound Controller לשליטה נפרדת בקולות ובאפקטים", "Adaptive Sound+ להתאמת השמע לתוכן ולסביבה", "Object Tracking Sound Lite", "Q-Symphony לסנכרון בין רמקולי הטלוויזיה לסאונדבר תואם", "מערכת Tizen™ Smart TV", "Samsung TV Plus", "Samsung Knox Security", "SmartThings Hub", "Art Store", "Generative Wallpaper", "Now Brief", "Gaming Hub", "AI Gaming Optimiser", "FreeSync Premium", "Game Bar", "Super Ultra Wide Game View", "VRR", "HGiG"] },
@@ -8464,6 +8588,7 @@ function initMasterMount() {
       { id: "product_44", brand: "TCL", model: "65P8L", sizeInches: 65, screenType: "QD Mini-LED",
         title: "טלוויזיה חכמה \"65 TCL QD-MINI LED טי.סי.אל דגם 65P8L", priceILS: 3090, imageUrl: "assets/products/product_44.jpg", imageUrlWebp: "assets/products/product_44.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["פאנל HVA", "קצב רענון טבעי 144Hz", "תמיכה ב־4K 144Hz", "מערכת שמע 2.0 ערוצים"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך 65 אינץ' ברזולוציית 4K UHD", "טכנולוגיית QD-Mini LED Dimming", "טכנולוגיית QLED", "פאנל HVA", "קצב רענון טבעי 144Hz", "תמיכה ב־4K 144Hz", "288Hz VRR Game Accelerator דרך HDMI 1 ו־2", "מעבד AiPQ עם AI Clarity, AI Motion ו־AI HDR", "Google TV", "TCL AI", "מרחב צבעים 93% DCI-P3", "DTS Virtual:X", "Dolby Atmos", "מערכת שמע 2.0 ערוצים", "עיצוב Slim & Uni-body"] },
@@ -8475,6 +8600,7 @@ function initMasterMount() {
       { id: "product_45", brand: "LG", model: "65MRGB85B6C", sizeInches: 65, screenType: "MRGB",
         title: "טלוויזיה חכמה 65\" LG 4K MINI RGB AI אל ג`י דגם 65MRGB85B6C", priceILS: 3840, imageUrl: "assets/products/product_45.jpg", imageUrlWebp: "assets/products/product_45.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית RGB Primary Color Pro", "SMART TV מתקדם", "מעבד Alpha 8 AI Gen 3", "חוויית צפייה מתקדמת"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["טלוויזיה חכמה המשלבת טכנולוגיות תצוגה מתקדמות", "עם צבעים עשירים, בהירות גבוהה וחוויית צפייה חלקה במיוחד", "טכנולוגיית RGB Primary Color Pro יחד עם תאורת Mini RGB", "מספקות צבעים מדויקים, ניגודיות גבוהה וטווח צבעים רחב במיוחד", "מעבד Alpha 8 AI 4K דור 3 משפר את איכות התמונה", "והצליל בזמן אמת באמצעות בינה מלאכותית ומתאים את התוכן לסוג הצפייה", "קצב רענון טבעי של 120Hz עם תמיכה ב־VRR עד 144Hz", "מספקים תנועה חלקה במיוחד למשחקים, ספורט ותוכן מהיר", "מערכת ההפעלה webOS 26 כוללת ממשק חכם", "שליטה קולית, תמיכה באפליקציות פופולריות ושדרוגי מערכת לאורך שנים", "FreeSync, HGIG ו־ALLM לחוויית משחק מהירה ומדויקת", "מערכת הסאונד AI Sound Pro מספקת סאונד", "וירטואלי 11.1.2 ערוצים לקבלת שמע עשיר וסוחף"] },
@@ -8491,6 +8617,7 @@ function initMasterMount() {
       { id: "product_46", brand: "SAMSUNG", model: "QE65QN70H", sizeInches: 65, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG QLED סמסונג דגם QE65QN70H", priceILS: 3580, imageUrl: "assets/products/product_46.jpg", imageUrlWebp: "assets/products/product_46.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["Quantum Mini LED שליטה מדויקת באזורי התאורה", "רזולוציית 4K UHD ‏3840×2160", "מעבד NQ4 AI Processor", "AirSlim עיצוב דק במיוחד"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך 65 אינץ'", "רזולוציית 4K UHD ‏3840×2160", "טכנולוגיית Quantum Mini LED", "מעבד NQ4 AI Processor", "4K Upscaling", "NQ HDR", "HDR10+ Adaptive", "Color Booster Pro", "Supreme Mini LED Dimming", "Motion Xcelerator", "Samsung Vision AI Companion", "AI Customisation Mode", "AI Football Mode", "AI Gaming Optimiser", "Gaming Hub", "Q-Symphony", "OTS Lite", "Adaptive Sound+", "מערכת הפעלה Tizen Smart TV"] },
@@ -8503,6 +8630,7 @@ function initMasterMount() {
       { id: "product_47", brand: "LG", model: "OLED65B66LA", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה \"65 LG OLED אל ג`י דגם OLED65B66LA", priceILS: 4680, imageUrl: "assets/products/product_47.jpg", imageUrlWebp: "assets/products/product_47.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מסך OLED 4K בגודל 65 אינץ'", "מעבד α8 AI 4K דור 3", "צבע שחור מוחלט ו-100% נפח צבע", "קצב רענון טבעי 120Hz"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך OLED 4K בגודל 65 אינץ'", "מעבד α8 AI 4K דור 3", "צבע שחור מוחלט ו-100% נפח צבע", "קצב רענון טבעי 120Hz", "תמיכה ב-Dolby Vision, HDR10 ו-HLG", "FILMMAKER Mode לחוויית צפייה קולנועית", "webOS 26 עם תוכנית webOS Re לעדכונים למשך 5 שנים", "תמיכה ב-Apple AirPlay 2, Apple Home ו-Google Cast", "שלט חכם עם חיפוש וזיהוי קולי", "Wi-Fi 6 ו-Bluetooth 5.3"] },
@@ -8520,6 +8648,7 @@ function initMasterMount() {
       { id: "product_48", brand: "SAMSUNG", model: "QE65QN80H", sizeInches: 65, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG MINI LED סמסונג דגם QE65QN80H", priceILS: 4890, imageUrl: "assets/products/product_48.jpg", imageUrlWebp: "assets/products/product_48.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["שליטה מדויקת בתמונה", "SmartThings תמיכה בבית חכם", "עיצוב דק ואלגנטי", "סוג מוצר Neo QLED"],
         fullSpecSections: [
           { heading: "Quantum Mini LED", items: ["רזולוציית 4K UHD ‏3840×2160", "מעבד NQ4 AI Gen2", "Motion Xcelerator 144Hz", "100% נפח צבע", "NQ HDR+", "4K AI Upscaling", "Samsung Vision AI", "AI HDR Remastering", "Dolby Atmos", "FreeSync Premium Pro", "Wi-Fi 6E", "Tizen Smart TV"] },
@@ -8533,6 +8662,7 @@ function initMasterMount() {
       { id: "product_49", brand: "SAMSUNG", model: "QE65LS03H", sizeInches: 65, screenType: "QLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG THE FRAME QLED סמסונג דגם QE65LS03H", priceILS: 4980, imageUrl: "assets/products/product_49.jpg", imageUrlWebp: "assets/products/product_49.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["עיצוב מסגרת מודרני המשתלב בחלל", "רזולוציית 4K UHD ‏3840×2160", "מערכת הפעלה Tizen Smart TV", "FreeSync Premium"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך QLED בגודל 65 אינץ'", "רזולוציית 4K UHD ‏3840×2160", "קצב רענון 144Hz עם תמיכה ב-VRR", "Glare Free להפחתת השתקפויות", "מעבד NQ4 AI Gen2", "שדרוג 4K באמצעות AI", "Quantum HDR ו-HDR10+", "מצב אומנות The Frame", "Art Store", "Samsung Vision AI Companion", "מערכת הפעלה Tizen™ Smart TV", "FreeSync Premium", "One Connect Box", "דירוג אנרגטי F"] },
@@ -8545,6 +8675,7 @@ function initMasterMount() {
       { id: "product_50", brand: "SAMSUNG", model: "QE65S85H", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG OLED 4K סמסונג דגם QE65S85H", priceILS: 4840, imageUrl: "assets/products/product_50.jpg", imageUrlWebp: "assets/products/product_50.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["פיקסלים בתאורה עצמית", "מעבד תמונה חכם NQ4 AI Gen2 המבוסס על בינה מלאכותית", "שיפור אוטומטי של תכנים לרזולוציית 4K", "עיצוב דק עם מסגרת מינימלית בארבעת צדי המסך"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך OLED בגודל 65 אינץ' וברזולוציית 4K", "פיקסלים בתאורה עצמית לקבלת שחור עמוק וניגודיות גבוהה", "מעבד תמונה חכם NQ4 AI Gen2 המבוסס על בינה מלאכותית", "שיפור אוטומטי של תכנים לרזולוציית 4K", "שיפור חכם של תמונות באיכות SDR לרמת HDR", "התאמה חכמה של הגדרות התמונה בהתאם לתוכן המוצג", "שיפור והעשרת הצבעים באמצעות בינה מלאכותית", "תמיכה בתקן PANTONE להצגת צבעים מדויקת", "שיפור תחושת העומק והניגודיות בתמונה", "זווית צפייה רחבה", "ציפוי להפחתת השתקפויות על המסך", "קצב רענון של 120Hz לחוויית צפייה חלקה", "תמיכה במשחקים ברזולוציית 4K בקצב של עד 120Hz", "תמיכה בטכנולוגיות NVIDIA G-SYNC ו-AMD FreeSync Premium", "התאמה אוטומטית של הגדרות התמונה למשחק באמצעות בינה מלאכותית", "סרגל משחקים עם מידע והגדרות משחק בזמן אמת", "מערכת שמע בהספק כולל של 20W", "תמיכה בצליל היקפי Dolby Atmos", "מעקב אחר אובייקטים באמצעות מערכת OTS Lite", "התאמה אוטומטית של הצליל לסוג התוכן", "שיפור ברור של עוצמת הדיבור והקולות", "סנכרון בין רמקולי הטלוויזיה למקרן קול תואם באמצעות Q-Symphony", "מערכת הפעלה חכמה Tizen", "שליטה קולית באמצעות Bixby", "תמיכה ב-SmartThings וב-Matter", "תמיכה ב-Apple AirPlay וב-Google Cast", "חיבור אלחוטי באמצעות Wi-Fi 6E", "Bluetooth בגרסה 5.3", "מערכת אבטחה Samsung Knox", "תמיכה בחיבור מצלמת רשת", "עיצוב דק עם מסגרת מינימלית בארבעת צדי המסך", "מעמד בעיצוב ליניארי פשוט בצבע שחור"] },
@@ -8570,6 +8701,7 @@ function initMasterMount() {
       { id: "product_51", brand: "LG", model: "OLED65CS6VA", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה \"65 LG EVO AI אל ג`י דגם OLED65CS6VA", priceILS: 5390, imageUrl: "assets/products/product_51.jpg", imageUrlWebp: "assets/products/product_51.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["גודל מסך 65 אינץ'", "רזולוציה 3840×2160 (4K Ultra HD)", "טכנולוגיית OLED evo", "עיצוב דק במיוחד"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["טכנולוגיית OLED evo 4K", "שחור מושלם (Perfect Black)", "צבעים מושלמים (Perfect Color)", "מעבד α11 AI Processor 4K Gen3", "מנגנון Brightness Booster להגברת הבהירות", "מערכת הפעלה webOS 26", "תמיכה ב-Google Gemini", "תמיכה ב-Microsoft Copilot", "AI Hub להתאמה אישית של חוויית הצפייה", "AI Voice ID לזיהוי משתמש באמצעות קול", "AI Concierge להמלצות מותאמות אישית", "AI Chatbot לסיוע חכם", "AI Picture Wizard להתאמת הגדרות התמונה", "AI Sound Wizard להתאמת הגדרות השמע", "LG Shield להגנה על פרטיות ואבטחת המידע", "תוכנית webOS Re:New לעדכוני מערכת למשך 5 שנים", "שלט AI Magic Remote כלול", "תמיכה ב-Dolby Vision", "תמיכה ב-Dolby Atmos", "מצב FILMMAKER MODE עם התאמה לתאורת הסביבה", "תמיכה ב-NVIDIA G-SYNC", "תמיכה ב-AMD FreeSync Premium", "תמיכה ב-VRR (קצב רענון משתנה)", "תמיכה ב-ALLM (מצב השהיה נמוכה אוטומטי)", "תמיכה ב-HGiG", "תמיכה בתקן VESA ClearMR", "תמיכה בתקן VESA Display Stream Compression (DSC)", "תמיכה ב-NVIDIA GeForce NOW", "תמיכה בבקרי Bluetooth בעלי זמן תגובה נמוך במיוחד", "חיישן תנועה לזיהוי נוכחות משתמש"] },
@@ -8586,6 +8718,7 @@ function initMasterMount() {
       { id: "product_52", brand: "TCL", model: "65C7L", sizeInches: 65, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה 65\" TCL 4K SQD-MINI LED טי.סי.אל דגם 65C7L", priceILS: 5590, imageUrl: "assets/products/product_52.jpg", imageUrlWebp: "assets/products/product_52.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["עוצמת הארה גבוהה", "מעבד בינה מלאכותית", "יציאת שמע דיגיטלית", "טכנולוגיות גיימינג מתקדמות"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["טכנולוגיית Super QD (QLED) פורצת הדרך של TCL", "מגדירה מחדש את חוויית הצפייה עם צבעים מדויקים יותר", "בהירות עוצמתית ושליטה חכמה באור לכל פרט בתמונה", "צבעים טהורים ומדויקים יותר,בהירות עוצמתית", "לכל סצנה ,נפח צבע רחב יותר (Wide Color Gamut)", "שליטה מתקדמת באור להפחתת הילות וחוויית HDR עשירה ומלאת פרטים", "טכנולוגיית Ultra Color Filter מרחיבה את מגוון הצבעים ב־33%", "ומאפשרת הצגת צבעים עשירים, חיים ומדויקים", "טכנולוגיית Super QD מספקת שיפור של עד 69% בדיוק הצבעים", "לקבלת תמונה טבעית, מדויקת ועשירה יותר", "טכנולוגייתMiniLED המאפשרת תמונה בהירה ומציאותית יותר", "בזכות מספר גבוה יותר של נורות לד זעירות ומספר יחסי גבוה יותר של אזורי תאורה", "עמעום מדויק עם אזורי תאורה נפרדים (Full Array Local Dimming zones)", "המבטיחים תמונה בקונטרסט גבוה, ללא הילה ובצבעים עמוקים ומדויקים"] },
@@ -8599,6 +8732,7 @@ function initMasterMount() {
       { id: "product_53", brand: "SAMSUNG", model: "QE65S90H", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG OLED 4K סמסונג דגם QE65S90H", priceILS: 6800, imageUrl: "assets/products/product_53.jpg", imageUrlWebp: "assets/products/product_53.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מסך OLED עם פיקסלים מאירים עצמאית", "רזולוציית 4K", "מעבד NQ4 AI Gen3", "OLED HDR"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך OLED עם פיקסלים מאירים עצמאית", "רזולוציית 4K", "מעבד NQ4 AI Gen3", "OLED HDR", "4K AI Upscaling Pro", "Motion Xcelerator 165Hz", "Glare Free", "Real Black & Real ColourDolby Atmos", "FreeSyncPremium Pro", "NVI", "DIA G-SYNC", "Samsung Vision AI Companion", "Gaming Hub", "Wi-Fi 6E", "Bluetooth 5.3"] },
@@ -8612,6 +8746,7 @@ function initMasterMount() {
       { id: "product_54", brand: "TCL", model: "65C8L", sizeInches: 65, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה 65\" TCL 4K SQD-MINI LED טי.סי.אל דגם 65C8L", priceILS: 6900, imageUrl: "assets/products/product_54.jpg", imageUrlWebp: "assets/products/product_54.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["עוצמת הארה גבוהה", "מעבד בינה מלאכותית", "יציאת שמע דיגיטלית", "טכנולוגיות גיימינג מתקדמות"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["טכנולוגיית Super QD (QLED) פורצת הדרך של TCL", "מגדירה מחדש את חוויית הצפייה עם צבעים מדויקים יותר", "בהירות עוצמתית ושליטה חכמה באור לכל פרט בתמונה", "צבעים טהורים ומדויקים יותר,בהירות עוצמתית", "לכל סצנה ,נפח צבע רחב יותר (Wide Color Gamut)", "שליטה מתקדמת באור להפחתת הילות וחוויית HDR עשירה ומלאת פרטים", "טכנולוגיית Ultra Color Filter מרחיבה את מגוון הצבעים ב־33%", "ומאפשרת הצגת צבעים עשירים, חיים ומדויקים", "טכנולוגיית Super QD מספקת שיפור של עד 69% בדיוק הצבעים", "לקבלת תמונה טבעית, מדויקת ועשירה יותר", "טכנולוגייתMiniLED המאפשרת תמונה בהירה ומציאותית יותר", "בזכות מספר גבוה יותר של נורות לד זעירות ומספר יחסי גבוה יותר של אזורי תאורה", "עמעום מדויק עם אזורי תאורה נפרדים (Full Array Local Dimming zones)", "המבטיחים תמונה בקונטרסט גבוה, ללא הילה ובצבעים עמוקים ומדויקים"] },
@@ -8625,6 +8760,7 @@ function initMasterMount() {
       { id: "product_55", brand: "LG", model: "OLED65C66LA", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה 65 אינץ` LG 4K OLED אל ג`י דגם OLED65C66LA", priceILS: 6900, imageUrl: "assets/products/product_55.jpg", imageUrlWebp: "assets/products/product_55.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מעבד אלפא 11 AI 4K  לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות", "צבע שחור מוחלט וצבעוניות מושלמת", "תמונה וצליל משופרים מבוססי בינה מלאכותית"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מעבד אלפא 11 AI 4K לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות Brightness Booster", "צבע שחור מוחלט וצבעוניות מושלמת", "webOS Re:New Program ‏תוכנית המבטיחה", "4 שנים של שדרוגים על פני תקופה של 5 שנים", "AI Picture, AI Sound תמונה וצליל משופרים מבוססי", "בינה מלאכותית מופעלים ע\"י מעבד אלפא 11"] },
@@ -8648,6 +8784,7 @@ function initMasterMount() {
       { id: "product_56", brand: "SAMSUNG", model: "QE65LS03HW", sizeInches: 65, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG THE FRAME PRO QLED סמסונג דגם QE65LS03HW", priceILS: 7990, imageUrl: "assets/products/product_56.jpg", imageUrlWebp: "assets/products/product_56.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["סוג תצוגה Neo QLED", "עיצוב מסגרת מודרני", "רזולוציה 3840×2160", "קצב רענון 144Hz"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מסך Neo QLED בגודל 65 אינץ'", "רזולוציית 4K UHD ‏3840×2160", "קצב רענון 144Hz עם תמיכה ב-VRR", "Glare Free להפחתת השתקפויות", "מעבד NQ4 AI Gen3", "שדרוג 4K AI Pro", "Quantum Matrix Technology Slim", "Neo Quantum HDR", "HDR10+", "מצב אומנות The Frame", "Art Store", "Samsung Vision AI Companion", "מערכת הפעלה Tizen™ Smart TV", "FreeSync Premium Pro", "Wireless One Connect", "דירוג אנרגטי F"] },
@@ -8660,6 +8797,7 @@ function initMasterMount() {
       { id: "product_57", brand: "LG", model: "OLED65G66LW", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה 65 אינץ` LG 4K OLED אל ג`י דגם OLED65G66LW", priceILS: 8400, imageUrl: "assets/products/product_57.jpg", imageUrlWebp: "assets/products/product_57.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מעבד אלפא 11 AI 4K  לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות", "צבע שחור מוחלט וצבעוניות מושלמת", "תמונה וצליל משופרים מבוססי בינה מלאכותית"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["מעבד אלפא 11 AI 4K לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות Brightness Booster Ultra", "צבע שחור מוחלט וצבעוניות מושלמת", "webOS Re:New Program ‏ תוכנית המבטיחה", "4 שנים של שדרוגים על פני תקופה של 5 שנים", "AI Picture, AI Sound תמונה וצליל משופרים", "מבוססי בינה מלאכותית מופעלים ע\"י מעבד אלפא 11", "טכנולוגיית Reflection Free, המאפשרת לשמור", "על השחור המושלם של OLED גם בסביבות מוארות"] },
@@ -8682,6 +8820,7 @@ function initMasterMount() {
       { id: "product_58", brand: "SAMSUNG", model: "MRE65R85H", sizeInches: 65, screenType: "RGB Mini-LED",
         title: "טלוויזיה חכמה \"65 SAMSUNG MICRO RGB סמסונג דגם MRE65R85H", priceILS: 8440, imageUrl: "assets/products/product_58.jpg", imageUrlWebp: "assets/products/product_58.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["עיצוב Monolith Edge", "תאורת LED אחורית RGB", "רזולוציה 3840 × 2160", "שדרוג תמונה 4K AI Upscaling"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["גודל מסך 65 אינץ'", "טכנולוגיית Micro RGB", "Micro RGB AI Engine", "Micro RGB Precision Color 100", "Samsung Vision AI Companion", "רזולוציית 4K", "קצב רענון עד 144Hz", "Micro RGB HDR+", "4K AI Upscaling", "Motion Xcelerator 144Hz", "Dolby Atmos", "OTS Lite"] },
@@ -8692,6 +8831,7 @@ function initMasterMount() {
       { id: "product_59", brand: "SAMSUNG", model: "QE65S95H", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG OLED סמסונג דגם QE65S95H", priceILS: 10990, imageUrl: "assets/products/product_59.jpg", imageUrlWebp: "assets/products/product_59.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["מסך ללא מסגרת ב-4 צדדים", "פאנל OLED עם פיקסלים בתאורה עצמית", "זווית צפייה רחבה במיוחד", "רזולוציה 3840 × 2160 4K"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["טלוויזיית OLED חכמה 4K בגודל 65 אינץ'", "טכנולוגיית Glare Free למניעת השתקפויות", "מעבד NQ4 AI Gen3 עם 128 רשתות עצביות AI", "OLED HDR Pro", "שדרוג 4K AI Pro", "AI Motion Enhancer Pro", "Color Booster ProAuto HDR Remastering Pro", "קצב רענון 165Hz עם תמיכה ב-VRR", "חבילת גיימינג מתקדמת", "עם FreeSync Premium Pro ו-G-SYNC", "מערכת הפעלה Tizen Smart TV", "Samsung Vision AI", "Generative Wallpaper", "Dolby Atmos ו-OTS+"] },
@@ -8703,6 +8843,7 @@ function initMasterMount() {
       { id: "product_60", brand: "LG", model: "MRE65R95H", sizeInches: 65, screenType: "RGB Mini-LED",
         title: "טלוויזיה חכמה \"65 SAMSUNG MICRO RGB סמסונג דגם MRE65R95H", priceILS: 16700, imageUrl: "assets/products/product_60.jpg", imageUrlWebp: "assets/products/product_60.webp",
         warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Micro RGB", "עיצוב Infinity Air", "רזולוציה 3840 × 2160", "שדרוג תמונה 4K AI Pro"],
         fullSpecSections: [
           { heading: "מאפיינים", items: ["גודל מסך 65 אינץ'", "טכנולוגיית Micro RGB", "Micro RGB AI Engine Pro", "Micro RGB Precision Color 100", "Samsung Vision AI Companion", "רזולוציית 4K", "קצב רענון 165Hz עם VRR", "Micro RGB HDR Pro", "שדרוג 4K AI Pro", "AI Motion Enhancer Pro", "Auto HDR Remastering Pro", "Motion Xcelerator 165Hz", "FreeSync Premium Pro", "Dolby Atmos", "OTS+", "One UI Tizen"] },
@@ -9320,6 +9461,22 @@ function initMasterMount() {
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeBundleModal(); closeProductPage(); closeCartPanel(); } });
 
   /* ================= STANDALONE PRODUCTS WHEEL (sold with delivery included, no bundle) ================= */
+  /* סימני-מוצר עגולים ("יבואן רשמי" / "אחריות Master Mount") - נגזרים מ-p.badges (מגיע מהסנכרון
+     מלוח-הניהול). role="img"+aria-label במקום טקסט-גלוי-לקורא-מסך (הטקסט בתוך העיגול הוא חלק
+     מהאיור, aria-hidden), כדי שלא יוקרא-פעמיים/יקטע-לשני-חלקים. lg=true לדף-המוצר (גדול). */
+  var MM_BADGE_DEFS = {
+    officialImporter: { cls: "mm-badge-importer", label: "יבואן רשמי", inner: '<span>יבואן</span><span>רשמי</span>' },
+    mmWarranty: { cls: "mm-badge-warranty", label: "אחריות Master Mount", inner: '<span class="mm-badge-he">אחריות</span><span class="mm-badge-en">MASTER</span><span class="mm-badge-en">MOUNT</span>' }
+  };
+  function productBadgesHtml(p, lg) {
+    var list = ((p && p.badges) || []).filter(function (k) { return MM_BADGE_DEFS[k]; });
+    if (!list.length) return "";
+    return '<div class="mm-badges' + (lg ? " mm-badges-lg" : "") + (list.length > 1 ? " mm-badges-two" : "") + '">' +
+      list.map(function (k) {
+        var d = MM_BADGE_DEFS[k];
+        return '<span class="mm-badge ' + d.cls + '" role="img" aria-label="' + d.label + '"><span aria-hidden="true" style="display:contents">' + d.inner + '</span></span>';
+      }).join("") + '</div>';
+  }
   function productThumbHtml(p) {
     return p.imageUrl ? catalogImgHtml(p.imageUrl, p.imageUrlWebp, "") :
       '<svg class="icon-fallback" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M9 20h6M12 17v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
@@ -9382,7 +9539,7 @@ function initMasterMount() {
     return '<div class="flat-card" role="button" tabindex="0" aria-label="' + __productCardLabel + '" onclick="this.focus();window.__openProductPage(\'' + p.id + '\')" onkeydown="if(event.key===&quot;Enter&quot;||event.key===&quot; &quot;){event.preventDefault();window.__openProductPage(\'' + p.id + '\')}">' +
       (isBestSeller(p) ? '<span class="best-seller-badge">מומלץ</span>' : '') +
       brandLogoChipHtml(p.brand) +
-      '<div class="flat-card-thumb">' + productThumbHtml(p) + '</div>' +
+      '<div class="flat-card-thumb">' + productThumbHtml(p) + productBadgesHtml(p) + '</div>' +
       '<div class="flat-card-title">' + (p.title || (p.brand + ' ' + p.model)) + '</div>' +
       '<div class="flat-card-sub">' + productSub + '</div>' +
       '<div class="flat-card-price">' + fmt(p.priceILS) + '</div>' +
@@ -9649,9 +9806,9 @@ function initMasterMount() {
 
     /* הנגשה (WCAG 1.1.1): alt תיאורי (לא ריק) לתמונת-המוצר הראשית בדף-הפריט - נשאב מ-p.title
        (כבר כולל מותג/דגם/גודל, אותו טקסט שכבר מוצג ב-productPageTitle) - לא-מומצא. */
-    document.getElementById("productPageMedia").innerHTML = p.imageUrl
+    document.getElementById("productPageMedia").innerHTML = (p.imageUrl
       ? catalogImgHtml(p.imageUrl, p.imageUrlWebp, String(p.title || (p.brand + " " + p.model)).replace(/"/g, "&quot;"))
-      : productThumbHtml(p);
+      : productThumbHtml(p)) + productBadgesHtml(p, true);
     document.getElementById("productPageBrand").textContent = p.brand;
     document.getElementById("productPageTitle").textContent = p.title;
     document.getElementById("productPageMeta").textContent = (p.screenType ? p.screenType + " · " : "") + (p.sizeInches ? p.sizeInches + '"' : "");
