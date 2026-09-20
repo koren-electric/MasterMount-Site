@@ -7691,6 +7691,162 @@ fieldset.step-fieldset legend {
   }
 }
 
+/* --- שלב "בחירת מתקן" (20.9.2026): הערת משנה בצ'יפ + קטלוג מתקנים צף (כותרת - תמונה קטנה - מחיר) --- */
+.multi-chip .wc-sub.wc-sub-note {
+  margin-bottom: 4px;
+}
+
+.mount-cat-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 260;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: #000000ad;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.mount-cat-dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(620px, 100%);
+  max-height: min(88vh, 760px);
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px -20px #000000a6;
+}
+
+.mount-cat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.mount-cat-head h3:focus {
+  outline: none;
+}
+
+.mount-cat-head h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.mount-cat-close {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+
+.mount-cat-list {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 2px 14px 16px;
+}
+
+.mount-cat-group {
+  margin: 16px 4px 8px;
+  color: var(--text-secondary);
+  font-size: .88rem;
+  font-weight: 800;
+}
+
+.mount-cat-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 68px;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background: var(--surface-2);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.mount-cat-row:hover,
+.mount-cat-row.selected {
+  border-color: var(--premium-text);
+}
+
+.mount-cat-row.selected {
+  box-shadow: 0 0 0 1px var(--premium-text) inset;
+}
+
+.mount-cat-row:focus-visible,
+.mount-cat-close:focus-visible {
+  outline: 3px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+.mount-cat-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: .92rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.mount-cat-thumb {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.mount-cat-price {
+  flex: none;
+  min-width: 64px;
+  color: var(--premium-text);
+  font-size: 1rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+@media (width <= 480px) {
+  .mount-cat-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .mount-cat-dialog {
+    width: 100%;
+    max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .mount-cat-row {
+    gap: 10px;
+    padding: 8px 10px;
+  }
+
+  .mount-cat-price {
+    min-width: 56px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -7974,6 +8130,49 @@ function initMovingDay() {
     { id: "ceiling", label: "התקנה מהתקרה (עד גובה 3 מטר)", priceILS: 260 },
     { id: "special", label: "התקנות מיוחדות", priceILS: null }
   ];
+  /* שלב "בחירת מתקן" (אחרי "איך תרצו להתקין"): לכל מסך שנבחר לו "תליה באופן אחר" - מתקן חדש שברשותי (מחיר קבוע)
+     או מתקן מהקטלוג (מחיר המתקן בלבד). המחיר הקבוע מנוהל בדשבורד: movingDayPricing, מפתח own_mount (newmount_own_mount). */
+  var MOVING_OWN_MOUNT_PRICE = 90;
+  /* קטלוג המתקנים לבחירה: עותק תמציתי של CATALOG.mountProducts (installation.html), נוצר ע"י scripts/sync-moving-mountcatalog.ps1 - לא לערוך ידנית */
+  var MOVING_MOUNT_CATALOG = [
+  /* MOVING_MOUNT_CATALOG:BEGIN */
+    { id: "mount_wall_1", name: "מתקן תליה צמוד קיר למסכים עד גודל 65\"", priceILS: 60, locationId: "wall", imageUrl: "assets/products/mount_wall_1.jpg", imageUrlWebp: "assets/products/mount_wall_1.webp" },
+    { id: "mount_wall_2", name: "מתקן תליה צמוד קיר למסכים עד גודל 65\" עם הטיה - TILT עד 12 מעלות", priceILS: 80, locationId: "wall", imageUrl: "assets/products/mount_wall_2.jpg", imageUrlWebp: "assets/products/mount_wall_2.webp" },
+    { id: "mount_wall_3", name: "מתקן תליה צמוד קיר למסכים 70\" - 86\"", priceILS: 110, locationId: "wall", imageUrl: "assets/products/mount_wall_3.jpg", imageUrlWebp: "assets/products/mount_wall_3.webp" },
+    { id: "mount_wall_4", name: "מתקן תליה צמוד קיר למסכים 70\" - 86\" עם הטיה - TILT עד 15 מעלות", priceILS: 140, locationId: "wall", imageUrl: "assets/products/mount_wall_4.jpg", imageUrlWebp: "assets/products/mount_wall_4.webp" },
+    { id: "mount_wall_5", name: "מתקן תליה צמוד קיר למסכים ענקיים 86\" עד 120\"", priceILS: 220, locationId: "wall", imageUrl: "assets/products/mount_wall_5.jpg", imageUrlWebp: "assets/products/mount_wall_5.webp" },
+    { id: "mount_wall_6", name: "מתקן תליה זרוע למסכים בגודל 32\"-55\"", priceILS: 120, locationId: "wall", imageUrl: "assets/products/mount_wall_6.jpg", imageUrlWebp: "assets/products/mount_wall_6.webp" },
+    { id: "mount_wall_7", name: "זרוע תלת מפרקית למסכים בגודל 43\"-65\"", priceILS: 290, locationId: "wall", imageUrl: "assets/products/mount_wall_7.jpg", imageUrlWebp: "assets/products/mount_wall_7.webp" },
+    { id: "mount_wall_8", name: "זרוע דו מפרקית למסכים גדולים עד 86\" יציאה רחוקה מהקיר", priceILS: 490, locationId: "wall", imageUrl: "assets/products/mount_wall_8.jpg", imageUrlWebp: "assets/products/mount_wall_8.webp" },
+    { id: "mount_wall_9", name: "זרוע דו מפרקית למסכים עד 75\"", priceILS: 440, locationId: "wall", imageUrl: "assets/products/mount_wall_9.jpg", imageUrlWebp: "assets/products/mount_wall_9.webp" },
+    { id: "mount_wall_10", name: "זרוע דו מפרקית למסכים עד 86\"", priceILS: 570, locationId: "wall", imageUrl: "assets/products/mount_wall_10.jpg", imageUrlWebp: "assets/products/mount_wall_10.webp" },
+    { id: "mount_wall_11", name: "זרוע תלת מפרקית למסכים עד 110\"", priceILS: 1450, locationId: "wall", imageUrl: "assets/products/mount_wall_11.jpg", imageUrlWebp: "assets/products/mount_wall_11.webp" },
+    { id: "mount_new_1789860140190", name: "מתקן שולחני אוניברסלי למסכים 40\"-70\" משטח זכוכית שחורה", priceILS: 180, locationId: "table", imageUrl: "assets/products/mount_new_1789860140190.jpg", imageUrlWebp: "assets/products/mount_new_1789860140190.webp" },
+    { id: "mount_new_1789860427086", name: "חצובה למסכים 32\"-55\" עם הטיה - TILT עד 8 מעלות", priceILS: 220, locationId: "floor_pole", imageUrl: "assets/products/mount_new_1789860427086.jpg", imageUrlWebp: "assets/products/mount_new_1789860427086.webp" },
+    { id: "mount_copy_1789860465972", name: "חצובה למסכים 32\"-65\" עם הטיה - TILT עד 8 מעלות (עותק)", priceILS: 250, locationId: "floor_pole", imageUrl: "assets/products/mount_copy_1789860465972.jpg", imageUrlWebp: "assets/products/mount_copy_1789860465972.webp" },
+    { id: "mount_new_1789860776203", name: "מתקן תקרה טלסקופי למסכים 40\"-70\" עם הטיה - TILT עד 25 מעלות", priceILS: 290, locationId: "ceiling", imageUrl: "assets/products/mount_new_1789860776203.jpg", imageUrlWebp: "assets/products/mount_new_1789860776203.webp" },
+    { id: "mount_copy_1789860957678", name: "מתקן תקרה טלסקופי למסכים 40\"-75\" עם הטיה - TILT עד 25 מעלות", priceILS: 240, locationId: "ceiling", imageUrl: "assets/products/mount_copy_1789860957678.jpg", imageUrlWebp: "assets/products/mount_copy_1789860957678.webp" },
+    { id: "mount_new_1789858731897", name: "מתקן שולחני אוניברסלי למסכים 32\"-70\"", priceILS: 120, locationId: "table", imageUrl: "assets/products/mount_new_1789858731897.jpg", imageUrlWebp: "assets/products/mount_new_1789858731897.webp" },
+    { id: "mount_new_1789859002052", name: "מתקן שולחני אוניברסלי למסכים 55\"-86\"", priceILS: 140, locationId: "table", imageUrl: "assets/products/mount_new_1789859002052.jpg", imageUrlWebp: "assets/products/mount_new_1789859002052.webp" },
+    { id: "mount_new_1789861400458", name: "עגלה ניידת למסכים עד 75\" צבע לבן", priceILS: 590, locationId: "cart", imageUrl: "assets/products/mount_new_1789861400458.jpg", imageUrlWebp: "assets/products/mount_new_1789861400458.webp" },
+    { id: "mount_new_1789861647170", name: "עגלה ניידת עם נעילה למסכים עד 65\" צבע שחור", priceILS: 550, locationId: "cart", imageUrl: "assets/products/mount_new_1789861647170.jpg", imageUrlWebp: "assets/products/mount_new_1789861647170.webp" },
+    { id: "mount_new_1789861854758", name: "חצובה מעוצבת למסכים עד 65\"", priceILS: 550, locationId: "floor_pole", imageUrl: "assets/products/mount_new_1789861854758.jpg", imageUrlWebp: "assets/products/mount_new_1789861854758.webp" },
+    { id: "mount_new_1789862552990", name: "עגלה ניידת למסכים עד 75\" צבע שחור", priceILS: 690, locationId: "cart", imageUrl: "assets/products/mount_new_1789862552990.jpg", imageUrlWebp: "assets/products/mount_new_1789862552990.webp" },
+    { id: "mount_new_1789862804340", name: "עגלה ניידת טלסקופי למסכים עד 100\"", priceILS: 1350, locationId: "cart", imageUrl: "assets/products/mount_new_1789862804340.jpg", imageUrlWebp: "assets/products/mount_new_1789862804340.webp" },
+    { id: "mount_new_1789862999386", name: "מתקן תקרה חשמלי למסכים עד 86\" עם הטיה - TILT עד 80 מעלות", priceILS: 1450, locationId: "ceiling", imageUrl: "assets/products/mount_new_1789862999386.jpg", imageUrlWebp: "assets/products/mount_new_1789862999386.webp" },
+    { id: "mount_new_1789863280745", name: "מעלית מרהיט למסכים עד 65\"", priceILS: 1990, locationId: "special", imageUrl: "assets/products/mount_new_1789863280745.jpg", imageUrlWebp: "assets/products/mount_new_1789863280745.webp" },
+    { id: "mount_new_1789864023402", name: "רצפה תקרה למסכים עד 85\" צבע שחור - התאמה אישית", priceILS: 3250, locationId: "floor_pole", imageUrl: "assets/products/mount_new_1789864023402.jpg", imageUrlWebp: "assets/products/mount_new_1789864023402.webp" },
+    { id: "mount_new_1789864214563", name: "עמוד ריצפתי למסכים עד 85\" צבע שחור - התאמה אישית", priceILS: 2650, locationId: "floor_pole", imageUrl: "assets/products/mount_new_1789864214563.jpg", imageUrlWebp: "assets/products/mount_new_1789864214563.webp" }
+  /* MOVING_MOUNT_CATALOG:END */
+  ];
+  var MOVING_MOUNT_GROUPS = [
+    { id: "wall", label: "מתקני קיר" },
+    { id: "table", label: "מתקנים שולחניים" },
+    { id: "floor_pole", label: "עמודים רצפתיים" },
+    { id: "cart", label: "עגלות ניידות" },
+    { id: "ceiling", label: "מתקני תקרה" },
+    { id: "special", label: "התקנות מיוחדות" }
+  ];
   var MOVING_STORAGE_OPTIONS = [
     { id: "short", label: "עד 7 ימי עסקים", priceILS: 0 },
     { id: "long", label: "עד 30 ימי עסקים", priceILS: 35, perScreen: true }
@@ -7987,6 +8186,7 @@ function initMovingDay() {
     { id: "sizes", type: "sizes", q: "מה הגודל של כל מסך?", skip: function () { return MOVING.isMax; } },
     { id: "currentMount", type: "currentMount", q: "איך המסכים מותקנים היום?", skip: function () { return MOVING.isMax; } },
     { id: "newMount", type: "newMount", q: "איך תרצו להתקין כל מסך בדירה החדשה?", skip: function () { return MOVING.isMax; } },
+    { id: "mountChoice", type: "mountChoice", q: "במידה ובחרת אופן התקנה אחר בשלב הקודם בחר מן האפשרויות הבאות", skip: function () { return MOVING.isMax || !MOVING.screens.some(function (s) { return s.newMount === "other"; }); } },
     { id: "storage", type: "storage", q: "נאחסן ונשמור עבורכם את הטלוויזיות עד תיאום ההתקנה" },
     { id: "summary", type: "movingSummary", q: "" }
   ];
@@ -8011,9 +8211,98 @@ function initMovingDay() {
   /* טלפון ישראלי: נייד 05X + 7 ספרות, קווי 0[2-4,8,9] + 7 ספרות, VoIP 07X + 7 ספרות */
   function isValidIlPhone(raw) { return /^(05\d{8}|0[2-489]\d{7}|07\d{8})$/.test(normalizeIlPhone(raw)); }
 
+  /* ---------- שלב "בחירת מתקן": עזרי מחיר/תווית + קטלוג צף ---------- */
+  function movingMountChoicePrice(sc) {
+    if (sc.newMount !== "other") return 0;
+    if (sc.mountSource === "own") return MOVING_OWN_MOUNT_PRICE;
+    if (sc.mountSource === "catalog") { var cm = findIn(MOVING_MOUNT_CATALOG, sc.catalogMountId); return cm ? cm.priceILS : 0; }
+    return 0;
+  }
+  function movingMountChoiceLabel(sc) {
+    if (sc.mountSource === "own") return "מתקן חדש שברשותי";
+    if (sc.mountSource === "catalog") { var cm = findIn(MOVING_MOUNT_CATALOG, sc.catalogMountId); return cm ? cm.name : ""; }
+    return "";
+  }
+  /* מידות (32"-55") נשארות בסדר הנכון בתוך טקסט עברי */
+  function mountNameHtml(name) { return String(name || "").replace(/[0-9]+"(?:-[0-9]+")?/g, function (m) { return ltr(m); }); }
+  function movingMountChoiceSummaryRowHtml(sc) {
+    if (sc.newMount !== "other" || !sc.mountSource) return "";
+    return '<div class="moving-summary-row"><span>מתקן</span><strong>' + mountNameHtml(movingMountChoiceLabel(sc)) + priceSuffixHtml(movingMountChoicePrice(sc)) + "</strong></div>";
+  }
+  function movingMountChoiceLine(sc) {
+    if (sc.newMount !== "other" || !sc.mountSource) return "";
+    return "מתקן: " + movingMountChoiceLabel(sc) + priceSuffix(movingMountChoicePrice(sc));
+  }
+
+  var mountCatalogOpenerIdx = -1;
+  var mountCatalogScrollLocked = "";
+  function mountCatalogRowsHtml(selectedId) {
+    return MOVING_MOUNT_GROUPS.map(function (g) {
+      var items = MOVING_MOUNT_CATALOG.filter(function (m) { return m.locationId === g.id; }).sort(function (a, b) { return a.priceILS - b.priceILS; });
+      if (!items.length) return "";
+      return '<div role="group" aria-label="' + g.label + '"><h4 class="mount-cat-group">' + g.label + "</h4>" + items.map(function (m) {
+        var pic = m.imageUrl
+          ? "<picture>" + (m.imageUrlWebp ? '<source type="image/webp" srcset="' + m.imageUrlWebp + '">' : "") + '<img class="mount-cat-thumb" src="' + m.imageUrl + '" alt="" width="56" height="56" loading="lazy"></picture>'
+          : '<span class="mount-cat-thumb" aria-hidden="true"></span>';
+        return '<button type="button" class="mount-cat-row' + (m.id === selectedId ? " selected" : "") + '" data-mount-id="' + m.id + '" aria-pressed="' + (m.id === selectedId ? "true" : "false") + '">' +
+          '<span class="mount-cat-title">' + mountNameHtml(m.name) + "</span>" + pic + '<span class="mount-cat-price">' + ltr(fmt(m.priceILS)) + "</span></button>";
+      }).join("") + "</div>";
+    }).join("");
+  }
+  function closeMountCatalogModal(skipRender) {
+    var ov = document.getElementById("mountCatOverlay");
+    if (!ov) return;
+    ov.parentNode.removeChild(ov);
+    document.body.style.overflow = mountCatalogScrollLocked;
+    var idx = mountCatalogOpenerIdx;
+    mountCatalogOpenerIdx = -1;
+    if (skipRender) return;
+    /* בונה מחדש את השלב (מציג את המצב האמיתי) ומחזיר פוקוס לקבוצת הבחירה של אותו מסך */
+    movingFocusRestoreGridId = "mountChoiceGrid_" + idx;
+    renderMovingStep();
+  }
+  function openMountCatalogModal(screenIdx) {
+    if (document.getElementById("mountCatOverlay")) return;
+    var sc = MOVING.screens[screenIdx];
+    var selectedId = sc && sc.mountSource === "catalog" ? sc.catalogMountId : null;
+    mountCatalogOpenerIdx = screenIdx;
+    var ov = document.createElement("div");
+    ov.className = "mount-cat-overlay";
+    ov.id = "mountCatOverlay";
+    ov.innerHTML = '<div class="mount-cat-dialog" role="dialog" aria-modal="true" aria-labelledby="mountCatTitle">' +
+      '<div class="mount-cat-head"><h3 id="mountCatTitle" tabindex="-1">בחירת מתקן מהקטלוג</h3><button type="button" class="mount-cat-close" aria-label="סגירת הקטלוג">✕</button></div>' +
+      '<div class="mount-cat-list">' + mountCatalogRowsHtml(selectedId) + "</div></div>";
+    document.body.appendChild(ov);
+    mountCatalogScrollLocked = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    ov.addEventListener("click", function (e) {
+      if (e.target === ov) { closeMountCatalogModal(false); return; }
+      var row = e.target.closest ? e.target.closest(".mount-cat-row") : null;
+      if (row) {
+        var s = MOVING.screens[mountCatalogOpenerIdx];
+        if (s) { s.mountSource = "catalog"; s.catalogMountId = row.dataset.mountId; }
+        closeMountCatalogModal(false);
+        return;
+      }
+      if (e.target.closest && e.target.closest(".mount-cat-close")) closeMountCatalogModal(false);
+    });
+    ov.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { e.preventDefault(); closeMountCatalogModal(false); return; }
+      if (e.key !== "Tab") return;
+      var f = Array.prototype.slice.call(ov.querySelectorAll("button:not([disabled])"));
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === ov.querySelector("#mountCatTitle"))) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+    var sel = ov.querySelector(".mount-cat-row.selected");
+    if (sel) { sel.focus(); if (sel.scrollIntoView) sel.scrollIntoView({ block: "center" }); }
+    else ov.querySelector("#mountCatTitle").focus();
+  }
+
   function computeMovingPrice() {
     var countPrice = MOVING.isMax ? MOVING_SCREEN_COUNT_PRICES.max : (MOVING.screenCount ? (MOVING_SCREEN_COUNT_PRICES[MOVING.screenCount] || 0) : 0);
-    var sizePrice = 0, currentMountPrice = 0, newMountPrice = 0, isCustomQuote = false;
+    var sizePrice = 0, currentMountPrice = 0, newMountPrice = 0, mountChoicePrice = 0, isCustomQuote = false;
     if (!MOVING.isMax) {
       MOVING.screens.forEach(function (sc) {
         if (sc.sizeId) sizePrice += (MOVING_SIZE_PRICES[sc.sizeId] || 0);
@@ -8027,6 +8316,7 @@ function initMovingDay() {
           var nm = findIn(MOVING_NEW_MOUNT_OPTIONS, sc.newMountDetail);
           if (nm) { if (nm.priceILS == null) isCustomQuote = true; else newMountPrice += nm.priceILS; }
         }
+        mountChoicePrice += movingMountChoicePrice(sc);
       });
     }
     var storagePrice = 0, storageIsEstimate = false;
@@ -8035,8 +8325,8 @@ function initMovingDay() {
       else { storagePrice = (MOVING.screenCount || 0) * MOVING_STORAGE_LONG_PRICE; }
     }
     return {
-      countPrice: countPrice, sizePrice: sizePrice, currentMountPrice: currentMountPrice, newMountPrice: newMountPrice, storagePrice: storagePrice,
-      total: countPrice + sizePrice + currentMountPrice + newMountPrice + storagePrice,
+      countPrice: countPrice, sizePrice: sizePrice, currentMountPrice: currentMountPrice, newMountPrice: newMountPrice, mountChoicePrice: mountChoicePrice, storagePrice: storagePrice,
+      total: countPrice + sizePrice + currentMountPrice + newMountPrice + mountChoicePrice + storagePrice,
       isCustomQuote: isCustomQuote, storageIsEstimate: storageIsEstimate, isPartialQuote: MOVING.isMax
     };
   }
@@ -8142,7 +8432,7 @@ function initMovingDay() {
         return '<h4 class="screen-block-title moving-summary-screen-title">מסך ' + (i + 1) + "</h4>" +
           '<div class="moving-summary-row"><span>גודל</span><strong>' + sizeLabelHtml(findSizeLabel(sc.sizeId)) + priceSuffixHtml(MOVING_SIZE_PRICES[sc.sizeId]) + "</strong></div>" +
           '<div class="moving-summary-row"><span>מותקן כיום</span><strong>' + findMountLabel(sc.currentMount) + (cm ? priceSuffixHtml(cm.priceILS) : "") + "</strong></div>" +
-          '<div class="moving-summary-row"><span>בדירה החדשה</span><strong>' + newMountLabel + newMountPriceHtml + "</strong></div>";
+          '<div class="moving-summary-row"><span>בדירה החדשה</span><strong>' + newMountLabel + newMountPriceHtml + "</strong></div>" + movingMountChoiceSummaryRowHtml(sc);
       }).join("");
     }
     if (MOVING.storageOption) {
@@ -8209,6 +8499,8 @@ function initMovingDay() {
         lines.push("גודל: " + findSizeLabel(sc.sizeId) + priceSuffix(MOVING_SIZE_PRICES[sc.sizeId]));
         lines.push("מותקן כיום: " + findMountLabel(sc.currentMount) + (cm ? priceSuffix(cm.priceILS) : ""));
         lines.push("בדירה החדשה: " + newMountLabel + newMountPriceStr);
+        var __mcLine = movingMountChoiceLine(sc);
+        if (__mcLine) lines.push(__mcLine);
       });
     }
     if (MOVING.storageOption) {
@@ -8315,7 +8607,7 @@ function initMovingDay() {
         } else {
           MOVING.isMax = false; MOVING.screenCount = +v;
           var arr = [];
-          for (var i = 0; i < +v; i++) arr.push(MOVING.screens[i] || { sizeId: null, currentMount: null, newMount: null, newMountDetail: null });
+          for (var i = 0; i < +v; i++) arr.push(MOVING.screens[i] || { sizeId: null, currentMount: null, newMount: null, newMountDetail: null, mountSource: null, catalogMountId: null });
           MOVING.screens = arr;
         }
         movingFocusRestoreGridId = "countGrid";
@@ -8342,7 +8634,7 @@ function initMovingDay() {
         wireChipRadioGroup(document.getElementById("newMountGrid_" + i), ".multi-chip[data-newmount]", chipIsActive, function (chip) {
           var idx = +chip.dataset.screen;
           MOVING.screens[idx].newMount = chip.dataset.newmount;
-          if (chip.dataset.newmount === "same") MOVING.screens[idx].newMountDetail = null;
+          if (chip.dataset.newmount === "same") { MOVING.screens[idx].newMountDetail = null; MOVING.screens[idx].mountSource = null; MOVING.screens[idx].catalogMountId = null; }
           movingFocusRestoreGridId = "newMountGrid_" + idx;
           renderMovingStep();
         });
@@ -8350,6 +8642,21 @@ function initMovingDay() {
           MOVING.screens[+chip.dataset.screen].newMountDetail = chip.dataset.newmountdetail;
           movingFocusRestoreGridId = "newMountDetailGrid_" + chip.dataset.screen;
           renderMovingStep();
+        });
+      });
+    } else if (step.type === "mountChoice") {
+      MOVING.screens.forEach(function (sc, i) {
+        if (sc.newMount !== "other") return;
+        wireChipRadioGroup(document.getElementById("mountChoiceGrid_" + i), ".multi-chip[data-mountsrc]", chipIsActive, function (chip) {
+          var idx = +chip.dataset.screen;
+          if (chip.dataset.mountsrc === "own") {
+            MOVING.screens[idx].mountSource = "own";
+            MOVING.screens[idx].catalogMountId = null;
+            movingFocusRestoreGridId = "mountChoiceGrid_" + idx;
+            renderMovingStep();
+          } else {
+            openMountCatalogModal(idx);
+          }
         });
       });
     } else if (step.type === "storage") {
@@ -8371,6 +8678,7 @@ function initMovingDay() {
     else if (step.type === "sizes") valid = MOVING.screens.every(function (s) { return !!s.sizeId; });
     else if (step.type === "currentMount") valid = MOVING.screens.every(function (s) { return !!s.currentMount; });
     else if (step.type === "newMount") valid = MOVING.screens.every(function (s) { return !!s.newMount && (s.newMount !== "other" || !!s.newMountDetail); });
+    else if (step.type === "mountChoice") valid = MOVING.screens.every(function (s) { return s.newMount !== "other" || s.mountSource === "own" || (s.mountSource === "catalog" && !!findIn(MOVING_MOUNT_CATALOG, s.catalogMountId)); });
     else if (step.type === "storage") valid = !!MOVING.storageOption;
     return valid;
   }
@@ -8382,6 +8690,7 @@ function initMovingDay() {
     sizes: "בחרו גודל לכל מסך להמשך.",
     currentMount: "בחרו איך כל מסך מותקן היום להמשך.",
     newMount: "בחרו איך להתקין כל מסך בדירה החדשה להמשך.",
+    mountChoice: "בחרו מתקן לכל מסך להמשך.",
     storage: "בחרו אפשרות אחסון להמשך."
   };
   function updateMovingNextEnabled(step) {
@@ -8420,7 +8729,9 @@ function initMovingDay() {
           sizeId: findIn(CATALOG.sizeTiers, s.sizeId) ? s.sizeId : null,
           currentMount: findIn(MOVING_CURRENT_MOUNT_OPTIONS, s.currentMount) ? s.currentMount : null,
           newMount: (s.newMount === "same" || s.newMount === "other") ? s.newMount : null,
-          newMountDetail: (s.newMount === "other" && findIn(MOVING_NEW_MOUNT_OPTIONS, s.newMountDetail)) ? s.newMountDetail : null
+          newMountDetail: (s.newMount === "other" && findIn(MOVING_NEW_MOUNT_OPTIONS, s.newMountDetail)) ? s.newMountDetail : null,
+          mountSource: (s.newMount === "other" && (s.mountSource === "own" || (s.mountSource === "catalog" && findIn(MOVING_MOUNT_CATALOG, s.catalogMountId)))) ? s.mountSource : null,
+          catalogMountId: (s.newMount === "other" && s.mountSource === "catalog" && findIn(MOVING_MOUNT_CATALOG, s.catalogMountId)) ? s.catalogMountId : null
         });
       }
       MOVING.screens = arr;
@@ -8445,6 +8756,7 @@ function initMovingDay() {
     else if (location.hash === "" || location.hash === "#") idx = 0;
     else if (/^#step-\d+$/.test(location.hash)) idx = (parseInt(location.hash.slice(6), 10) || 1) - 1;
     if (idx === null) return; /* עוגן אחר (למשל "דלג לתוכן") - לא משנה שלב */
+    closeMountCatalogModal(true);
     idx = Math.max(0, Math.min(movingActiveSteps().length - 1, idx));
     if (idx === movingStepIdx) return;
     movingStepIdx = idx;
@@ -8456,7 +8768,7 @@ function initMovingDay() {
     if (movingStepIdx > steps.length - 1) movingStepIdx = steps.length - 1;
     var step = steps[movingStepIdx];
     /* כשבוחרים "6 ומעלה" שלבי הגודל/התקנה מדולגים ומספר השלבים קטן מ-8 - מצוין במפורש */
-    var stepLabelText = "שלב " + (movingStepIdx + 1) + " מתוך " + steps.length + (steps.length < MOVING_STEPS.length ? " (מותאם לבחירתכם)" : "");
+    var stepLabelText = "שלב " + (movingStepIdx + 1) + " מתוך " + steps.length + (MOVING.isMax ? " (מותאם לבחירתכם)" : "");
     document.getElementById("movingStepLabel").textContent = stepLabelText;
     document.getElementById("movingProgressFill").style.width = (steps.length > 1 ? (movingStepIdx / (steps.length - 1) * 100) : 100) + "%";
     var body = document.getElementById("movingBody");
@@ -8514,6 +8826,17 @@ function initMovingDay() {
             }).join("") + "</div>";
           }
           return block + "</div>";
+        }).join("");
+      } else if (step.type === "mountChoice") {
+        html += MOVING.screens.map(function (sc, i) {
+          if (sc.newMount !== "other") return "";
+          var catMount = sc.mountSource === "catalog" ? findIn(MOVING_MOUNT_CATALOG, sc.catalogMountId) : null;
+          return '<div class="screen-block"><h4 class="screen-block-title" id="screenHeading_' + i + '">מסך ' + (i + 1) + " (" + sizeLabelHtml(findSizeLabel(sc.sizeId) || "") + ")</h4>" +
+            '<div class="multi-grid" id="mountChoiceGrid_' + i + '" role="radiogroup" aria-labelledby="screenHeading_' + i + '">' +
+              '<div class="multi-chip' + (sc.mountSource === "own" ? " active" : "") + '" data-screen="' + i + '" data-mountsrc="own"><div class="wc-title">מתקן חדש שברשותי</div><div class="wc-sub wc-sub-note">לא כולל מתקן חשמלי או תקרתי</div><div class="wc-sub">' + ltr("+" + fmt(MOVING_OWN_MOUNT_PRICE)) + "</div></div>" +
+              '<div class="multi-chip' + (catMount ? " active" : "") + '" data-screen="' + i + '" data-mountsrc="catalog"><div class="wc-title">בחר מן הקטלוג</div>' +
+                (catMount ? '<div class="wc-sub wc-sub-note">' + mountNameHtml(catMount.name) + '</div><div class="wc-sub">' + ltr("+" + fmt(catMount.priceILS)) + " · לחצו להחלפה</div>" : '<div class="wc-sub">פתיחת קטלוג המתקנים</div>') + "</div>" +
+            "</div></div>";
         }).join("");
       } else if (step.type === "storage") {
         html += '<div class="multi-grid" id="storageGrid" role="radiogroup" aria-labelledby="stepQuestionHeading">' + MOVING_STORAGE_OPTIONS.map(function (o) {
