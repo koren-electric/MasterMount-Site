@@ -103,6 +103,7 @@
       html += "<li><strong>אחריות:</strong> " + esc(warrantyText) + "</li>";
     }
     html += '<li><a class="legal-disclosure-link" href="./cancellation-policy.html">מדיניות ביטולים והחזרות</a></li>';
+    html += '<li><a class="legal-disclosure-link" href="./delivery-terms.html">תנאי הובלה ותוספות</a></li>';
     html += "</ul>";
     html += "</div>";
     return html;
