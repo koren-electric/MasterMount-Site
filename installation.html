@@ -7573,10 +7573,6 @@ fieldset.step-fieldset legend {
       <span class="block-eyebrow">שלב 1</span>
       <h2>הגדירו את ההתקנה שלכם</h2>
       <p>כל שאלה ממקדת את הצרכים שלך - המחיר מתעדכן בזמן אמת לצד כל בחירה.</p>
-      <div class="install-exclusions-box" id="installExclusionsBox" style="max-width:640px;margin:20px auto 0;padding:16px 20px;border:1px solid #e1ddd4;border-radius:12px;background:#faf9f6;text-align:right;">
-        <strong style="display:block;margin-bottom:8px;font-size:.92rem;">מה כלול ומה לא כלול בהתקנה</strong>
-        <ul id="installExclusionsList" style="margin:0;padding-inline-start:20px;font-size:.83rem;color:#55606b;line-height:1.6;"></ul>
-      </div>
     </div>
 </section>
 
@@ -7598,6 +7594,8 @@ fieldset.step-fieldset legend {
     </div>
   </div>
 </section>
+
+<section class="block" id="installQaSection"><div class="wrap"><div class="qa-box" id="installQaBox"></div></div></section>
 
 <div class="cart-panel-overlay" id="cartPanelOverlay" hidden>
   <div class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cartPanelTitle">
@@ -7698,16 +7696,7 @@ function initInstallation() {
   }
 
   // "מה כלול ומה לא כלול" - רשימה עשירה מ-installation-exclusions.js (קובץ משותף, ניתן לעריכה)
-  (function renderInstallExclusions() {
-    var listEl = document.getElementById("installExclusionsList");
-    if (!listEl || !window.INSTALLATION_EXCLUSIONS) return;
-    listEl.innerHTML = window.INSTALLATION_EXCLUSIONS.map(function (ex) {
-      var extra = ex.alreadyPriced
-        ? ' <span style="color:var(--accent,#1a73e8);"><span aria-hidden="true">✓ </span>' + (ex.catalogHint || "ניתן להוסיף במחשבון") + '</span>'
-        : ' <span style="color:var(--text-tertiary,#8a8a8a);">(דורש תיאום נפרד)</span>';
-      return "<li><strong>" + ex.label + ":</strong> " + ex.note + extra + "</li>";
-    }).join("");
-  })();
+  if (window.renderExclusionsQa) window.renderExclusionsQa("installQaBox", "מה כלול ומה לא כלול בהתקנה");
 
   function setRunningPrice() {
     var el = document.getElementById("runningPrice");

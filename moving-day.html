@@ -7407,10 +7407,6 @@ fieldset.step-fieldset legend {
       <span class="block-eyebrow">שירות מיוחד</span>
       <h2>עוברים דירה עם MASTER MOUNT</h2>
       <p>עוברים דירה ולא יודעים איך להעביר את הטלוויזיות? אנחנו כאן בכדי להעניק לכם את השירות האחראי, הבטוח והמקצועי ביותר.</p>
-      <div class="install-exclusions-box" id="movingExclusionsBox" style="max-width:640px;margin:20px auto 0;padding:16px 20px;border:1px solid #e1ddd4;border-radius:12px;background:#faf9f6;text-align:right;">
-        <strong style="display:block;margin-bottom:8px;font-size:.92rem;">מה כלול ומה לא כלול בשירות</strong>
-        <ul id="movingExclusionsList" style="margin:0;padding-inline-start:20px;font-size:.83rem;color:#55606b;line-height:1.6;"></ul>
-      </div>
     </div>
   </div>
 </section>
@@ -7432,6 +7428,7 @@ fieldset.step-fieldset legend {
     </div>
   </div>
 </section>
+<section class="block" id="movingQaSection"><div class="wrap"><div class="qa-box" id="movingQaBox"></div></div></section>
 </main>
 
 <footer class="site-foot">
@@ -7491,16 +7488,7 @@ function initMovingDay() {
 
   // "מה כלול ומה לא כלול" - רשימה עשירה מ-installation-exclusions.js (קובץ משותף, ניתן לעריכה).
   // תוספת יזומה (לא התבקשה במפורש בטקסט המקורי) - אותו סיכון-מחיר-דומה קיים גם בהעברת-דירה.
-  (function renderMovingExclusions() {
-    var listEl = document.getElementById("movingExclusionsList");
-    if (!listEl || !window.INSTALLATION_EXCLUSIONS) return;
-    listEl.innerHTML = window.INSTALLATION_EXCLUSIONS.map(function (ex) {
-      var extra = ex.alreadyPriced
-        ? ' <span style="color:var(--accent,#1a73e8);"><span aria-hidden="true">✓ </span>' + (ex.catalogHint || "ניתן להוסיף במחשבון") + '</span>'
-        : ' <span style="color:var(--text-tertiary,#8a8a8a);">(דורש תיאום נפרד)</span>';
-      return "<li><strong>" + ex.label + ":</strong> " + ex.note + extra + "</li>";
-    }).join("");
-  })();
+  if (window.renderExclusionsQa) window.renderExclusionsQa("movingQaBox", "מה כלול ומה לא כלול בשירות");
 
   /* מייל-לשירות-והזמנות (16.9.2026) - חלופה למייל לכל כפתור-WhatsApp ששולח הזמנה/פנייה.
      mailto: לא-נחסם ע"י המאזין-החוסם-למעלה (שממוקד רק wa.me/tel), אז זמין תמיד ללא-תלות
