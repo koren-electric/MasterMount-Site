@@ -8131,8 +8131,8 @@ function initMovingDay() {
     { id: "special", label: "התקנות מיוחדות", priceILS: null }
   ];
   /* שלב "בחירת מתקן" (אחרי "איך תרצו להתקין"): לכל מסך שנבחר לו "תליה באופן אחר" - מתקן חדש שברשותי (מחיר קבוע)
-     או מתקן מהקטלוג (מחיר המתקן בלבד). המחיר הקבוע מנוהל בדשבורד: movingDayPricing, מפתח own_mount (newmount_own_mount). */
-  var MOVING_OWN_MOUNT_PRICE = 90;
+     או מתקן מהקטלוג (מחיר המתקן בלבד). המחיר מנוהל בדשבורד: movingDayPricing, מפתח own_mount (newmount_own_mount), כרגע 0. */
+  var MOVING_OWN_MOUNT_PRICE = 0; /* ללא עלות: מחיר ההתקנה כבר נכלל בבחירת "תליה באופן אחר" בשלב הקודם */
   /* קטלוג המתקנים לבחירה: עותק תמציתי של CATALOG.mountProducts (installation.html), נוצר ע"י scripts/sync-moving-mountcatalog.ps1 - לא לערוך ידנית */
   var MOVING_MOUNT_CATALOG = [
   /* MOVING_MOUNT_CATALOG:BEGIN */
@@ -8833,7 +8833,7 @@ function initMovingDay() {
           var catMount = sc.mountSource === "catalog" ? findIn(MOVING_MOUNT_CATALOG, sc.catalogMountId) : null;
           return '<div class="screen-block"><h4 class="screen-block-title" id="screenHeading_' + i + '">מסך ' + (i + 1) + " (" + sizeLabelHtml(findSizeLabel(sc.sizeId) || "") + ")</h4>" +
             '<div class="multi-grid" id="mountChoiceGrid_' + i + '" role="radiogroup" aria-labelledby="screenHeading_' + i + '">' +
-              '<div class="multi-chip' + (sc.mountSource === "own" ? " active" : "") + '" data-screen="' + i + '" data-mountsrc="own"><div class="wc-title">מתקן חדש שברשותי</div><div class="wc-sub wc-sub-note">לא כולל מתקן חשמלי או תקרתי</div><div class="wc-sub">' + ltr("+" + fmt(MOVING_OWN_MOUNT_PRICE)) + "</div></div>" +
+              '<div class="multi-chip' + (sc.mountSource === "own" ? " active" : "") + '" data-screen="' + i + '" data-mountsrc="own"><div class="wc-title">מתקן חדש שברשותי</div><div class="wc-sub wc-sub-note">לא כולל מתקן חשמלי או תקרתי</div></div>' +
               '<div class="multi-chip' + (catMount ? " active" : "") + '" data-screen="' + i + '" data-mountsrc="catalog"><div class="wc-title">בחר מן הקטלוג</div>' +
                 (catMount ? '<div class="wc-sub wc-sub-note">' + mountNameHtml(catMount.name) + '</div><div class="wc-sub">' + ltr("+" + fmt(catMount.priceILS)) + " · לחצו להחלפה</div>" : '<div class="wc-sub">פתיחת קטלוג המתקנים</div>') + "</div>" +
             "</div></div>";
