@@ -46,7 +46,11 @@
     lastUpdated: "2026-09-18",
 
     // דגל מרכזי: האם העוסק כבר רשום ופעיל מסחרית
-    isRegistered: false
+    isRegistered: false,
+
+    // מתג מרכזי: פעולות קשר (וואטסאפ, חיוג, הצגת הטלפון). true = פתוח בכל עמודי האתר (הבעלים אישר, 20.9.2026).
+    // להשבתה זמנית: false. הדגל נחשף גם כ-window.CONTACT_ACTIONS_ENABLED (legal-components.js / legal-page-common.js).
+    contactActionsEnabled: true
   };
 
   function isDevEnvironment() {
@@ -95,4 +99,5 @@
   BUSINESS_CONFIG.vatNote = vatNote;
 
   window.BUSINESS_CONFIG = BUSINESS_CONFIG;
+  window.CONTACT_ACTIONS_ENABLED = BUSINESS_CONFIG.contactActionsEnabled === true;
 })();

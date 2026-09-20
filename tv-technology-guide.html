@@ -8347,10 +8347,8 @@ if(window.matchMedia){var mq=window.matchMedia("(min-width:1100px)");var onMq=fu
 
 function initTvGuide() {
 var BUSINESS = window.BUSINESS_CONFIG;
-  // זמנית (החלטה עסקית של הבעלים, אותה החלטה כמו בשאר עמודי האתר): טלפון/וואטסאפ עדיין לא מוצגים ולא פעילים.
-  // הכפתורים מוסתרים לגמרי (hidden, ללא href) ו"שלחו לנו מייל" הוא הכפתור הראשי.
-  // להחזרה: לשנות ל-true בשורה הבאה - הכפתורים והקישורים יופיעו ויעבדו.
-  var CONTACT_ACTIONS_ENABLED = false;
+  // מתג מרכזי: business-config.js -> contactActionsEnabled (true = וואטסאפ/חיוג פתוחים בכל העמודים; החלטת הבעלים 20.9.2026).
+  var CONTACT_ACTIONS_ENABLED = !!(BUSINESS && BUSINESS.contactActionsEnabled === true);
   document.addEventListener("click", function (e) {
     if (CONTACT_ACTIONS_ENABLED) return;
     var link = e.target.closest('a[href^="https://wa.me/"], a[href^="tel:"]');

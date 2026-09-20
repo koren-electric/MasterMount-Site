@@ -7847,6 +7847,16 @@ fieldset.step-fieldset legend {
   }
 }
 
+/* 20.9.2026: כשהטלפון/מייל מוצגים בגילוי הנאות - כתובת המייל הארוכה לא גולשת מהחלון ב-320px */
+.legal-disclosure-list li,
+.legal-disclosure-list a {
+  overflow-wrap: anywhere;
+}
+
+/* 20.9.2026: צבע אחיד לכפתור הוואטסאפ העליון בכל העמודים (כמו במדריך הטכנולוגיות) - #128C7E: לבן עליו 4.4:1 (ה-#25d366 הישן: 2:1, נכשל בניגודיות רכיב) */
+.top-cta::before {
+  background: #128C7E;
+}
 </style>
 </head>
 <body>
@@ -7990,10 +8000,8 @@ function initMovingDay() {
 
 
   var BUSINESS = window.BUSINESS_CONFIG;
-  // זמנית (14.9.2026 סוג-שינוי, בקשת ברק 16.9.2026): מספר-הטלפון/וואטסאפ עדיין לא-מוצג/פעיל
-  // באתר-החי בזמן-שהדומיין החדש עולה - הכפתורים נשארים גלויים (לא-הוסרו) אבל חסומים-משימוש.
-  // להחזרה: לשנות ל-true בשורה הבאה.
-  var CONTACT_ACTIONS_ENABLED = false;
+  // מתג מרכזי: business-config.js -> contactActionsEnabled (true = וואטסאפ/חיוג פתוחים בכל העמודים; החלטת הבעלים 20.9.2026).
+  var CONTACT_ACTIONS_ENABLED = !!(BUSINESS && BUSINESS.contactActionsEnabled === true);
   document.addEventListener("click", function (e) {
     if (CONTACT_ACTIONS_ENABLED) return;
     var link = e.target.closest('a[href^="https://wa.me/"], a[href^="tel:"]');
