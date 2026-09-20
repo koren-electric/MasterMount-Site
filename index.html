@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Suez+One&amp;family=Big+Shoulders+Display:wght@600;800&amp;family=Noto+Sans+Hebrew:wght@300;400;500;600;700;800;900&amp;display=swap"/><title>Master Mount - התקנת טלוויזיה מקצועית עם מחיר שקוף מראש</title><meta name="author" content="Master Mount"/><meta name="description" content="טלוויזיות, באנדלים והתקנה מקצועית עם אחריות. בוחרים גודל מסך, סוג מתקן ומיקום - ומקבלים הצעת מחיר מדויקת במקום, בלי הפתעות."/><meta property="og:title" content="Master Mount - התקנת טלוויזיה מקצועית עם מחיר שקוף מראש"/><meta property="og:description" content="טלוויזיות, באנדלים והתקנה מקצועית עם אחריות - מחיר שקוף ומדויק עוד לפני שהתקשרתם."/><meta property="og:type" content="website"/><meta property="og:url" content="https://mastermount.co.il/"/><meta name="twitter:card" content="summary_large_image"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="icon" href="assets/site/favicon.png" type="image/png"/><link rel="canonical" href="https://mastermount.co.il/"/>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&amp;family=Noto+Sans+Hebrew:wght@400;600;700;800&amp;display=swap"/><title>Master Mount - התקנת טלוויזיה מקצועית עם מחיר שקוף מראש</title><meta name="author" content="Master Mount"/><meta name="description" content="טלוויזיות, באנדלים והתקנה מקצועית עם אחריות. בוחרים גודל מסך, סוג מתקן ומיקום - ומקבלים הצעת מחיר מדויקת במקום, בלי הפתעות."/><meta property="og:title" content="Master Mount - התקנת טלוויזיה מקצועית עם מחיר שקוף מראש"/><meta property="og:description" content="טלוויזיות, באנדלים והתקנה מקצועית עם אחריות - מחיר שקוף ומדויק עוד לפני שהתקשרתם."/><meta property="og:type" content="website"/><meta property="og:url" content="https://mastermount.co.il/"/><meta name="twitter:card" content="summary_large_image"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="icon" href="assets/site/favicon.png" type="image/png"/><link rel="canonical" href="https://mastermount.co.il/"/>
 <style>
 /*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
 @layer properties {
@@ -3531,8 +3531,11 @@ header {
   justify-content: center;
   position: relative;
   z-index: 3;
-  width: 36px;
-  height: 36px;
+  /* אזור מגע 44x44 (הנגשה) והמבורגר לעולם לא מתכווץ בסרגל צפוף (320-360) */
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   padding: 0;
   border: none;
   border-radius: 999px;
@@ -3543,6 +3546,13 @@ header {
 
 .menu-toggle-btn:hover {
   background: var(--surface-2);
+}
+
+.menu-toggle-btn:focus-visible,
+.topsearch-toggle:focus-visible,
+.mobile-drawer-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .menu-toggle-icon-close {
@@ -3577,6 +3587,33 @@ body.mobile-nav-open {
   overflow: hidden;
 }
 
+.mobile-drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  margin: 0 0 6px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.mobile-drawer-close:hover {
+  background: var(--surface-2);
+}
+
+/* וואטסאפ עליון: כל עוד CONTACT_ACTIONS_ENABLED כבוי הכפתור מוסתר לגמרי (לא href, לא target).
+   ה-JS מסיר hidden ומחזיר את הקישור כשהדגל מופעל. */
+.top-cta[hidden] {
+  display: none;
+}
+
 .top-cta {
   background: #25d366;
   color: #fff;
@@ -3591,6 +3628,14 @@ body.mobile-nav-open {
   text-decoration: none;
   box-shadow: 0 2px 6px #00000026;
   display: flex;
+  /* אזור מגע 44x44 בלי לשנות את מראה העיגול (36px): ::before מרחיב את שטח הלחיצה */
+  position: relative;
+}
+
+.top-cta::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
 }
 
 .top-cta svg {
@@ -3653,9 +3698,11 @@ body.mobile-nav-open {
   z-index: 90;
   border-radius: 14px;
   width: min(330px, 86vw);
+  max-width: calc(100vw - 24px);
   max-height: 62vh;
   position: absolute;
-  inset-inline-start: 0;
+  /* החיפוש יושב בקצה השמאלי של הסרגל (RTL): התוצאות נפתחות מהקצה השמאלי שלו ימינה, אל תוך המסך */
+  inset-inline-end: 0;
   overflow: hidden auto;
   box-shadow: 0 18px 40px #20272e29;
 }
@@ -3728,19 +3775,101 @@ body.mobile-nav-open {
   font-size: .78rem;
 }
 
-@media (width <= 979px) {
-  .topsearch {
-    margin-inline-end: auto;
-  }
+/* כפתור-אייקון החיפוש (רק ב-<=520px; מוסתר מעל זה) */
+.topsearch-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+}
 
+.topsearch-toggle:hover, .topsearch-toggle[aria-expanded="true"] {
+  background: var(--surface-2);
+}
+
+/* נקודת המעבר בין המבורגר לתוויות: 1100px (המבורגר עד 1099). ב-980-1099 התוויות לא נכנסות. */
+@media (width < 1100px) {
   .topsearch-input {
     width: 132px;
   }
+
+  /* המבורגר בצד הלוגו, שאר הפריטים (חיפוש, וואטסאפ, עגלה) מתקבצים בקצה הנגדי. */
+  .topsearch {
+    margin-inline-end: 0;
+  }
 }
 
-@media (width >= 980px) {
+@media (width >= 1100px) {
   .topsearch-input {
     font-size: .8rem;
+  }
+}
+
+/* מובייל צר: החיפוש הופך לכפתור-אייקון 44x44 שפותח שורה ברוחב מלא מתחת לסרגל.
+   .topbar-inner הוא ה-containing block היציב (לא fixed: ל-.topbar יש backdrop-filter). */
+@media (width <= 520px) {
+  .topbar-inner {
+    position: relative;
+    padding-inline: 12px;
+  }
+
+  .topsearch-toggle {
+    display: inline-flex;
+  }
+
+  .topsearch {
+    display: none;
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    margin: 0;
+    flex-shrink: 1;
+    padding: 8px 12px 10px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 10px 22px #20272e1f;
+    z-index: 2;
+  }
+
+  .topsearch.is-open {
+    display: block;
+  }
+
+  .topsearch-icon {
+    inset-inline-start: 21px;
+    top: calc(50% - 1px);
+  }
+
+  .topsearch-input {
+    display: block;
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding-block: 10px;
+    padding-inline: 34px 14px;
+  }
+
+  .topsearch-results {
+    inset-inline: 12px;
+    width: auto;
+    max-width: none;
+    top: calc(100% - 2px);
+    max-height: min(62vh, calc(100dvh - 150px));
+  }
+}
+
+@media (width <= 480px) {
+  .topbar-inner {
+    gap: 8px;
   }
 }
 
@@ -6393,7 +6522,8 @@ footer.site-foot a:hover {
   display: flex;
 }
 
-@media (width <= 979px) {
+/* נקודת המעבר: המבורגר עד 1099px, תוויות מ-1100px (ב-980-1099 התוויות לא נכנסות לסרגל). */
+@media (width < 1100px) {
   .menu-toggle-btn {
     display: inline-flex;
     margin-inline-end: auto;
@@ -6414,22 +6544,30 @@ footer.site-foot a:hover {
     flex-direction: column;
     align-items: stretch;
     gap: 4px;
-    padding: 28px 20px 24px;
+    padding: 12px 20px 24px;
     background: var(--bg);
     border-left: 1px solid var(--border);
     box-shadow: -8px 0 24px rgba(0, 0, 0, .18);
     overflow-y: auto;
     transform: translateX(100%);
-    transition: transform .25s ease;
+    /* סגורה: visibility:hidden כך שהקישורים לא נגישים במקלדת/קורא מסך. ההסתרה מתעכבת עד סוף האנימציה. */
+    visibility: hidden;
+    transition: transform .25s ease, visibility 0s linear .25s;
   }
 
   body.mobile-nav-open .mobile-drawer-nav {
     transform: translateX(0);
+    visibility: visible;
+    transition: transform .25s ease, visibility 0s;
   }
 
   .mobile-drawer-nav a {
     color: var(--text-primary);
     padding: 12px 14px;
+    min-height: 44px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
     font-size: .95rem;
     border-radius: 10px;
     text-decoration: none;
@@ -6437,6 +6575,22 @@ footer.site-foot a:hover {
 
   .mobile-drawer-nav a:hover {
     background: var(--surface-2);
+  }
+
+  .mobile-drawer-nav a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+}
+
+/* חלון רחב: אם המגירה נשארה פתוחה בשינוי גודל, הרקע/נעילת הגלילה לא נשארים */
+@media (width >= 1100px) {
+  body.mobile-nav-open {
+    overflow: visible;
+  }
+
+  body.mobile-nav-open .mobile-nav-backdrop {
+    display: none;
   }
 }
 
@@ -8216,10 +8370,594 @@ footer.site-foot a:hover {
   }
 }
 
+/* ==========================================================================
+   שלב ב' - תיקוני QA מובייל (20.9.2026). רק טוקנים קיימים של האתר.
+   ========================================================================== */
+
+/* --- FIX-08: חותמים ("פלאחים") כצ'יפים טקסטואליים במובייל --- */
+.mm-chips {
+  display: none;
+}
+
+.mm-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  max-width: 100%;
+}
+
+.mm-chip-importer {
+  background: var(--premium-oncolor);
+  color: var(--orange-ink);
+  border-color: var(--premium-oncolor);
+}
+
+.mm-chip-delivery {
+  background: var(--surface);
+  color: var(--premium-text);
+  border-color: var(--premium-text);
+}
+
+.mm-chip-warranty {
+  background: var(--brand-ink);
+  color: var(--on-dark);
+  border-color: var(--brand-ink);
+}
+
+@media (width <= 640px) {
+  .flat-card > .mm-badges,
+  .mm-badges.mm-badges-page,
+  .mm-badges.mm-badges-bundle-page {
+    display: none;
+  }
+
+  .mm-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .mm-chips-page {
+    margin: 14px 16px 0;
+  }
+
+  .mm-chips-page .mm-chip {
+    font-size: 13px;
+    padding: 5px 12px;
+  }
+}
+
+/* --- FIX-12: כפתור סגירה שנשאר גלוי בגלילה (חלון דיל, חלון מוצר, עגלה) --- */
+.bundle-modal, .product-page {
+  overflow: hidden;
+  overflow: clip;
+}
+
+/* sticky נמדד מקצה התוכן של מיכל הגלילה (אחרי הריפוד שלו): ב-overlay ריפוד עליון 26px, בפאנל העגלה גם 26px,
+   לכן top שלילי - הכפתור נשאר בערך 16px מקצה המסך בעת גלילה, ובמקומו הטבעי בראש החלון. */
+.bundle-modal-close, .product-page-close {
+  position: sticky;
+  top: -10px;
+  z-index: 6;
+  inset-inline-end: auto;
+  margin-block: 16px -60px;
+  margin-inline: auto 16px;
+}
+
+.cart-panel .product-page-close {
+  top: -10px;
+  margin-block: -10px -34px;
+  margin-inline: auto -10px;
+}
+
+@media (width <= 640px) {
+  .product-page-media,
+  .bundle-modal-media {
+    width: calc(100% - 32px);
+    max-width: 560px;
+    margin: 64px auto 0;
+  }
+}
+
+/* --- FIX-19: סיכום עגלה בעמודה (סה"כ בשורה בולטת, הערות בשורות נפרדות ברוחב מלא) --- */
+.cart-panel-total {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.cart-total-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.cart-panel-total .val {
+  color: var(--premium-text);
+}
+
+.cart-total-amount .val-extra {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.cart-total-note {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.cart-panel-item-remove {
+  min-width: 44px;
+  min-height: 44px;
+  font-size: .9rem;
+}
+
+/* --- FIX-03 / FIX-26: כפתור "שלחו במייל" כראשי כשהוואטסאפ מושבת, ושדות/הודעות בטפסי הפנייה --- */
+.btn-mail-primary {
+  background: var(--premium-oncolor) !important;
+  color: var(--orange-ink) !important;
+  border: none;
+}
+
+.btn-mail-primary:hover {
+  filter: brightness(1.07);
+}
+
+.field-error {
+  color: var(--premium-text);
+  font-size: .9rem;
+  font-weight: 700;
+  margin-top: -4px;
+}
+
+.lead-form input[aria-invalid="true"] {
+  border-color: var(--premium-text);
+  outline: 2px solid var(--premium-text);
+  outline-offset: 1px;
+}
+
+.form-status {
+  text-align: center;
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-top: 12px;
+  font-size: .9rem;
+}
+
+.privacy-point-of-contact-note {
+  font-size: .875rem !important;
+}
+
+.flat-card-buy-tag {
+  font-size: .8rem;
+}
+
+.block-eyebrow {
+  font-size: .8rem;
+}
+
+@media (width <= 640px) {
+  .trust-card .subtitle,
+  .lead-fineprint {
+    font-size: .9rem;
+  }
+
+  footer.site-foot p {
+    font-size: .9rem;
+  }
+}
+
+.privacy-point-of-contact-note a {
+  /* inline (לא inline-block): הריפוד מרחיב את אזור הלחיצה ל-44px בלי לנפח את גובה השורה */
+  padding-block: 14px;
+}
+
+#finalPrivacyNotice label,
+#cartPrivacyNotice label,
+#bundlePrivacyNotice label {
+  min-height: 44px;
+  gap: 10px !important;
+  font-size: .9rem !important;
+}
+
+#finalPrivacyNotice input[type="checkbox"],
+#cartPrivacyNotice input[type="checkbox"],
+#bundlePrivacyNotice input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  flex: none;
+}
+
+/* כותרות חלון (tabindex=-1, פוקוס תכנותי בפתיחה): בלי מסגרת שחורה סביב כותרת שאינה אינטראקטיבית */
+.cart-panel h3:focus,
+.product-page-title:focus,
+.bundle-modal-title:focus {
+  outline: none;
+}
+
+/* --- FIX-21/22/23/24: ניגודיות, גדלי גופן ומגע --- */
+.placeholder-note {
+  color: var(--premium-text);
+  font-size: .9rem;
+}
+
+.topsearch-empty {
+  font-size: .9rem;
+}
+
+.filter-check-chip .filter-check-box {
+  border: 2px solid var(--text-tertiary);
+}
+
+.flat-card-vat-note {
+  font-size: .75rem;
+}
+
+.flat-card .best-seller-badge,
+.best-seller-badge {
+  font-size: .78rem;
+}
+
+.flat-swipe-hint {
+  display: none;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin: 6px 0 0;
+}
+
+@media (width <= 860px) {
+  .product-filters .filter-group-title {
+    font-size: .95rem;
+    min-height: 44px;
+  }
+
+  .filter-group-arrow {
+    font-size: .85rem;
+  }
+
+  .product-filters .filter-check-chip {
+    font-size: .9rem;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+  }
+
+  .filter-check-chip .filter-check-box {
+    width: 22px;
+    height: 22px;
+    font-size: .85rem;
+    margin-top: 0;
+  }
+
+  .size-filter-chip {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px 16px;
+  }
+
+  .size-filter-chip .wc-title {
+    font-size: .95rem;
+  }
+
+  .clear-all-filters,
+  .active-filter-pill {
+    min-height: 44px;
+    font-size: .9rem;
+    padding: 8px 14px;
+  }
+
+  .active-filters-label,
+  .product-filter-count {
+    font-size: .9rem;
+  }
+}
+
+@media (width <= 640px), (pointer: coarse) {
+  footer.site-foot .foot-links {
+    gap: 0 18px;
+  }
+
+  footer.site-foot .foot-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: .95rem;
+  }
+}
+
+/* --- FIX-25: קרוסלות (דילים / מומלצים / טלוויזיות) במובייל: החלקה, כרטיס וחצי, טקסט קריא --- */
+@media (width <= 640px) {
+  .flat-arrow {
+    display: none;
+  }
+
+  .flat-swipe-hint {
+    display: block;
+  }
+
+  .flat-card {
+    width: min(58vw, 220px);
+  }
+
+  .flat-card-title {
+    font-size: 14px;
+    line-height: 1.3;
+    -webkit-line-clamp: 3;
+  }
+
+  .flat-card-sub {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .flat-card-price {
+    font-size: 1.3rem;
+  }
+}
+
+/* --- FIX-16: hero --- */
+.hero h1 em {
+  color: var(--brand-orange-2);
+  font-size: max(14px, .58em);
+}
+
+.hero-eyebrow {
+  text-wrap: balance;
+}
+
+.hero p.lede,
+.bundles-lede,
+.block-head p {
+  text-wrap: pretty;
+}
+
+.hero-carousel-arrow {
+  background: var(--brand-ink);
+  border: 2px solid var(--on-dark);
+  color: var(--on-dark);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.hero-carousel-arrow:hover {
+  background: var(--brand-ink-2);
+  border-color: #fff;
+}
+
+.hero-carousel-dots {
+  gap: 0;
+  margin-top: 0;
+}
+
+.hero-carousel-dot,
+.hero-carousel-dot.active {
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border-radius: 0;
+  position: relative;
+}
+
+.hero-carousel-dot:hover {
+  background: transparent;
+}
+
+.hero-carousel-dot::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--text-tertiary);
+  transform: translate(-50%, -50%);
+  transition: width .25s, background-color .25s;
+}
+
+.hero-carousel-dot.active::after {
+  width: 24px;
+  background: var(--premium-text);
+}
+
+.hero-carousel-playpause {
+  bottom: 0;
+  color: var(--text-secondary);
+}
+
+.process-banner.install.hero-slide,
+.process-banner.moving.hero-slide,
+.process-banner.bundle.hero-slide {
+  transition: opacity .55s ease, visibility 0s linear .55s;
+}
+
+.process-banner.install.hero-slide:not(.active),
+.process-banner.moving.hero-slide:not(.active),
+.process-banner.bundle.hero-slide:not(.active) {
+  visibility: hidden;
+}
+
+.process-banner.install.hero-slide.active,
+.process-banner.moving.hero-slide.active,
+.process-banner.bundle.hero-slide.active {
+  transition: opacity .55s ease, visibility 0s linear 0s;
+}
+
+@media (width <= 860px) {
+  .hero-visual {
+    display: none;
+  }
+}
+
+/* עד 860px (מובייל וטאבלט צר): שקופית בעמודה, תמונה מעל והטקסט מתחתיה, החצים על התמונה ולא על הטקסט */
+@media (width <= 860px) {
+  .hero-carousel {
+    --hero-img-ratio: 2.8;
+    padding-inline: 16px;
+  }
+
+  .hero-carousel-track {
+    display: grid;
+  }
+
+  .process-banner.install.hero-slide,
+  .process-banner.moving.hero-slide,
+  .process-banner.bundle.hero-slide {
+    position: relative;
+    inset: auto;
+    grid-area: 1 / 1;
+    aspect-ratio: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+  }
+
+  .process-banner.install.hero-slide .process-banner-strip-img,
+  .process-banner.moving.hero-slide .process-banner-strip-img,
+  .process-banner.bundle.hero-slide .process-banner-strip-img {
+    flex: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: var(--hero-img-ratio, 2) / 1;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .process-banner.install.hero-slide .process-banner-text,
+  .process-banner.moving.hero-slide .process-banner-text,
+  .process-banner.bundle.hero-slide .process-banner-text {
+    flex: none;
+    padding: 14px 16px 18px;
+    border-inline-end: 0;
+    border-top: 3px solid var(--brand-orange);
+  }
+
+  .process-banner.install.hero-slide .process-banner-text h2,
+  .process-banner.moving.hero-slide .process-banner-text h2,
+  .process-banner.bundle.hero-slide .process-banner-text h2 {
+    font-size: 1.15rem;
+    line-height: 1.25;
+  }
+
+  .process-banner.install.hero-slide .process-banner-text p,
+  .process-banner.moving.hero-slide .process-banner-text p,
+  .process-banner.bundle.hero-slide .process-banner-text p {
+    font-size: .9rem;
+    line-height: 1.5;
+  }
+
+  .process-banner.install.hero-slide .process-banner-text .process-banner-eyebrow,
+  .process-banner.moving.hero-slide .process-banner-text .process-banner-eyebrow,
+  .process-banner.bundle.hero-slide .process-banner-text .process-banner-eyebrow {
+    font-size: .78rem;
+  }
+
+  .hero-carousel-arrow {
+    width: 44px;
+    height: 44px;
+    top: calc((min(100vw, 1080px) - 32px) / var(--hero-img-ratio, 2) / 2 - 22px);
+    font-size: 1.5rem;
+  }
+}
+
+@media (width <= 640px) {
+  .hero-carousel {
+    --hero-img-ratio: 2;
+  }
+}
+
+/* --- FIX-31: חלון דיל ארוך - שורת מחיר וכפתורי פעולה דביקים בתחתית (מובייל) --- */
+.bundle-cta-price {
+  display: none;
+}
+
+@media (width <= 640px) {
+  .bundle-modal-ctas {
+    position: sticky;
+    bottom: 0;
+    z-index: 4;
+    background: var(--surface);
+    padding: 10px 0 12px;
+    margin-inline: -4px;
+    box-shadow: 0 -10px 14px -12px #20272e59;
+  }
+
+  .bundle-cta-price {
+    display: block;
+    flex: 1 1 100%;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--premium-text);
+  }
+}
+
 </style>
 </head>
 <body><a class="skip-link" href="#main-content">דלג לתוכן הראשי</a><div id="modalAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-<!--$--><header><div class="topbar"><div class="topbar-inner"><a class="brandmark" href="index.html"><img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount"/></a><button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="toplinks"><a href="installation.html">הזמנת התקנה מותאמת</a><a href="#products">טלוויזיות למכירה</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="#how">איך זה עובד</a><a href="#contact">יצירת קשר</a></nav><div class="topsearch" id="topSearch"><svg class="topsearch-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"></circle><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg><input type="search" id="topSearchInput" class="topsearch-input" placeholder="חיפוש באתר..." autoComplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="topSearchResults" aria-label="חיפוש באתר"/><div class="topsearch-results" id="topSearchResults" role="listbox" hidden=""></div></div><a class="top-cta" id="topWhatsappBtn" href="#" target="_blank" rel="noopener" aria-label="פנייה בוואטסאפ (נפתח בכרטיסייה חדשה)"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.36 2 11.75c0 2.06.65 3.97 1.76 5.55L2.5 22l4.86-1.24a10.1 10.1 0 0 0 4.64 1.14c5.52 0 10-4.36 10-9.75S17.52 2 12 2Zm0 17.75c-1.5 0-2.9-.4-4.1-1.09l-.29-.17-2.88.73.77-2.8-.19-.29A7.66 7.66 0 0 1 4.15 11.75C4.15 7.46 7.66 4 12 4s7.85 3.46 7.85 7.75-3.51 7.75-7.85 7.75Zm4.3-5.8c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.17-.7-.62-1.18-1.39-1.31-1.63-.14-.24-.01-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28Z"></path></svg></a><button type="button" class="cart-badge-btn empty" id="cartBadgeBtn" aria-label="עגלת הזמנות, ריקה"><span class="cart-disc"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7.5H6.2"></path></svg></span><span class="cart-count" id="cartBadgeCount">0</span></button></div></div></header><div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד"><a href="installation.html">הזמנת התקנה מותאמת</a><a href="#products">טלוויזיות למכירה</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="#how">איך זה עובד</a><a href="#contact">יצירת קשר</a></nav><script>(function(){var btn=document.getElementById("mobileMenuToggleBtn");var backdrop=document.getElementById("mobileNavBackdrop");var nav=document.getElementById("mobileDrawerNav");if(!btn||!backdrop||!nav)return;function closeMenu(){document.body.classList.remove("mobile-nav-open");btn.setAttribute("aria-expanded","false");}function openMenu(){document.body.classList.add("mobile-nav-open");btn.setAttribute("aria-expanded","true");}btn.addEventListener("click",function(){if(document.body.classList.contains("mobile-nav-open")){closeMenu();}else{openMenu();}});backdrop.addEventListener("click",closeMenu);nav.querySelectorAll("a").forEach(function(a){a.addEventListener("click",closeMenu);});document.addEventListener("keydown",function(e){if(e.key==="Escape")closeMenu();});})();</script><main id="main-content" tabindex="-1"><div class="hero"><div class="hero-inner hero-grid"><div class="hero-copy"><span class="hero-eyebrow"><span id="heroWarrantyLine">התקנת טלוויזיה ביתית, מקצועית וברמת גימור גבוהה.</span></span><div class="hero-title-bubble"><h1>התקנה מקצועית. מחיר מדויק ושקוף. <em>כל הפרטים גלויים מראש - בלי תוספות בשטח</em></h1></div><p class="lede">בחרו את גודל המסך, סוג המתקן ומיקום ההתקנה - וקבלו הצעת מחיר שקופה וסופית במקום. בלי הפתעות ובלי תוספות ביום ההתקנה.</p></div><div class="hero-visual" aria-hidden="true"><div class="hero-logo-mark"><img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount"/></div></div></div><div class="hero-carousel" id="heroCarousel"><div class="hero-carousel-stage"><div class="hero-carousel-track" id="heroCarouselTrack"><a class="process-banner install hero-slide active" href="installation.html" data-slide="0"><img class="process-banner-strip-img" src="assets/site/hero-banner-install.jpg" alt="טלוויזיה מותקנת על מתקן תקרה בפטיו מעוצב עם נוף לגינה" loading="lazy"><span class="process-banner-text"><span class="process-banner-eyebrow">שלב 1</span><h2>הגדירו את ההתקנה שלכם</h2><p>כל שאלה ממקדת את הצרכים שלך - המחיר מתעדכן בזמן אמת לצד כל בחירה.</p></span></a><a class="process-banner moving hero-slide" href="moving-day.html" data-slide="1"><img class="process-banner-strip-img" src="assets/site/hero-banner-moving.jpg" alt="זוג עם קופסאות על הראש מחזיק טלוויזיה, לקראת מעבר דירה" loading="lazy"><span class="process-banner-text"><span class="process-banner-eyebrow">שירות מיוחד</span><h2>עוברים דירה עם MASTER MOUNT</h2><p>עוברים דירה ולא יודעים איך להעביר את הטלוויזיות? אנחנו כאן בכדי להעניק לכם את השירות האחראי, הבטוח והמקצועי ביותר.</p></span></a><a class="process-banner bundle hero-slide" href="#bundles" data-slide="2"><img class="process-banner-strip-img" src="assets/site/hero-banner-bundle.jpg" alt="חדר תצוגה עם מגוון טלוויזיות מותקנות בפתרונות התקנה שונים" loading="lazy"><span class="process-banner-text"><span class="process-banner-eyebrow">פתרון מקצה לקצה</span><h2>טלוויזיה והתקנה מקצועית בחבילה אחת</h2><p>רוכשים חבילת פרימיום שכוללת טלוויזיה והתקנה מקצועית במועד הקרוב ביותר - הכל בחבילה אחת משתלמת</p></span></a></div><button type="button" class="hero-carousel-arrow hero-carousel-prev" id="heroCarouselPrev" aria-label="השלייד הקודם">&#8249;</button><button type="button" class="hero-carousel-arrow hero-carousel-next" id="heroCarouselNext" aria-label="השלייד הבא">&#8250;</button></div><div class="hero-carousel-dots" id="heroCarouselDots"><button type="button" class="hero-carousel-dot active" data-slide="0" aria-label="שלייד 1 מתוך 3"></button><button type="button" class="hero-carousel-dot" data-slide="1" aria-label="שלייד 2 מתוך 3"></button><button type="button" class="hero-carousel-dot" data-slide="2" aria-label="שלייד 3 מתוך 3"></button></div><button type="button" class="hero-carousel-playpause" id="heroCarouselPlayPause" aria-pressed="false"><svg id="heroCarouselPlayPauseIcon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"></rect><rect x="14" y="5" width="4" height="14"></rect></svg><span class="sr-only" id="heroCarouselPlayPauseLabel">השהיית החלפת השקופיות האוטומטית</span></button></div></div><section class="brand-banner"><img src="assets/site/brand-banner-index.jpg" alt="חמש טלוויזיות בגדלים שונים (75, 55, 65, 85 ו-43 אינץ&#x27;) על סוגי מתקנים שונים - עמוד רצפתי לתקרה, תלייה מהתקרה, זרוע קיר מתכווננת, התקנה שטוחה על קיר ועמידה רצפתית, בחדר תצוגה מודרני"/></section><section class="block" id="bundles"><div class="wrap"><div class="block-head"><span class="bundles-eyebrow">דילים משתלמים - DEALS</span><h2 class="bundles-title-en">טלוויזיה + התקנה במחיר מנצח</h2><p class="bundles-lede">הדילים הכי שווים למסכים הכי המובילים כולל התקנה מקצועית בלחיצה אחת.</p></div><div class="flat-outer"><button type="button" class="flat-arrow" id="bundleRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="bundleViewport"><div class="flat-track" id="bundleTrack"></div></div><button type="button" class="flat-arrow" id="bundleLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div><p class="placeholder-note" id="bundlePlaceholderNote"></p></div></section><section class="block" id="bestSellersSection"><div class="wrap"><div class="block-head"><span class="block-eyebrow">הנבחרים של הלקוחות</span><h2>מומלצים</h2><span class="section-tag-en">POPULAR</span><p>הדגמים המבוקשים ביותר אצלנו - זמינים עם הובלה עד הבית.</p></div><div class="flat-outer"><button type="button" class="flat-arrow" id="bestSellersRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="bestSellersViewport"><div class="flat-track" id="bestSellersTrack"></div></div><button type="button" class="flat-arrow" id="bestSellersLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div></div></section><section class="block" id="products"><div class="wrap"><div class="block-head"><h2>טלוויזיות <span class="h2-tag-en">TV Screen</span></h2><p>המשך לבחירת התקנה מותאמת אישית</p></div><div class="product-layout"><div class="product-filters"><div class="filter-group" id="sizeFilterGroup"><div class="filter-group-title"><span>גודל מסך</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="size-filter-grid" id="productSizeFilter"></div></div><div class="filter-group" id="brandFilterGroup"><div class="filter-group-title"><span>מותג</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productBrandFilter" role="group" aria-label="סינון לפי מותג"></div></div><div class="filter-group" id="techFilterGroup"><div class="filter-group-title"><span>טכנולוגיות</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productTechFilter" role="group" aria-label="סינון לפי טכנולוגיה"></div></div><div class="filter-group" id="bestFilterGroup"><div class="filter-group-title"><span>מומלצים</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productBestSellerFilter" role="group" aria-label="סינון נמכרים ביותר"></div></div><div class="active-filters-bar" id="activeFiltersBar" hidden=""></div><div class="product-filter-count" id="productFilterCount" aria-live="polite" aria-atomic="true"></div></div><div class="product-carousel-col"><div class="flat-outer"><button type="button" class="flat-arrow" id="productRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="productViewport"><div class="flat-track" id="productTrack"></div></div><button type="button" class="flat-arrow" id="productLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div><p class="placeholder-note" id="productSizeEmptyNote" hidden="">אין טלוויזיות שמתאימות לסינון שבחרתם - נסו שילוב אחר או לחצו &quot;נקה הכל&quot;.</p></div></div><p class="install-only-optout"><button type="button" class="btn-ghost" id="installOnlyBtn">רק צריך התקנה, בלי טלוויזיה? לחצו כאן</button></p></div></section><section class="block" id="how"><div class="wrap"><div class="block-head"><span class="block-eyebrow">איך זה עובד</span><h2>שקיפות מלאה, מהתחלה ועד הסוף</h2></div><div class="trust-grid"><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-nut.png" alt="" width="39" height="34"/><h3>חוויית רכישה פשוטה</h3><p class="subtitle">חיסכון חכם בעלויות, בלי לוותר על האיכות</p><p>המודל העסקי היעיל שלנו, מאפשר לנו להציע לכם מחירים הוגנים ותחרותיים מבלי להתפשר על איכות המוצרים או רמת השירות האישי. אתם נהנים מהמחיר הטוב ביותר, עם שירות מקיף שמלווה אתכם לכל אורך הדרך.</p></div><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-icon-service.svg" alt="" width="39" height="34"/><h3>שירות מקצועי</h3><p class="subtitle">הכל תחת קורת גג אחת - מהייעוץ ועד ההתקנה</p><p>אנחנו הכתובת היחידה שלכם — מהייעוץ, דרך הרכישה ועד ההתקנה. אנחנו כאן לכל שאלה, לפני ותוך כדי, ומשתדלים לחזור אליכם במהירות בכל מקרה שתצטרכו אותנו.</p></div><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-icon-price.svg" alt="" width="39" height="34"/><h3>תמחור שקוף</h3><p class="subtitle">מחיר הוגן, ללא הפתעות</p><p>אנו מאמינים בשקיפות מחירים מלאה. בקטלוג המקיף שלנו תמצאו פירוט מלא ומדויק של כל עלויות ההתקנה, מגוון הגדלים וסוגי המתקנים השונים. אין צורך בניחושים או בשיחות מקדימות – אתם רואים בדיוק את העלות המדויקת, לפני כל התחייבות.</p></div></div></div></section><section class="block" id="contact"><div class="wrap" style="max-width:620px"><div class="block-head"><span class="block-eyebrow">מוכנים להתקדם? רוצים לסגור התקנה?</span><h2>לייעוץ מותאם אישית ותיאום התקנה</h2><p>השאירו פרטים ונחזור אליכם ישר בוואטסאפ עם הצעת מחיר מסודרת ותיאום מהיר.</p></div><div class="lead-form"><label for="leadName" class="sr-only">שם מלא</label><input type="text" id="leadName" placeholder="שם מלא"/><label for="leadPhone" class="sr-only">טלפון</label><input type="tel" id="leadPhone" placeholder="טלפון" dir="ltr" style="text-align:right"/><div class="lead-ctas"><a class="btn-accent btn-whatsapp lead-cta-main" id="finalWhatsappBtn" href="#" target="_blank" rel="noopener"><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.25-1.5A9.9 9.9 0 1 0 12.04 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.18-3.1.88.9-3.02-.2-.31A8.1 8.1 0 0 1 12.04 3.8zM8.6 7.6c-.2 0-.5.07-.75.35-.26.28-1 1-1 2.4s1.03 2.8 1.17 3c.15.2 2 3.2 4.9 4.36 2.4.95 2.9.76 3.4.72.52-.05 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34-.3-.15-1.7-.84-1.97-.94-.26-.1-.46-.14-.65.15-.2.3-.75.94-.92 1.13-.17.2-.34.22-.63.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.65-1.6-.9-2.18-.23-.56-.47-.48-.65-.49h-.55z"/></svg> שלחו בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-ghost lead-cta-sub" id="finalMailtoBtn" href="#"><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg> שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a><a class="btn-ghost lead-cta-sub" id="finalCallBtn" href="#"><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3.5l1.7 4.3-2.2 1.4a11 11 0 0 0 6.3 6.3l1.4-2.2L20 15.5V19a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg> התקשרו אלינו<span class="sr-only"> (מבצע שיחת טלפון)</span></a></div><p class="lead-fineprint"><svg class="lead-fineprint-check" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>התשלום יבוצע לאחר אישור הלקוח למתן קבלת השירות שסוכם.</span></p><div id="finalPrivacyNotice"></div></div></div></section></main><footer class="site-foot"><div class="wrap foot-grid"><div><div class="brandmark"><img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount"/></div><p>התקנה מדויקת בשבילך.</p></div><div class="foot-links"><a href="#products">טלוויזיות למכירה</a><a href="installation.html">מחשבון מחיר התקנה</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a id="footCallLink" href="#">התקשרו</a><a id="footEmailLink" href="mailto:mastermount@mastermount.co.il">mastermount@mastermount.co.il</a></div><div class="foot-links"><a href="./terms-of-use.html">תנאי שימוש</a><a href="./privacy-policy.html">מדיניות פרטיות</a><a href="./cancellation-policy.html">מדיניות ביטולים והחזרות</a><a href="./accessibility-statement.html">הצהרת נגישות</a><a href="./weee-returns.html">החזרת ציוד חשמלי ואלקטרוני וסוללות</a><a href="#" id="cookieSettingsLink">הגדרות עוגיות</a></div></div></footer><div class="bundle-modal-overlay" id="bundleModalOverlay" hidden=""><div class="bundle-modal" role="dialog" aria-modal="true" aria-labelledby="bundleModalTitle"><button class="bundle-modal-close" id="bundleModalCloseBtn" type="button" aria-label="סגירה">✕</button><div class="bundle-modal-media" id="bundleModalMedia"></div><div class="bundle-modal-body"><div class="bundle-modal-brand" id="bundleModalBrand"></div><h3 class="bundle-modal-title" id="bundleModalTitle" tabindex="-1"></h3><div class="bundle-modal-screentype" id="bundleModalScreenType"></div><div class="bundle-modal-description" id="bundleModalDescription" hidden=""></div><div class="bundle-modal-included-wrap" id="bundleModalIncludedWrap" hidden=""><div class="bundle-modal-subheading">מה כלול בבאנדל</div><ul class="bundle-modal-features" id="bundleModalIncluded"></ul></div><div class="bundle-modal-mount" id="bundleModalMount" hidden=""></div><ul class="bundle-modal-features" id="bundleModalFeatures"></ul><div class="bundle-modal-priceblock" id="bundleModalPriceBlock"></div><div id="bundleModalLegalDisclosure"></div><div class="lead-ctas bundle-modal-ctas"><a class="btn-accent btn-whatsapp" id="bundleModalWhatsapp" href="#" target="_blank" rel="noopener"><span aria-hidden="true">📲</span> בקשו הצעה לבאנדל הזה<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-ghost" id="bundleModalMailto" href="#"><span aria-hidden="true">✉️</span> בקשו הצעה במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div><div id="bundlePrivacyNotice"></div></div></div></div><div class="product-page-overlay" id="productPageOverlay" hidden=""><div class="product-page" role="dialog" aria-modal="true" aria-labelledby="productPageTitle"><button class="product-page-close" id="productPageCloseBtn" type="button" aria-label="סגירה">✕</button><div class="product-page-media" id="productPageMedia"></div><div class="product-page-body"><div class="product-page-brand" id="productPageBrand"></div><h3 class="product-page-title" id="productPageTitle" tabindex="-1"></h3><div class="product-page-meta" id="productPageMeta"></div><div class="product-page-price-row"><span class="product-page-price" id="productPagePrice"></span></div><div class="product-page-price-note" id="productPagePriceNote">המחיר כולל מע"מ והובלה עד הבית - אין תשלום נוסף ואין אפשרות איסוף עצמי.</div><div class="product-page-ctas"><button type="button" class="btn-accent" id="productPageWhatsapp">המשיכו להתקנה</button><button type="button" class="btn-ghost" id="productPageQuickBuy">קניה מהירה ללא התקנה</button><a class="btn-ghost" id="productPageCall" href="#"><span aria-hidden="true">📞</span> התקשרו אלינו<span class="sr-only"> (מבצע שיחת טלפון)</span></a></div><button class="product-features-toggle" id="productFeaturesToggle" type="button" aria-expanded="false" aria-controls="productFeaturesBody"><span>מאפיינים</span><span class="arrow" aria-hidden="true">▾</span></button><div class="product-features-body" id="productFeaturesBody"><div class="product-features-inner" id="productFeaturesInner"></div></div><div class="product-page-warranty" id="productPageWarranty"></div><div id="productPageSchemaFields" style="font-size:.8rem;color:var(--text-tertiary,#7a7a7a);margin-top:4px;"></div><div id="productPageLegalDisclosure"></div></div></div></div><div class="cart-panel-overlay" id="cartPanelOverlay" hidden=""><div class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cartPanelTitle"><button class="product-page-close" id="cartPanelCloseBtn" type="button" aria-label="סגירה">✕</button><h3 id="cartPanelTitle" tabindex="-1">העגלה שלכם</h3><div id="cartPanelEmpty" class="cart-panel-empty" hidden=""><p>העגלה ריקה. בחרו טלוויזיה או הגדירו התקנה כדי להתחיל.</p><a class="btn-accent" href="#products" id="cartPanelEmptyLink">לבחירת טלוויזיה</a></div><div id="cartPanelList" class="cart-panel-list"></div><div class="cart-panel-total" id="cartPanelTotal" hidden=""></div><div class="lead-form cart-panel-lead-form" id="cartPanelLeadForm" hidden=""><label for="cartLeadName" class="sr-only">שם מלא</label><input type="text" id="cartLeadName" placeholder="שם מלא"/><label for="cartLeadPhone" class="sr-only">טלפון</label><input type="tel" id="cartLeadPhone" placeholder="טלפון" dir="ltr" style="text-align:right"/><div class="lead-ctas"><a class="btn-accent btn-whatsapp" id="cartWhatsappBtn" href="#" target="_blank" rel="noopener"><span aria-hidden="true">📲</span> שלחו את כל העגלה בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-ghost" id="cartMailtoBtn" href="#"><span aria-hidden="true">✉️</span> שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div><p class="lead-fineprint">התשלום סוכם ומתבצע מחוץ לאתר.</p><div id="cartPrivacyNotice"></div></div></div><!--/$-->
+<!--$--><header><div class="topbar"><div class="topbar-inner"><a class="brandmark" href="index.html"><img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" alt="Master Mount"/></a><button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileDrawerNav"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="toplinks"><a href="installation.html">הזמנת התקנה מותאמת</a><a href="#products">טלוויזיות למכירה</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="#how">איך זה עובד</a><a href="#contact">יצירת קשר</a></nav><button type="button" class="topsearch-toggle" id="topSearchOpenBtn" aria-label="פתיחת חיפוש" aria-expanded="false" aria-controls="topSearch"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.9"></circle><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"></path></svg></button><div class="topsearch" id="topSearch"><svg class="topsearch-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"></circle><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg><input type="search" id="topSearchInput" class="topsearch-input" placeholder="חיפוש באתר..." autoComplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="topSearchResults" aria-label="חיפוש באתר"/><div class="topsearch-results" id="topSearchResults" role="listbox" hidden=""></div></div><a class="top-cta" id="topWhatsappBtn" hidden rel="noopener" aria-label="פנייה בוואטסאפ (נפתח בכרטיסייה חדשה)"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.36 2 11.75c0 2.06.65 3.97 1.76 5.55L2.5 22l4.86-1.24a10.1 10.1 0 0 0 4.64 1.14c5.52 0 10-4.36 10-9.75S17.52 2 12 2Zm0 17.75c-1.5 0-2.9-.4-4.1-1.09l-.29-.17-2.88.73.77-2.8-.19-.29A7.66 7.66 0 0 1 4.15 11.75C4.15 7.46 7.66 4 12 4s7.85 3.46 7.85 7.75-3.51 7.75-7.85 7.75Zm4.3-5.8c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.17-.7-.62-1.18-1.39-1.31-1.63-.14-.24-.01-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28Z"></path></svg></a><button type="button" class="cart-badge-btn empty" id="cartBadgeBtn" aria-label="עגלת הזמנות, ריקה"><span class="cart-disc"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7.5H6.2"></path></svg></span><span class="cart-count" id="cartBadgeCount">0</span></button></div></div></header><div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד"><button type="button" class="mobile-drawer-close" id="mobileDrawerCloseBtn" aria-label="סגירת תפריט"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><a href="installation.html">הזמנת התקנה מותאמת</a><a href="#products">טלוויזיות למכירה</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="#how">איך זה עובד</a><a href="#contact">יצירת קשר</a></nav><script>(function(){
+var btn=document.getElementById("mobileMenuToggleBtn");
+var backdrop=document.getElementById("mobileNavBackdrop");
+var nav=document.getElementById("mobileDrawerNav");
+var closeBtn=document.getElementById("mobileDrawerCloseBtn");
+if(!btn||!backdrop||!nav)return;
+function isOpen(){return document.body.classList.contains("mobile-nav-open");}
+/* פתיחה: פוקוס עובר למגירה (כפתור X). סגירה: פוקוס חוזר להמבורגר (חוץ מסגירה בגלל ניווט/שינוי גודל). */
+function setOpen(open,restoreFocus){
+  document.body.classList.toggle("mobile-nav-open",open);
+  btn.setAttribute("aria-expanded",open?"true":"false");
+  btn.setAttribute("aria-label",open?"סגירת תפריט":"פתיחת תפריט");
+  if(open){if(closeBtn)closeBtn.focus();}
+  else if(restoreFocus){btn.focus();}
+}
+btn.addEventListener("click",function(){setOpen(!isOpen(),true);});
+if(closeBtn)closeBtn.addEventListener("click",function(){setOpen(false,true);});
+backdrop.addEventListener("click",function(){setOpen(false,true);});
+nav.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){setOpen(false,false);});});
+document.addEventListener("keydown",function(e){
+  if(!isOpen())return;
+  if(e.key==="Escape"){setOpen(false,true);return;}
+  if(e.key==="Tab"){
+    /* מלכודת פוקוס: כל עוד המגירה פתוחה הטאב מסתובב בתוכה בלבד */
+    var f=nav.querySelectorAll("button,a[href]");
+    if(!f.length)return;
+    var first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    else if(!nav.contains(document.activeElement)){e.preventDefault();first.focus();}
+  }
+});
+/* מעבר לרוחב שבו מוצגות התוויות (1100px): סוגרים מגירה פתוחה */
+var mq=window.matchMedia?window.matchMedia("(min-width: 1100px)"):null;
+function onMq(ev){if(ev.matches&&isOpen())setOpen(false,false);}
+if(mq){if(mq.addEventListener)mq.addEventListener("change",onMq);else if(mq.addListener)mq.addListener(onMq);}
+})();</script><main id="main-content" tabindex="-1"><div class="hero"><div class="hero-inner hero-grid"><div class="hero-copy"><span class="hero-eyebrow"><span id="heroWarrantyLine">התקנת טלוויזיה ביתית, מקצועית וברמת גימור גבוהה.</span></span><div class="hero-title-bubble"><h1>התקנה מקצועית. מחיר מדויק ושקוף. <em>כל הפרטים גלויים מראש - בלי תוספות בשטח</em></h1></div><p class="lede">בחרו את גודל המסך, סוג המתקן ומיקום ההתקנה - וקבלו הצעת מחיר שקופה וסופית במקום. בלי הפתעות ובלי תוספות ביום ההתקנה.</p></div><div class="hero-visual" aria-hidden="true"><div class="hero-logo-mark"><img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount" loading="lazy" decoding="async"/><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount" loading="lazy" decoding="async"/></div></div></div><div class="hero-carousel" id="heroCarousel"><div class="hero-carousel-stage"><div class="hero-carousel-track" id="heroCarouselTrack"><a class="process-banner install hero-slide active" href="installation.html" data-slide="0"><img class="process-banner-strip-img" src="assets/site/hero-banner-install.jpg" alt="טלוויזיה מותקנת על מתקן תקרה בפטיו מעוצב עם נוף לגינה"><span class="process-banner-text"><span class="process-banner-eyebrow">שלב 1</span><h2>הגדירו את ההתקנה שלכם</h2><p>כל שאלה ממקדת את הצרכים שלך - המחיר מתעדכן בזמן אמת לצד כל בחירה.</p></span></a><a class="process-banner moving hero-slide" href="moving-day.html" data-slide="1"><img class="process-banner-strip-img" src="assets/site/hero-banner-moving.jpg" alt="זוג עם קופסאות על הראש מחזיק טלוויזיה, לקראת מעבר דירה" loading="lazy"><span class="process-banner-text"><span class="process-banner-eyebrow">שירות מיוחד</span><h2>עוברים דירה עם MASTER MOUNT</h2><p>עוברים דירה ולא יודעים איך להעביר את הטלוויזיות? אנחנו כאן בכדי להעניק לכם את השירות האחראי, הבטוח והמקצועי ביותר.</p></span></a><a class="process-banner bundle hero-slide" href="#bundles" data-slide="2"><img class="process-banner-strip-img" src="assets/site/hero-banner-bundle.jpg" alt="חדר תצוגה עם מגוון טלוויזיות מותקנות בפתרונות התקנה שונים" loading="lazy"><span class="process-banner-text"><span class="process-banner-eyebrow">פתרון מקצה לקצה</span><h2>טלוויזיה והתקנה מקצועית בחבילה אחת</h2><p>רוכשים חבילת פרימיום שכוללת טלוויזיה והתקנה מקצועית במועד הקרוב ביותר - הכל בחבילה אחת משתלמת</p></span></a></div><button type="button" class="hero-carousel-arrow hero-carousel-prev" id="heroCarouselPrev" aria-label="השלייד הקודם">&#8249;</button><button type="button" class="hero-carousel-arrow hero-carousel-next" id="heroCarouselNext" aria-label="השלייד הבא">&#8250;</button></div><div class="hero-carousel-dots" id="heroCarouselDots"><button type="button" class="hero-carousel-dot active" data-slide="0" aria-label="שלייד 1 מתוך 3"></button><button type="button" class="hero-carousel-dot" data-slide="1" aria-label="שלייד 2 מתוך 3"></button><button type="button" class="hero-carousel-dot" data-slide="2" aria-label="שלייד 3 מתוך 3"></button></div><button type="button" class="hero-carousel-playpause" id="heroCarouselPlayPause" aria-pressed="false"><svg id="heroCarouselPlayPauseIcon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"></rect><rect x="14" y="5" width="4" height="14"></rect></svg><span class="sr-only" id="heroCarouselPlayPauseLabel">השהיית החלפת השקופיות האוטומטית</span></button></div></div><section class="brand-banner"><img src="assets/site/brand-banner-index.jpg" alt="חמש טלוויזיות בגדלים שונים (75, 55, 65, 85 ו-43 אינץ&#x27;) על סוגי מתקנים שונים - עמוד רצפתי לתקרה, תלייה מהתקרה, זרוע קיר מתכווננת, התקנה שטוחה על קיר ועמידה רצפתית, בחדר תצוגה מודרני"/></section><section class="block" id="bundles"><div class="wrap"><div class="block-head"><span class="bundles-eyebrow">דילים משתלמים - DEALS</span><h2 class="bundles-title-en">טלוויזיה + התקנה במחיר מנצח</h2><p class="bundles-lede">הדילים הכי שווים למסכים הכי המובילים כולל התקנה מקצועית בלחיצה אחת.</p></div><div class="flat-outer"><button type="button" class="flat-arrow" id="bundleRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="bundleViewport"><div class="flat-track" id="bundleTrack"></div></div><button type="button" class="flat-arrow" id="bundleLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div><p class="flat-swipe-hint" aria-hidden="true">החליקו לצדדים לעוד דילים</p><p class="placeholder-note" id="bundlePlaceholderNote"></p></div></section><section class="block" id="bestSellersSection"><div class="wrap"><div class="block-head"><span class="block-eyebrow">הנבחרים של הלקוחות</span><h2>מומלצים</h2><span class="section-tag-en">POPULAR</span><p>הדגמים המבוקשים ביותר אצלנו - זמינים עם הובלה עד הבית.</p></div><div class="flat-outer"><button type="button" class="flat-arrow" id="bestSellersRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="bestSellersViewport"><div class="flat-track" id="bestSellersTrack"></div></div><button type="button" class="flat-arrow" id="bestSellersLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div><p class="flat-swipe-hint" aria-hidden="true">החליקו לצדדים לעוד דגמים</p></div></section><section class="block" id="products"><div class="wrap"><div class="block-head"><h2>טלוויזיות <span class="h2-tag-en">TV Screen</span></h2><p>המשך לבחירת התקנה מותאמת אישית</p></div><div class="product-layout"><div class="product-filters"><div class="filter-group" id="sizeFilterGroup"><div class="filter-group-title"><span>גודל מסך</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="size-filter-grid" id="productSizeFilter"></div></div><div class="filter-group" id="brandFilterGroup"><div class="filter-group-title"><span>מותג</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productBrandFilter" role="group" aria-label="סינון לפי מותג"></div></div><div class="filter-group" id="techFilterGroup"><div class="filter-group-title"><span>טכנולוגיות</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productTechFilter" role="group" aria-label="סינון לפי טכנולוגיה"></div></div><div class="filter-group" id="bestFilterGroup"><div class="filter-group-title"><span>מומלצים</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productBestSellerFilter" role="group" aria-label="סינון נמכרים ביותר"></div></div><div class="active-filters-bar" id="activeFiltersBar" hidden=""></div><div class="product-filter-count" id="productFilterCount" aria-live="polite" aria-atomic="true"></div></div><div class="product-carousel-col"><div class="flat-outer"><button type="button" class="flat-arrow" id="productRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="productViewport"><div class="flat-track" id="productTrack"></div></div><button type="button" class="flat-arrow" id="productLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div><p class="flat-swipe-hint" aria-hidden="true">החליקו לצדדים לעוד דגמים</p><p class="placeholder-note" id="productSizeEmptyNote" hidden="">אין טלוויזיות שמתאימות לסינון שבחרתם - נסו שילוב אחר או לחצו &quot;נקה הכל&quot;.</p></div></div><p class="install-only-optout"><button type="button" class="btn-ghost" id="installOnlyBtn">רק צריך התקנה, בלי טלוויזיה? לחצו כאן</button></p></div></section><section class="block" id="how"><div class="wrap"><div class="block-head"><span class="block-eyebrow">איך זה עובד</span><h2>שקיפות מלאה, מהתחלה ועד הסוף</h2></div><div class="trust-grid"><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-nut.png" alt="" width="39" height="34"/><h3>חוויית רכישה פשוטה</h3><p class="subtitle">חיסכון חכם בעלויות, בלי לוותר על האיכות</p><p>המודל העסקי היעיל שלנו, מאפשר לנו להציע לכם מחירים הוגנים ותחרותיים מבלי להתפשר על איכות המוצרים או רמת השירות האישי. אתם נהנים מהמחיר הטוב ביותר, עם שירות מקיף שמלווה אתכם לכל אורך הדרך.</p></div><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-icon-service.svg" alt="" width="39" height="34"/><h3>שירות מקצועי</h3><p class="subtitle">הכל תחת קורת גג אחת - מהייעוץ ועד ההתקנה</p><p>אנחנו הכתובת היחידה שלכם - מהייעוץ, דרך הרכישה ועד ההתקנה. אנחנו כאן לכל שאלה, לפני ותוך כדי, ומשתדלים לחזור אליכם במהירות בכל מקרה שתצטרכו אותנו.</p></div><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-icon-price.svg" alt="" width="39" height="34"/><h3>תמחור שקוף</h3><p class="subtitle">מחיר הוגן, ללא הפתעות</p><p>אנו מאמינים בשקיפות מחירים מלאה. בקטלוג המקיף שלנו תמצאו פירוט מלא ומדויק של כל עלויות ההתקנה, מגוון הגדלים וסוגי המתקנים השונים. אין צורך בניחושים או בשיחות מקדימות - אתם רואים בדיוק את העלות המדויקת, לפני כל התחייבות.</p></div></div></div></section><section class="block" id="contact"><div class="wrap" style="max-width:620px"><div class="block-head"><span class="block-eyebrow">מוכנים להתקדם? רוצים לסגור התקנה?</span><h2>לייעוץ מותאם אישית ותיאום התקנה</h2><p>השאירו טלפון ונחזור אליכם עם הצעת מחיר מסודרת ותיאום מהיר.</p></div><div class="lead-form"><label for="leadName" class="sr-only">שם מלא (לא חובה)</label><input type="text" id="leadName" name="name" autocomplete="name" placeholder="שם מלא"/><label for="leadPhone" class="sr-only">טלפון (חובה)</label><input type="tel" id="leadPhone" name="phone" inputmode="tel" autocomplete="tel" placeholder="טלפון (חובה)" dir="ltr" style="text-align:right" aria-required="true" aria-describedby="leadPhoneError"/><div class="field-error" id="leadPhoneError" role="alert" hidden></div><div class="lead-ctas"><a class="btn-accent btn-whatsapp lead-cta-main" id="finalWhatsappBtn" hidden rel="noopener"><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.25-1.5A9.9 9.9 0 1 0 12.04 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.18-3.1.88.9-3.02-.2-.31A8.1 8.1 0 0 1 12.04 3.8zM8.6 7.6c-.2 0-.5.07-.75.35-.26.28-1 1-1 2.4s1.03 2.8 1.17 3c.15.2 2 3.2 4.9 4.36 2.4.95 2.9.76 3.4.72.52-.05 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34-.3-.15-1.7-.84-1.97-.94-.26-.1-.46-.14-.65.15-.2.3-.75.94-.92 1.13-.17.2-.34.22-.63.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.65-1.6-.9-2.18-.23-.56-.47-.48-.65-.49h-.55z"/></svg> שלחו בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-accent btn-mail-primary lead-cta-main" id="finalMailtoBtn" href="#"><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg> שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a><a class="btn-ghost lead-cta-sub" id="finalCallBtn" hidden><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3.5l1.7 4.3-2.2 1.4a11 11 0 0 0 6.3 6.3l1.4-2.2L20 15.5V19a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg> התקשרו אלינו<span class="sr-only"> (מבצע שיחת טלפון)</span></a></div><p class="lead-fineprint"><svg class="lead-fineprint-check" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>התשלום יבוצע לאחר אישור הלקוח למתן קבלת השירות שסוכם.</span></p><p class="form-status" id="leadFormStatus" role="status" aria-live="polite" hidden></p><div id="finalPrivacyNotice"></div></div></div></section></main><footer class="site-foot"><div class="wrap foot-grid"><div><div class="brandmark"><img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" alt="Master Mount"/></div><p>התקנה מדויקת בשבילך.</p></div><div class="foot-links"><a href="#products">טלוויזיות למכירה</a><a href="installation.html">מחשבון מחיר התקנה</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a id="footCallLink" hidden>התקשרו</a><a id="footEmailLink" href="mailto:mastermount@mastermount.co.il">mastermount@mastermount.co.il</a></div><div class="foot-links"><a href="./terms-of-use.html">תנאי שימוש</a><a href="./privacy-policy.html">מדיניות פרטיות</a><a href="./cancellation-policy.html">מדיניות ביטולים והחזרות</a><a href="./accessibility-statement.html">הצהרת נגישות</a><a href="./weee-returns.html">החזרת ציוד חשמלי ואלקטרוני וסוללות</a><a href="#" id="cookieSettingsLink">הגדרות עוגיות</a></div></div></footer><div class="bundle-modal-overlay" id="bundleModalOverlay" hidden=""><div class="bundle-modal" role="dialog" aria-modal="true" aria-labelledby="bundleModalTitle"><button class="bundle-modal-close" id="bundleModalCloseBtn" type="button" aria-label="סגירה">✕</button><div class="bundle-modal-media" id="bundleModalMedia"></div><div class="bundle-modal-body"><div class="bundle-modal-brand" id="bundleModalBrand"></div><h3 class="bundle-modal-title" id="bundleModalTitle" tabindex="-1"></h3><div class="bundle-modal-screentype" id="bundleModalScreenType"></div><div class="bundle-modal-description" id="bundleModalDescription" hidden=""></div><div class="bundle-modal-included-wrap" id="bundleModalIncludedWrap" hidden=""><div class="bundle-modal-subheading">מה כלול בבאנדל</div><ul class="bundle-modal-features" id="bundleModalIncluded"></ul></div><div class="bundle-modal-mount" id="bundleModalMount" hidden=""></div><ul class="bundle-modal-features" id="bundleModalFeatures"></ul><div class="bundle-modal-priceblock" id="bundleModalPriceBlock"></div><div id="bundleModalLegalDisclosure"></div><div class="lead-ctas bundle-modal-ctas"><div class="bundle-cta-price" id="bundleCtaPrice"></div><a class="btn-accent btn-whatsapp" id="bundleModalWhatsapp" hidden rel="noopener"><span aria-hidden="true">📲</span> בקשו הצעה לבאנדל הזה<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-accent btn-mail-primary" id="bundleModalMailto" href="#"><span aria-hidden="true">✉️</span> בקשו הצעה במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div><div id="bundlePrivacyNotice"></div></div></div></div><div class="product-page-overlay" id="productPageOverlay" hidden=""><div class="product-page" role="dialog" aria-modal="true" aria-labelledby="productPageTitle"><button class="product-page-close" id="productPageCloseBtn" type="button" aria-label="סגירה">✕</button><div class="product-page-media" id="productPageMedia"></div><div class="product-page-body"><div class="product-page-brand" id="productPageBrand"></div><h3 class="product-page-title" id="productPageTitle" tabindex="-1"></h3><div class="product-page-meta" id="productPageMeta"></div><div class="product-page-price-row"><span class="product-page-price" id="productPagePrice"></span></div><div class="product-page-price-note" id="productPagePriceNote">המחיר כולל מע"מ והובלה עד הבית - אין תשלום נוסף ואין אפשרות איסוף עצמי.</div><div class="product-page-ctas"><button type="button" class="btn-accent" id="productPageWhatsapp">המשיכו להתקנה</button><button type="button" class="btn-ghost" id="productPageQuickBuy">קניה מהירה ללא התקנה</button><a class="btn-ghost" id="productPageCall" hidden><span aria-hidden="true">📞</span> התקשרו אלינו<span class="sr-only"> (מבצע שיחת טלפון)</span></a></div><button class="product-features-toggle" id="productFeaturesToggle" type="button" aria-expanded="false" aria-controls="productFeaturesBody"><span>מאפיינים</span><span class="arrow" aria-hidden="true">▾</span></button><div class="product-features-body" id="productFeaturesBody"><div class="product-features-inner" id="productFeaturesInner"></div></div><div class="product-page-warranty" id="productPageWarranty"></div><div id="productPageSchemaFields" style="font-size:.8rem;color:var(--text-tertiary,#7a7a7a);margin-top:4px;"></div><div id="productPageLegalDisclosure"></div></div></div></div><div class="cart-panel-overlay" id="cartPanelOverlay" hidden=""><div class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cartPanelTitle"><button class="product-page-close" id="cartPanelCloseBtn" type="button" aria-label="סגירה">✕</button><h3 id="cartPanelTitle" tabindex="-1">העגלה שלכם</h3><div id="cartPanelEmpty" class="cart-panel-empty" hidden=""><p>העגלה ריקה. בחרו טלוויזיה או הגדירו התקנה כדי להתחיל.</p><a class="btn-accent" href="#products" id="cartPanelEmptyLink">לבחירת טלוויזיה</a></div><div id="cartPanelList" class="cart-panel-list"></div><div class="cart-panel-total" id="cartPanelTotal" hidden=""></div><div class="lead-form cart-panel-lead-form" id="cartPanelLeadForm" hidden=""><label for="cartLeadName" class="sr-only">שם מלא (לא חובה)</label><input type="text" id="cartLeadName" name="name" autocomplete="name" placeholder="שם מלא"/><label for="cartLeadPhone" class="sr-only">טלפון (חובה)</label><input type="tel" id="cartLeadPhone" name="phone" inputmode="tel" autocomplete="tel" placeholder="טלפון (חובה)" dir="ltr" style="text-align:right" aria-required="true" aria-describedby="cartLeadPhoneError"/><div class="field-error" id="cartLeadPhoneError" role="alert" hidden></div><div class="lead-ctas"><a class="btn-accent btn-whatsapp" id="cartWhatsappBtn" hidden rel="noopener"><span aria-hidden="true">📲</span> שלחו את כל העגלה בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-accent btn-mail-primary" id="cartMailtoBtn" href="#"><span aria-hidden="true">✉️</span> שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div><p class="lead-fineprint">התשלום סוכם ומתבצע מחוץ לאתר.</p><p class="form-status" id="cartFormStatus" role="status" aria-live="polite" hidden></p><div id="cartPrivacyNotice"></div></div></div><!--/$-->
 <script src="./business-config.js"></script>
 <script src="./legal-components.js"></script>
 <script src="./cookie-consent.js"></script>
@@ -8238,11 +8976,43 @@ function initMasterMount() {
   // באתר-החי בזמן-שהדומיין החדש עולה - הכפתורים נשארים גלויים (לא-הוסרו) אבל חסומים-משימוש.
   // להחזרה: לשנות ל-true בשורה הבאה.
   var CONTACT_ACTIONS_ENABLED = false;
+  /* חשיפת הדגל גם ל-legal-components.js (טלפון בגילוי הנאות מוצג רק כשהדגל true). */
+  window.CONTACT_ACTIONS_ENABLED = CONTACT_ACTIONS_ENABLED;
   document.addEventListener("click", function (e) {
     if (CONTACT_ACTIONS_ENABLED) return;
     var link = e.target.closest('a[href^="https://wa.me/"], a[href^="tel:"]');
     if (link) { e.preventDefault(); e.stopPropagation(); }
   }, true);
+  /* כפתורי וואטסאפ/טלפון בגוף העמוד: מוסתרים לגמרי (hidden, בלי href ובלי target) כל עוד הדגל כבוי,
+     ו"שלחו במייל" הוא הכפתור הראשי. כשמפעילים את הדגל הכפתורים חוזרים והמייל חוזר להיות משני. */
+  if (CONTACT_ACTIONS_ENABLED) {
+    ["finalWhatsappBtn", "bundleModalWhatsapp", "cartWhatsappBtn"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) { el.hidden = false; el.target = "_blank"; }
+    });
+    ["finalCallBtn", "footCallLink", "productPageCall"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.hidden = false;
+    });
+    ["finalMailtoBtn", "bundleModalMailto", "cartMailtoBtn"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove("btn-accent", "btn-mail-primary");
+      el.classList.add("btn-ghost");
+      if (id === "finalMailtoBtn") { el.classList.remove("lead-cta-main"); el.classList.add("lead-cta-sub"); }
+    });
+  }
+  /* escape אחד לכל ערך שמגיע מקלט/URL/localStorage לפני שהוא נכנס ל-innerHTML */
+  function escapeHtmlMM(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  /* עטיפת רצפי לטינית שמסתיימים ב-+ (למשל HDR10+) ב-bdi כדי שה-+ לא יקפוץ לתחילת הרצף בטקסט עברי.
+     מקבל טקסט קטלוג אמין (לא קלט משתמש) ומחזיר HTML; הטקסט עובר escape קודם. */
+  function bidiPlusHtml(text) {
+    return escapeHtmlMM(text).replace(/(^|[^A-Za-z0-9])([A-Za-z0-9]+\+)/g, '$1<bdi dir="ltr">$2</bdi>');
+  }
 
   // דגל מרכזי: האם העוסק כבר רשום ופעיל מסחרית (window.BUSINESS_CONFIG.isRegistered).
   // false = מצב-מידע-בלבד: עגלה/קניה-מהירה מוסתרות, נשארת רק אפשרות יצירת-קשר לקבלת הצעת מחיר.
@@ -10170,12 +10940,62 @@ function initMasterMount() {
     });
   }
   var __modalTriggerEl = null;
+
+  /* כפתור "אחורה" בטלפון (M2-14): סוגר את החלון הפתוח (מוצר/דיל/עגלה) במקום לצאת מהאתר.
+     כל פתיחה דוחפת רשומת history (pushState, בלי לשנות את ה-URL). סגירה ב-X/רקע/Esc מסירה אותה
+     ב-history.go(-1) שמתעכב ב-setTimeout: פתיחה מיידית של חלון אחר (למשל "קניה מהירה" שסוגרת
+     מוצר ופותחת עגלה) משתמשת שוב באותה רשומה (replaceState) ולא רצה מול history אסינכרוני.
+     כל שאר ההתנהגות (פוקוס, הכרזה, נעילת גלילה) נשארת ב-openModalA11y/closeModalA11y כמו קודם. */
+  var __mmOpenOverlays = [];
+  var __mmPendingRemovals = 0;
+  var __mmBackTimer = null;
+  var __mmSelfNav = 0;
+  function __mmFlushBack() {
+    __mmBackTimer = null;
+    if (__mmPendingRemovals > 0) {
+      var n = __mmPendingRemovals;
+      __mmPendingRemovals = 0;
+      __mmSelfNav++;
+      try { history.go(-n); } catch (e) { __mmSelfNav = 0; }
+    }
+  }
+  function __mmModalOpened(overlayEl) {
+    if (__mmOpenOverlays.indexOf(overlayEl) !== -1) return;
+    __mmOpenOverlays.push(overlayEl);
+    try {
+      if (__mmPendingRemovals > 0) {
+        __mmPendingRemovals--;
+        if (!__mmPendingRemovals && __mmBackTimer) { clearTimeout(__mmBackTimer); __mmBackTimer = null; }
+        history.replaceState({ mmModal: true }, "");
+      } else {
+        history.pushState({ mmModal: true }, "");
+      }
+    } catch (e) {}
+  }
+  function __mmModalClosedByUi(overlayEl) {
+    var i = __mmOpenOverlays.indexOf(overlayEl);
+    if (i === -1) return;
+    __mmOpenOverlays.splice(i, 1);
+    __mmPendingRemovals++;
+    if (!__mmBackTimer) __mmBackTimer = setTimeout(__mmFlushBack, 60);
+  }
+  window.addEventListener("popstate", function () {
+    if (__mmSelfNav > 0) { __mmSelfNav--; return; }
+    if (__mmOpenOverlays.length) {
+      closeModalA11y(__mmOpenOverlays.pop(), true);
+    } else if (__mmPendingRemovals > 0) {
+      __mmPendingRemovals--;
+      if (!__mmPendingRemovals && __mmBackTimer) { clearTimeout(__mmBackTimer); __mmBackTimer = null; }
+    }
+  });
+
   function openModalA11y(overlayEl, headingEl, announceText, explicitTriggerEl) {
     /* explicitTriggerEl אופציונלי - מועדף-על-פני document.activeElement-בזמן-הקריאה, כי
        לא-תמיד-אמין-ש-click (בעיקר synthetic/programmatic) כבר-הזיז-בפועל את הפוקוס לפני
        שהפונקציה-הזו נקראת - מעביר-הקוד-הקורא את-האלמנט-הידוע-בוודאות כשזמין. */
     __modalTriggerEl = explicitTriggerEl || document.activeElement;
     overlayEl.hidden = false;
+    __mmModalOpened(overlayEl);
     document.body.style.overflow = "hidden";
     if (headingEl && typeof headingEl.focus === "function") {
       /* setTimeout(0) - מוודא שהפוקוס עובר אחרי ש-hidden הוסר בפועל מה-DOM (חלק מהדפדפנים
@@ -10185,7 +11005,8 @@ function initMasterMount() {
     var announcer = document.getElementById("modalAnnouncer");
     if (announcer && announceText) announcer.textContent = announceText;
   }
-  function closeModalA11y(overlayEl) {
+  function closeModalA11y(overlayEl, fromHistory) {
+    if (!fromHistory) __mmModalClosedByUi(overlayEl);
     overlayEl.hidden = true;
     document.body.style.overflow = "";
     if (__modalTriggerEl && typeof __modalTriggerEl.focus === "function" && document.body.contains(__modalTriggerEl)) {
@@ -10210,10 +11031,34 @@ function initMasterMount() {
   /* ================= CART (multi-item; שיתוף בין index.html ל-installation.html דרך
      localStorage - "קניה מהירה" כאן + "הוספה לעגלה" בעמוד-ההתקנה מצטרפים לאותה עגלה) ================= */
   var CART_STORAGE_KEY = "mm_cart_v1";
+  /* ניקוי פריט עגלה שנקרא מ-localStorage (הערכים יכולים להגיע מפרמטרי URL בעמוד ההתקנה או מגרסאות ישנות):
+     תגיות HTML מוסרות, טיפוסים מוכרחים, מזהה מוגבל לתווים בטוחים. שדות נוספים נשמרים כמו שהם. */
+  function sanitizeCartText(v) {
+    return String(v == null ? "" : v).replace(/<[^>]*>/g, "").replace(/[<>]/g, "").trim();
+  }
+  function sanitizeCartItem(ci) {
+    if (!ci || typeof ci !== "object" || Array.isArray(ci)) return null;
+    var label = sanitizeCartText(ci.label);
+    if (!label) return null;
+    var out = {};
+    Object.keys(ci).forEach(function (k) { out[k] = ci[k]; });
+    out.label = label;
+    var total = Number(ci.itemTotal);
+    out.itemTotal = isFinite(total) && total >= 0 ? total : 0;
+    out.cartItemId = String(ci.cartItemId == null ? "" : ci.cartItemId).replace(/[^A-Za-z0-9_\-]/g, "") || ("ci_" + Date.now() + "_" + Math.random().toString(36).slice(2));
+    out.isCustomQuote = !!ci.isCustomQuote;
+    out.rows = (Array.isArray(ci.rows) ? ci.rows : []).filter(Array.isArray).map(function (r) {
+      var price = r[2];
+      return [sanitizeCartText(r[0]), sanitizeCartText(r[1]), typeof price === "number" && isFinite(price) ? price : null];
+    });
+    return out;
+  }
   function loadCartFromStorage() {
     try {
       var raw = localStorage.getItem(CART_STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
+      var parsed = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(parsed)) return [];
+      return parsed.map(sanitizeCartItem).filter(Boolean);
     } catch (e) { return []; }
   }
   function saveCartToStorage() {
@@ -10244,6 +11089,8 @@ function initMasterMount() {
     var btn = document.getElementById("cartBadgeBtn");
     document.getElementById("cartBadgeCount").textContent = cart.length;
     btn.classList.toggle("empty", cart.length === 0);
+    /* עגלה ריקה: הכפתור בסרגל מוסתר (הפתיחה דרך #cart והחלון עצמו נשארים). מופיע ברגע שיש פריט. */
+    btn.hidden = cart.length === 0;
     var countLabel = cart.length === 0 ? "עגלת הזמנות, ריקה" : "עגלת הזמנות, " + cart.length + " פריטים";
     btn.setAttribute("aria-label", countLabel);
     if (__lastAnnouncedCartCount !== null && __lastAnnouncedCartCount !== cart.length) {
@@ -10299,15 +11146,19 @@ function initMasterMount() {
     listEl.innerHTML = cart.map(function (ci) {
       /* הנגשה (WCAG 2.4.6/4.1.2): "הסר" לבדו לא-ייחודי כשיש כמה-שורות-בעגלה - aria-label
          כולל את שם-הפריט כדי שקורא-מסך יבחין ביניהם. */
-      var __removeAriaLabel = ("הסרת " + ci.label + " מהעגלה").replace(/"/g, "&quot;");
-      return '<div class="cart-panel-item"><div><div class="cart-panel-item-label">' + ci.label + '</div><div class="cart-panel-item-total">' + formatItemTotal(ci.itemTotal, ci.isCustomQuote) + '</div></div><button type="button" class="cart-panel-item-remove" data-cart-item-id="' + ci.cartItemId + '" aria-label="' + __removeAriaLabel + '">הסר</button></div>';
+      var __removeAriaLabel = escapeHtmlMM("הסרת " + ci.label + " מהעגלה");
+      return '<div class="cart-panel-item"><div><div class="cart-panel-item-label">' + escapeHtmlMM(ci.label) + '</div><div class="cart-panel-item-total">' + escapeHtmlMM(formatItemTotal(ci.itemTotal, ci.isCustomQuote)) + '</div></div><button type="button" class="cart-panel-item-remove" data-cart-item-id="' + escapeHtmlMM(ci.cartItemId) + '" aria-label="' + __removeAriaLabel + '">הסר</button></div>';
     }).join("");
     listEl.querySelectorAll("[data-cart-item-id]").forEach(function (btn) {
       btn.addEventListener("click", function () { removeCartItem(btn.dataset.cartItemId); });
     });
-    totalEl.innerHTML = '<span>סה"כ כללי</span><span class="val">' + formatCartGrandTotal() + '</span>' +
-      '<div style="width:100%;font-size:.78rem;color:var(--text-tertiary,#7a7a7a);margin-top:4px;">' + (BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote({ includeShipping: true }) : "המחיר כולל מע\"מ והובלה עד הבית") + '</div>' +
-      '<div style="width:100%;font-size:.75rem;color:var(--text-tertiary,#7a7a7a);margin-top:6px;">' + (typeof weeeNoticeHtml === "function" ? weeeNoticeHtml() : "") + '</div>';
+    /* סיכום העגלה בעמודה: שורה ראשית (תווית + סכום), וההערות (מע"מ, ציוד חשמלי) בשורות נפרדות ברוחב מלא.
+       "הצעת מחיר בהתאמה אישית" מוצגת בגופן קטן יותר מהסכום, לא באותו גודל ענק. */
+    var __grand = cartGrandTotal();
+    totalEl.innerHTML = '<div class="cart-total-row"><span class="cart-total-label">סה"כ כללי</span><span class="cart-total-amount"><span class="val">' + escapeHtmlMM(fmt(__grand.numeric)) + '</span>' +
+      (__grand.hasCustom ? '<span class="val-extra">+ הצעת מחיר בהתאמה אישית</span>' : '') + '</span></div>' +
+      '<div class="cart-total-note">' + (BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote({ includeShipping: true }) : "המחיר כולל מע\"מ והובלה עד הבית") + '</div>' +
+      '<div class="cart-total-note">' + (typeof weeeNoticeHtml === "function" ? weeeNoticeHtml() : "") + '</div>';
     updateCartWhatsappLink();
   }
   function updateCartWhatsappLink() {
@@ -10432,10 +11283,20 @@ function initMasterMount() {
      גם דרך ריחוף-עכבר (שורת-התצוגה-בתחתית-הדפדפן מציגה href-נוכחי גם בלי-לחיצה). מייל - לא-
      מושפע, ר' buildMailtoLink/ *MailtoBtn למטה - חשוף-תמיד בכוונה. */
   if (CONTACT_ACTIONS_ENABLED) {
-    document.getElementById("topWhatsappBtn").href = genericWhatsappLink();
+    var topWaBtn = document.getElementById("topWhatsappBtn");
+    topWaBtn.href = genericWhatsappLink();
+    topWaBtn.target = "_blank";
+    topWaBtn.hidden = false;
     document.getElementById("finalCallBtn").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
     document.getElementById("footCallLink").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
-    document.getElementById("footCallLink").textContent = BUSINESS.phone;
+    (function () {
+      var __footCall = document.getElementById("footCallLink");
+      var __phoneBdi = document.createElement("bdi");
+      __phoneBdi.setAttribute("dir", "ltr");
+      __phoneBdi.textContent = BUSINESS.phone;
+      __footCall.textContent = "";
+      __footCall.appendChild(__phoneBdi);
+    })();
     /* הנגשה: textContent מוחלף-כאן-בפועל (לא-רק href) - לא-בטוח-להסתמך-על-span-סטטי-בתוך-
        ה-HTML (הוא היה נמחק). aria-label דינמי מבטיח שם-נגיש נכון גם אחרי-ההחלפה. */
     document.getElementById("footCallLink").setAttribute("aria-label", "התקשרו אלינו - " + BUSINESS.phone + " (מבצע שיחת טלפון)");
@@ -10472,6 +11333,50 @@ function initMasterMount() {
   document.getElementById("leadName").addEventListener("input", updateFinalWhatsapp);
   document.getElementById("leadPhone").addEventListener("input", updateFinalWhatsapp);
   updateFinalWhatsapp();
+
+  /* ולידציית טפסי הפנייה (יצירת קשר + עגלה): טלפון חובה (שם רשות) לפני שליחה, הודעת שגיאה בעברית מתחת
+     לשדה (role=alert, aria-invalid), והודעת אישור אחרי פתיחת תוכנת המייל. תוכן ה-mailto לא משתנה. */
+  function phoneLooksValid(v) {
+    var d = String(v || "").replace(/\D/g, "");
+    return d.length >= 9 && d.length <= 13;
+  }
+  function wireLeadValidation(phoneId, errorId, statusId, sendButtonIds) {
+    var phone = document.getElementById(phoneId);
+    var err = document.getElementById(errorId);
+    var status = document.getElementById(statusId);
+    if (!phone || !err) return;
+    function clearError() {
+      phone.removeAttribute("aria-invalid");
+      err.hidden = true;
+      err.textContent = "";
+    }
+    function validate() {
+      if (phoneLooksValid(phone.value)) { clearError(); return true; }
+      phone.setAttribute("aria-invalid", "true");
+      err.textContent = "נא להזין מספר טלפון תקין (לפחות 9 ספרות), כדי שנוכל לחזור אליכם.";
+      err.hidden = false;
+      if (status) status.hidden = true;
+      return false;
+    }
+    phone.addEventListener("input", function () {
+      if (phone.getAttribute("aria-invalid") === "true" && phoneLooksValid(phone.value)) clearError();
+      if (status) status.hidden = true;
+    });
+    sendButtonIds.forEach(function (id) {
+      var b = document.getElementById(id);
+      if (!b) return;
+      b.addEventListener("click", function (e) {
+        if (b.hidden) return;
+        if (!validate()) { e.preventDefault(); phone.focus(); return; }
+        if (status && id.indexOf("Mailto") >= 0) {
+          status.textContent = "תוכנת המייל נפתחה עם פרטי הפנייה. השלימו שם את השליחה, ונחזור אליכם בהקדם.";
+          status.hidden = false;
+        }
+      });
+    });
+  }
+  wireLeadValidation("leadPhone", "leadPhoneError", "leadFormStatus", ["finalMailtoBtn", "finalWhatsappBtn"]);
+  wireLeadValidation("cartLeadPhone", "cartLeadPhoneError", "cartFormStatus", ["cartMailtoBtn", "cartWhatsappBtn"]);
 
   /* ================= BUNDLES WHEEL ================= */
   function sizeTierIdForInches(inches) {
@@ -10529,8 +11434,11 @@ function initMasterMount() {
      never break. alt is HTML-escaped by the caller, not here. */
   function catalogImgHtml(url, urlWebp, altAttr) {
     if (!url) return "";
-    if (!urlWebp) return '<img src="' + url + '" alt="' + altAttr + '">';
-    return '<picture><source type="image/webp" srcset="' + urlWebp + '"><img src="' + url + '" alt="' + altAttr + '"></picture>';
+    /* loading=lazy + decoding=async: 100+ תמונות קטלוג לא נטענות בבת אחת. width/height (יחס כ-784x490) שומרים מקום
+       ומונעים קפיצות; ה-CSS של כל מכולה קובע את הגודל בפועל (100%/object-fit), אז אין עיוות. */
+    var __imgAttrs = ' loading="lazy" width="784" height="490"';
+    if (!urlWebp) return '<img src="' + url + '" alt="' + altAttr + '"' + __imgAttrs + '>';
+    return '<picture><source type="image/webp" srcset="' + urlWebp + '"><img src="' + url + '" alt="' + altAttr + '"' + __imgAttrs + '></picture>';
   }
   function bundleThumbHtml(b) {
     return b.imageUrl ? catalogImgHtml(b.imageUrl, b.imageUrlWebp, "") :
@@ -10571,6 +11479,7 @@ function initMasterMount() {
       bundleCardImporterHtml(b) +
       warrantyBadgeHtml("mm-badges-bundle") +
       '<div class="flat-card-thumb">' + bundleThumbHtml(b) + '</div>' +
+      bundleCardChipsHtml(b) +
       '<div class="flat-card-title">' + bundleTitle + '</div>' +
       bundleSub +
       priceHtml +
@@ -10600,15 +11509,15 @@ function initMasterMount() {
       : bundleThumbHtml(b) + '<span class="media-hint">תמונות מוצר אמיתיות יתווספו בקרוב</span>';
     /* הסימנים הם ילד-ישיר של .bundle-modal (לא של תיבת-התמונה, שהיא overflow:hidden) - כמו בדף המוצר */
     var __bundleModalBox = document.getElementById("bundleModalMedia").parentNode;
-    var __oldBundleBadges = __bundleModalBox.querySelector(".mm-badges-bundle-page");
-    if (__oldBundleBadges) __oldBundleBadges.remove();
-    document.getElementById("bundleModalMedia").insertAdjacentHTML("afterend", bundleModalBadgesHtml(b));
+    __bundleModalBox.querySelectorAll(".mm-badges-bundle-page, .mm-chips-bundle-page").forEach(function (old) { old.remove(); });
+    document.getElementById("bundleModalMedia").insertAdjacentHTML("afterend", bundleModalBadgesHtml(b) + bundleModalChipsHtml(b));
+    document.getElementById("bundleCtaPrice").textContent = fmt(bundleTotal) + " · כולל הובלה והתקנה";
     document.getElementById("bundleModalBrand").textContent = b.brand;
     document.getElementById("bundleModalTitle").textContent = b.name || b.model;
-    document.getElementById("bundleModalScreenType").textContent = (b.screenType ? b.screenType + " · " : "") + b.sizeInches + '"';
+    document.getElementById("bundleModalScreenType").innerHTML = "<bdi>" + escapeHtmlMM((b.screenType ? b.screenType + " · " : "") + b.sizeInches + '"') + "</bdi>";
     document.getElementById("bundleModalDescription").textContent = b.description || "";
     document.getElementById("bundleModalDescription").hidden = !b.description;
-    document.getElementById("bundleModalIncluded").innerHTML = (b.includedItems || []).map(function (f) { return "<li>" + f + "</li>"; }).join("");
+    document.getElementById("bundleModalIncluded").innerHTML = (b.includedItems || []).map(function (f) { return "<li>" + bidiPlusHtml(f) + "</li>"; }).join("");
     document.getElementById("bundleModalIncludedWrap").hidden = !(b.includedItems && b.includedItems.length);
     var __mountEl = document.getElementById("bundleModalMount");
     if (__mountEl) {
@@ -10618,7 +11527,7 @@ function initMasterMount() {
         __mountEl.hidden = false;
       } else { __mountEl.innerHTML = ""; __mountEl.hidden = true; }
     }
-    document.getElementById("bundleModalFeatures").innerHTML = (b.keyFeatures || []).map(function (f) { return "<li>" + f + "</li>"; }).join("");
+    document.getElementById("bundleModalFeatures").innerHTML = (b.keyFeatures || []).map(function (f) { return "<li>" + bidiPlusHtml(f) + "</li>"; }).join("");
     var __bundleVatNoteHtml = '<div class="bundle-vat-note" style="font-size:.78rem;color:var(--text-tertiary,#7a7a7a);margin-top:6px;">' + (BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote({ includeShipping: true }) : "המחיר כולל מע\"מ והובלה עד הבית") + '</div>';
     document.getElementById("bundleModalPriceBlock").innerHTML = (b.fixedTotalPriceILS != null
       ? '<div class="row total"><span>סה"כ באנדל</span><span class="val">' + fmt(bundleTotal) + '</span></div>'
@@ -10685,6 +11594,32 @@ function initMasterMount() {
   function bundleModalBadgesHtml(b) {
     var two = bundleHasImporter(b);
     return '<div class="mm-badges mm-badges-bundle-page' + (two ? ' mm-badges-two' : '') + '">' + (two ? importerSealSpan() : '') + warrantySealSpan() + deliverySealSpan() + '</div>';
+  }
+  /* חותמים כצ'יפים טקסטואליים (מובייל <=640px). העיגולים (.mm-badge) נשארים בדסקטופ/טאבלט בלבד; במובייל
+     הם מוסתרים והצ'יפים מוצגים בשורה עוטפת מתחת לתמונה: קריאים (12px+), ללא כיסוי של תמונה או כותרת.
+     הפונקציות כאן הן function declarations (hoisted): נקראות כבר בבניית קרוסלת-הבאנדלים. */
+  function mmChipHtml(cls, text) {
+    return '<span class="mm-chip ' + cls + '">' + text + '</span>';
+  }
+  function bundleCardChipsHtml(b) {
+    /* כרטיס: "כולל הובלה והתקנה בביקור אחד" ו"יבואן רשמי" (אם סומן). האחריות מוצגת בחלון הפרטים. */
+    return '<div class="mm-chips mm-chips-card">' +
+      (bundleHasImporter(b) ? mmChipHtml("mm-chip-importer", "יבואן רשמי") : "") +
+      mmChipHtml("mm-chip-delivery", "כולל הובלה והתקנה בביקור אחד") +
+    '</div>';
+  }
+  function bundleModalChipsHtml(b) {
+    return '<div class="mm-chips mm-chips-page mm-chips-bundle-page">' +
+      (bundleHasImporter(b) ? mmChipHtml("mm-chip-importer", "יבואן רשמי") : "") +
+      mmChipHtml("mm-chip-warranty", "אחריות Master Mount על ההתקנה") +
+      mmChipHtml("mm-chip-delivery", "כולל הובלה והתקנה בביקור אחד") +
+    '</div>';
+  }
+  /* טלוויזיה למכירה: רק "יבואן רשמי" (חותם האחריות מסונן ממנה תמיד). page=true לחלון המוצר. */
+  function productChipsHtml(p, page) {
+    var has = ((p && p.badges) || []).indexOf("officialImporter") >= 0;
+    if (!has) return "";
+    return '<div class="mm-chips ' + (page ? "mm-chips-page mm-chips-product-page" : "mm-chips-card") + '">' + mmChipHtml("mm-chip-importer", "יבואן רשמי") + '</div>';
   }
   function productBadgesHtml(p, lg) {
     var list = ((p && p.badges) || []).filter(function (k) { return MM_BADGE_DEFS[k] && k !== "mmWarranty"; });
@@ -10765,6 +11700,7 @@ function initMasterMount() {
       brandLogoChipHtml(p.brand) +
       productBadgesHtml(p) +
       '<div class="flat-card-thumb">' + productThumbHtml(p) + '</div>' +
+      productChipsHtml(p, false) +
       '<div class="flat-card-title">' + (p.title || (p.brand + ' ' + p.model)) + '</div>' +
       '<div class="flat-card-sub">' + productSub + '</div>' +
       '<div class="flat-card-price">' + fmt(p.priceILS) + '</div>' +
@@ -10852,7 +11788,7 @@ function initMasterMount() {
     el.innerHTML = '<span class="active-filters-label">סינון פעיל:</span>' +
       chips.map(function (c) {
         return '<button type="button" class="active-filter-pill" data-group="' + c.group + '" data-value="' + c.value + '">' +
-          c.label + ' <span aria-hidden="true">✕</span><span class="sr-only">הסרת הסינון</span></button>';
+          '<bdi>' + c.label + '</bdi> <span aria-hidden="true">✕</span><span class="sr-only">הסרת הסינון</span></button>';
       }).join("") +
       '<button type="button" class="clear-all-filters" id="clearAllFiltersBtn">נקה הכל</button>';
     el.querySelectorAll(".active-filter-pill").forEach(function (pill) {
@@ -10917,9 +11853,17 @@ function initMasterMount() {
        aria-checked על כל צ'יפ, tabindex="0" + Enter/Space מפעילים. */
     el.setAttribute("role", "radiogroup");
     el.setAttribute("aria-label", "סינון לפי גודל מסך");
-    el.innerHTML = PRODUCT_SIZE_BUCKETS.map(function (b) {
+    /* צ'יפ גודל שאין בו אף דגם בקטלוג הנוכחי לא מוצג (חוץ מ"הכל" ומהצ'יפ הפעיל), כדי שלא יובילו ללחיצה על תוצאה ריקה */
+    var __sizeCounts = {};
+    allActiveProducts.forEach(function (p) {
+      var bid = productSizeBucketId(p.sizeInches);
+      if (bid) __sizeCounts[bid] = (__sizeCounts[bid] || 0) + 1;
+    });
+    el.innerHTML = PRODUCT_SIZE_BUCKETS.filter(function (b) {
+      return b.id === "all" || b.id === activeSizeBucket || (__sizeCounts[b.id] || 0) > 0;
+    }).map(function (b) {
       var isActive = b.id === activeSizeBucket;
-      return '<div class="multi-chip size-filter-chip' + (isActive ? " active" : "") + '" data-bucket="' + b.id + '" role="radio" aria-checked="' + (isActive ? "true" : "false") + '" tabindex="0"><div class="wc-title">' + b.label + '</div></div>';
+      return '<div class="multi-chip size-filter-chip' + (isActive ? " active" : "") + '" data-bucket="' + b.id + '" role="radio" aria-checked="' + (isActive ? "true" : "false") + '" tabindex="0"><div class="wc-title"><bdi>' + b.label + '</bdi></div></div>';
     }).join("");
     el.querySelectorAll("[data-bucket]").forEach(function (chip) {
       chip.addEventListener("click", function () {
@@ -11036,13 +11980,13 @@ function initMasterMount() {
       ? catalogImgHtml(p.imageUrl, p.imageUrlWebp, String(p.title || (p.brand + " " + p.model)).replace(/"/g, "&quot;"))
       : productThumbHtml(p));
     /* סימני-מוצר: אחים של תיבת-התמונה (על הרקע הלבן של הדף), לא בתוכה - מסירים את הקודם בכל פתיחה */
-    var __ppOldBadges = __ppMedia.parentNode.querySelector(".mm-badges-page");
-    if (__ppOldBadges) __ppOldBadges.remove();
-    var __ppBadges = productBadgesHtml(p, true);
+    __ppMedia.parentNode.querySelectorAll(".mm-badges-page, .mm-chips-product-page").forEach(function (old) { old.remove(); });
+    var __ppBadges = productBadgesHtml(p, true) + productChipsHtml(p, true);
     if (__ppBadges) __ppMedia.insertAdjacentHTML("afterend", __ppBadges);
     document.getElementById("productPageBrand").textContent = p.brand;
     document.getElementById("productPageTitle").textContent = p.title;
-    document.getElementById("productPageMeta").textContent = (p.screenType ? p.screenType + " · " : "") + (p.sizeInches ? p.sizeInches + '"' : "");
+    /* bdi: סימן האינץ' (") לא קופץ לתחילת השורה בהקשר RTL */
+    document.getElementById("productPageMeta").innerHTML = "<bdi>" + escapeHtmlMM((p.screenType ? p.screenType + " · " : "") + (p.sizeInches ? p.sizeInches + '"' : "")) + "</bdi>";
     document.getElementById("productPagePrice").textContent = fmt(p.priceILS);
     var __priceNoteEl = document.getElementById("productPagePriceNote");
     if (__priceNoteEl) {
@@ -11087,8 +12031,8 @@ function initMasterMount() {
     }
 
     document.getElementById("productFeaturesInner").innerHTML = (p.fullSpecSections || []).map(function (sec) {
-      return '<div class="product-spec-section"><h4>' + sec.heading + '</h4><ul>' +
-        (sec.items || []).map(function (item) { return "<li>" + item + "</li>"; }).join("") +
+      return '<div class="product-spec-section"><h4>' + bidiPlusHtml(sec.heading) + '</h4><ul>' +
+        (sec.items || []).map(function (item) { return "<li>" + bidiPlusHtml(item) + "</li>"; }).join("") +
         '</ul></div>';
     }).join("");
     setProductFeaturesOpen(false);
@@ -11117,6 +12061,34 @@ function initMasterMount() {
     var input = document.getElementById("topSearchInput");
     var box = document.getElementById("topSearchResults");
     if (!input || !box) return;
+
+    /* מובייל צר (<=520px): כפתור-אייקון 44x44 פותח שורת חיפוש ברוחב מלא מתחת לסרגל (CSS: .topsearch.is-open).
+       ברוחב רחב יותר השדה מוצג בתוך הסרגל כרגיל והכפתור מוסתר. */
+    var row = document.getElementById("topSearch");
+    var toggleBtn = document.getElementById("topSearchOpenBtn");
+    var narrowMq = window.matchMedia ? window.matchMedia("(max-width: 520px)") : null;
+    function rowMode() { return !!(toggleBtn && narrowMq && narrowMq.matches); }
+    function setRowOpen(open, restoreFocus) {
+      if (!toggleBtn || !row) return;
+      row.classList.toggle("is-open", open);
+      toggleBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      toggleBtn.setAttribute("aria-label", open ? "סגירת חיפוש" : "פתיחת חיפוש");
+      if (open) { input.focus(); }
+      else { closeResults(); if (restoreFocus) toggleBtn.focus(); }
+    }
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", function () { setRowOpen(!row.classList.contains("is-open"), true); });
+    }
+    if (narrowMq) {
+      var onNarrowChange = function (ev) { if (!ev.matches && row && row.classList.contains("is-open")) setRowOpen(false, false); };
+      if (narrowMq.addEventListener) narrowMq.addEventListener("change", onNarrowChange);
+      else if (narrowMq.addListener) narrowMq.addListener(onNarrowChange);
+    }
+    function escHtml(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
 
     function norm(s) { return String(s == null ? "" : s).toLowerCase().replace(/["'`״׳]/g, "").trim(); }
 
@@ -11211,8 +12183,8 @@ function initMasterMount() {
     function highlight(text, q) {
       var n = norm(q).split(/\s+/)[0];
       var idx = norm(text).indexOf(n);
-      if (!n || idx < 0) return text;
-      return text.slice(0, idx) + "<mark>" + text.slice(idx, idx + n.length) + "</mark>" + text.slice(idx + n.length);
+      if (!n || idx < 0) return escHtml(text);
+      return escHtml(text.slice(0, idx)) + "<mark>" + escHtml(text.slice(idx, idx + n.length)) + "</mark>" + escHtml(text.slice(idx + n.length));
     }
 
     /* הנגשה (WCAG 4.1.2 - combobox pattern מלא): כל-אפשרות מקבלת id ייחודי, input.aria-
@@ -11232,7 +12204,7 @@ function initMasterMount() {
       var announcer = document.getElementById("modalAnnouncer");
       if (!results.length) {
         if (!norm(q)) { closeResults(); return; }
-        box.innerHTML = '<div class="topsearch-empty">לא נמצאו תוצאות עבור "' + q + '"</div>';
+        box.innerHTML = '<div class="topsearch-empty">לא נמצאו תוצאות עבור "' + escHtml(q) + '"</div>';
         box.hidden = false;
         input.setAttribute("aria-expanded", "true");
         if (announcer) announcer.textContent = "לא נמצאו תוצאות חיפוש";
@@ -11242,7 +12214,7 @@ function initMasterMount() {
         return '<button type="button" class="topsearch-item" role="option" id="topsearch-opt-' + i + '" aria-selected="false" data-i="' + i + '">' +
           '<span class="topsearch-item-type">' + it.type + '</span>' +
           '<span class="topsearch-item-main"><span class="topsearch-item-label">' + highlight(it.label, q) + '</span>' +
-          '<span class="topsearch-item-sub">' + it.sub + '</span></span></button>';
+          '<span class="topsearch-item-sub">' + escHtml(it.sub) + '</span></span></button>';
       }).join("");
       box.hidden = false;
       input.setAttribute("aria-expanded", "true");
@@ -11271,6 +12243,7 @@ function initMasterMount() {
       input.value = it.label;
       closeResults();
       input.blur();
+      if (rowMode()) setRowOpen(false, false);
       it.run();
     }
 
@@ -11280,10 +12253,16 @@ function initMasterMount() {
       if (e.key === "ArrowDown") { e.preventDefault(); setCursor(cursor + 1); }
       else if (e.key === "ArrowUp") { e.preventDefault(); setCursor(cursor - 1); }
       else if (e.key === "Enter") { e.preventDefault(); choose(cursor >= 0 ? cursor : 0); }
-      else if (e.key === "Escape") { closeResults(); }
+      else if (e.key === "Escape") {
+        /* Esc ראשון סוגר את התוצאות; Esc שני (במובייל צר) סוגר את שורת החיפוש */
+        if (rowMode() && box.hidden) setRowOpen(false, true); else closeResults();
+      }
     });
     document.addEventListener("click", function (e) {
-      if (!document.getElementById("topSearch").contains(e.target)) closeResults();
+      if (!document.getElementById("topSearch").contains(e.target)) {
+        closeResults();
+        if (rowMode() && !(toggleBtn && toggleBtn.contains(e.target))) setRowOpen(false, false);
+      }
     });
   })();
 

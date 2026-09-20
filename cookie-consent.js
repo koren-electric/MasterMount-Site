@@ -4,12 +4,19 @@
  * תשתית מוכנה-לעתיד - נכון להיום אין שום סקריפט-אנליטיקס/פיקסל באתר בפועל, אז אין עדיין
  * מה לחסום. מציג באנר בכל זאת כי זו דרישת-שקיפות (אם/כש-אנליטיקס יתווסף, הוא כבר יכבד
  * את ההסכמה הקיימת, בלי צורך לבנות את המנגנון מחדש).
+ *
+ * הבאנר קומפקטי (כ-70px במובייל), לא חוסם גלילה, ובזמן שהוא מוצג מתווסף רווח בתחתית הדף
+ * (אלמנט #mmCookieSpacer ומשתנה CSS ‎--mm-cookie-h‎ על ה-html) כדי שקישורי הפוטר לא ייסתרו.
+ * z-index (150) נמוך ממגירת התפריט (200) ומהרקע שלה (190), וגבוה מהתוכן הרגיל (הסרגל העליון 30).
+ * לוגיקת שמירת ההסכמה (get/set/isAccepted/isDeclined/onChange) לא שונתה.
  */
 (function () {
   "use strict";
 
   var STORAGE_KEY = "mm_cookie_consent";
   var listeners = [];
+  var resizeObserver = null;
+  var lastFocus = null;
 
   function get() {
     try {
@@ -45,44 +52,112 @@
     if (typeof fn === "function") listeners.push(fn);
   }
 
+  function ensureStyle() {
+    if (document.getElementById("mmCookieStyle")) return;
+    var st = document.createElement("style");
+    st.id = "mmCookieStyle";
+    st.textContent =
+      "#mmCookieBanner{position:fixed;left:0;right:0;bottom:0;z-index:150;display:flex;align-items:center;gap:8px;" +
+      "padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));box-sizing:border-box;direction:rtl;" +
+      "background:var(--brand-ink,#20272e);color:var(--on-dark,#f3f4f6);font-family:inherit;" +
+      "box-shadow:0 -4px 16px rgba(0,0,0,.2)}" +
+      "#mmCookieBanner:focus{outline:none}" +
+      "#mmCookieBanner .mm-cc-text{flex:1 1 auto;margin:0;font-size:13px;line-height:1.4;color:inherit}" +
+      "#mmCookieBanner .mm-cc-text a{color:inherit;text-decoration:underline;white-space:nowrap}" +
+      "#mmCookieBanner .mm-cc-actions{display:flex;flex:0 0 auto;gap:6px}" +
+      "#mmCookieBanner .mm-cc-btn{box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;margin:0;" +
+      "border-radius:8px;border:1px solid var(--on-dark,#f3f4f6);background:transparent;color:var(--on-dark,#f3f4f6);" +
+      "font-family:inherit;font-size:13px;font-weight:600;line-height:1.2;cursor:pointer}" +
+      "#mmCookieBanner .mm-cc-accept{background:var(--on-dark,#f3f4f6);color:var(--brand-ink,#20272e)}" +
+      "#mmCookieBanner .mm-cc-btn:focus-visible,#mmCookieBanner .mm-cc-text a:focus-visible{" +
+      "outline:3px solid var(--brand-orange-2,#ff8a52);outline-offset:2px}" +
+      "@media (min-width:640px){#mmCookieBanner{gap:16px;padding:12px 24px calc(12px + env(safe-area-inset-bottom,0px))}" +
+      "#mmCookieBanner .mm-cc-text{font-size:14px}#mmCookieBanner .mm-cc-btn{font-size:14px;padding:0 20px}}";
+    document.head.appendChild(st);
+  }
+
   function buildBannerHtml() {
     return (
-      '<div id="mmCookieBanner" style="position:fixed;bottom:0;right:0;left:0;z-index:9999;background:#20272e;color:#fff;padding:16px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:space-between;font-size:.85rem;box-shadow:0 -4px 16px rgba(0,0,0,.2);">' +
-      '<span style="flex:1 1 280px;line-height:1.5;">אנו משתמשים בעוגיות לא-חיוניות (כגון אנליטיקס) רק לאחר קבלת הסכמתכם. ' +
-      '<a href="./privacy-policy.html" style="color:#fff;text-decoration:underline;">מדיניות פרטיות</a></span>' +
-      '<span style="display:flex;gap:10px;flex:0 0 auto;">' +
-      '<button type="button" id="mmCookieDecline" style="padding:9px 18px;border-radius:8px;border:1px solid #fff;background:transparent;color:#fff;font-size:.85rem;cursor:pointer;">דחייה</button>' +
-      '<button type="button" id="mmCookieAccept" style="padding:9px 18px;border-radius:8px;border:1px solid #fff;background:#fff;color:#20272e;font-size:.85rem;cursor:pointer;">אישור</button>' +
-      "</span></div>"
+      '<div id="mmCookieBanner" role="dialog" aria-modal="false" aria-label="הגדרות עוגיות" aria-describedby="mmCookieText" tabindex="-1">' +
+      '<p class="mm-cc-text" id="mmCookieText">אנו משתמשים בעוגיות <span style="white-space:nowrap">לא-חיוניות</span> רק לאחר הסכמתכם. ' +
+      '<a href="./privacy-policy.html">מדיניות פרטיות</a></p>' +
+      '<div class="mm-cc-actions">' +
+      '<button type="button" class="mm-cc-btn mm-cc-decline" id="mmCookieDecline">דחייה</button>' +
+      '<button type="button" class="mm-cc-btn mm-cc-accept" id="mmCookieAccept">אישור</button>' +
+      "</div></div>"
     );
   }
 
-  function showBanner() {
-    hideBanner();
+  /** שומר על רווח תחתון שווה לגובה הבאנר, כדי שהפוטר לא ייסתר בגלילה לסוף הדף */
+  function syncSpacer() {
+    var banner = document.getElementById("mmCookieBanner");
+    var spacer = document.getElementById("mmCookieSpacer");
+    if (!banner || !spacer) return;
+    var h = Math.ceil(banner.getBoundingClientRect().height);
+    spacer.style.height = h + "px";
+    document.documentElement.style.setProperty("--mm-cookie-h", h + "px");
+  }
+
+  function showBanner(userInitiated) {
+    hideBanner(false);
+    ensureStyle();
+    lastFocus = userInitiated ? document.activeElement : null;
     var div = document.createElement("div");
     div.innerHTML = buildBannerHtml();
-    document.body.appendChild(div.firstChild);
+    var banner = div.firstChild;
+    var spacer = document.createElement("div");
+    spacer.id = "mmCookieSpacer";
+    spacer.setAttribute("aria-hidden", "true");
+    document.body.appendChild(spacer);
+    document.body.appendChild(banner);
+    syncSpacer();
+
+    if (typeof ResizeObserver === "function") {
+      resizeObserver = new ResizeObserver(syncSpacer);
+      resizeObserver.observe(banner);
+    } else {
+      window.addEventListener("resize", syncSpacer);
+    }
+
     document.getElementById("mmCookieAccept").addEventListener("click", function () {
       set(true);
-      hideBanner();
+      hideBanner(true);
     });
     document.getElementById("mmCookieDecline").addEventListener("click", function () {
       set(false);
-      hideBanner();
+      hideBanner(true);
     });
+    banner.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") hideBanner(true);
+    });
+
+    // פתיחה יזומה מתוך "הגדרות עוגיות": מעבירים פוקוס לבאנר (לא חוסם גלילה). בפתיחה אוטומטית לא גונבים פוקוס.
+    if (userInitiated) banner.focus();
   }
 
-  function hideBanner() {
+  function hideBanner(restoreFocus) {
     var el = document.getElementById("mmCookieBanner");
+    if (resizeObserver) {
+      try { resizeObserver.disconnect(); } catch (e) {}
+      resizeObserver = null;
+    }
+    window.removeEventListener("resize", syncSpacer);
     if (el) el.parentNode.removeChild(el);
+    var spacer = document.getElementById("mmCookieSpacer");
+    if (spacer) spacer.parentNode.removeChild(spacer);
+    document.documentElement.style.removeProperty("--mm-cookie-h");
+    if (restoreFocus && lastFocus && document.contains(lastFocus) && typeof lastFocus.focus === "function") {
+      try { lastFocus.focus(); } catch (e) {}
+    }
+    if (restoreFocus) lastFocus = null;
   }
 
   function initBannerIfNeeded() {
-    if (get() === null) showBanner();
+    if (get() === null) showBanner(false);
   }
 
   function openSettings() {
-    showBanner();
+    showBanner(true);
   }
 
   window.CookieConsent = {

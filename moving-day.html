@@ -3321,6 +3321,10 @@
   --orange: #ea5b24;
   --orange-ink: #fff;
   --orange-soft: #fdeae1;
+  /* טוקני הנגשה (WCAG 1.4.3) - זהים לערכים ב-index.html: --premium-text לטקסט כתום על רקע בהיר,
+     --premium-oncolor לרקע כתום מתחת לטקסט לבן (4.69:1 במקום 3.49:1 של --orange). */
+  --premium-text: #ba4112;
+  --premium-oncolor: #cc4714;
   --shadow: 0 1px 2px #20272e0f, 0 16px 34px -16px #20272e38;
   --dot: var(--border);
   --accent: var(--blue);
@@ -3348,6 +3352,8 @@
   --orange: #ff6f3c;
   --orange-ink: #1a0e07;
   --orange-soft: #35211a;
+  --premium-text: var(--orange);
+  --premium-oncolor: var(--orange);
   --shadow: 0 1px 2px #00000073, 0 24px 50px -20px #000000bf;
   --dot: #2a323a;
   --accent: var(--blue);
@@ -3475,6 +3481,7 @@ header {
 .brandmark {
   letter-spacing: .03em;
   text-transform: uppercase;
+  min-height: 44px;
   flex-shrink: 0;
   align-items: center;
   gap: 8px;
@@ -3501,8 +3508,11 @@ header {
   color: var(--text-secondary);
   white-space: nowrap;
   border-radius: 999px;
-  padding: 5px 9px;
-  font-size: .78rem;
+  padding: 0 9px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-size: .875rem;
   text-decoration: none;
 }
 
@@ -3517,8 +3527,11 @@ header {
   justify-content: center;
   position: relative;
   z-index: 3;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  flex: 0 0 44px;
+  flex-shrink: 0;
   padding: 0;
   border: none;
   border-radius: 999px;
@@ -3529,6 +3542,14 @@ header {
 
 .menu-toggle-btn:hover {
   background: var(--surface-2);
+}
+
+.mobile-drawer-close {
+  display: none;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 .menu-toggle-icon-close {
@@ -3564,22 +3585,32 @@ body.mobile-nav-open {
 }
 
 .top-cta {
-  background: #25d366;
+  /* אזור מגע 44x44; הדיסק הירוק הנראה 36px (כמו דיסק העגלה) נבנה ב-::before */
+  position: relative;
+  background: transparent;
   color: #fff;
   border: none;
-  border-radius: 50%;
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   text-decoration: none;
-  box-shadow: 0 2px 6px #00000026;
   display: flex;
 }
 
+.top-cta::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: #25d366;
+  box-shadow: 0 2px 6px #00000026;
+}
+
 .top-cta svg {
+  position: relative;
   width: 19px;
   height: 19px;
 }
@@ -3729,12 +3760,13 @@ body.mobile-nav-open {
   }
 }
 
-.btn-whatsapp {
-  background: var(--orange) !important;
-  color: var(--orange-ink) !important;
+.btn-whatsapp, .btn-cta-main {
+  /* הנגשה (WCAG 1.4.3): --orange מול לבן = 3.49:1 בלבד; --premium-oncolor = 4.69:1 */
+  background: var(--premium-oncolor) !important;
+  color: #fff !important;
 }
 
-.btn-whatsapp:hover {
+.btn-whatsapp:hover, .btn-cta-main:hover {
   filter: brightness(1.07);
 }
 
@@ -3784,17 +3816,17 @@ body.mobile-nav-open {
   position: absolute;
   top: 0;
   right: 0;
-  min-width: 19px;
-  height: 19px;
+  min-width: 20px;
+  height: 20px;
   padding: 0 5px;
   box-sizing: border-box;
   border-radius: 10px;
   background: #20272e;
   color: #fff;
   border: 2px solid var(--bg, #fff);
-  font-size: .68rem;
+  font-size: .75rem;
   font-weight: 800;
-  line-height: 15px;
+  line-height: 16px;
   text-align: center;
   pointer-events: none;
 }
@@ -4005,7 +4037,7 @@ section.block {
   letter-spacing: .1em;
   color: var(--text-tertiary);
   margin-bottom: 8px;
-  font-size: .74rem;
+  font-size: .875rem;
   font-weight: 700;
   display: block;
 }
@@ -4098,7 +4130,7 @@ section.block {
 
 .step-label {
   color: var(--text-tertiary);
-  font-size: .82rem;
+  font-size: .9rem;
 }
 
 .progress-track {
@@ -4405,7 +4437,7 @@ section.block {
 .multi-chip .wc-sub {
   color: var(--text-tertiary);
   margin-top: 2px;
-  font-size: .76rem;
+  font-size: .875rem;
 }
 
 .multi-chip.active {
@@ -4662,24 +4694,50 @@ section.block {
   outline-offset: 1px;
 }
 
+/* כפתורי השליחה מוערמים תמיד ברוחב מלא של הטופס (בלי בועות/אליפסות גבוהות בשום רוחב) */
 .lead-ctas {
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 10px;
   margin-top: 4px;
   display: flex;
 }
 
 .lead-ctas a, .lead-ctas button {
-  flex: 1;
+  flex: 0 0 auto;
   justify-content: center;
-  min-width: 160px;
+  align-items: center;
+  display: inline-flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  padding: 12px 16px;
+  border-radius: 26px;
+  text-align: center;
 }
 
 .lead-fineprint {
   text-align: center;
   color: var(--text-tertiary);
   margin-top: 14px;
-  font-size: .78rem;
+  font-size: .875rem;
+}
+
+.lead-error {
+  color: var(--brand-orange-2);
+  margin: 0;
+  font-size: .9375rem;
+  line-height: 1.5;
+}
+
+.lead-form input[aria-invalid="true"] {
+  border-color: var(--brand-orange-2);
+  outline: 2px solid var(--brand-orange-2);
+}
+
+.lead-req-note {
+  color: var(--on-dark-dim);
+  margin: 0;
+  font-size: .875rem;
 }
 
 .config-shell {
@@ -4731,6 +4789,11 @@ section.block {
 
 .config-shell .wheel-lock-hint, .config-shell .multi-hint, .config-shell .photo-step-hint, .config-shell .tbd-note, .config-shell .lead-fineprint {
   color: #f3f4f68c;
+}
+
+/* היה חסר: .moving-step-note קיבל --text-secondary (כהה) על רקע כהה = 2.5:1 */
+.config-shell .moving-step-note, .config-shell .lead-fineprint, .config-shell .moving-next-hint, .config-shell .mini-cal-legend, .config-shell .moving-vat-note {
+  color: var(--on-dark-dim);
 }
 
 .config-shell .sub-question {
@@ -4815,7 +4878,7 @@ section.block {
 }
 
 .config-shell .wall-other-input::placeholder, .config-shell .lead-form input::placeholder {
-  color: var(--brand-ink-mute);
+  color: var(--brand-ink-dim);
 }
 
 .config-shell .lead-form input:focus {
@@ -4853,7 +4916,8 @@ section.block {
 }
 
 .config-shell .btn-nav.primary {
-  background: linear-gradient(135deg, var(--brand-ink-2), var(--brand-ink));
+  /* היררכיה: "הבא" ראשי בכתום (היה כהה על כהה), "הקודם" משני */
+  background: var(--premium-oncolor);
   color: #fff;
   border-color: #0000;
   box-shadow: 0 14px 28px -12px #20272e8c;
@@ -4907,7 +4971,7 @@ section.block {
 }
 
 .config-shell .mini-cal-dow {
-  color: #f3f4f680;
+  color: var(--on-dark-dim);
 }
 
 .config-shell .mini-cal-nav {
@@ -5729,7 +5793,7 @@ footer.site-foot {
 
 footer.site-foot p, footer.site-foot a {
   color: var(--text-tertiary);
-  font-size: .85rem;
+  font-size: .9rem;
   text-decoration: none;
 }
 
@@ -5739,11 +5803,19 @@ footer.site-foot a:hover {
 
 .foot-links {
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 0 18px;
   display: flex;
 }
 
-@media (width <= 979px) {
+/* אזור מגע 44px לקישורי הפוטר (הנגשה) */
+footer.site-foot .foot-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* נקודת המעבר בין המבורגר לתוויות: 1100px (המבורגר עד 1099, תוויות מ-1100) */
+@media (width <= 1099px) {
   .menu-toggle-btn {
     display: inline-flex;
     margin-inline-end: auto;
@@ -5764,29 +5836,76 @@ footer.site-foot a:hover {
     flex-direction: column;
     align-items: stretch;
     gap: 4px;
-    padding: 28px 20px 24px;
+    padding: 12px 20px 24px;
     background: var(--bg);
     border-left: 1px solid var(--border);
     box-shadow: -8px 0 24px rgba(0, 0, 0, .18);
     overflow-y: auto;
     transform: translateX(100%);
-    transition: transform .25s ease;
+    /* סגורה: לא נראית ולא ניתנת למיקוד (visibility) - הקישורים לא tabbable */
+    visibility: hidden;
+    transition: transform .25s ease, visibility 0s linear .25s;
   }
 
   body.mobile-nav-open .mobile-drawer-nav {
     transform: translateX(0);
+    visibility: visible;
+    transition: transform .25s ease, visibility 0s;
   }
 
   .mobile-drawer-nav a {
     color: var(--text-primary);
-    padding: 12px 14px;
-    font-size: .95rem;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 14px;
+    font-size: 1rem;
     border-radius: 10px;
     text-decoration: none;
   }
 
   .mobile-drawer-nav a:hover {
     background: var(--surface-2);
+  }
+
+  .mobile-drawer-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 8px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .mobile-drawer-close:hover {
+    background: var(--surface-2);
+  }
+}
+
+@media (width >= 1100px) {
+  .mobile-drawer-nav, .mobile-nav-backdrop {
+    display: none !important;
+  }
+}
+
+@media (width <= 480px) {
+  .topbar-inner {
+    gap: 8px;
+    padding-inline: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-drawer-nav {
+    transition: none !important;
   }
 }
 
@@ -6534,7 +6653,7 @@ footer.site-foot a:hover {
   letter-spacing: .1em;
   color: var(--text-tertiary);
   margin-bottom: 8px;
-  font-size: .74rem;
+  font-size: .875rem;
   font-weight: 700;
   display: block;
 }
@@ -7406,6 +7525,161 @@ fieldset.step-fieldset legend {
   min-height: 44px;
 }
 
+/* ============================================================
+   תיקוני QA מובייל (20.9.2026) - moving-day.html
+   ============================================================ */
+.mini-cal-dow {
+  font-size: .875rem;
+}
+
+.mini-cal-legend {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 340px;
+  margin: 12px auto 0;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+.mini-cal-legend-swatch {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  border-radius: 4px;
+  background: #ffffff80;
+  border: 1px solid var(--brand-ink-mute);
+}
+
+.moving-next-hint {
+  text-align: center;
+  margin: 0;
+  padding: 10px 22px 0;
+  font-size: .9375rem;
+}
+
+.moving-next-hint:empty {
+  display: none;
+}
+
+.moving-vat-note {
+  font-size: .875rem;
+}
+
+.config-shell .legal-disclosure {
+  max-width: 460px;
+  margin: 18px auto 0;
+  padding: 14px 16px;
+  border: 1px solid #ffffff1a;
+  border-radius: 12px;
+  color: var(--on-dark-dim);
+  font-size: .9375rem;
+  line-height: 1.6;
+}
+
+.config-shell .legal-disclosure-title {
+  color: var(--brand-paper);
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.config-shell .legal-disclosure-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.config-shell .legal-disclosure-list strong {
+  color: var(--brand-paper);
+}
+
+.config-shell .legal-disclosure-link {
+  color: var(--brand-orange-2);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: underline;
+}
+
+.config-shell .privacy-point-of-contact-note {
+  color: var(--on-dark-dim) !important;
+  font-size: .875rem !important;
+}
+
+.config-shell .lead-form label[for$="MarketingOptIn"] {
+  color: var(--on-dark-dim) !important;
+  font-size: .9375rem !important;
+  min-height: 44px;
+  gap: 10px !important;
+}
+
+.config-shell .lead-form label[for$="MarketingOptIn"] input {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  accent-color: var(--premium-oncolor);
+}
+
+@media (width <= 640px) {
+  /* צ'יפים באורך ורוחב אחידים: גריד 2 עמודות, כל השורות באותו גובה */
+  .multi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 10px;
+  }
+
+  .multi-chip {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 8px;
+  }
+
+  .multi-grid > .multi-chip:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 5px);
+  }
+
+  /* תאי לוח שנה: גובה מגע 44px */
+  .mini-cal-grid {
+    gap: 3px;
+  }
+
+  .mini-cal-cell {
+    aspect-ratio: auto;
+    min-height: 44px;
+  }
+}
+
+@media (width <= 340px) {
+  .config-body {
+    padding-inline: 8px !important;
+  }
+}
+
+@media (width <= 480px) {
+  .config-body {
+    padding-inline: 14px;
+  }
+
+  .config-top {
+    padding-inline: 14px;
+  }
+
+  .config-nav {
+    padding-inline: 14px;
+  }
+}
+
 /* prefers-reduced-motion - מכבה/מקצר אנימציות ומעברים לבקשת המשתמש */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -7424,9 +7698,9 @@ fieldset.step-fieldset legend {
 <!--$--><div><header class="topbar">
   <div class="topbar-inner">
     <a class="brandmark" href="index.html">
-      <img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount">
+      <img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" loading="lazy" alt="Master Mount">
     </a>
-    <button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="toplinks" aria-label="ניווט ראשי">
+    <button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileDrawerNav"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="toplinks" aria-label="ניווט ראשי">
       <a href="installation.html">הזמנת התקנה מותאמת</a>
       <a href="index.html#products">טלוויזיות למכירה</a>
       <a href="index.html#bundles">דילים משתלמים</a>
@@ -7435,12 +7709,56 @@ fieldset.step-fieldset legend {
       <a href="index.html#how">איך זה עובד</a>
       <a href="index.html#contact">יצירת קשר</a>
     </nav>
-    <a class="top-cta" id="topWhatsappBtn" href="#" target="_blank" rel="noopener" aria-label="יצירת קשר בוואטסאפ">
+    <a class="top-cta" id="topWhatsappBtn" hidden rel="noopener" aria-label="יצירת קשר בוואטסאפ">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C6.48 2 2 6.36 2 11.75c0 2.06.65 3.97 1.76 5.55L2.5 22l4.86-1.24a10.1 10.1 0 0 0 4.64 1.14c5.52 0 10-4.36 10-9.75S17.52 2 12 2Zm0 17.75c-1.5 0-2.9-.4-4.1-1.09l-.29-.17-2.88.73.77-2.8-.19-.29A7.66 7.66 0 0 1 4.15 11.75C4.15 7.46 7.66 4 12 4s7.85 3.46 7.85 7.75-3.51 7.75-7.85 7.75Zm4.3-5.8c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.17-.7-.62-1.18-1.39-1.31-1.63-.14-.24-.01-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28Z"/></svg>
       <span class="sr-only">(נפתח בוואטסאפ)</span>
     </a><a class="cart-badge-btn empty" id="cartBadgeBtn" href="index.html#cart" aria-label="עגלת הזמנות, ריקה"><span class="cart-disc"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7.5H6.2"></path></svg></span><span class="cart-count" id="cartBadgeCount">0</span></a><script>(function(){try{var c=JSON.parse(localStorage.getItem("mm_cart_v1")||"[]");var n=Array.isArray(c)?c.length:0;var b=document.getElementById("cartBadgeBtn");document.getElementById("cartBadgeCount").textContent=n;b.classList.toggle("empty",n===0);b.setAttribute("aria-label",n?"עגלת הזמנות, "+n+" פריטים":"עגלת הזמנות, ריקה");}catch(e){}})();</script>
   </div>
-</header><div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד"><a href="installation.html">הזמנת התקנה מותאמת</a><a href="index.html#products">טלוויזיות למכירה</a><a href="index.html#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="index.html#how">איך זה עובד</a><a href="index.html#contact">יצירת קשר</a></nav><script>(function(){var btn=document.getElementById("mobileMenuToggleBtn");var backdrop=document.getElementById("mobileNavBackdrop");var nav=document.getElementById("mobileDrawerNav");if(!btn||!backdrop||!nav)return;function closeMenu(){document.body.classList.remove("mobile-nav-open");btn.setAttribute("aria-expanded","false");}function openMenu(){document.body.classList.add("mobile-nav-open");btn.setAttribute("aria-expanded","true");}btn.addEventListener("click",function(){if(document.body.classList.contains("mobile-nav-open")){closeMenu();}else{openMenu();}});backdrop.addEventListener("click",closeMenu);nav.querySelectorAll("a").forEach(function(a){a.addEventListener("click",closeMenu);});document.addEventListener("keydown",function(e){if(e.key==="Escape")closeMenu();});})();</script>
+</header><div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד" tabindex="-1"><button type="button" class="mobile-drawer-close" id="mobileDrawerCloseBtn" aria-label="סגירת תפריט"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><a href="installation.html">הזמנת התקנה מותאמת</a><a href="index.html#products">טלוויזיות למכירה</a><a href="index.html#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="index.html#how">איך זה עובד</a><a href="index.html#contact">יצירת קשר</a></nav><script>(function(){
+  var btn=document.getElementById("mobileMenuToggleBtn");
+  var backdrop=document.getElementById("mobileNavBackdrop");
+  var nav=document.getElementById("mobileDrawerNav");
+  var closeBtn=document.getElementById("mobileDrawerCloseBtn");
+  if(!btn||!backdrop||!nav)return;
+  function isOpen(){return document.body.classList.contains("mobile-nav-open");}
+  /* main/footer נמצאים ב-DOM אחרי הסקריפט הזה - מאתרים בעת הפתיחה */
+  function setInert(on){[document.getElementById("main-content"),document.querySelector("footer.site-foot")].forEach(function(el){if(!el)return;if(on){el.setAttribute("inert","");}else{el.removeAttribute("inert");}});}
+  function closeMenu(returnFocus){
+    if(!isOpen())return;
+    document.body.classList.remove("mobile-nav-open");
+    btn.setAttribute("aria-expanded","false");
+    btn.setAttribute("aria-label","פתיחת תפריט");
+    setInert(false);
+    if(returnFocus)btn.focus();
+  }
+  function openMenu(){
+    document.body.classList.add("mobile-nav-open");
+    btn.setAttribute("aria-expanded","true");
+    btn.setAttribute("aria-label","סגירת תפריט");
+    setInert(true);
+    (closeBtn||nav).focus();
+  }
+  btn.addEventListener("click",function(){if(isOpen()){closeMenu(true);}else{openMenu();}});
+  backdrop.addEventListener("click",function(){closeMenu(true);});
+  if(closeBtn)closeBtn.addEventListener("click",function(){closeMenu(true);});
+  nav.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){closeMenu(false);});});
+  document.addEventListener("keydown",function(e){
+    if(!isOpen())return;
+    if(e.key==="Escape"){closeMenu(true);return;}
+    if(e.key==="Tab"){
+      var f=nav.querySelectorAll("button,a[href]");
+      if(!f.length)return;
+      var first=f[0],last=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    }
+  });
+  if(window.matchMedia){
+    var mq=window.matchMedia("(min-width: 1100px)");
+    var onMq=function(){if(mq.matches)closeMenu(false);};
+    if(mq.addEventListener){mq.addEventListener("change",onMq);}else if(mq.addListener){mq.addListener(onMq);}
+  }
+})();</script>
 
 <main id="main-content" tabindex="-1">
 <h1 class="sr-only">שירות העברת טלוויזיה ביום המעבר - בקשת הצעת מחיר - Master Mount</h1>
@@ -7459,14 +7777,15 @@ fieldset.step-fieldset legend {
     <div class="config-shell">
       <div class="config-top">
         <span class="step-label" id="movingStepLabel">שלב 1</span>
-        <div class="progress-track"><div class="progress-fill" id="movingProgressFill" style="width:0%"></div></div>
+        <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="movingProgressFill" style="width:0%"></div></div>
         <span class="running-price" id="movingRunningPrice" aria-hidden="true">₪0</span>
         <span id="movingRunningPriceAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true">המחיר המעודכן: 0 שקלים</span>
       </div>
       <div class="config-body" id="movingBody"></div>
+      <p class="moving-next-hint" id="movingNextHint" role="status" aria-live="polite"></p>
       <div class="config-nav">
         <button class="btn-nav" id="movingPrevBtn">→ הקודם</button>
-        <button class="btn-nav primary" id="movingNextBtn">הבא ←</button>
+        <button class="btn-nav primary" id="movingNextBtn" aria-describedby="movingNextHint">הבא ←</button>
       </div>
     </div>
   </div>
@@ -7478,7 +7797,7 @@ fieldset.step-fieldset legend {
   <div class="wrap foot-grid">
     <div>
       <div class="brandmark">
-        <img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount">
+        <img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" loading="lazy" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" loading="lazy" alt="Master Mount">
       </div>
       <p>התקנה מדויקת בשבילך.</p>
     </div>
@@ -7488,7 +7807,7 @@ fieldset.step-fieldset legend {
       <a href="index.html#bundles">דילים משתלמים</a>
       <a href="moving-day.html">מעבר דירה</a>
       <a href="tv-technology-guide.html">מדריך טכנולוגיות</a>
-      <a id="footCallLink" href="#">התקשרו</a>
+      <a id="footCallLink" hidden>התקשרו</a>
       <a id="footEmailLink" href="mailto:mastermount@mastermount.co.il">mastermount@mastermount.co.il</a>
     </div>
     <div class="foot-links">
@@ -7544,10 +7863,17 @@ function initMovingDay() {
   function genericWhatsappLink() {
     return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent("שלום! אשמח לפרטים על התקנת טלוויזיה דרך Master Mount.");
   }
+  /* כל עוד הדגל כבוי: וואטסאפ עליון ו"התקשרו" בפוטר מוסתרים לגמרי (hidden) - בלי href="#" ובלי
+     target=_blank. כשהדגל יופעל הם יוצגו ויקבלו את הקישורים. */
   if (CONTACT_ACTIONS_ENABLED) {
-    document.getElementById("topWhatsappBtn").href = genericWhatsappLink();
-    document.getElementById("footCallLink").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
-    document.getElementById("footCallLink").textContent = BUSINESS.phone;
+    var topWaEl = document.getElementById("topWhatsappBtn");
+    topWaEl.href = genericWhatsappLink();
+    topWaEl.target = "_blank";
+    topWaEl.hidden = false;
+    var footCallEl = document.getElementById("footCallLink");
+    footCallEl.href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
+    footCallEl.innerHTML = '<bdi dir="ltr">' + BUSINESS.phone + "</bdi>";
+    footCallEl.hidden = false;
   }
 
   function fmt(n) { return "₪" + Number(n || 0).toLocaleString("he-IL"); }
@@ -7616,7 +7942,7 @@ function initMovingDay() {
     ]
   };
 
-  /* ================= MOVING DAY (מעבר דירה) — independent mini-flow, own state, no sharing with the configurator ================= */
+  /* ================= MOVING DAY (מעבר דירה) - independent mini-flow, own state, no sharing with the configurator ================= */
   var MOVING = { moveDate: null, installDate: null, screenCount: null, isMax: false, screens: [], storageOption: null };
   var movingStepIdx = 0;
   var movingStepHasRenderedOnce = false; /* SPA-nav: לא-לגנוב-פוקוס בטעינה-הראשונה */
@@ -7667,6 +7993,22 @@ function initMovingDay() {
 
   function priceSuffix(amount) { return amount ? " (+" + fmt(amount) + ")" : " (כלול)"; }
   function priceSuffixOrQuote(amount) { return amount == null ? " (תמחור מול המתקין)" : priceSuffix(amount); }
+
+  /* bidi: מספרים/סימנים בתוך טקסט עברי (RTL) מסודרים במקטע LTR מבודד, אחרת "+₪70" נראה "₪70+"
+     ו-32"-43" נראה הפוך. הגרסאות ה-Html משמשות רק להצגה על המסך (ההודעות היוצאות נשארות טקסט רגיל). */
+  function ltr(s) { return '<bdi dir="ltr">' + s + "</bdi>"; }
+  function priceSuffixHtml(amount) { return amount ? " " + ltr("(+" + fmt(amount) + ")") : " (כלול)"; }
+  function priceSuffixOrQuoteHtml(amount) { return amount == null ? " (תמחור מול המתקין)" : priceSuffixHtml(amount); }
+  function sizeLabelHtml(label) { return String(label || "").replace(/^(\d+"(?:-\d+")?)/, function (m) { return ltr(m); }); }
+  var PHONE_REQUIRED_MSG = "נא להזין מספר טלפון תקין (למשל 0521234567) כדי שנוכל לחזור אליכם.";
+  function normalizeIlPhone(raw) {
+    var s = String(raw || "").replace(/[\s\-().]/g, "");
+    if (s.indexOf("+972") === 0) s = "0" + s.slice(4);
+    else if (s.indexOf("972") === 0) s = "0" + s.slice(3);
+    return s;
+  }
+  /* טלפון ישראלי: נייד 05X + 7 ספרות, קווי 0[2-4,8,9] + 7 ספרות, VoIP 07X + 7 ספרות */
+  function isValidIlPhone(raw) { return /^(05\d{8}|0[2-489]\d{7}|07\d{8})$/.test(normalizeIlPhone(raw)); }
 
   function computeMovingPrice() {
     var countPrice = MOVING.isMax ? MOVING_SCREEN_COUNT_PRICES.max : (MOVING.screenCount ? (MOVING_SCREEN_COUNT_PRICES[MOVING.screenCount] || 0) : 0);
@@ -7786,19 +8128,19 @@ function initMovingDay() {
     rows += '<div class="moving-summary-row"><span>תאריך המעבר</span><strong>' + formatDateHe(MOVING.moveDate) + "</strong></div>";
     rows += '<div class="moving-summary-row"><span>תאריך התקנה מבוקש</span><strong>' + formatDateHe(MOVING.installDate) + "</strong></div>";
     if (MOVING.isMax) {
-      rows += '<div class="moving-summary-row"><span>כמות מסכים</span><strong>6 ומעלה' + priceSuffix(price.countPrice) + "</strong></div>";
+      rows += '<div class="moving-summary-row"><span>כמות מסכים</span><strong>6 ומעלה' + priceSuffixHtml(price.countPrice) + "</strong></div>";
     } else {
-      rows += '<div class="moving-summary-row"><span>כמות מסכים</span><strong>' + MOVING.screenCount + priceSuffix(price.countPrice) + "</strong></div>";
+      rows += '<div class="moving-summary-row"><span>כמות מסכים</span><strong>' + MOVING.screenCount + priceSuffixHtml(price.countPrice) + "</strong></div>";
     }
     if (!MOVING.isMax) {
       rows += MOVING.screens.map(function (sc, i) {
         var cm = findIn(MOVING_CURRENT_MOUNT_OPTIONS, sc.currentMount);
         var nm = sc.newMount === "other" ? findIn(MOVING_NEW_MOUNT_OPTIONS, sc.newMountDetail) : null;
         var newMountLabel = sc.newMount === "same" ? "כמו שהיה מותקן לפני הפירוק" : findLocationLabel(sc.newMountDetail);
-        var newMountPriceHtml = sc.newMount === "same" ? priceSuffix(MOVING_SAME_MOUNT_PRICE) : (nm ? priceSuffixOrQuote(nm.priceILS) : "");
+        var newMountPriceHtml = sc.newMount === "same" ? priceSuffixHtml(MOVING_SAME_MOUNT_PRICE) : (nm ? priceSuffixOrQuoteHtml(nm.priceILS) : "");
         return '<h4 class="screen-block-title moving-summary-screen-title">מסך ' + (i + 1) + "</h4>" +
-          '<div class="moving-summary-row"><span>גודל</span><strong>' + findSizeLabel(sc.sizeId) + priceSuffix(MOVING_SIZE_PRICES[sc.sizeId]) + "</strong></div>" +
-          '<div class="moving-summary-row"><span>מותקן כיום</span><strong>' + findMountLabel(sc.currentMount) + (cm ? priceSuffix(cm.priceILS) : "") + "</strong></div>" +
+          '<div class="moving-summary-row"><span>גודל</span><strong>' + sizeLabelHtml(findSizeLabel(sc.sizeId)) + priceSuffixHtml(MOVING_SIZE_PRICES[sc.sizeId]) + "</strong></div>" +
+          '<div class="moving-summary-row"><span>מותקן כיום</span><strong>' + findMountLabel(sc.currentMount) + (cm ? priceSuffixHtml(cm.priceILS) : "") + "</strong></div>" +
           '<div class="moving-summary-row"><span>בדירה החדשה</span><strong>' + newMountLabel + newMountPriceHtml + "</strong></div>";
       }).join("");
     }
@@ -7808,28 +8150,31 @@ function initMovingDay() {
       if (MOVING.storageOption === "long") {
         storageValue += MOVING.isMax
           ? " (" + fmt(MOVING_STORAGE_LONG_PRICE) + " לכל מסך - הסכום המדויק ייקבע לפי כמות המסכים בתיאום מול הנציג)"
-          : " (" + fmt(MOVING_STORAGE_LONG_PRICE) + " × " + MOVING.screenCount + " = " + fmt(price.storagePrice) + ")";
+          : " " + ltr("(" + fmt(MOVING_STORAGE_LONG_PRICE) + " × " + MOVING.screenCount + " = " + fmt(price.storagePrice) + ")");
       } else {
         storageValue += " (כלול)";
       }
       rows += '<div class="moving-summary-row"><span>אחסון עד תיאום ההתקנה</span><strong>' + storageValue + "</strong></div>";
     }
     rows += '<div class="moving-summary-row total"><span>סה"כ משוער</span><strong>' + fmt(price.total) + (price.isCustomQuote ? " + הצעת מחיר בהתאמה אישית" : "") + "</strong></div>";
-    rows += '<div class="moving-summary-row"><span style="font-size:.78rem;color:var(--text-tertiary,#7a7a7a);">' + (BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote({ includeShipping: false }) : "המחיר כולל מע\"מ") + '</span></div>';
+    rows += '<div class="moving-summary-row"><span class="moving-vat-note">' + (BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote({ includeShipping: false }) : "המחיר כולל מע\"מ") + '</span></div>';
     var html = '<h3 class="step-question" id="stepQuestionHeading" tabindex="-1">סיכום הבקשה שלכם</h3><div class="moving-summary">' + rows + "</div>";
     if (MOVING.isMax) {
-      html += '<p class="mini-cal-picked">את פרטי המסכים המדויקים (גודל / פירוק / הרכבה) נשלים יחד עם הנציג בוואטסאפ - הסכום המוצג אינו כולל אותם.</p>';
+      html += '<p class="mini-cal-picked">את פרטי המסכים המדויקים (גודל / פירוק / הרכבה) נשלים יחד עם הנציג' + (CONTACT_ACTIONS_ENABLED ? " בוואטסאפ" : " בעת יצירת הקשר") + " - הסכום המוצג אינו כולל אותם.</p>";
     }
+    /* כל עוד הדגל CONTACT_ACTIONS_ENABLED כבוי כפתור הוואטסאפ לא נבנה בכלל, ו"שלחו במייל" הוא הכפתור הראשי */
+    var ctasHtml = CONTACT_ACTIONS_ENABLED
+      ? '<a class="btn-accent btn-whatsapp" id="movingWhatsappBtn" href="#" target="_blank" rel="noopener"><span aria-hidden="true">📲 </span>שלחו בוואטסאפ להמשך טיפול<span class="sr-only"> (נפתח בוואטסאפ)</span></a>' +
+        '<a class="btn-ghost" id="movingMailtoBtn" href="#"><span aria-hidden="true">✉️ </span>שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a>'
+      : '<a class="btn-accent btn-cta-main" id="movingMailtoBtn" href="#"><span aria-hidden="true">✉️ </span>שלחו את הבקשה במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a>';
     html +=
       '<div class="lead-form">' +
-        '<label for="movingLeadName" class="sr-only">שם מלא</label>' +
-        '<input type="text" id="movingLeadName" placeholder="שם מלא">' +
-        '<label for="movingLeadPhone" class="sr-only">טלפון</label>' +
-        '<input type="tel" id="movingLeadPhone" placeholder="טלפון" dir="ltr" style="text-align:right;">' +
-        '<div class="lead-ctas">' +
-          '<a class="btn-accent btn-whatsapp" id="movingWhatsappBtn" href="#" target="_blank" rel="noopener"><span aria-hidden="true">📲 </span>שלחו בוואטסאפ להמשך טיפול<span class="sr-only"> (נפתח בוואטסאפ)</span></a>' +
-          '<a class="btn-ghost" id="movingMailtoBtn" href="#"><span aria-hidden="true">✉️ </span>שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a>' +
-        "</div>" +
+        '<label for="movingLeadName" class="sr-only">שם מלא (לא חובה)</label>' +
+        '<input type="text" id="movingLeadName" name="name" placeholder="שם מלא (לא חובה)" autocomplete="name">' +
+        '<label for="movingLeadPhone" class="sr-only">טלפון (חובה)</label>' +
+        '<input type="tel" id="movingLeadPhone" name="tel" placeholder="טלפון (חובה)" dir="ltr" style="text-align:right;" inputmode="tel" autocomplete="tel" required aria-required="true" aria-describedby="movingLeadError">' +
+        '<p class="lead-error" id="movingLeadError" role="alert" hidden></p>' +
+        '<div class="lead-ctas">' + ctasHtml + "</div>" +
         '<p class="lead-fineprint">נציג יחזור אליכם לחידוד הפרטים ולמתן הצעת מחיר מדויקת.</p>' +
         (window.privacyNoticeHtml ? window.privacyNoticeHtml() : "") +
         (window.consentCheckboxHtml ? window.consentCheckboxHtml("moving") : "") +
@@ -7898,14 +8243,43 @@ function initMovingDay() {
   }
 
   function wireMovingSummaryEvents() {
+    var phoneEl = document.getElementById("movingLeadPhone");
+    var errEl = document.getElementById("movingLeadError");
+    function showPhoneError(msg) {
+      errEl.textContent = msg;
+      errEl.hidden = !msg;
+      if (msg) phoneEl.setAttribute("aria-invalid", "true"); else phoneEl.removeAttribute("aria-invalid");
+    }
     function update() {
       var name = document.getElementById("movingLeadName").value.trim();
-      var phone = document.getElementById("movingLeadPhone").value.trim();
-      if (CONTACT_ACTIONS_ENABLED) { document.getElementById("movingWhatsappBtn").href = buildMovingWhatsappLink(name, phone); }
+      var phone = phoneEl.value.trim();
+      var waEl = document.getElementById("movingWhatsappBtn");
+      if (CONTACT_ACTIONS_ENABLED && waEl) { waEl.href = buildMovingWhatsappLink(name, phone); }
       document.getElementById("movingMailtoBtn").href = buildMovingMailtoLink(name, phone);
     }
     document.getElementById("movingLeadName").addEventListener("input", update);
-    document.getElementById("movingLeadPhone").addEventListener("input", update);
+    phoneEl.addEventListener("input", function () {
+      /* רק תווים שמופיעים בטלפון: ספרות, +, מקף, רווח, סוגריים ונקודה */
+      var cleaned = phoneEl.value.replace(/[^\d+\-\s().]/g, "");
+      if (cleaned !== phoneEl.value) phoneEl.value = cleaned;
+      if (!errEl.hidden && isValidIlPhone(cleaned)) showPhoneError("");
+      update();
+    });
+    /* טלפון חובה (שם רשות): בלי מספר תקין לא נפתח המייל/וואטסאפ, ומוצגת הודעת שגיאה בעברית */
+    ["movingMailtoBtn", "movingWhatsappBtn"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener("click", function (e) {
+        if (!isValidIlPhone(phoneEl.value)) {
+          e.preventDefault();
+          e.stopPropagation();
+          showPhoneError(PHONE_REQUIRED_MSG);
+          phoneEl.focus();
+          return;
+        }
+        showPhoneError("");
+      }, true);
+    });
     update();
     var __consentCb = document.getElementById("movingMarketingOptIn");
     if (__consentCb) __consentCb.addEventListener("change", function () { if (window.recordMarketingConsent) window.recordMarketingConsent(__consentCb.checked); });
@@ -7988,8 +8362,7 @@ function initMovingDay() {
     }
   }
 
-  function updateMovingNextEnabled(step) {
-    var nextBtn = document.getElementById("movingNextBtn");
+  function movingStepIsValid(step) {
     var valid = true;
     if (step.type === "calendar") valid = !!MOVING.moveDate;
     else if (step.type === "calendar2") valid = !!MOVING.installDate;
@@ -7998,14 +8371,92 @@ function initMovingDay() {
     else if (step.type === "currentMount") valid = MOVING.screens.every(function (s) { return !!s.currentMount; });
     else if (step.type === "newMount") valid = MOVING.screens.every(function (s) { return !!s.newMount && (s.newMount !== "other" || !!s.newMountDetail); });
     else if (step.type === "storage") valid = !!MOVING.storageOption;
-    nextBtn.disabled = !valid;
+    return valid;
   }
+  /* הסבר קצר מדוע "הבא" מנוטרל - מוצג מעל הכפתור עד שהשלב תקין */
+  var MOVING_NEXT_HINTS = {
+    calendar: "בחרו תאריך מעבר להמשך.",
+    calendar2: "בחרו תאריך התקנה להמשך.",
+    count: "בחרו כמות מסכים להמשך.",
+    sizes: "בחרו גודל לכל מסך להמשך.",
+    currentMount: "בחרו איך כל מסך מותקן היום להמשך.",
+    newMount: "בחרו איך להתקין כל מסך בדירה החדשה להמשך.",
+    storage: "בחרו אפשרות אחסון להמשך."
+  };
+  function updateMovingNextEnabled(step) {
+    var nextBtn = document.getElementById("movingNextBtn");
+    var valid = movingStepIsValid(step);
+    nextBtn.disabled = !valid;
+    var hintEl = document.getElementById("movingNextHint");
+    if (hintEl) hintEl.textContent = valid ? "" : (MOVING_NEXT_HINTS[step.type] || "");
+  }
+
+  /* ---------- שמירת מצב + היסטוריית דפדפן (כפתור "אחורה" עובר שלב אחורה, רענון לא מאבד בחירות) ---------- */
+  var MOVING_STORE_KEY = "mm_moving_v1";
+  function movingSaveState() {
+    try { sessionStorage.setItem(MOVING_STORE_KEY, JSON.stringify({ m: MOVING, i: movingStepIdx })); } catch (e) {}
+  }
+  function isDateKey(k) { return typeof k === "string" && /^\d{4}-\d{2}-\d{2}$/.test(k); }
+  function movingRestoreState() {
+    /* משחזר רק כשהכתובת כבר מכילה #step-N (רענון או חזרה לעמוד) - כניסה חדשה דרך קישור מתחילה מחדש */
+    if (!/^#step-\d+$/.test(location.hash)) { try { sessionStorage.removeItem(MOVING_STORE_KEY); } catch (e) {} return; }
+    var o = null;
+    try { o = JSON.parse(sessionStorage.getItem(MOVING_STORE_KEY) || "null"); } catch (e) { o = null; }
+    if (!o || !o.m || typeof o.m !== "object") {
+      try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+      return;
+    }
+    var m = o.m;
+    if (isDateKey(m.moveDate) && m.moveDate >= movingMinMoveKey()) MOVING.moveDate = m.moveDate;
+    if (isDateKey(m.installDate) && MOVING.moveDate && m.installDate >= movingMinInstallKey()) MOVING.installDate = m.installDate;
+    if (m.isMax === true) { MOVING.isMax = true; MOVING.screenCount = null; MOVING.screens = []; }
+    else if (typeof m.screenCount === "number" && m.screenCount >= 1 && m.screenCount <= 5 && Math.floor(m.screenCount) === m.screenCount) {
+      MOVING.isMax = false; MOVING.screenCount = m.screenCount;
+      var arr = [];
+      for (var i = 0; i < m.screenCount; i++) {
+        var s = (m.screens && m.screens[i]) || {};
+        arr.push({
+          sizeId: findIn(CATALOG.sizeTiers, s.sizeId) ? s.sizeId : null,
+          currentMount: findIn(MOVING_CURRENT_MOUNT_OPTIONS, s.currentMount) ? s.currentMount : null,
+          newMount: (s.newMount === "same" || s.newMount === "other") ? s.newMount : null,
+          newMountDetail: (s.newMount === "other" && findIn(MOVING_NEW_MOUNT_OPTIONS, s.newMountDetail)) ? s.newMountDetail : null
+        });
+      }
+      MOVING.screens = arr;
+    }
+    if (m.storageOption === "short" || m.storageOption === "long") MOVING.storageOption = m.storageOption;
+    /* לא מאפשר לנחות על שלב שקודמיו לא הושלמו */
+    var steps = movingActiveSteps();
+    var want = Math.max(0, Math.min(steps.length - 1, parseInt(location.hash.slice(6), 10) - 1 || 0));
+    var firstInvalid = steps.length - 1;
+    for (var k = 0; k < steps.length; k++) { if (steps[k].type !== "movingSummary" && !movingStepIsValid(steps[k])) { firstInvalid = k; break; } }
+    movingStepIdx = Math.min(want, firstInvalid);
+    try { history.replaceState({ movingStep: movingStepIdx }, "", "#step-" + (movingStepIdx + 1)); } catch (e) {}
+  }
+  function movingGoToStep(idx) {
+    movingStepIdx = idx;
+    try { history.pushState({ movingStep: idx }, "", "#step-" + (idx + 1)); } catch (e) {}
+    renderMovingStep();
+  }
+  window.addEventListener("popstate", function (e) {
+    var idx = null;
+    if (e.state && typeof e.state.movingStep === "number") idx = e.state.movingStep;
+    else if (location.hash === "" || location.hash === "#") idx = 0;
+    else if (/^#step-\d+$/.test(location.hash)) idx = (parseInt(location.hash.slice(6), 10) || 1) - 1;
+    if (idx === null) return; /* עוגן אחר (למשל "דלג לתוכן") - לא משנה שלב */
+    idx = Math.max(0, Math.min(movingActiveSteps().length - 1, idx));
+    if (idx === movingStepIdx) return;
+    movingStepIdx = idx;
+    renderMovingStep();
+  });
 
   function renderMovingStep() {
     var steps = movingActiveSteps();
     if (movingStepIdx > steps.length - 1) movingStepIdx = steps.length - 1;
     var step = steps[movingStepIdx];
-    document.getElementById("movingStepLabel").textContent = "שלב " + (movingStepIdx + 1) + " מתוך " + steps.length;
+    /* כשבוחרים "6 ומעלה" שלבי הגודל/התקנה מדולגים ומספר השלבים קטן מ-8 - מצוין במפורש */
+    var stepLabelText = "שלב " + (movingStepIdx + 1) + " מתוך " + steps.length + (steps.length < MOVING_STEPS.length ? " (מותאם לבחירתכם)" : "");
+    document.getElementById("movingStepLabel").textContent = stepLabelText;
     document.getElementById("movingProgressFill").style.width = (steps.length > 1 ? (movingStepIdx / (steps.length - 1) * 100) : 100) + "%";
     var body = document.getElementById("movingBody");
     var prevBtn = document.getElementById("movingPrevBtn");
@@ -8025,6 +8476,8 @@ function initMovingDay() {
         var minKey = isSecond ? movingMinInstallKey() : movingMinMoveKey();
         var initParts = (selKey || minKey).split("-");
         html += buildCalendarHtml("movingCal", +initParts[0], +initParts[1] - 1, selKey, minKey, step.q);
+        html += '<p class="mini-cal-legend"><span class="mini-cal-legend-swatch" aria-hidden="true"></span><span>תאריכים באפור אינם זמינים: ' +
+          (isSecond ? "ימי שבת ותאריכים עד יום המעבר שבחרתם (ההתקנה החל מהיום שאחריו)." : "תאריכים שעברו, ימי שבת, והיום ומחר (נדרשות לפחות יומיים מראש).") + "</span></p>";
         html += '<p class="mini-cal-picked" id="movingCalPicked" aria-live="polite">' + (selKey ? '<span aria-hidden="true">📌 </span>נבחר: ' + formatDateHe(selKey) : "") + "</p>";
       } else if (step.type === "count") {
         html += '<div class="multi-grid" id="countGrid" role="radiogroup" aria-labelledby="stepQuestionHeading">' + [1, 2, 3, 4, 5].map(function (n) {
@@ -8035,14 +8488,14 @@ function initMovingDay() {
           return '<div class="screen-block"><h4 class="screen-block-title" id="screenHeading_' + i + '">מסך ' + (i + 1) + "</h4>" +
             '<div class="multi-grid" id="sizeGrid_' + i + '" role="radiogroup" aria-labelledby="screenHeading_' + i + '">' + MOVING_SIZE_OPTIONS.map(function (o) {
               var p = MOVING_SIZE_PRICES[o.id];
-              return '<div class="multi-chip' + (sc.sizeId === o.id ? " active" : "") + '" data-screen="' + i + '" data-size="' + o.id + '"><div class="wc-title">' + o.label + '</div><div class="wc-sub">' + (p ? "+" + fmt(p) : "כלול") + "</div></div>";
+              return '<div class="multi-chip' + (sc.sizeId === o.id ? " active" : "") + '" data-screen="' + i + '" data-size="' + o.id + '"><div class="wc-title">' + sizeLabelHtml(o.label) + '</div><div class="wc-sub">' + (p ? ltr("+" + fmt(p)) : "כלול") + "</div></div>";
             }).join("") + "</div></div>";
         }).join("");
       } else if (step.type === "currentMount") {
         html += MOVING.screens.map(function (sc, i) {
-          return '<div class="screen-block"><h4 class="screen-block-title" id="screenHeading_' + i + '">מסך ' + (i + 1) + " (" + (findSizeLabel(sc.sizeId) || "") + ")</h4>" +
+          return '<div class="screen-block"><h4 class="screen-block-title" id="screenHeading_' + i + '">מסך ' + (i + 1) + " (" + sizeLabelHtml(findSizeLabel(sc.sizeId) || "") + ")</h4>" +
             '<div class="multi-grid" id="mountGrid_' + i + '" role="radiogroup" aria-labelledby="screenHeading_' + i + '">' + MOVING_CURRENT_MOUNT_OPTIONS.map(function (o) {
-              return '<div class="multi-chip' + (sc.currentMount === o.id ? " active" : "") + '" data-screen="' + i + '" data-mount="' + o.id + '"><div class="wc-title">' + o.label + '</div><div class="wc-sub">' + (o.priceILS ? "+" + fmt(o.priceILS) : "כלול") + "</div></div>";
+              return '<div class="multi-chip' + (sc.currentMount === o.id ? " active" : "") + '" data-screen="' + i + '" data-mount="' + o.id + '"><div class="wc-title">' + o.label + '</div><div class="wc-sub">' + (o.priceILS ? ltr("+" + fmt(o.priceILS)) : "כלול") + "</div></div>";
             }).join("") + "</div></div>";
         }).join("");
       } else if (step.type === "newMount") {
@@ -8051,19 +8504,19 @@ function initMovingDay() {
           var otherActive = sc.newMount === "other";
           var block = '<div class="screen-block"><h4 class="screen-block-title" id="screenHeading_' + i + '">מסך ' + (i + 1) + "</h4>" +
             '<div class="multi-grid" id="newMountGrid_' + i + '" role="radiogroup" aria-labelledby="screenHeading_' + i + '">' +
-              '<div class="multi-chip' + (sameActive ? " active" : "") + '" data-screen="' + i + '" data-newmount="same"><div class="wc-title">כמו שהיה מותקן לפני הפירוק</div><div class="wc-sub">' + fmt(MOVING_SAME_MOUNT_PRICE) + '</div></div>' +
+              '<div class="multi-chip' + (sameActive ? " active" : "") + '" data-screen="' + i + '" data-newmount="same"><div class="wc-title">כמו שהיה מותקן לפני הפירוק</div><div class="wc-sub">' + ltr(fmt(MOVING_SAME_MOUNT_PRICE)) + '</div></div>' +
               '<div class="multi-chip' + (otherActive ? " active" : "") + '" data-screen="' + i + '" data-newmount="other"><div class="wc-title">תליה באופן אחר</div></div>' +
             "</div>";
           if (otherActive) {
             block += '<div class="multi-grid" id="newMountDetailGrid_' + i + '" role="radiogroup" aria-label="פרטי ההתקנה בדירה החדשה - מסך ' + (i + 1) + '" style="margin-top:10px;">' + MOVING_NEW_MOUNT_OPTIONS.map(function (o) {
-              return '<div class="multi-chip' + (sc.newMountDetail === o.id ? " active" : "") + '" data-screen="' + i + '" data-newmountdetail="' + o.id + '"><div class="wc-title">' + o.label + '</div><div class="wc-sub">' + (o.priceILS == null ? "תמחור מול המתקין" : "+" + fmt(o.priceILS)) + "</div></div>";
+              return '<div class="multi-chip' + (sc.newMountDetail === o.id ? " active" : "") + '" data-screen="' + i + '" data-newmountdetail="' + o.id + '"><div class="wc-title">' + o.label + '</div><div class="wc-sub">' + (o.priceILS == null ? "תמחור מול המתקין" : ltr("+" + fmt(o.priceILS))) + "</div></div>";
             }).join("") + "</div>";
           }
           return block + "</div>";
         }).join("");
       } else if (step.type === "storage") {
         html += '<div class="multi-grid" id="storageGrid" role="radiogroup" aria-labelledby="stepQuestionHeading">' + MOVING_STORAGE_OPTIONS.map(function (o) {
-          var sub = o.priceILS ? "+" + fmt(o.priceILS) + (o.perScreen ? " / מסך" : "") : "כלול";
+          var sub = o.priceILS ? ltr("+" + fmt(o.priceILS)) + (o.perScreen ? " / מסך" : "") : "כלול";
           return '<div class="multi-chip' + (MOVING.storageOption === o.id ? " active" : "") + '" data-storage="' + o.id + '"><div class="wc-title">' + o.label + '</div><div class="wc-sub">' + sub + "</div></div>";
         }).join("") + "</div>";
         if (MOVING.storageOption === "long") {
@@ -8090,7 +8543,7 @@ function initMovingDay() {
     /* SPA-nav (Reg.35/IS5568): title-דף + הכרזה + פוקוס-לכותרת-השלב - רק במעבר-שלב-אמיתי
        (movingStepIdx השתנה), לא בכל render-חוזר-של-אותו-שלב (כל בחירת-chip/תאריך קוראת
        renderMovingStep() מחדש) ולא בטעינה-הראשונה. */
-    document.title = (step.type === "movingSummary" ? "מעבר דירה — סיכום הבקשה" : "מעבר דירה — שלב " + (movingStepIdx + 1) + " מתוך " + steps.length) + " | Master Mount";
+    document.title = (step.type === "movingSummary" ? "מעבר דירה - סיכום הבקשה" : "מעבר דירה - שלב " + (movingStepIdx + 1) + " מתוך " + steps.length) + " | Master Mount";
     if (movingStepHasRenderedOnce && movingStepIdx !== movingLastAnnouncedStepIdx) {
       var movingAnnouncerEl = document.getElementById("stepAnnouncer");
       if (movingAnnouncerEl) movingAnnouncerEl.textContent = step.type === "movingSummary" ? "עברת לשלב הסיכום" : "עברת לשלב " + (movingStepIdx + 1) + " מתוך " + steps.length + ": " + step.q;
@@ -8110,14 +8563,16 @@ function initMovingDay() {
     }
     movingLastAnnouncedStepIdx = movingStepIdx;
     movingStepHasRenderedOnce = true;
+    movingSaveState();
   }
 
   document.getElementById("movingPrevBtn").addEventListener("click", function () {
-    if (movingStepIdx > 0) { movingStepIdx--; renderMovingStep(); }
+    if (movingStepIdx > 0) { movingGoToStep(movingStepIdx - 1); }
   });
   document.getElementById("movingNextBtn").addEventListener("click", function () {
-    if (movingStepIdx < movingActiveSteps().length - 1) { movingStepIdx++; renderMovingStep(); }
+    if (movingStepIdx < movingActiveSteps().length - 1) { movingGoToStep(movingStepIdx + 1); }
   });
+  movingRestoreState();
   renderMovingStep();
 
 

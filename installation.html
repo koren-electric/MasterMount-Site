@@ -5925,7 +5925,7 @@ footer.site-foot a:hover {
   display: flex;
 }
 
-@media (width <= 979px) {
+@media (width <= 1099px) {
   .menu-toggle-btn {
     display: inline-flex;
     margin-inline-end: auto;
@@ -5946,17 +5946,20 @@ footer.site-foot a:hover {
     flex-direction: column;
     align-items: stretch;
     gap: 4px;
-    padding: 28px 20px 24px;
+    padding: 12px 20px 24px;
     background: var(--bg);
     border-left: 1px solid var(--border);
     box-shadow: -8px 0 24px rgba(0, 0, 0, .18);
     overflow-y: auto;
     transform: translateX(100%);
-    transition: transform .25s ease;
+    visibility: hidden;
+    transition: transform .25s ease, visibility 0s linear .25s;
   }
 
   body.mobile-nav-open .mobile-drawer-nav {
     transform: translateX(0);
+    visibility: visible;
+    transition: transform .25s ease, visibility 0s;
   }
 
   .mobile-drawer-nav a {
@@ -7598,6 +7601,392 @@ fieldset.step-fieldset legend {
   }
 }
 
+/* ============================================================
+   תיקוני QA מובייל (20.9.2026) - installation.html
+   ============================================================ */
+
+/* טוקנים קיימים באתר (מוגדרים ב-index.html): כתום לטקסט על רקע בהיר / כתום כרקע מתחת לטקסט לבן (4.69:1) */
+:root:root, :root:root[data-theme="dark"] {
+  --premium-text: #ba4112;
+  --premium-oncolor: #cc4714;
+}
+
+/* כפתורי קשר מושבתים (CONTACT_ACTIONS_ENABLED כבוי): מוסתרים לגמרי */
+.top-cta[hidden], #cartWhatsappBtn[hidden], #footCallLink[hidden],
+.cart-lead-error[hidden], .cart-lead-sent[hidden], .step-note[hidden] {
+  display: none !important;
+}
+.btn-whatsapp {
+  background: var(--premium-oncolor) !important;
+}
+
+/* סרגל עליון: המבורגר 44x44 שאינו מתכווץ, ריווח מצומצם במסכים צרים */
+.menu-toggle-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  flex-shrink: 0;
+}
+.top-cta, .cart-badge-btn, .brandmark {
+  flex-shrink: 0;
+}
+@media (width <= 480px) {
+  .topbar-inner {
+    gap: 8px;
+    padding-inline: 12px;
+  }
+}
+.mobile-drawer-close {
+  align-self: flex-start;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 4px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.mobile-drawer-close:hover {
+  background: var(--surface-2);
+}
+.mobile-drawer-nav:focus-visible {
+  outline: none;
+}
+
+/* מדדי גופן מינימליים (14px) לטקסט מידע */
+.step-label, .config-shell .step-label,
+.flat-card .wc-sub, .multi-chip .wc-sub, .extra-price,
+.lead-fineprint, .tbd-note, .multi-hint,
+.block-eyebrow, .mount-select-card .mount-fit-line,
+.mount-select-card .mount-features, .cart-panel-item-total {
+  font-size: .875rem;
+}
+.mount-select-card .mount-features-toggle {
+  font-size: .875rem;
+  min-height: 44px;
+  padding: 8px 16px;
+}
+.cart-panel-item-remove {
+  font-size: .875rem;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* מחיר רץ: הערות ליד המחיר (כולל הטלוויזיה / הערכה) קטנות וקריאות */
+.running-price-note {
+  font-family: Noto Sans Hebrew, sans-serif;
+  font-size: .875rem;
+  font-weight: 400;
+  color: var(--on-dark-dim);
+}
+.step-note {
+  flex-basis: 100%;
+  order: 4;
+  color: var(--brand-orange-2);
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+/* כפתורי ניווט וכפתור ראשי: "הבא"/"בקשו הצעת מחיר" בכתום מלא (לבן עליו 4.69:1), "הקודם" ghost */
+.config-shell .btn-nav {
+  min-height: 48px;
+}
+.config-shell .btn-nav:not(.primary) {
+  background: transparent;
+  border-color: #ffffff73;
+}
+.config-shell .btn-nav.primary {
+  background: var(--premium-oncolor);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 14px 28px -12px #0a0d10a6;
+}
+.config-shell .btn-nav.primary:hover {
+  color: #fff;
+  border-color: transparent;
+  filter: brightness(1.08);
+}
+.config-shell .btn-nav.primary:disabled {
+  filter: none;
+}
+.config-shell .btn-accent, .cart-mail-primary {
+  background: var(--premium-oncolor);
+  color: #fff;
+  min-height: 48px;
+  justify-content: center;
+}
+
+/* כרטיס נבחר: טקסט כהה (שחור מוצק) על הגרדיאנט הכתום - >=6:1 */
+.config-shell .flat-card.selected .wc-title,
+.config-shell .flat-card.selected .wc-sub {
+  color: #000;
+}
+.config-shell .flat-card.selected .wc-sub {
+  font-weight: 700;
+}
+.flat-card.selected:before {
+  font-size: .875rem;
+  top: -14px;
+}
+/* מרווח פנימי במסלול כדי שתג "✓ נבחר" והצל של הכרטיס הנבחר לא ייחתכו על ידי overflow של ה-viewport */
+.flat-track {
+  padding: 20px 10px 30px;
+}
+/* צ'יפ נבחר (כבלים / חומר קיר / צבע): מסגרת כתומה עבה כדי שלא יטמע ברקע הכהה */
+.config-shell .multi-chip.active {
+  border-color: var(--brand-orange-2);
+  box-shadow: 0 0 0 1px var(--brand-orange-2), 0 16px 34px -14px #20272e8c;
+}
+
+/* תוויות התאמת מתקן לגודל המסך */
+.mount-size-chip {
+  align-self: center;
+  text-align: center;
+  font-size: .875rem;
+  font-weight: 700;
+  line-height: 1.3;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.mount-size-chip.fit {
+  background: var(--brand-paper-2);
+  color: var(--brand-ink);
+}
+.mount-size-chip.nofit {
+  background: #fff;
+  border: 1px solid var(--premium-text);
+  color: var(--premium-text);
+}
+
+/* חותם האחריות: בדסקטופ העיגול (עיצוב הבעלים), במובייל צ'יפ טקסט קריא (14px) שאינו מכסה את התמונה */
+.mm-warranty-chip {
+  display: none;
+}
+.flat-counter {
+  display: none;
+  text-align: center;
+  color: var(--on-dark-dim);
+  font-size: .875rem;
+  font-variant-numeric: tabular-nums;
+  min-height: 1.4em;
+}
+@media (width <= 860px) {
+  .mm-badges {
+    display: none;
+  }
+  .mm-warranty-chip {
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    background: var(--brand-ink);
+    color: #fff;
+    font-size: .875rem;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+}
+@media (width <= 640px) {
+  .flat-card.mount-select-card {
+    width: min(230px, 100%);
+    max-width: calc(100% - 8px);
+  }
+  .flat-arrow {
+    display: none;
+  }
+  .flat-counter {
+    display: block;
+  }
+  #configurator .wrap {
+    padding-inline: 12px;
+  }
+  .config-body {
+    padding-inline: 14px;
+  }
+}
+
+/* גילוי נאות + תעודת אחריות בתוך המעטפת הכהה: צבע קריא (היה כהה על כהה, ~1.1:1) */
+.config-shell .legal-disclosure {
+  max-width: 460px;
+  margin: 22px auto 0;
+  padding: 16px 18px;
+  border: 1px solid #ffffff29;
+  border-radius: 12px;
+  color: var(--on-dark-dim);
+  font-size: .875rem;
+  line-height: 1.6;
+}
+.config-shell .legal-disclosure-title {
+  color: var(--brand-paper);
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+.config-shell .legal-disclosure-list {
+  margin: 0;
+  padding-inline-start: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.config-shell .legal-disclosure-list strong {
+  color: var(--brand-paper);
+}
+.config-shell .legal-disclosure-link {
+  color: var(--brand-orange-2);
+  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.config-shell .legal-disclosure a {
+  color: var(--brand-orange-2);
+  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.topbar a.brandmark {
+  min-height: 44px;
+  min-width: 44px;
+}
+.summary-vat-note {
+  font-size: .875rem;
+}
+.warranty-cert-btn {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 8px auto 0;
+  max-width: 460px;
+  width: 100%;
+  padding: 0 4px;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: .875rem;
+  color: var(--brand-orange-2);
+}
+
+/* תמונת מיקום: תצוגה מקדימה מוגבלת בגובה כדי שכפתור "הבא" לא יידחק מתחת לקפל */
+.photo-preview-wrap img {
+  max-height: min(240px, 38vh);
+  width: auto;
+  object-fit: contain;
+}
+
+/* סיכום/הזמנה: כפתורים בשורה מלאה במסך צר, רדיוס לא אליפטי */
+@media (width <= 520px) {
+  .lead-ctas a, .lead-ctas button {
+    flex: 1 1 100%;
+    min-width: 0;
+    border-radius: 14px;
+    min-height: 48px;
+    justify-content: center;
+  }
+}
+
+/* טופס עגלה: הודעות שגיאה/אישור, שדה הסכמה ומדיניות פרטיות (הסגנון הפנימי שלהם מגיע מ-legal-components.js) */
+.cart-lead-error {
+  color: var(--premium-text);
+  font-size: .9rem;
+  font-weight: 700;
+  margin: 0;
+}
+.cart-lead-sent {
+  color: var(--text-secondary);
+  font-size: .9rem;
+  margin: 0;
+}
+#cartPrivacyNotice label {
+  font-size: .875rem !important;
+  min-height: 44px;
+  align-items: center !important;
+  gap: 10px !important;
+}
+#cartPrivacyNotice input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+#cartPrivacyNotice .privacy-point-of-contact-note {
+  font-size: .875rem !important;
+}
+
+/* פוטר: אזורי מגע 44px */
+footer.site-foot .foot-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.foot-links {
+  gap: 4px 16px;
+}
+footer.site-foot p, footer.site-foot a {
+  font-size: .875rem;
+}
+
+/* במסכים צרים שורת ההתקדמות (שלב + מחיר רץ) וכפתורי הניווט התחתונים דבוקים למסך.
+   overflow:clip (במקום hidden) שומר על פינות מעוגלות בלי ליצור scroll container ששובר sticky. */
+.config-shell {
+  overflow: clip;
+}
+.step-question {
+  scroll-margin-top: 150px;
+}
+@media (width <= 1099px) {
+  .config-top {
+    position: sticky;
+    top: 69px;
+    z-index: 20;
+    background: var(--brand-ink);
+  }
+  .config-nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    background: var(--brand-ink);
+  }
+}
+@media (width <= 640px) {
+  .config-top {
+    padding: 10px 14px;
+    gap: 4px 10px;
+  }
+  .config-top .progress-track {
+    order: 3;
+    flex: 1 1 100%;
+    margin: 0;
+    min-width: 0;
+  }
+  .config-shell .running-price {
+    font-size: 1.3rem;
+  }
+  .config-nav {
+    padding: 10px 14px;
+  }
+  /* כותרת ה-hero: קצרה יותר במובייל (התמונה עצמה לא משתנה) */
+  .brand-banner .block-head {
+    padding: 14px 16px;
+    margin-top: 14px;
+  }
+  .brand-banner .block-head h2 {
+    font-size: 1.3rem;
+  }
+  .brand-banner .block-head p {
+    display: none;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -7607,9 +7996,9 @@ fieldset.step-fieldset legend {
 <!--$--><div><header class="topbar">
   <div class="topbar-inner">
     <a class="brandmark" href="index.html">
-      <img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount">
+      <img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" loading="lazy" alt="Master Mount">
     </a>
-    <button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="toplinks" aria-label="ניווט ראשי">
+    <button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-controls="mobileDrawerNav" aria-expanded="false"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="toplinks" aria-label="ניווט ראשי">
       <a href="installation.html">הזמנת התקנה מותאמת</a>
       <a href="index.html#products">טלוויזיות למכירה</a>
       <a href="index.html#bundles">דילים משתלמים</a>
@@ -7618,20 +8007,55 @@ fieldset.step-fieldset legend {
       <a href="index.html#how">איך זה עובד</a>
       <a href="index.html#contact">יצירת קשר</a>
     </nav>
-    <a class="top-cta" id="topWhatsappBtn" href="#" target="_blank" rel="noopener" aria-label="יצירת קשר בוואטסאפ">
+    <a class="top-cta" id="topWhatsappBtn" hidden aria-label="יצירת קשר בוואטסאפ">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C6.48 2 2 6.36 2 11.75c0 2.06.65 3.97 1.76 5.55L2.5 22l4.86-1.24a10.1 10.1 0 0 0 4.64 1.14c5.52 0 10-4.36 10-9.75S17.52 2 12 2Zm0 17.75c-1.5 0-2.9-.4-4.1-1.09l-.29-.17-2.88.73.77-2.8-.19-.29A7.66 7.66 0 0 1 4.15 11.75C4.15 7.46 7.66 4 12 4s7.85 3.46 7.85 7.75-3.51 7.75-7.85 7.75Zm4.3-5.8c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.17-.7-.62-1.18-1.39-1.31-1.63-.14-.24-.01-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28Z"/></svg>
       <span class="sr-only">(נפתח בוואטסאפ)</span>
     </a>
     <button type="button" class="cart-badge-btn empty" id="cartBadgeBtn" aria-label="עגלת הזמנות, ריקה"><span class="cart-disc"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7.5H6.2"></path></svg></span><span class="cart-count" id="cartBadgeCount">0</span></button>
   </div>
-</header><div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד"><a href="installation.html">הזמנת התקנה מותאמת</a><a href="index.html#products">טלוויזיות למכירה</a><a href="index.html#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="index.html#how">איך זה עובד</a><a href="index.html#contact">יצירת קשר</a></nav><script>(function(){var btn=document.getElementById("mobileMenuToggleBtn");var backdrop=document.getElementById("mobileNavBackdrop");var nav=document.getElementById("mobileDrawerNav");if(!btn||!backdrop||!nav)return;function closeMenu(){document.body.classList.remove("mobile-nav-open");btn.setAttribute("aria-expanded","false");}function openMenu(){document.body.classList.add("mobile-nav-open");btn.setAttribute("aria-expanded","true");}btn.addEventListener("click",function(){if(document.body.classList.contains("mobile-nav-open")){closeMenu();}else{openMenu();}});backdrop.addEventListener("click",closeMenu);nav.querySelectorAll("a").forEach(function(a){a.addEventListener("click",closeMenu);});document.addEventListener("keydown",function(e){if(e.key==="Escape")closeMenu();});})();</script>
+</header><div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד" tabindex="-1" inert><button type="button" class="mobile-drawer-close" id="mobileDrawerCloseBtn" aria-label="סגירת תפריט"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><a href="installation.html">הזמנת התקנה מותאמת</a><a href="index.html#products">טלוויזיות למכירה</a><a href="index.html#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="index.html#how">איך זה עובד</a><a href="index.html#contact">יצירת קשר</a></nav><script>(function(){
+  var btn=document.getElementById("mobileMenuToggleBtn");
+  var backdrop=document.getElementById("mobileNavBackdrop");
+  var nav=document.getElementById("mobileDrawerNav");
+  var closeBtn=document.getElementById("mobileDrawerCloseBtn");
+  if(!btn||!backdrop||!nav)return;
+  /* מגירת ניווט (מובייל): X בתוך המגירה, aria-label דינמי, פוקוס נכנס למגירה ובסגירה חוזר להמבורגר,
+     Esc/רקע סוגרים, כשסגורה היא inert+visibility:hidden (הקישורים אינם ניתנים למיקוד), מלכודת-פוקוס בזמן פתיחה. */
+  function isOpen(){return document.body.classList.contains("mobile-nav-open");}
+  function setOpen(open,returnFocus){
+    document.body.classList.toggle("mobile-nav-open",open);
+    btn.setAttribute("aria-expanded",open?"true":"false");
+    btn.setAttribute("aria-label",open?"סגירת תפריט":"פתיחת תפריט");
+    if(open){nav.removeAttribute("inert");nav.focus();}
+    else{nav.setAttribute("inert","");if(returnFocus)btn.focus();}
+  }
+  btn.addEventListener("click",function(){setOpen(!isOpen(),true);});
+  backdrop.addEventListener("click",function(){setOpen(false,true);});
+  if(closeBtn)closeBtn.addEventListener("click",function(){setOpen(false,true);});
+  nav.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){setOpen(false,false);});});
+  document.addEventListener("keydown",function(e){
+    if(!isOpen())return;
+    if(e.key==="Escape"){e.preventDefault();setOpen(false,true);return;}
+    if(e.key==="Tab"){
+      var f=Array.prototype.slice.call(nav.querySelectorAll("a[href],button"));
+      if(!f.length)return;
+      var first=f[0],last=f[f.length-1];
+      if(e.shiftKey&&(document.activeElement===first||document.activeElement===nav)){e.preventDefault();last.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    }
+  });
+  if(window.matchMedia){
+    var mq=window.matchMedia("(min-width:1100px)");
+    var onMq=function(){if(mq.matches&&isOpen())setOpen(false,false);};
+    if(mq.addEventListener)mq.addEventListener("change",onMq);else if(mq.addListener)mq.addListener(onMq);
+  }
+})();</script>
 
 <main id="main-content" tabindex="-1">
 <h1 class="sr-only">הגדרת התקנה מותאמת אישית לטלוויזיה - מחשבון מחיר - Master Mount</h1>
 <section class="brand-banner">
   <img src="assets/site/brand-banner-installation.jpg" alt="חדר שינה מעוצב עם טלוויזיה מותקנת על מתקן עמידה רצפתי מול דלתות זכוכית לגינה - התקנה פרימיום, ביתית ומדויקת">
 <div class="block-head">
-      <span class="block-eyebrow">שלב 1</span>
       <h2>הגדירו את ההתקנה שלכם</h2>
       <p>כל שאלה ממקדת את הצרכים שלך - המחיר מתעדכן בזמן אמת לצד כל בחירה.</p>
     </div>
@@ -7644,6 +8068,7 @@ fieldset.step-fieldset legend {
       <div class="config-top">
         <span class="step-label" id="stepLabel">שלב 1</span>
         <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <span class="step-note" id="stepNote" hidden></span>
         <span class="running-price" id="runningPrice" aria-hidden="true">₪0</span>
         <span id="runningPriceAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true">המחיר המעודכן: 0 שקלים</span>
       </div>
@@ -7669,11 +8094,13 @@ fieldset.step-fieldset legend {
     <div id="cartPanelList" class="cart-panel-list"></div>
     <div class="cart-panel-total" id="cartPanelTotal" hidden></div>
     <div class="lead-form cart-panel-lead-form" id="cartPanelLeadForm" hidden>
-      <label for="cartLeadName" class="sr-only">שם מלא</label>
-      <input type="text" id="cartLeadName" placeholder="שם מלא">
-      <label for="cartLeadPhone" class="sr-only">טלפון</label>
-      <input type="tel" id="cartLeadPhone" placeholder="טלפון" dir="ltr" style="text-align:right;">
-      <div class="lead-ctas"><a class="btn-accent btn-whatsapp" id="cartWhatsappBtn" href="#" target="_blank" rel="noopener"><span aria-hidden="true">📲 </span>שלחו את כל העגלה בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ)</span></a><a class="btn-ghost" id="cartMailtoBtn" href="#"><span aria-hidden="true">✉️ </span>שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div>
+      <label for="cartLeadName" class="sr-only">שם מלא (לא חובה)</label>
+      <input type="text" id="cartLeadName" placeholder="שם מלא (לא חובה)" autocomplete="name">
+      <label for="cartLeadPhone" class="sr-only">טלפון (חובה)</label>
+      <input type="tel" id="cartLeadPhone" placeholder="טלפון (חובה)" dir="ltr" style="text-align:right;" autocomplete="tel" inputmode="tel" aria-describedby="cartLeadError">
+      <p class="cart-lead-error" id="cartLeadError" role="alert" hidden></p>
+      <div class="lead-ctas"><a class="btn-accent btn-whatsapp" id="cartWhatsappBtn" hidden><span aria-hidden="true">📲 </span>שלחו את כל העגלה בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ)</span></a><a class="btn-accent cart-mail-primary" id="cartMailtoBtn" href="#"><span aria-hidden="true">✉️ </span>שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div>
+      <p class="cart-lead-sent" id="cartLeadSent" role="status" hidden></p>
       <p class="lead-fineprint">התשלום סוכם ומתבצע מחוץ לאתר.</p>
       <div id="cartPrivacyNotice"></div>
     </div>
@@ -7685,7 +8112,7 @@ fieldset.step-fieldset legend {
   <div class="wrap foot-grid">
     <div>
       <div class="brandmark">
-        <img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount">
+        <img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" loading="lazy" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" loading="lazy" alt="Master Mount">
       </div>
       <p>התקנה מדויקת בשבילך.</p>
     </div>
@@ -7695,7 +8122,7 @@ fieldset.step-fieldset legend {
       <a href="index.html#bundles">דילים משתלמים</a>
       <a href="moving-day.html">מעבר דירה</a>
       <a href="tv-technology-guide.html">מדריך טכנולוגיות</a>
-      <a id="footCallLink" href="#">התקשרו</a>
+      <a id="footCallLink" hidden>התקשרו</a>
       <a id="footEmailLink" href="mailto:mastermount@mastermount.co.il">mastermount@mastermount.co.il</a>
     </div>
     <div class="foot-links">
@@ -7760,11 +8187,18 @@ function initInstallation() {
   function setRunningPrice() {
     var el = document.getElementById("runningPrice");
     if (!el) return;
-    var total = computePrice().total;
-    var suffix = IS_REGISTERED ? "" : " (הערכה, לא מחייב)";
-    el.textContent = fmt(total) + suffix;
+    /* המחיר הרץ זהה תמיד לסה"כ שבסיכום: בזרימת מוצר מקושר הוא כולל את הטלוויזיה (ומסומן כך) */
+    var linkedProduct = (sel && sel.linkedProductId) ? URL_LINKED_PRODUCT : null;
+    var total = computePrice().total + (linkedProduct ? linkedProduct.priceILS : 0);
+    var notes = [];
+    if (linkedProduct) notes.push("כולל הטלוויזיה");
+    if (!IS_REGISTERED) notes.push("הערכה, לא מחייב");
+    var suffix = notes.length ? " (" + notes.join(", ") + ")" : "";
+    el.innerHTML = esc(fmt(total)) + (notes.length ? ' <small class="running-price-note">' + esc(notes.join(", ")) + "</small>" : "");
     var announcerEl = document.getElementById("runningPriceAnnouncer");
     if (announcerEl) announcerEl.textContent = "המחיר המעודכן: " + Number(total || 0).toLocaleString("he-IL") + " שקלים" + suffix;
+    persistState();
+    updateNextEnabled();
   }
 
   /* מייל-לשירות-והזמנות (16.9.2026) - חלופה למייל לכל כפתור-WhatsApp ששולח הזמנה/פנייה.
@@ -7778,10 +8212,62 @@ function initInstallation() {
   function genericWhatsappLink() {
     return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent("שלום! אשמח לפרטים על התקנת טלוויזיה דרך Master Mount.");
   }
+  /* כל עוד CONTACT_ACTIONS_ENABLED כבוי: וואטסאפ/התקשרו מוסתרים לגמרי (hidden ב-HTML, ללא href/target),
+     ו"שלחו במייל" הוא הכפתור הראשי. כשהדגל יופעל - הכפתורים חוזרים, והמייל הופך למשני. */
   if (CONTACT_ACTIONS_ENABLED) {
-    document.getElementById("topWhatsappBtn").href = genericWhatsappLink();
-    document.getElementById("footCallLink").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
-    document.getElementById("footCallLink").textContent = BUSINESS.phone;
+    var topWa = document.getElementById("topWhatsappBtn");
+    topWa.href = genericWhatsappLink();
+    topWa.target = "_blank";
+    topWa.rel = "noopener";
+    topWa.hidden = false;
+    var footCall = document.getElementById("footCallLink");
+    footCall.href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
+    footCall.textContent = BUSINESS.phone;
+    footCall.hidden = false;
+    var cartWa = document.getElementById("cartWhatsappBtn");
+    cartWa.href = "#";
+    cartWa.target = "_blank";
+    cartWa.rel = "noopener";
+    cartWa.hidden = false;
+    document.getElementById("cartMailtoBtn").className = "btn-ghost";
+  }
+
+  /* escape יחיד לכל ערך שמגיע מ-URL/localStorage/קלט משתמש לפני הכנסה ל-innerHTML */
+  function esc(s) {
+    if (s === null || s === undefined) return "";
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+  /* escape + עטיפת רצפים לטיניים/מספריים (HDMI - 1.5, 4K, 65) ב-bdi LTR כדי שהסדר יוצג נכון בעברית */
+  function bidiHtml(s) {
+    s = (s === null || s === undefined) ? "" : String(s);
+    var out = "", last = 0, m, re = /[A-Za-z0-9]+(?:[ .\-]+[A-Za-z0-9]+)*/g;
+    while ((m = re.exec(s))) {
+      out += esc(s.slice(last, m.index)) + '<bdi dir="ltr">' + esc(m[0]) + "</bdi>";
+      last = m.index + m[0].length;
+    }
+    return out + esc(s.slice(last));
+  }
+
+  /* מנקה את הגילוי הנאות (legal-components.js) לפני הצגה: שורות בלי ערך (שם עוסק/מספר עוסק/כתובת שטרם הוזנו)
+     אינן מוצגות, וכל עוד CONTACT_ACTIONS_ENABLED כבוי הטלפון אינו מוצג בשורת "יצירת קשר" (נשאר המייל). */
+  function cleanLegalDisclosureHtml(html) {
+    try {
+      var box = document.createElement("div");
+      box.innerHTML = html;
+      var phone = BUSINESS && BUSINESS.phone ? String(BUSINESS.phone) : "";
+      Array.prototype.slice.call(box.querySelectorAll("li")).forEach(function (li) {
+        var strong = li.querySelector("strong");
+        if (!strong) return;
+        if (!CONTACT_ACTIONS_ENABLED && phone && /יצירת קשר/.test(strong.textContent)) {
+          Array.prototype.forEach.call(li.childNodes, function (n) {
+            if (n.nodeType === 3) n.nodeValue = n.nodeValue.split(phone).join("").replace(/^\s*[·|,-]\s*/, " ").replace(/\s*[·|,-]\s*$/, "");
+          });
+        }
+        var rest = li.textContent.replace(strong.textContent, "").trim();
+        if (!rest) li.parentNode.removeChild(li);
+      });
+      return box.innerHTML;
+    } catch (e) { return html; }
   }
 
   function fmt(n) { return "₪" + Number(n || 0).toLocaleString("he-IL"); }
@@ -7946,26 +8432,58 @@ function initInstallation() {
       });
     }
 
+    /* מונה "N מתוך M" (מוצג במובייל, שם החצים מוסתרים): הכרטיס הקרוב ביותר לקצה הימני (תחילת הקריאה ב-RTL) */
+    function updateCounter() {
+      var el = opts.counterEl;
+      if (!el) return;
+      var overflowing = viewportEl.scrollWidth - viewportEl.clientWidth > 2;
+      if (!items.length || !overflowing) { el.textContent = ""; return; }
+      var vr = viewportEl.getBoundingClientRect();
+      var best = 0, bestDist = Infinity;
+      Array.prototype.forEach.call(trackEl.children, function (card, domIdx) {
+        var d = Math.abs(card.getBoundingClientRect().right - vr.right);
+        if (d < bestDist) { bestDist = d; best = domIdx; }
+      });
+      el.textContent = (items.length - best) + " מתוך " + items.length;
+    }
+    var counterRaf = 0;
+    function scheduleCounter() {
+      if (!opts.counterEl || counterRaf) return;
+      counterRaf = requestAnimationFrame(function () { counterRaf = 0; updateCounter(); });
+    }
+
     function setItems(newItems, keepId) {
       items = newItems || [];
       render();
       viewportEl.scrollLeft = viewportEl.scrollWidth - viewportEl.clientWidth;
       updateArrowState();
-      if (!items.length) return;
-      var idx = 0;
-      if (keepId) {
-        var found = items.findIndex(function (x) { return x.id === keepId; });
-        if (found >= 0) idx = found;
+      if (!items.length) { updateCounter(); return; }
+      /* אין בחירה אוטומטית של האפשרות הראשונה: נבחר רק ערך שכבר נבחר קודם (keepId). אחרת הכרטיס
+         הראשון מקבל tabindex=0 כדי שהקבוצה תישאר נגישה למקלדת, והמשתמש בוחר בעצמו. */
+      var idx = -1;
+      if (keepId) idx = items.findIndex(function (x) { return x.id === keepId; });
+      if (idx >= 0) {
+        selectIndex(idx, false);
+        var card = cardByRealIndex(idx);
+        if (card) {
+          var vr = viewportEl.getBoundingClientRect(), cr = card.getBoundingClientRect();
+          if (cr.left < vr.left) viewportEl.scrollLeft += cr.left - vr.left;
+          else if (cr.right > vr.right) viewportEl.scrollLeft += cr.right - vr.right;
+        }
+      } else if (opts.selectable) {
+        var first = cardByRealIndex(0);
+        if (first) first.setAttribute("tabindex", "0");
       }
-      selectIndex(idx, false);
+      updateArrowState();
+      updateCounter();
     }
 
     rightBtn.addEventListener("click", function () { viewportEl.scrollBy({ left: -measureStep(), behavior: "smooth" }); });
     leftBtn.addEventListener("click", function () { viewportEl.scrollBy({ left: measureStep(), behavior: "smooth" }); });
-    viewportEl.addEventListener("scroll", updateArrowState, { passive: true });
+    viewportEl.addEventListener("scroll", function () { updateArrowState(); scheduleCounter(); }, { passive: true });
 
     var resizeT;
-    window.addEventListener("resize", function () { clearTimeout(resizeT); resizeT = setTimeout(updateArrowState, 150); });
+    window.addEventListener("resize", function () { clearTimeout(resizeT); resizeT = setTimeout(function () { updateArrowState(); updateCounter(); }, 150); });
 
     viewportEl.addEventListener("wheel", function (e) {
       if (Math.abs(e.deltaY) < 8) return;
@@ -8100,7 +8618,19 @@ function initInstallation() {
   function loadCartFromStorage() {
     try {
       var raw = localStorage.getItem(CART_STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
+      var parsed = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(parsed)) return [];
+      /* הנתון מגיע מ-localStorage (יכול להגיע גם מעמוד הבית) - מנקים כל פריט לצורה בטוחה ידועה */
+      return parsed.filter(function (ci) { return ci && typeof ci === "object"; }).map(function (ci) {
+        return {
+          cartItemId: String(ci.cartItemId || ("ci_" + Date.now() + "_" + Math.random().toString(36).slice(2))),
+          productId: ci.productId ? String(ci.productId) : null,
+          label: String(ci.label == null ? "" : ci.label),
+          rows: Array.isArray(ci.rows) ? ci.rows.filter(Array.isArray) : [],
+          isCustomQuote: !!ci.isCustomQuote,
+          itemTotal: Number(ci.itemTotal) || 0
+        };
+      });
     } catch (e) { return []; }
   }
   function saveCartToStorage() {
@@ -8111,12 +8641,12 @@ function initInstallation() {
      כלול בעמוד הזה בכוונה - חוסך ~4.68MB שלא-רלוונטיים לאשף-ההתקנה). */
   function getLinkedProductFromUrl() {
     var params = new URLSearchParams(location.search);
-    var id = params.get("linkedProductId");
+    var id = String(params.get("linkedProductId") || "").slice(0, 80);
     if (!id) return null;
     return {
       id: id,
-      title: params.get("linkedProductTitle") || "",
-      priceILS: Number(params.get("linkedProductPrice")) || 0
+      title: String(params.get("linkedProductTitle") || "").split("").map(function (ch) { var c = ch.charCodeAt(0); return (c < 32 || c === 127) ? " " : ch; }).join("").slice(0, 120),
+      priceILS: Math.max(0, Number(params.get("linkedProductPrice")) || 0)
     };
   }
   var URL_LINKED_PRODUCT = getLinkedProductFromUrl();
@@ -8133,6 +8663,61 @@ function initInstallation() {
     if (URL_LINKED_SIZE_INCHES) sel.sizeTierId = sizeTierIdForInches(URL_LINKED_SIZE_INCHES);
   }
 
+  /* ---- התאמת מתקן לגודל המסך שנבחר (מיון בלבד, לא מסננים מתקנים מהקטלוג) ----
+     טווח הגדלים נגזר מטקסט המתקן עצמו ("מתאים לגודל מסך A - B" / "A - B" / "עד B"). מתקן שהטווח שלו לא
+     ידוע נשאר "unknown" ולא מקבל תווית. טווחי המדרגות לפי תוויות המדרגות במחשבון (t5 = "98 ומעלה"). */
+  var TIER_INCH_RANGE = { t1: [32, 43], t2: [48, 55], t3: [58, 65], t4: [70, 86], t5: [98, 98] };
+  function mountSizeRange(m) {
+    var feats = m.keyFeatures || [], i, r;
+    for (i = 0; i < feats.length; i++) {
+      r = /מתאים לגודל מסך\s*(\d+)\D+?(\d+)/.exec(feats[i]);
+      if (r) return [Number(r[1]), Number(r[2])];
+    }
+    r = /(\d{2,3})\s*["״”׳']?\s*-\s*(\d{2,3})/.exec(m.name || "");
+    if (r) return [Number(r[1]), Number(r[2])];
+    r = /עד\s+(?:גודל\s+)?(\d{2,3})/.exec(m.name || "");
+    if (r) return [0, Number(r[1])];
+    return null;
+  }
+  function mountFitState(m) {
+    var tier = TIER_INCH_RANGE[sel.sizeTierId];
+    var range = mountSizeRange(m);
+    if (!tier || !range) return "unknown";
+    return (range[1] >= tier[1] && range[0] <= tier[0]) ? "fit" : "nofit";
+  }
+
+  /* ---- שמירת מצב ב-sessionStorage (רענון/חזרה לא מוחקים את הבחירות; ללא תמונה - גדולה מדי) ---- */
+  var STATE_KEY = "mm_install_state_v1";
+  function persistState() {
+    try {
+      var copy = JSON.parse(JSON.stringify(sel));
+      copy.photoDataUrl = null;
+      copy.photoFileName = null;
+      sessionStorage.setItem(STATE_KEY, JSON.stringify({ sel: copy, step: curStepIdx, linked: sel.linkedProductId || null }));
+    } catch (e) {}
+  }
+  function clearPersistedState() { try { sessionStorage.removeItem(STATE_KEY); } catch (e) {} }
+  function sanitizeSel(raw) {
+    var s = { installLocationId: null, sizeTierId: null, mountProductId: null, photoDataUrl: null, photoFileName: null, cableId: null, wallMaterialId: null, wallMaterialOther: "", cableColor: null, extraQty: {}, linkedProductId: null, installOnlyTvModel: "" };
+    if (!raw || typeof raw !== "object") return s;
+    if (findIn(CATALOG.installLocations, raw.installLocationId)) s.installLocationId = raw.installLocationId;
+    if (findIn(CATALOG.sizeTiers, raw.sizeTierId)) s.sizeTierId = raw.sizeTierId;
+    var mp = findIn(CATALOG.mountProducts, raw.mountProductId);
+    if (mp && s.installLocationId && mp.locationIds.indexOf(s.installLocationId) >= 0 && s.installLocationId !== "special") s.mountProductId = mp.id;
+    if (findIn(CATALOG.cableConcealment, raw.cableId)) s.cableId = raw.cableId;
+    if (findIn(CATALOG.wallMaterials, raw.wallMaterialId)) s.wallMaterialId = raw.wallMaterialId;
+    s.wallMaterialOther = String(raw.wallMaterialOther || "").slice(0, 120);
+    if (raw.cableColor === "שחור" || raw.cableColor === "לבן") s.cableColor = raw.cableColor;
+    if (raw.extraQty && typeof raw.extraQty === "object") {
+      CATALOG.extraHardware.forEach(function (e) {
+        var q = Math.floor(Number(raw.extraQty[e.id]));
+        if (q > 0 && q < 100) s.extraQty[e.id] = q;
+      });
+    }
+    s.installOnlyTvModel = String(raw.installOnlyTvModel || "").slice(0, 120);
+    return s;
+  }
+
   /* ================= CART (multi-item: one entry per completed configurator run) ================= */
   var cart = loadCartFromStorage();
 
@@ -8144,8 +8729,10 @@ function initInstallation() {
       options: function () { return CATALOG.sizeTiers.map(function (t) { return { id: t.id, title: t.label, subtitle: fmt(t.priceILS) }; }); } },
     { id: "mountProductId", q: "איזה סוג מתקן תרצו?", type: "single", skip: function () { return sel.installLocationId === "special"; },
       options: function () {
+        var order = { fit: 0, unknown: 1, nofit: 2 };
         return CATALOG.mountProducts.filter(function (m) { return m.locationIds.indexOf(sel.installLocationId) >= 0; })
-          .map(function (m) { return { id: m.id, title: m.name, subtitle: fmt(m.priceILS), imageUrl: m.imageUrl, imageUrlWebp: m.imageUrlWebp, features: m.keyFeatures }; });
+          .map(function (m, i) { return { id: m.id, title: m.name, subtitle: fmt(m.priceILS), imageUrl: m.imageUrl, imageUrlWebp: m.imageUrlWebp, features: m.keyFeatures, fit: mountFitState(m), _i: i }; })
+          .sort(function (a, b) { return (order[a.fit] - order[b.fit]) || (a._i - b._i); });
       } },
     { id: "photo", q: "תמונה של מיקום ההתקנה", type: "photo" },
     { id: "cableId", q: "איך תרצו להסתיר את הכבלים?", type: "cable" },
@@ -8165,7 +8752,8 @@ function initInstallation() {
     var locPrice = loc && loc.priceILS != null ? loc.priceILS : 0;
     var size = findIn(CATALOG.sizeTiers, sel.sizeTierId);
     var sizePrice = size ? size.priceILS : 0;
-    var mountProduct = findIn(CATALOG.mountProducts, sel.mountProductId);
+    /* בהתקנה מיוחדת אין בחירת מתקן (השלב מדולג) - מתקן שנבחר קודם לא נספר */
+    var mountProduct = sel.installLocationId === "special" ? null : findIn(CATALOG.mountProducts, sel.mountProductId);
     var mountPrice = mountProduct ? mountProduct.priceILS : 0;
     var cable = findIn(CATALOG.cableConcealment, sel.cableId);
     var cablePrice = cable ? cable.priceILS : 0;
@@ -8184,12 +8772,26 @@ function initInstallation() {
   }
   function formatItemTotal(total, isCustomQuote) { return isCustomQuote ? fmt(total) + " + הצעת מחיר בהתאמה אישית" : fmt(total); }
 
+  /* תווית "שלב X מתוך Y", פס ההתקדמות והערת ההסבר. נקראת גם מיד אחרי בחירת מיקום, כדי שספירת השלבים
+     לא תקפוץ בשקט: בהתקנה מיוחדת אין שלב בחירת מתקן, ולכן יש שלב אחד פחות - ומסבירים זאת. */
+  function updateStepHeader() {
+    var steps = activeSteps();
+    var idx = Math.min(curStepIdx, steps.length - 1);
+    document.getElementById("stepLabel").textContent = "שלב " + (idx + 1) + " מתוך " + steps.length;
+    document.getElementById("progressFill").style.width = (idx / (steps.length - 1) * 100) + "%";
+    var stepNoteEl = document.getElementById("stepNote");
+    if (stepNoteEl) {
+      var showStepNote = sel.installLocationId === "special";
+      stepNoteEl.hidden = !showStepNote;
+      stepNoteEl.textContent = showStepNote ? "בהתקנה מיוחדת אין בחירת מתקן, ולכן יש שלב אחד פחות." : "";
+    }
+  }
+
   function renderConfigStep() {
     var steps = activeSteps();
     if (curStepIdx > steps.length - 1) curStepIdx = steps.length - 1;
     var step = steps[curStepIdx];
-    document.getElementById("stepLabel").textContent = "שלב " + (curStepIdx + 1) + " מתוך " + steps.length;
-    document.getElementById("progressFill").style.width = ((curStepIdx) / (steps.length - 1) * 100) + "%";
+    updateStepHeader();
     setRunningPrice();
 
     var bannerEl = document.getElementById("linkedProductBanner");
@@ -8211,14 +8813,15 @@ function initInstallation() {
         '<div class="flat-outer"><button type="button" class="flat-arrow" id="cfgRightBtn" aria-label="גלילה ימינה בין האפשרויות"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></button>' +
         '<div class="flat-viewport" id="cfgViewport"><div class="flat-track" id="cfgTrack" role="radiogroup" aria-labelledby="stepQuestionHeading"></div></div>' +
         '<button type="button" class="flat-arrow" id="cfgLeftBtn" aria-label="גלילה שמאלה בין האפשרויות"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg></button></div>' +
+        '<div class="flat-counter" id="cfgCounter" aria-hidden="true"></div>' +
         '</fieldset>';
       configWheel = FlatCarousel(document.getElementById("cfgViewport"), document.getElementById("cfgTrack"), document.getElementById("cfgRightBtn"), document.getElementById("cfgLeftBtn"),
-        function (it) {
+        function (it, realIdx) {
           if (isMountStep) {
             /* WebP-with-JPG-fallback, imageUrlWebp אופציונלי - נופל ל-<img> רגיל אם חסר. */
             var thumbHtml = it.imageUrl ? (it.imageUrlWebp
-                ? '<picture><source type="image/webp" srcset="' + it.imageUrlWebp + '"><img src="' + it.imageUrl + '" alt=""></picture>'
-                : '<img src="' + it.imageUrl + '" alt="">') :
+                ? '<picture><source type="image/webp" srcset="' + it.imageUrlWebp + '"><img src="' + it.imageUrl + '" alt="" loading="' + (realIdx >= 2 ? "lazy" : "eager") + '" decoding="async"></picture>'
+                : '<img src="' + it.imageUrl + '" alt="" loading="' + (realIdx >= 2 ? "lazy" : "eager") + '" decoding="async">') :
               '<svg class="icon-fallback" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M9 20h6M12 17v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
             /* טווח-הגדלים-המתאים ("מתאים לגודל מסך X\" - Y\"") נשאר תמיד-גלוי (תנאי-חסימה, לא-
                "עוד מאפיין" - ר' ההערה ב-CSS למעלה) - כל שאר-המאפיינים עוברים מאחורי-כפתור
@@ -8236,19 +8839,34 @@ function initInstallation() {
               ? '<button type="button" class="mount-features-toggle" aria-expanded="false" aria-controls="' + toggleId + '"><span class="toggle-label">מאפיינים</span></button>' +
                 '<ul class="mount-features" id="' + toggleId + '" hidden>' + restFeatures.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>'
               : '';
+            /* חותם האחריות העגול (עיצוב הבעלים) נשאר בדסקטופ; במובייל הוא הוחלף בצ'יפ טקסט קריא בגודל 14px
+               שאינו מכסה את התמונה (ר' CSS: .mm-warranty-chip). */
+            var sizeChipHtml = it.fit === "fit" ? '<div class="mount-size-chip fit">✓ מתאים לגודל שבחרת</div>'
+              : (it.fit === "nofit" ? '<div class="mount-size-chip nofit">לא מתאים לגודל שבחרת</div>' : '');
             return '<div class="flat-card mount-select-card">' +
               '<div class="mm-badges"><span class="mm-badge mm-badge-warranty" role="img" aria-label="אחריות Master Mount על ההתקנה"><span aria-hidden="true" style="display:contents"><span class="mm-w-he">אחריות</span><span class="mm-w-sticker"><i></i></span><span class="mm-w-sub">על ההתקנה</span></span></span></div>' +
+              '<span class="mm-warranty-chip">אחריות Master Mount על ההתקנה</span>' +
               '<div class="mount-thumb-wrap">' + thumbHtml + '</div>' +
-              '<div class="wc-title">' + it.title + '</div>' +
+              '<div class="wc-title">' + esc(it.title) + '</div>' +
+              sizeChipHtml +
               fitHtml +
               restHtml +
               '<div class="wc-sub">' + it.subtitle + '</div>' +
             '</div>';
           }
-          return '<div class="flat-card"><div class="wc-title">' + it.title + '</div><div class="wc-sub">' + it.subtitle + '</div></div>';
-        }, { selectable: true });
-      configWheel.onSelect(function (it) { sel[step.id] = it.id; setRunningPrice(); });
-      configWheel.setItems(step.options(), sel[step.id]);
+          return '<div class="flat-card"><div class="wc-title">' + esc(it.title) + '</div><div class="wc-sub">' + esc(it.subtitle) + '</div></div>';
+        }, { selectable: true, counterEl: document.getElementById("cfgCounter") });
+      configWheel.onSelect(function (it) {
+        /* החלפת מיקום התקנה מבטלת מתקן שנבחר למיקום הקודם - אחרת נשאר "מתקן סמוי" שנספר במחיר */
+        if (step.id === "installLocationId" && sel.installLocationId !== it.id) sel.mountProductId = null;
+        sel[step.id] = it.id;
+        if (step.id === "installLocationId") updateStepHeader();
+        setRunningPrice();
+      });
+      var stepOptions = step.options();
+      /* ערך שנבחר בעבר שכבר אינו קיים ברשימה (למשל אחרי החלפת מיקום) לא נשאר "פעיל" ולא נספר במחיר */
+      if (sel[step.id] && !stepOptions.some(function (o) { return o.id === sel[step.id]; })) sel[step.id] = null;
+      configWheel.setItems(stepOptions, sel[step.id]);
       if (isMountStep) {
         /* חיווט כפתורי-"מאפיינים" - נעשה כל-פעם-מחדש (ה-DOM של #cfgTrack נבנה-מחדש בכל
            renderConfigStep, אין-דליפת-listeners כי ה-DOM-הישן-כולו-מוחלף ולא-נשאר-מקושר).
@@ -8279,7 +8897,8 @@ function initInstallation() {
 
     /* SPA-nav (Reg.35/IS5568): title-דף + הכרזה + פוקוס-לכותרת-השלב בכל מעבר-שלב אמיתי -
        לא בטעינה-הראשונה (שם הדפדפן כבר מטפל נכון בפוקוס/title). */
-    document.title = (step.type === "summary" ? "התקנה — סיכום ההתקנה" : "התקנה — שלב " + (curStepIdx + 1) + " מתוך " + steps.length) + " | Master Mount";
+    setRunningPrice();
+    document.title = (step.type === "summary" ? "התקנה - סיכום ההתקנה" : "התקנה - שלב " + (curStepIdx + 1) + " מתוך " + steps.length) + " | Master Mount";
     if (configStepHasRenderedOnce) {
       var stepAnnouncerEl = document.getElementById("stepAnnouncer");
       if (stepAnnouncerEl) stepAnnouncerEl.textContent = step.type === "summary" ? "עברת לשלב הסיכום" : "עברת לשלב " + (curStepIdx + 1) + " מתוך " + steps.length + ": " + step.q;
@@ -8293,8 +8912,8 @@ function initInstallation() {
     body.innerHTML = '<h3 class="step-question" id="stepQuestionHeading" tabindex="-1">' + step.q + '</h3>' +
       '<p class="photo-step-hint" id="tvModelHint">כדי שהצוות יגיע מוכן עם הציוד הנכון - ספרו לנו איזו טלוויזיה (יצרן/דגם/גודל) מתקינים.</p>' +
       '<label for="tvModelInput" class="sr-only">' + step.q + '</label>' +
-      '<input type="text" id="tvModelInput" class="wall-other-input" value="' + (sel.installOnlyTvModel || "") + '" placeholder="למשל: Samsung 55 אינץ" aria-describedby="tvModelHint">';
-    document.getElementById("tvModelInput").addEventListener("input", function (e) { sel.installOnlyTvModel = e.target.value; });
+      '<input type="text" id="tvModelInput" class="wall-other-input" value="' + esc(sel.installOnlyTvModel || "") + '" placeholder="למשל: Samsung 55 אינץ" aria-describedby="tvModelHint" maxlength="120">';
+    document.getElementById("tvModelInput").addEventListener("input", function (e) { sel.installOnlyTvModel = e.target.value; persistState(); });
   }
 
   function renderPhotoStep(body, step) {
@@ -8306,7 +8925,7 @@ function initInstallation() {
           : '<label class="btn-ghost" for="photoInput" style="display:inline-flex;cursor:pointer;"><span aria-hidden="true">📷 </span>העלאת תמונה</label>') +
         '<input type="file" id="photoInput" accept="image/*" class="sr-only">' +
       '</div>' +
-      '<p class="photo-step-hint">שימו לב: בשלב שליחת ההודעה בוואטסאפ תתבקשו לצרף את התמונה ידנית - לא ניתן לצרף קובץ אוטומטית מהאתר.</p>';
+      '<p class="photo-step-hint">שימו לב: לא ניתן לצרף את התמונה אוטומטית מהאתר. בבקשת ההצעה במייל, צרפו את התמונה ידנית להודעה.</p>';
 
     var input = document.getElementById("photoInput");
     input.addEventListener("change", function (e) {
@@ -8335,7 +8954,7 @@ function initInstallation() {
     body.innerHTML = '<h3 class="step-question" id="stepQuestionHeading" tabindex="-1">' + step.q + '</h3>' +
       '<div class="multi-grid" id="cableOptionsGrid" role="radiogroup" aria-labelledby="stepQuestionHeading">' + opts.map(function (o) {
         var isActive = sel.cableId === o.id;
-        return '<div class="multi-chip' + (isActive ? " active" : "") + '" data-id="' + o.id + '"><div class="wc-title">' + o.name + '</div><div class="wc-sub">' + (o.priceILS ? "+" + fmt(o.priceILS) : "כלול") + '</div></div>';
+        return '<div class="multi-chip' + (isActive ? " active" : "") + '" data-id="' + o.id + '"><div class="wc-title">' + esc(o.name) + '</div><div class="wc-sub">' + (o.priceILS ? '<bdi dir="ltr">+' + esc(fmt(o.priceILS)) + '</bdi>' : "כלול") + '</div></div>';
       }).join("") + '</div>' +
       '<div id="cableSubOptions"></div>';
 
@@ -8349,14 +8968,14 @@ function initInstallation() {
             var isActive = sel.wallMaterialId === m.id;
             return '<div class="multi-chip' + (isActive ? " active" : "") + '" data-wall-id="' + m.id + '"><div class="wc-title">' + m.name + '</div></div>';
           }).join("") + '</div>' +
-          (sel.wallMaterialId === "other" ? '<label for="wallOtherInput" class="sr-only">פרטו את סוג הקיר</label><input type="text" id="wallOtherInput" class="wall-other-input" placeholder="פרטו את סוג הקיר" value="' + (sel.wallMaterialOther || "") + '">' : '');
+          (sel.wallMaterialId === "other" ? '<label for="wallOtherInput" class="sr-only">פרטו את סוג הקיר</label><input type="text" id="wallOtherInput" class="wall-other-input" placeholder="פרטו את סוג הקיר" value="' + esc(sel.wallMaterialOther || "") + '" maxlength="120">' : '');
         wireChipRadioGroup(
           document.getElementById("wallMaterialGrid"), "[data-wall-id]",
           function (chip) { return chip.dataset.wallId === sel.wallMaterialId; },
-          function (chip) { sel.wallMaterialId = chip.dataset.wallId; renderSubOptions(); }
+          function (chip) { sel.wallMaterialId = chip.dataset.wallId; persistState(); renderSubOptions(); }
         );
         var otherInput = document.getElementById("wallOtherInput");
-        if (otherInput) otherInput.addEventListener("input", function () { sel.wallMaterialOther = otherInput.value; });
+        if (otherInput) otherInput.addEventListener("input", function () { sel.wallMaterialOther = otherInput.value; persistState(); });
       } else if (cable.needsColor) {
         subEl.innerHTML = '<h4 class="sub-question" id="cableColorHeading">בחרו צבע לצינור השרשור</h4><div class="multi-grid" id="cableColorGrid" role="radiogroup" aria-labelledby="cableColorHeading">' +
           ["שחור", "לבן"].map(function (c) {
@@ -8366,7 +8985,7 @@ function initInstallation() {
         wireChipRadioGroup(
           document.getElementById("cableColorGrid"), "[data-color]",
           function (chip) { return chip.dataset.color === sel.cableColor; },
-          function (chip) { sel.cableColor = chip.dataset.color; renderSubOptions(); }
+          function (chip) { sel.cableColor = chip.dataset.color; persistState(); renderSubOptions(); }
         );
       } else {
         subEl.innerHTML = "";
@@ -8392,9 +9011,9 @@ function initInstallation() {
     body.innerHTML = '<h3 class="step-question" id="stepQuestionHeading" tabindex="-1">' + step.q + '</h3>' +
       '<div class="extras-list" id="extrasList" role="group" aria-labelledby="stepQuestionHeading">' + CATALOG.extraHardware.map(function (e) {
         var qty = sel.extraQty[e.id] || 0;
-        var priceLabel = e.priceILS == null ? "מחיר יימסר בהמשך" : "+" + fmt(e.priceILS) + " ליחידה";
+        var priceLabel = e.priceILS == null ? "מחיר יימסר בהמשך" : '<bdi dir="ltr">+' + esc(fmt(e.priceILS)) + '</bdi> ליחידה';
         return '<div class="extra-row">' +
-          '<div><div class="extra-name" id="extraName_' + e.id + '">' + e.name + '</div><div class="extra-price">' + priceLabel + '</div></div>' +
+          '<div><div class="extra-name" id="extraName_' + e.id + '">' + bidiHtml(e.name) + '</div><div class="extra-price">' + priceLabel + '</div></div>' +
           '<div class="extra-qty-controls" role="group" aria-labelledby="extraName_' + e.id + '">' +
             '<button type="button" class="qty-btn" data-action="dec" data-id="' + e.id + '" aria-label="הפחת כמות - ' + e.name + '">−</button>' +
             '<span class="qty-value" id="qtyValue_' + e.id + '" aria-live="polite">' + qty + '</span>' +
@@ -8441,7 +9060,7 @@ function initInstallation() {
 
     var rows = [
       product ? ["טלוויזיה", product.title, product.priceILS] : null,
-      ["מיקום התקנה", loc ? loc.name : "-", p.locPrice],
+      ["מיקום התקנה", loc ? loc.name : "-", (loc && loc.priceILS == null) ? "לפי הצעת מחיר" : p.locPrice],
       ["גודל מסך", size ? size.label : "-", p.sizePrice],
       sel.installLocationId !== "special" ? ["סוג מתקן", mountProduct ? mountProduct.name : "-", p.mountPrice] : null,
       ["תמונת מיקום ההתקנה", sel.photoDataUrl ? "צורפה" : "לא צורפה", null],
@@ -8461,22 +9080,22 @@ function initInstallation() {
 
     body.innerHTML = '<h3 class="step-question" id="stepQuestionHeading" tabindex="-1">סיכום ההתקנה שלכם</h3>' +
       '<div class="summary-list">' + built.rows.map(function (r) {
-        return '<div class="summary-row"><span>' + r[0] + ': ' + r[1] + '</span>' + (r[2] != null ? '<span class="val">' + fmt(r[2]) + '</span>' : '') + '</div>';
+        return '<div class="summary-row"><span>' + esc(r[0]) + ': ' + bidiHtml(r[1]) + '</span>' + (r[2] != null ? '<span class="val">' + (typeof r[2] === "string" ? esc(r[2]) : esc(fmt(r[2]))) + '</span>' : '') + '</div>';
       }).join("") +
       (built.hasTbdExtra ? '<div class="summary-row"><span class="tbd-note">מחיר כבלי HDMI יימסר בהמשך ואינו כלול בסכום המוצג</span></div>' : '') +
       '<div class="summary-row total"><span>סה"כ' + (product ? " (כולל הטלוויזיה)" : "") + '</span><span class="val">' + formatItemTotal(itemTotal, p.isCustomQuote) + '</span></div>' +
-      '<div class="summary-row"><span style="font-size:.78rem;color:var(--text-tertiary,#7a7a7a);">' + (BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote({ includeShipping: !!product }) : "המחיר כולל מע\"מ") + '</span></div></div>' +
+      '<div class="summary-row"><span class="summary-vat-note">' + esc(BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote({ includeShipping: !!product }) : "המחיר כולל מע\"מ") + '</span></div></div>' +
       '<div class="order-review-notice"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"></circle><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg><p>הצוות שלנו יבדוק את בקשתכם לוודא את תקינות ההזמנה, במידה וימצאו אי התאמות נעדכן אתכם בהקדם.</p></div>' +
       '<div class="lead-ctas"><button type="button" class="btn-accent" id="addToCartBtn">' + (IS_REGISTERED ? '<span aria-hidden="true">🛒 </span>הוסיפו לעגלה' : '<span aria-hidden="true">📩 </span>בקשו הצעת מחיר') + '</button></div>' +
       '<p class="lead-fineprint">' + (IS_REGISTERED ? "אפשר להוסיף עוד טלוויזיה/התקנה לעגלה לפני שליחת הכל בהודעה אחת." : "נשלח אליכם פירוט וסיכום מחיר - התשלום עצמו יסוכם מולנו בנפרד.") + '</p>' +
-      (window.legalDisclosureHtml ? window.legalDisclosureHtml({
+      (window.legalDisclosureHtml ? cleanLegalDisclosureHtml(window.legalDisclosureHtml({
         title: "התקנת טלוויזיה" + (product ? " + " + product.title : ""),
         priceILS: itemTotal,
         description: built.rows.map(function (r) { return r[0] + ": " + r[1]; }).join(", "),
         deliveryText: "לפי תיאום מול הצוות",
         isService: !product
-      }) : "") +
-      '<button type="button" id="installWarrantyCertBtn" style="margin-top:8px;background:none;border:none;text-decoration:underline;cursor:pointer;font-size:.82rem;color:var(--accent,#1a73e8);padding:0;display:block;"><span aria-hidden="true">🖨️ </span>הצג תעודת אחריות להדפסה</button>';
+      })) : "") +
+      '<button type="button" id="installWarrantyCertBtn" class="warranty-cert-btn"><span aria-hidden="true">🖨️ </span>הצג תעודת אחריות להדפסה</button>';
 
     document.getElementById("installWarrantyCertBtn").addEventListener("click", function () {
       openWarrantyCertificateWindow({
@@ -8491,19 +9110,74 @@ function initInstallation() {
       addCurrentRunToCart();
       openCartPanel();
       resetSel();
-      curStepIdx = 0;
-      renderConfigStep();
+      clearPersistedState();
+      goToStep(0, "replace");
     });
   }
 
-  document.getElementById("prevStepBtn").addEventListener("click", function () { if (curStepIdx > 0) { curStepIdx--; renderConfigStep(); } });
-  document.getElementById("nextStepBtn").addEventListener("click", function () {
-    var steps = activeSteps(); var step = steps[curStepIdx];
-    if (step.onLeave) step.onLeave();
-    if (curStepIdx < steps.length - 1) { curStepIdx++; renderConfigStep(); }
+  /* ---- ניווט בין שלבים + היסטוריית דפדפן (#step-N): כפתור "אחורה" עובר שלב אחורה, רענון משחזר ---- */
+  function stepComplete(step) {
+    if (step.type === "single") return !!sel[step.id];
+    if (step.type === "cable") return !!sel.cableId;
+    return true;
+  }
+  /* השלב המרוחק ביותר שמותר להגיע אליו: הראשון שעוד לא הושלם בו הבחירה החובה */
+  function maxAllowedStep() {
+    var steps = activeSteps();
+    for (var i = 0; i < steps.length; i++) { if (!stepComplete(steps[i])) return i; }
+    return steps.length - 1;
+  }
+  function updateNextEnabled() {
+    var nextBtn = document.getElementById("nextStepBtn");
+    if (!nextBtn) return;
+    var steps = activeSteps();
+    var step = steps[Math.min(curStepIdx, steps.length - 1)];
+    var ok = !step || stepComplete(step);
+    nextBtn.disabled = !ok;
+    nextBtn.title = ok ? "" : "יש לבחור אפשרות כדי להמשיך";
+  }
+  function goToStep(idx, mode) {
+    var steps = activeSteps();
+    idx = Math.max(0, Math.min(idx, steps.length - 1, maxAllowedStep()));
+    curStepIdx = idx;
+    try {
+      if (mode === "push") history.pushState({ mmStep: idx }, "", "#step-" + (idx + 1));
+      else if (mode === "replace") history.replaceState({ mmStep: idx }, "", "#step-" + (idx + 1));
+    } catch (e) {}
+    renderConfigStep();
+  }
+  window.addEventListener("popstate", function () {
+    var m = /^#step-(\d+)$/.exec(location.hash || "");
+    goToStep(m ? Number(m[1]) - 1 : 0, "none");
   });
 
-  renderConfigStep();
+  document.getElementById("prevStepBtn").addEventListener("click", function () { if (curStepIdx > 0) goToStep(curStepIdx - 1, "push"); });
+  document.getElementById("nextStepBtn").addEventListener("click", function () {
+    var steps = activeSteps(); var step = steps[curStepIdx];
+    if (!stepComplete(step)) return;
+    if (step.onLeave) step.onLeave();
+    if (curStepIdx < steps.length - 1) goToStep(curStepIdx + 1, "push");
+  });
+
+  /* שחזור מצב אחרי רענון: רק אם הוא שייך לאותו מוצר מקושר (או לאף אחד) ורק ערכים שקיימים בקטלוג */
+  (function restoreOnLoad() {
+    var startStep = 0;
+    try {
+      var raw = sessionStorage.getItem(STATE_KEY);
+      var st = raw ? JSON.parse(raw) : null;
+      var linkedNow = URL_LINKED_PRODUCT ? URL_LINKED_PRODUCT.id : null;
+      if (st && st.sel && (st.linked || null) === linkedNow) {
+        sel = sanitizeSel(st.sel);
+        if (URL_LINKED_PRODUCT) {
+          sel.linkedProductId = URL_LINKED_PRODUCT.id;
+          if (URL_LINKED_SIZE_INCHES) sel.sizeTierId = sizeTierIdForInches(URL_LINKED_SIZE_INCHES);
+        }
+        var m = /^#step-(\d+)$/.exec(location.hash || "");
+        startStep = m ? Number(m[1]) - 1 : (Number(st.step) || 0);
+      }
+    } catch (e) {}
+    goToStep(startStep, "replace");
+  })();
 
   /* ================= CART (multi-item; every completed configurator run is saved here) ================= */
   function addCurrentRunToCart() {
@@ -8596,12 +9270,12 @@ function initInstallation() {
     totalEl.hidden = false;
     formEl.hidden = false;
     listEl.innerHTML = cart.map(function (ci) {
-      return '<div class="cart-panel-item"><div><div class="cart-panel-item-label">' + ci.label + '</div><div class="cart-panel-item-total">' + formatItemTotal(ci.itemTotal, ci.isCustomQuote) + '</div></div><button type="button" class="cart-panel-item-remove" data-cart-item-id="' + ci.cartItemId + '" aria-label="הסר מהעגלה: ' + ci.label + '">הסר</button></div>';
+      return '<div class="cart-panel-item"><div><div class="cart-panel-item-label">' + bidiHtml(ci.label) + '</div><div class="cart-panel-item-total">' + esc(formatItemTotal(ci.itemTotal, ci.isCustomQuote)) + '</div></div><button type="button" class="cart-panel-item-remove" data-cart-item-id="' + esc(ci.cartItemId) + '" aria-label="הסר מהעגלה: ' + esc(ci.label) + '">הסר</button></div>';
     }).join("");
     listEl.querySelectorAll("[data-cart-item-id]").forEach(function (btn) {
       btn.addEventListener("click", function () { removeCartItem(btn.dataset.cartItemId); });
     });
-    totalEl.innerHTML = '<span>סה"כ כללי</span><span class="val">' + formatCartGrandTotal() + '</span>';
+    totalEl.innerHTML = '<span>סה"כ כללי</span><span class="val">' + esc(formatCartGrandTotal()) + '</span>';
     updateCartWhatsappLink();
   }
   function updateCartWhatsappLink() {
@@ -8609,7 +9283,32 @@ function initInstallation() {
     var phone = document.getElementById("cartLeadPhone").value;
     if (CONTACT_ACTIONS_ENABLED) { document.getElementById("cartWhatsappBtn").href = buildCartWhatsappLink(name, phone); }
     document.getElementById("cartMailtoBtn").href = buildCartMailtoLink(name, phone);
+    /* הודעת שגיאה/אישור קודמת אינה רלוונטית אחרי עריכת השדות */
+    var errEl = document.getElementById("cartLeadError");
+    if (errEl && !errEl.hidden) { errEl.hidden = true; errEl.textContent = ""; }
+    var sentEl = document.getElementById("cartLeadSent");
+    if (sentEl && !sentEl.hidden) { sentEl.hidden = true; sentEl.textContent = ""; }
   }
+  /* טלפון חובה (לפחות 9 ספרות) לפני שליחה במייל; שם רשות. בלי טלפון תקין לא נפתחת תוכנת המייל. */
+  document.getElementById("cartMailtoBtn").addEventListener("click", function (e) {
+    var phoneEl = document.getElementById("cartLeadPhone");
+    var errEl = document.getElementById("cartLeadError");
+    var sentEl = document.getElementById("cartLeadSent");
+    var digits = String(phoneEl.value || "").replace(/\D/g, "");
+    if (digits.length < 9 || digits.length > 15) {
+      e.preventDefault();
+      errEl.textContent = "נא להזין מספר טלפון תקין (לפחות 9 ספרות) כדי שנוכל לחזור אליכם.";
+      errEl.hidden = false;
+      sentEl.hidden = true;
+      phoneEl.setAttribute("aria-invalid", "true");
+      phoneEl.focus();
+      return;
+    }
+    phoneEl.removeAttribute("aria-invalid");
+    errEl.hidden = true;
+    sentEl.textContent = "נפתחה תוכנת המייל עם פרטי ההזמנה. כדי לסיים, לחצו שם על 'שליחה'. העגלה נשמרה ולא נמחקה.";
+    sentEl.hidden = false;
+  });
   /* ================= CART MODAL - focus-trap/Escape/return-focus/SPA-announce (Reg.35/IS5568) ================= */
   var cartPanelTriggerEl = null;
   var FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';

@@ -3328,6 +3328,9 @@
   --accent-soft: var(--blue-soft);
   --premium: var(--orange);
   --premium-soft: var(--orange-soft);
+  /* --premium-text/--premium-oncolor (הנגשה) - אותם ערכים כמו index.html: כתום כהה יותר לטקסט על רקע בהיר ולרקע מתחת לטקסט לבן */
+  --premium-text: #ba4112;
+  --premium-oncolor: #cc4714;
 }
 
 :root:root[data-theme="dark"] {
@@ -3355,6 +3358,8 @@
   --accent-soft: var(--blue-soft);
   --premium: var(--orange);
   --premium-soft: var(--orange-soft);
+  --premium-text: var(--orange);
+  --premium-oncolor: var(--orange);
 }
 
 :root:root, :root:root[data-theme="dark"], .config-shell {
@@ -3517,8 +3522,11 @@ header {
   justify-content: center;
   position: relative;
   z-index: 3;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
   padding: 0;
   border: none;
   border-radius: 999px;
@@ -5729,13 +5737,15 @@ footer.site-foot a:hover {
   display: flex;
 }
 
-@media (width <= 979px) {
+/* נקודת מעבר אחידה בכל האתר: המבורגר עד 1099px, שורת תוויות מ-1100px (רק אחד מוצג בכל רוחב) */
+@media (width <= 1099px) {
   .menu-toggle-btn {
     display: inline-flex;
     margin-inline-end: auto;
   }
 
-  .toplinks {
+  .toplinks,
+  .tvguide-page .toplinks {
     display: none;
   }
 
@@ -5750,22 +5760,29 @@ footer.site-foot a:hover {
     flex-direction: column;
     align-items: stretch;
     gap: 4px;
-    padding: 28px 20px 24px;
+    padding: 12px 20px 24px;
     background: var(--bg);
     border-left: 1px solid var(--border);
     box-shadow: -8px 0 24px rgba(0, 0, 0, .18);
     overflow-y: auto;
     transform: translateX(100%);
-    transition: transform .25s ease;
+    /* סגורה: לא ניתנת לפוקוס/טאב (visibility:hidden), מתעכב עד סוף האנימציה */
+    visibility: hidden;
+    transition: transform .25s ease, visibility 0s linear .25s;
   }
 
   body.mobile-nav-open .mobile-drawer-nav {
     transform: translateX(0);
+    visibility: visible;
+    transition: transform .25s ease, visibility 0s linear 0s;
   }
 
   .mobile-drawer-nav a {
     color: var(--text-primary);
     padding: 12px 14px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
     font-size: .95rem;
     border-radius: 10px;
     text-decoration: none;
@@ -5773,6 +5790,41 @@ footer.site-foot a:hover {
 
   .mobile-drawer-nav a:hover {
     background: var(--surface-2);
+  }
+
+  .mobile-drawer-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .mobile-drawer-close:hover {
+    background: var(--surface-2);
+  }
+}
+
+@media (width <= 480px) {
+  .topbar-inner,
+  .tvguide-page .topbar-inner {
+    gap: 8px;
+    padding-inline: 12px;
+  }
+}
+
+@media (width >= 1100px) {
+  .tvguide-page .toplinks {
+    display: flex;
   }
 }
 
@@ -6364,8 +6416,7 @@ footer.site-foot a:hover {
 .tvguide-page .toplinks {
   gap: 4px;
   margin-inline-end: auto;
-  display: flex;
-  overflow-x: auto;
+  /* display נקבע רק ב-media (1099px / 1100px) כדי שלא ידרוס את ההסתרה - אחרת גם המבורגר וגם תוויות מוצגים */
 }
 
 .tvguide-page .toplinks a {
@@ -6405,10 +6456,8 @@ footer.site-foot a:hover {
   filter: brightness(1.06);
 }
 
-@media (width <= 640px) {
-  .tvguide-page .toplinks {
-    display: none;
-  }
+.tvguide-page .top-cta[hidden] {
+  display: none;
 }
 
 .tvguide-page .btn-accent {
@@ -7465,6 +7514,250 @@ footer.site-foot a:hover {
   }
 }
 
+/* ===== תיקוני QA מובייל (2026-09-20) ===== */
+
+/* טבלת "השוואה מהירה": מתחת ל-640px - כרטיס לכל שורה (בלי גלילה אופקית, כל שלושת המותגים נראים) */
+@media (width <= 640px) {
+  .tvguide-page .compare-scroll {
+    overflow: visible;
+  }
+
+  .tvguide-page table.compare {
+    display: block;
+    min-width: 0;
+  }
+
+  .tvguide-page table.compare thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .tvguide-page table.compare tbody {
+    display: block;
+  }
+
+  .tvguide-page table.compare tbody tr {
+    display: block;
+    margin-bottom: 12px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  .tvguide-page table.compare tbody th {
+    display: block;
+    padding: 0 0 8px;
+    border: 0;
+    color: var(--text-primary);
+    white-space: normal;
+    font-size: .95rem;
+  }
+
+  .tvguide-page table.compare tbody td {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 0;
+    border: 0;
+    font-size: .95rem;
+  }
+
+  .tvguide-page table.compare tbody td[data-label]::before {
+    content: attr(data-label);
+    flex: 0 0 82px;
+    color: var(--text-tertiary);
+    letter-spacing: .04em;
+    font-size: .75rem;
+    font-weight: 700;
+    direction: ltr;
+    text-align: end;
+  }
+
+  .tvguide-page table.compare tbody td:empty {
+    display: none;
+  }
+
+  /* שורת ההערה על HDR10/HLG: צמודה לכרטיס שמעליה, בלי מסגרת משלה */
+  .tvguide-page table.compare tbody tr.compare-note-row {
+    margin-top: -6px;
+    padding: 0 16px;
+    background: none;
+    border: 0;
+  }
+}
+
+/* פתיחת העמוד: שלושת לוגואי המותגים בשורה אחת (לא פירמידה 2+1) גם ב-320px */
+@media (width <= 640px) {
+  .tvguide-page .guide-hero .brands-strip-row {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .tvguide-page .guide-hero .brands-strip-chip {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 150px;
+    height: 56px;
+  }
+}
+
+/* "מוכנים לבחור?" - אותו גודל כמו שאר כותרות ה-H2 בדף */
+.tvguide-page .guide-cta h2 {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+}
+
+/* כפתור ראשי "שלחו לנו מייל" (כשוואטסאפ/טלפון מושבתים) - כתום מלא, טקסט לבן/כהה לפי ערכת הצבעים */
+.tvguide-page .btn-mail-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 13px 26px;
+  border: none;
+  border-radius: 999px;
+  background: var(--premium-oncolor);
+  color: var(--orange-ink, #fff);
+  font-size: .98rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.tvguide-page .btn-mail-primary:hover {
+  filter: brightness(1.06);
+}
+
+.tvguide-page .btn-ghost {
+  min-height: 44px;
+}
+
+.tvguide-page .btn-ghost[hidden] {
+  display: none;
+}
+
+/* "התאמה מהירה" - התוצאה היא קישורים (כפתורים) לסעיפי הטכנולוגיה */
+.tvguide-page .quickpick-result-text .qp-lead {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.tvguide-page .quickpick-result-text .qp-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tvguide-page .quickpick-result-text a.qp-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-primary);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.tvguide-page .quickpick-result-text a.qp-chip:hover {
+  border-color: var(--accent);
+}
+
+.tvguide-page .quickpick-result-text .qp-note {
+  display: block;
+  margin-top: 10px;
+  color: var(--text-secondary);
+  font-size: .9rem;
+  font-weight: 400;
+}
+
+.tvguide-page .quickpick-result-text a.qp-catalog {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  margin-top: 8px;
+  font-size: .92rem;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* תג רמה: טקסט בצבע הטקסט הראשי (ניגודיות בשתי ערכות הצבע), הצבע של המותג במסגרת וברקע */
+.tvguide-page .tier-badge {
+  color: var(--text-primary);
+  border: 1px solid var(--brand);
+  font-size: .8rem;
+}
+
+/* גודל מינימום לתוויות משניות 12px */
+.tvguide-page .brand-fact .fact-label,
+.tvguide-page .block-eyebrow,
+.tvguide-page table.compare thead th {
+  font-size: .75rem;
+}
+
+/* טקסט מידע - מינימום 14px */
+.tvguide-page .hdr-strip p,
+.tvguide-page .quickpick-result-note,
+.tvguide-page .tier-cols li,
+.tvguide-page .tier-tags span,
+.tvguide-page footer.site-foot p,
+.tvguide-page footer.site-foot a,
+.tvguide-page .basics-note p {
+  font-size: .875rem;
+}
+
+/* ערכת כהה: צבע המותג הכהה (כחול/בורדו/טורקיז) מתערבב עם צבע הטקסט הראשי כדי לשמור על ניגודיות */
+@supports (color: color-mix(in lab, red, red)) {
+  [data-theme="dark"] .tvguide-page .brand-pill,
+  [data-theme="dark"] .tvguide-page .tier-highlight {
+    color: color-mix(in srgb, var(--brand) 30%, var(--text-primary));
+  }
+}
+
+.cart-badge-btn .cart-count {
+  font-size: .75rem;
+}
+
+/* פוטר: קישורים באזור מגע 44px, ארגון זהה לשאר האתר */
+.tvguide-page footer.site-foot a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0;
+  margin-block: 0;
+}
+
+.tvguide-page footer.site-foot a[hidden] {
+  display: none;
+}
+
+.tvguide-page .foot-links {
+  row-gap: 0;
+  column-gap: 16px;
+}
+
+@media (width <= 640px) {
+  .tvguide-page .quickpick-chip {
+    font-size: .875rem;
+  }
+}
+
+/* סרגל עליון צפוף ב-<=480: gap 8px ושוליים 12px (ספציפיות גבוהה כדי לגבור על ההגדרה הבסיסית של הדף) */
+@media (width <= 480px) {
+  .tvguide-page .topbar .topbar-inner {
+    gap: 8px;
+    padding-inline: 12px;
+  }
+}
+
 /* ===== התאמות נגישות (a11y) - תקנה 35 + ת"י 5568 רמה AA ===== */
 
 .skip-link {
@@ -7507,26 +7800,42 @@ footer.site-foot a:hover {
 <!--$--><div class="tvguide-page"><header><div class="topbar">
   <div class="topbar-inner">
     <a class="brandmark" href="index.html">
-      <img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount">
+      <img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" loading="lazy" alt="Master Mount">
     </a>
-    <button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="toplinks" aria-label="ניווט עליון">
-      <a href="installation.html">מחשבון מחיר התקנה</a>
+    <button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileDrawerNav"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="toplinks" aria-label="ניווט עליון">
+      <a href="installation.html">הזמנת התקנה מותאמת</a>
       <a href="index.html#products">טלוויזיות למכירה</a>
       <a href="index.html#bundles">דילים משתלמים</a>
+      <a href="moving-day.html">מעבר דירה</a>
       <a href="tv-technology-guide.html">מדריך טכנולוגיות</a>
+      <a href="index.html#how">איך זה עובד</a>
       <a href="index.html#contact">יצירת קשר</a>
     </nav>
-    <a class="top-cta" id="topWhatsappBtn" href="#" target="_blank" rel="noopener" aria-label="יצירת קשר בוואטסאפ (נפתח בוואטסאפ)">
+    <a class="top-cta" id="topWhatsappBtn" hidden aria-label="יצירת קשר בוואטסאפ (נפתח בוואטסאפ)">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C6.48 2 2 6.36 2 11.75c0 2.06.65 3.97 1.76 5.55L2.5 22l4.86-1.24a10.1 10.1 0 0 0 4.64 1.14c5.52 0 10-4.36 10-9.75S17.52 2 12 2Zm0 17.75c-1.5 0-2.9-.4-4.1-1.09l-.29-.17-2.88.73.77-2.8-.19-.29A7.66 7.66 0 0 1 4.15 11.75C4.15 7.46 7.66 4 12 4s7.85 3.46 7.85 7.75-3.51 7.75-7.85 7.75Zm4.3-5.8c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.17-.7-.62-1.18-1.39-1.31-1.63-.14-.24-.01-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28Z"/></svg>
     </a><a class="cart-badge-btn empty" id="cartBadgeBtn" href="index.html#cart" aria-label="עגלת הזמנות, ריקה"><span class="cart-disc"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7.5H6.2"></path></svg></span><span class="cart-count" id="cartBadgeCount">0</span></a><script>(function(){try{var c=JSON.parse(localStorage.getItem("mm_cart_v1")||"[]");var n=Array.isArray(c)?c.length:0;var b=document.getElementById("cartBadgeBtn");document.getElementById("cartBadgeCount").textContent=n;b.classList.toggle("empty",n===0);b.setAttribute("aria-label",n?"עגלת הזמנות, "+n+" פריטים":"עגלת הזמנות, ריקה");}catch(e){}})();</script>
   </div>
-</div></header><div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד"><a href="installation.html">מחשבון מחיר התקנה</a><a href="index.html#products">טלוויזיות למכירה</a><a href="index.html#bundles">דילים משתלמים</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="index.html#contact">יצירת קשר</a></nav><script>(function(){var btn=document.getElementById("mobileMenuToggleBtn");var backdrop=document.getElementById("mobileNavBackdrop");var nav=document.getElementById("mobileDrawerNav");if(!btn||!backdrop||!nav)return;function closeMenu(){document.body.classList.remove("mobile-nav-open");btn.setAttribute("aria-expanded","false");}function openMenu(){document.body.classList.add("mobile-nav-open");btn.setAttribute("aria-expanded","true");}btn.addEventListener("click",function(){if(document.body.classList.contains("mobile-nav-open")){closeMenu();}else{openMenu();}});backdrop.addEventListener("click",closeMenu);nav.querySelectorAll("a").forEach(function(a){a.addEventListener("click",closeMenu);});document.addEventListener("keydown",function(e){if(e.key==="Escape")closeMenu();});})();</script>
+</div></header><div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד"><button type="button" class="mobile-drawer-close" id="mobileDrawerClose" aria-label="סגירת תפריט"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><a href="installation.html">הזמנת התקנה מותאמת</a><a href="index.html#products">טלוויזיות למכירה</a><a href="index.html#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="index.html#how">איך זה עובד</a><a href="index.html#contact">יצירת קשר</a></nav><script>(function(){var btn=document.getElementById("mobileMenuToggleBtn");var backdrop=document.getElementById("mobileNavBackdrop");var nav=document.getElementById("mobileDrawerNav");var closeBtn=document.getElementById("mobileDrawerClose");if(!btn||!backdrop||!nav)return;
+/* סגורה = לא ניתנת לפוקוס: visibility:hidden ב-CSS, ובנוסף inert (כשנתמך) */
+function setInert(v){try{if(v){nav.setAttribute("inert","");}else{nav.removeAttribute("inert");}}catch(e){}}
+setInert(true);
+function isOpen(){return document.body.classList.contains("mobile-nav-open");}
+function closeMenu(returnFocus){if(!isOpen())return;document.body.classList.remove("mobile-nav-open");btn.setAttribute("aria-expanded","false");btn.setAttribute("aria-label","פתיחת תפריט");setInert(true);if(returnFocus){btn.focus();}}
+function openMenu(){document.body.classList.add("mobile-nav-open");btn.setAttribute("aria-expanded","true");btn.setAttribute("aria-label","סגירת תפריט");setInert(false);if(closeBtn){closeBtn.focus();}}
+btn.addEventListener("click",function(){if(isOpen()){closeMenu(true);}else{openMenu();}});
+if(closeBtn){closeBtn.addEventListener("click",function(){closeMenu(true);});}
+backdrop.addEventListener("click",function(){closeMenu(true);});
+nav.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){closeMenu(false);});});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&isOpen()){closeMenu(true);}});
+/* מעבר לרוחב מחשב (>=1100px) בזמן שהמגירה פתוחה: סוגרים כדי לא להשאיר רקע/נעילת גלילה */
+if(window.matchMedia){var mq=window.matchMedia("(min-width:1100px)");var onMq=function(){if(mq.matches){closeMenu(false);}};if(mq.addEventListener){mq.addEventListener("change",onMq);}else if(mq.addListener){mq.addListener(onMq);}}
+})();</script>
 
 <main id="main-content" tabindex="-1">
 <section class="guide-hero">
   <div class="guide-hero-inner">
     <span class="guide-eyebrow"><span aria-hidden="true">📺</span> מדריך צרכני</span>
-    <h1>מדריך טכנולוגיות מסך</h1><div class="brands-strip-row" style="margin:18px 0 4px;"><div class="brands-strip-chip"><img src="assets/site/brands-chip-samsung.png" alt="Samsung"/></div><div class="brands-strip-chip"><img src="assets/site/brands-chip-lg.png" alt="LG"/></div><div class="brands-strip-chip"><img src="assets/site/brands-chip-tcl.png" alt="TCL"/></div></div>
+    <h1>מדריך טכנולוגיות מסך</h1><div class="brands-strip-row" style="margin:18px 0 16px;"><div class="brands-strip-chip"><img src="assets/site/brands-chip-samsung.png" alt="Samsung"/></div><div class="brands-strip-chip"><img src="assets/site/brands-chip-lg.png" alt="LG"/></div><div class="brands-strip-chip"><img src="assets/site/brands-chip-tcl.png" alt="TCL"/></div></div>
     <p class="lede">בחירת טלוויזיה היא הרבה יותר מגודל ומחיר - הטכנולוגיה שמאחורי המסך היא מה שבאמת קובע איך התמונה תיראה בסלון שלכם. ריכזנו לכם את כל הטכנולוגיות של שלושת המותגים שאנחנו מוכרים, בשפה פשוטה, עם יתרונות, חסרונות והמלצה למי כל טכנולוגיה הכי מתאימה.</p>
     <p style="font-size:.78rem;color:var(--text-tertiary);margin-top:10px;"><time datetime="2026-09">עודכן לאחרונה: ספטמבר 2026</time></p>
     <nav class="jump-nav" aria-label="ניווט מהיר בתוך המדריך">
@@ -7630,7 +7939,7 @@ footer.site-foot a:hover {
         <p class="b-explain">Micro-LED האמיתי דומה ל-OLED: כל פיקסל הוא נורית-לד זעירה שמאירה בעצמה, בלי תאורת רקע - אבל יקר ונדיר מאוד כרגע. "Micro RGB" (סמסונג) ו-"RGB Mini-LED" (TCL ואחרים) הם דווקא שדרוג לתאורת הרקע של מסך LCD רגיל - נקודות אדום/ירוק/כחול זעירות במקום לד לבן אחיד. מרשים ומתקדם, אבל לא אותו דבר.</p>
       </div>
       <div class="basics-note">
-        <strong>שני מושגים נוספים שכדאי להכיר:</strong> תוכן HDR מגיע עם "הוראות" לצבע ובהירות - <strong>HDR10</strong> הוא הבסיס שכל טלוויזיה תומכת בו, ו-<strong>HDR10+</strong> ו-<strong>Dolby Vision</strong> הם שני שדרוגים מתחרים שמתאימים את ההוראות לכל סצנה בנפרד. טלוויזיה תומכת רק במה שהיא תומכת - וזה משתנה בין המותגים (פירוט בכל מותג בהמשך). בנוסף, <strong>תדר רענון גבוה</strong> (120Hz ומעלה) חשוב בעיקר לגיימרים ולתוכן ספורט/אקשן מהיר - התמונה זזה בצורה חלקה יותר, בלי טשטוש תנועה. שני מנגנונים נלווים חשובים כאן: <strong>VRR</strong> (התאמת קצב הרענון למשחק, למניעת קרעים בתמונה) ו-<strong>ALLM</strong> (מעבר אוטומטי למצב משחק).
+        <strong>שני מושגים נוספים שכדאי להכיר:</strong> תוכן HDR מגיע עם "הוראות" לצבע ובהירות - <strong>HDR10</strong> הוא הבסיס שכל טלוויזיה תומכת בו, ו-<strong><bdi dir="ltr">HDR10+</bdi></strong> ו-<strong>Dolby Vision</strong> הם שני שדרוגים מתחרים שמתאימים את ההוראות לכל סצנה בנפרד. טלוויזיה תומכת רק במה שהיא תומכת - וזה משתנה בין המותגים (פירוט בכל מותג בהמשך). בנוסף, <strong>תדר רענון גבוה</strong> (120Hz ומעלה) חשוב בעיקר לגיימרים ולתוכן ספורט/אקשן מהיר - התמונה זזה בצורה חלקה יותר, בלי טשטוש תנועה. שני מנגנונים נלווים חשובים כאן: <strong>VRR</strong> (התאמת קצב הרענון למשחק, למניעת קרעים בתמונה) ו-<strong>ALLM</strong> (מעבר אוטומטי למצב משחק).
       </div>
       <div class="basics-note" id="idan-plus">
         <span aria-hidden="true">📡</span> רוצים לקלוט ערוצים בחינם? שידורי עידן+ (כאן 11, 12, 13 ועוד) נקלטים דרך אנטנה. ודאו שבטלוויזיה יש ממיר מובנה שתומך בתקן DVB-T2, ושיש לכם אנטנה מתאימה. <a href="https://www.rashut2.org.il/הפצת-שידורים/המדריך-להתחברות-עידןplus" target="_blank" rel="noopener">למדריך הרשמי של הרשות השנייה <span aria-hidden="true">←</span><span class="sr-only"> (נפתח בכרטיסייה חדשה)</span></a>
@@ -7647,10 +7956,10 @@ footer.site-foot a:hover {
     <p class="brand-tagline">סמסונג מובילה בבהירות מסך, בטכנולוגיית Quantum Dot ובמערכת גיימינג עשירה שמובנית בתוך הטלוויזיה עצמה - בלי צורך בקונסולה חיצונית.</p>
     <div class="brand-facts">
       <div class="brand-fact"><span class="fact-label">מערכת הפעלה</span><span class="fact-value">Tizen (Gaming Hub מובנה)</span></div>
-      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">HDR10+ (ללא Dolby Vision)</span></div>
+      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value"><bdi dir="ltr">HDR10+</bdi> (ללא Dolby Vision)</span></div>
       <div class="brand-fact"><span class="fact-label">גיימינג</span><span class="fact-value">Game Bar · ALLM · VRR מובנים</span></div>
     </div>
-    <p style="font-size:.85rem;color:var(--text-tertiary);margin-bottom:20px;"><span aria-hidden="true">💡</span> בדגמי 2026 נוסף HDR10+ Advanced, שנתמך בחלק מהתכנים באמזון פריים וידאו.</p>
+    <p style="font-size:.875rem;color:var(--text-tertiary);margin-bottom:20px;"><span aria-hidden="true">💡</span> בדגמי 2026 נוסף <bdi dir="ltr">HDR10+</bdi> Advanced, שנתמך בחלק מהתכנים באמזון פריים וידאו.</p>
 
     <div class="tier-list">
       <article class="tier-card" id="samsung-crystal-uhd">
@@ -7775,7 +8084,7 @@ footer.site-foot a:hover {
     <p class="brand-tagline">LG היא מהמובילות הוותיקות בשוק ה-OLED - עם מערכת הפעלה נוחה ושלט Magic Remote שמצביע כמו עכבר.</p>
     <div class="brand-facts">
       <div class="brand-fact"><span class="fact-label">מערכת הפעלה</span><span class="fact-value">webOS (שלט Magic Remote)</span></div>
-      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">Dolby Vision (ללא HDR10+)</span></div>
+      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">Dolby Vision (ללא <bdi dir="ltr">HDR10+</bdi>)</span></div>
       <div class="brand-fact"><span class="fact-label">מעבד</span><span class="fact-value">α (Alpha) AI Processor</span></div>
     </div>
 
@@ -7866,7 +8175,7 @@ footer.site-foot a:hover {
             <li>חשש לצריבה: תמונה סטטית שמוצגת שעות רבות (לוגו ערוץ, סרגל משחק) עלולה להשאיר סימן קבוע. בשימוש רגיל ומגוון הסיכון נמוך.</li>
           </ul></div>
         </div>
-        <div class="tier-tags"><span>קולנוע ביתי וחוויית צפייה</span><span>חדר מוחשך / מבוקר תאורה</span><span>צופים הרבה Netflix/Disney+ עם Dolby Vision</span></div>
+        <div class="tier-tags"><span>קולנוע ביתי וחוויית צפייה</span><span>חדר מוחשך / מבוקר תאורה</span><span>צופים הרבה Netflix/<bdi dir="ltr">Disney+</bdi> עם Dolby Vision</span></div>
       </article>
     </div>
   </div>
@@ -7880,7 +8189,7 @@ footer.site-foot a:hover {
     <p class="brand-tagline">TCL מתקדמת הכי מהר במונחי מפרט מול מחיר, עם Google TV פתוח ותמיכה בשני פורמטי ה-HDR המובילים גם יחד - יתרון שאין לשני המותגים האחרים במדריך.</p>
     <div class="brand-facts">
       <div class="brand-fact"><span class="fact-label">מערכת הפעלה</span><span class="fact-value">Google TV</span></div>
-      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value">HDR10+ וגם Dolby Vision</span></div>
+      <div class="brand-fact"><span class="fact-label">פורמט HDR</span><span class="fact-value"><bdi dir="ltr">HDR10+</bdi> וגם Dolby Vision</span></div>
       <div class="brand-fact"><span class="fact-label">עיצוב ועיבוד</span><span class="fact-value">NXTVISION (מעבד AiPQ) · Game Master</span></div>
     </div>
 
@@ -7918,7 +8227,7 @@ footer.site-foot a:hover {
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>ניגודיות ובהירות שמתחרות בדגמי דגל של מותגים אחרים</li>
-            <li>תמיכה גם ב-HDR10+ וגם ב-Dolby Vision</li>
+            <li>תמיכה גם ב-<bdi dir="ltr">HDR10+</bdi> וגם ב-Dolby Vision</li>
             <li>תדר רענון גבוה, טוב לגיימינג</li>
           </ul></div>
           <div class="tier-cons"><h4>לשים לב</h4><ul>
@@ -7941,7 +8250,7 @@ footer.site-foot a:hover {
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>טווח צבעים מהרחבים ביותר בשוק</li>
             <li>בהירות וניגודיות ברמה גבוהה מאוד</li>
-            <li>עדיין תומך גם ב-HDR10+ וגם ב-Dolby Vision</li>
+            <li>עדיין תומך גם ב-<bdi dir="ltr">HDR10+</bdi> וגם ב-Dolby Vision</li>
           </ul></div>
           <div class="tier-cons"><h4>לשים לב</h4><ul>
             <li>מחיר פרימיום</li>
@@ -7965,23 +8274,23 @@ footer.site-foot a:hover {
         <li>ביטול עסקה: לצרכן יש זכות לבטל רכישה בתנאים הקבועים בחוק הגנת הצרכן - לפירוט המלא ראו <a href="./cancellation-policy.html">מדיניות הביטולים וההחזרות שלנו</a>.</li>
         <li>קליטת ערוצים: ראו <a href="#idan-plus">תיבת עידן+ למעלה</a>.</li>
       </ul>
-      <p style="margin-top:10px;font-size:.8rem;">מקור: חוק הגנת הצרכן, התשמ"א-1981, ותקנותיו (הרשות להגנת הצרכן ולסחר הוגן, משרד הכלכלה והתעשייה).</p>
+      <p style="margin-top:10px;font-size:.875rem;">מקור: חוק הגנת הצרכן, התשמ"א-1981, ותקנותיו (הרשות להגנת הצרכן ולסחר הוגן, משרד הכלכלה והתעשייה).</p>
     </div>
     <div class="block-head">
       <span class="block-eyebrow">סיכום</span>
       <h2>השוואה מהירה בין המותגים</h2>
       <p>לעין ציפור, לפני שממשיכים לקטלוג</p>
     </div>
-    <div class="compare-scroll" tabindex="0" role="region" aria-label="טבלת השוואה בין המותגים, ניתן לגלול אופקית">
+    <div class="compare-scroll" tabindex="0" role="region" aria-label="טבלת השוואה בין המותגים">
       <table class="compare">
         <thead>
           <tr><th></th><th>SAMSUNG</th><th>LG</th><th>TCL</th></tr>
         </thead>
         <tbody>
-          <tr><th>מערכת הפעלה</th><td>Tizen</td><td>webOS</td><td>Google TV</td></tr>
-          <tr><th>פורמט HDR</th><td>HDR10+</td><td>Dolby Vision</td><td>HDR10+ וגם Dolby Vision</td></tr>
-          <tr><td></td><td colspan="3" style="font-size:.8rem;color:var(--text-tertiary);font-weight:400;">כל הטלוויזיות תומכות גם ב-HDR10 וב-HLG הבסיסיים.</td></tr>
-          <tr><th>חוזק בולט</th><td>בהירות + Quantum Dot + גיימינג מובנה</td><td>OLED מוביל + חוויית צפייה קולנועית</td><td>ערך לכסף + גמישות HDR</td></tr>
+          <tr><th>מערכת הפעלה</th><td data-label="SAMSUNG">Tizen</td><td data-label="LG">webOS</td><td data-label="TCL">Google TV</td></tr>
+          <tr><th>פורמט HDR</th><td data-label="SAMSUNG"><bdi dir="ltr">HDR10+</bdi></td><td data-label="LG">Dolby Vision</td><td data-label="TCL"><bdi dir="ltr">HDR10+</bdi> וגם Dolby Vision</td></tr>
+          <tr class="compare-note-row"><td></td><td colspan="3" style="font-size:.875rem;color:var(--text-tertiary);font-weight:400;">כל הטלוויזיות תומכות גם ב-HDR10 וב-HLG הבסיסיים.</td></tr>
+          <tr><th>חוזק בולט</th><td data-label="SAMSUNG">בהירות + Quantum Dot + גיימינג מובנה</td><td data-label="LG">OLED מוביל + חוויית צפייה קולנועית</td><td data-label="TCL">ערך לכסף + גמישות HDR</td></tr>
         </tbody>
       </table>
     </div>
@@ -7993,8 +8302,9 @@ footer.site-foot a:hover {
     <h2>מוכנים לבחור?</h2>
     <p>עכשיו כשאתם מכירים את הטכנולוגיות - בואו נמצא לכם את הטלוויזיה והפתרון להתקנה שמתאימים בדיוק לחדר שלכם.</p>
     <div class="ctas">
-      <a class="btn-accent" href="index.html#products">לקטלוג הטלוויזיות <span aria-hidden="true">⟵</span></a>
-      <a class="btn-ghost" id="finalWhatsappBtn" href="#" target="_blank" rel="noopener"><span aria-hidden="true">📲</span> שאלו אותנו בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ)</span></a>
+      <a class="btn-mail-primary" id="finalEmailBtn" href="mailto:mastermount@mastermount.co.il"><span aria-hidden="true">✉</span> שלחו לנו מייל</a>
+      <a class="btn-ghost" id="finalWhatsappBtn" hidden><span aria-hidden="true">📲</span> שאלו אותנו בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ)</span></a>
+      <a class="btn-ghost" href="index.html#products">לקטלוג הטלוויזיות <span aria-hidden="true">⟵</span></a>
     </div>
     <p style="font-size:.88rem;color:var(--text-tertiary);margin-top:18px;">כבר יודעים איזה מסך? בדקו כמה תעלה <a href="installation.html">התקנה על הקיר <span aria-hidden="true">←</span></a></p>
   </div>
@@ -8005,7 +8315,7 @@ footer.site-foot a:hover {
   <div class="wrap foot-grid">
     <div>
       <a class="brandmark" href="index.html">
-        <img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount">
+        <img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" loading="lazy" alt="Master Mount">
       </a>
       <p>התקנה מדויקת בשבילך.</p>
     </div>
@@ -8015,7 +8325,7 @@ footer.site-foot a:hover {
       <a href="index.html#bundles">דילים משתלמים</a>
       <a href="moving-day.html">מעבר דירה</a>
       <a href="tv-technology-guide.html">מדריך טכנולוגיות</a>
-      <a id="footCallLink" href="#">התקשרו</a>
+      <a id="footCallLink" hidden>התקשרו</a>
       <a id="footEmailLink" href="mailto:mastermount@mastermount.co.il">mastermount@mastermount.co.il</a>
     </div>
     <div class="foot-links">
@@ -8037,14 +8347,43 @@ footer.site-foot a:hover {
 
 function initTvGuide() {
 var BUSINESS = window.BUSINESS_CONFIG;
+  // זמנית (החלטה עסקית של הבעלים, אותה החלטה כמו בשאר עמודי האתר): טלפון/וואטסאפ עדיין לא מוצגים ולא פעילים.
+  // הכפתורים מוסתרים לגמרי (hidden, ללא href) ו"שלחו לנו מייל" הוא הכפתור הראשי.
+  // להחזרה: לשנות ל-true בשורה הבאה - הכפתורים והקישורים יופיעו ויעבדו.
+  var CONTACT_ACTIONS_ENABLED = false;
+  document.addEventListener("click", function (e) {
+    if (CONTACT_ACTIONS_ENABLED) return;
+    var link = e.target.closest('a[href^="https://wa.me/"], a[href^="tel:"]');
+    if (link) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
   function genericWhatsappLink(text) {
     return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent(text);
   }
-  document.getElementById("topWhatsappBtn").href = genericWhatsappLink("שלום! אשמח לפרטים על התקנת טלוויזיה דרך Master Mount.");
-  document.getElementById("finalWhatsappBtn").href = genericWhatsappLink("שלום! קראתי את מדריך הטכנולוגיות ואשמח לשירות בבחירת טלוויזיה.");
-  document.getElementById("footCallLink").href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
-  document.getElementById("footCallLink").textContent = BUSINESS.phone;
-  document.getElementById("footCallLink").setAttribute("aria-label", BUSINESS.phone + " (חיוג טלפוני)");
+  var emailBtn = document.getElementById("finalEmailBtn");
+  if (emailBtn && BUSINESS && BUSINESS.email) {
+    emailBtn.href = "mailto:" + BUSINESS.email + "?subject=" + encodeURIComponent("שאלה בעקבות מדריך הטכנולוגיות") +
+      "&body=" + encodeURIComponent("שלום! קראתי את מדריך הטכנולוגיות ואשמח לשירות בבחירת טלוויזיה.");
+  }
+  var footEmail = document.getElementById("footEmailLink");
+  if (footEmail && BUSINESS && BUSINESS.email) {
+    footEmail.href = "mailto:" + BUSINESS.email;
+    footEmail.innerHTML = '<bdi dir="ltr"></bdi>';
+    footEmail.firstChild.textContent = BUSINESS.email;
+  }
+  if (CONTACT_ACTIONS_ENABLED) {
+    var topWa = document.getElementById("topWhatsappBtn");
+    topWa.href = genericWhatsappLink("שלום! אשמח לפרטים על התקנת טלוויזיה דרך Master Mount.");
+    topWa.target = "_blank"; topWa.rel = "noopener"; topWa.hidden = false;
+    var finalWa = document.getElementById("finalWhatsappBtn");
+    finalWa.href = genericWhatsappLink("שלום! קראתי את מדריך הטכנולוגיות ואשמח לשירות בבחירת טלוויזיה.");
+    finalWa.target = "_blank"; finalWa.rel = "noopener"; finalWa.hidden = false;
+    var call = document.getElementById("footCallLink");
+    call.href = "tel:" + BUSINESS.whatsappNumber.replace(/^972/, "0");
+    call.innerHTML = '<bdi dir="ltr"></bdi>';
+    call.firstChild.textContent = BUSINESS.phone;
+    call.setAttribute("aria-label", BUSINESS.phone + " (חיוג טלפוני)");
+    call.hidden = false;
+  }
   wireQuickpick();
 }
 
@@ -8075,13 +8414,15 @@ function computeQuickpickRecommendation(room, content, budget) {
       { label: "LG LED", href: "#lg-led" }
     ];
   }
+  /* כל המלצה היא קישור (כפתור) אל סעיף הטכנולוגיה במדריך; בנוסף קישור אל קטלוג הטלוויזיות */
   var linksHtml = options.map(function (o) {
-    return '<a href="' + o.href + '">' + o.label + '</a>';
-  }).join(" / ");
-  var text = "מתאים לכם: " + linksHtml;
+    return '<a class="qp-chip" href="' + o.href + '"><bdi dir="ltr">' + o.label + '</bdi></a>';
+  }).join(" ");
+  var text = '<span class="qp-lead">מתאים לכם:</span> <span class="qp-links">' + linksHtml + '</span>';
   if (content === "gaming") {
-    text += ". שימו לב: לגיימינג חפשו 120Hz ומעלה עם VRR ו-ALLM.";
+    text += '<span class="qp-note">שימו לב: לגיימינג חפשו <bdi dir="ltr">120Hz</bdi> ומעלה עם <bdi dir="ltr">VRR</bdi> ו-<bdi dir="ltr">ALLM</bdi>.</span>';
   }
+  text += '<a class="qp-catalog" href="index.html#products">לקטלוג הטלוויזיות <span aria-hidden="true">⟵</span></a>';
   return text;
 }
 

@@ -23,9 +23,41 @@
 
   var B = window.BUSINESS_CONFIG || {};
 
+  function hasVal(v) {
+    return v !== null && v !== undefined && String(v).trim() !== "";
+  }
+
+  /**
+   * האם פעולות קשר (טלפון/וואטסאפ) מופעלות. הדגל CONTACT_ACTIONS_ENABLED מוגדר כרגע כמשתנה
+   * מקומי בתוך index/installation/moving-day - ועד שייחשף כ-window.CONTACT_ACTIONS_ENABLED (או
+   * BUSINESS_CONFIG.contactActionsEnabled) הטלפון לא יוצג כאן. ברירת המחדל: כבוי.
+   */
+  function contactActionsEnabled() {
+    if (window.CONTACT_ACTIONS_ENABLED === true) return true;
+    var biz = window.BUSINESS_CONFIG || {};
+    return biz.contactActionsEnabled === true;
+  }
+
+  /** טלפון בבידוד LTR (מונע החלפת מיקום ה-"+" בטקסט עברי). ללא tel: - טקסט בלבד */
+  function phoneBdi(phone) {
+    return '<bdi dir="ltr">' + esc(phone) + "</bdi>";
+  }
+
+  /** שורת פרטי קשר: טלפון רק כשהפעולות מופעלות, מייל כקישור mailto. ריק אם אין מה להציג */
+  function contactValueHtml(biz) {
+    var parts = [];
+    if (contactActionsEnabled() && hasVal(biz.phone)) parts.push(phoneBdi(biz.phone));
+    if (hasVal(biz.email)) {
+      parts.push('<a href="mailto:' + esc(biz.email) + '"><bdi dir="ltr">' + esc(biz.email) + "</bdi></a>");
+    }
+    return parts.join(" · ");
+  }
+
   /**
    * גילוי-נאות מלא לפי סעיף 14ג לחוק הגנת הצרכן.
    * item: { title, priceILS, description, warrantyMonths, deliveryText, isService }
+   * שורות שהערך שלהן ריק לא מוצגות בפרודקשן (בסביבת dev bizField מחזיר placeholder גלוי).
+   * כשכל שדות הזהות (שם/מספר עוסק/כתובת) ריקים - מוצג נוסח ניטרלי אחד במקומם.
    */
   function legalDisclosureHtml(item) {
     item = item || {};
@@ -33,21 +65,29 @@
     var legalName = biz.bizField ? biz.bizField("legalName", "שם העוסק") : "";
     var businessId = biz.bizField ? biz.bizField("businessId", "מספר עוסק / ח.פ") : "";
     var address = biz.bizField ? biz.bizField("address", "כתובת") : "";
-    var phone = biz.phone || "";
-    var email = biz.email || "";
     var vatNote = biz.vatNote ? biz.vatNote({ includeShipping: !item.isService }) : "";
+    var configuredWarranty = biz.warrantyMonths_installation;
     var warrantyText = item.warrantyMonths
       ? "אחריות " + item.warrantyMonths + " חודשים"
-      : (biz.bizField ? biz.bizField("warrantyMonths_installation", "משך אחריות") : "");
+      : (hasVal(configuredWarranty) && !isNaN(configuredWarranty)
+          ? "אחריות " + configuredWarranty + " חודשים"
+          : (biz.bizField ? biz.bizField("warrantyMonths_installation", "משך אחריות") : ""));
+    var contactHtml = contactValueHtml(biz);
 
     var html = "";
     html += '<div class="legal-disclosure">';
     html += '<h4 class="legal-disclosure-title">פרטי העסקה (גילוי נאות)</h4>';
     html += '<ul class="legal-disclosure-list">';
-    html += "<li><strong>שם העוסק:</strong> " + esc(legalName) + "</li>";
-    html += "<li><strong>מספר עוסק:</strong> " + esc(businessId) + "</li>";
-    html += "<li><strong>כתובת:</strong> " + esc(address) + "</li>";
-    html += "<li><strong>יצירת קשר:</strong> " + esc(phone) + (email ? " · " + esc(email) : "") + "</li>";
+    if (hasVal(legalName) || hasVal(businessId) || hasVal(address)) {
+      if (hasVal(legalName)) html += "<li><strong>שם העוסק:</strong> " + esc(legalName) + "</li>";
+      if (hasVal(businessId)) html += "<li><strong>מספר עוסק:</strong> " + esc(businessId) + "</li>";
+      if (hasVal(address)) html += "<li><strong>כתובת:</strong> " + esc(address) + "</li>";
+    } else {
+      html += "<li>פרטי העוסק יפורסמו עם פתיחת העסק</li>";
+    }
+    if (contactHtml) {
+      html += "<li><strong>יצירת קשר:</strong> " + contactHtml + "</li>";
+    }
     if (item.description) {
       html += "<li><strong>תיאור:</strong> " + esc(item.description) + "</li>";
     }
@@ -59,7 +99,7 @@
       html += "<li><strong>מועד אספקה/התקנה:</strong> " + esc(item.deliveryText) + "</li>";
     }
     html += "<li><strong>תוקף ההצעה:</strong> 7 ימים ממועד קבלתה, אלא אם צוין אחרת.</li>";
-    if (warrantyText) {
+    if (hasVal(warrantyText)) {
       html += "<li><strong>אחריות:</strong> " + esc(warrantyText) + "</li>";
     }
     html += '<li><a class="legal-disclosure-link" href="./cancellation-policy.html">מדיניות ביטולים והחזרות</a></li>';
@@ -111,7 +151,12 @@
     if (details.totalILS !== undefined) {
       html += "<p><strong>סה\"כ כולל מע\"מ: " + esc(fmtIls(details.totalILS)) + "</strong></p>";
     }
-    html += "<p>" + esc(biz.bizField ? biz.bizField("legalName", "שם העוסק") : "") + " · " + esc(biz.bizField ? biz.bizField("businessId", "מספר עוסק") : "") + "</p>";
+    var idParts = [];
+    var docName = biz.bizField ? biz.bizField("legalName", "שם העוסק") : "";
+    var docBizId = biz.bizField ? biz.bizField("businessId", "מספר עוסק") : "";
+    if (hasVal(docName)) idParts.push(esc(docName));
+    if (hasVal(docBizId)) idParts.push(esc(docBizId));
+    html += "<p>" + (idParts.length ? idParts.join(" · ") : "פרטי העוסק יפורסמו עם פתיחת העסק") + "</p>";
     html += "<p>" + esc(transactionCancellationNote()) + "</p>";
     html += "</div>";
     return html;
@@ -126,7 +171,7 @@
       "זכות ביטול: ניתן לבטל את העסקה תוך " + days +
       " ימים ממועד קבלת המוצר/השירות או ממועד קבלת מסמך זה - לפי המאוחר מביניהם. " +
       "ייתכן חיוב בדמי ביטול של עד " + pct + "% ממחיר העסקה או " + fmtIls(maxIls) +
-      " ₪, לפי הנמוך מביניהם. לפרטים מלאים ראו מדיניות הביטולים באתר."
+      ", לפי הנמוך מביניהם. לפרטים מלאים ראו מדיניות הביטולים באתר."
     );
   }
 
@@ -149,7 +194,10 @@
     if (details.totalILS !== undefined) {
       lines.push('סה"כ כולל מע"מ: ' + fmtIls(details.totalILS));
     }
-    lines.push((biz.legalName || "") + (biz.businessId ? " · " + biz.businessId : ""));
+    var idText = [];
+    if (hasVal(biz.legalName)) idText.push(biz.legalName);
+    if (hasVal(biz.businessId)) idText.push(biz.businessId);
+    lines.push(idText.length ? idText.join(" · ") : "פרטי העוסק יפורסמו עם פתיחת העסק");
     lines.push(transactionCancellationNote());
     return lines.filter(Boolean).join("\n");
   }
@@ -164,17 +212,27 @@
     var html = "";
     html += '<div class="warranty-certificate">';
     html += "<h4>תעודת אחריות</h4>";
-    html += "<p>" + esc(biz.bizField ? biz.bizField("legalName", "שם העוסק") : "") + " · " + esc(biz.bizField ? biz.bizField("businessId", "מספר עוסק") : "") + "</p>";
+    var wName = biz.bizField ? biz.bizField("legalName", "שם העוסק") : "";
+    var wBizId = biz.bizField ? biz.bizField("businessId", "מספר עוסק") : "";
+    var wParts = [];
+    if (hasVal(wName)) wParts.push(esc(wName));
+    if (hasVal(wBizId)) wParts.push(esc(wBizId));
+    html += "<p>" + (wParts.length ? wParts.join(" · ") : "פרטי העוסק יפורסמו עם פתיחת העסק") + "</p>";
     html += "<p>תאריך רכישה: " + esc(details.purchaseDate || new Date().toLocaleDateString("he-IL")) + "</p>";
     html += "<p>מוצר/שירות: " + esc(details.productOrServiceTitle || "") + "</p>";
-    html += "<p>תקופת אחריות: " + esc(details.warrantyMonths ? details.warrantyMonths + " חודשים" : "") + "</p>";
+    if (details.warrantyMonths) {
+      html += "<p>תקופת אחריות: " + esc(details.warrantyMonths + " חודשים") + "</p>";
+    }
     if (details.included) {
       html += "<p><strong>מה כלול:</strong> " + esc(details.included) + "</p>";
     }
     if (details.excluded) {
       html += "<p><strong>מה לא כלול:</strong> " + esc(details.excluded) + "</p>";
     }
-    html += "<p>לפנייה בנושא האחריות: " + esc(biz.phone || "") + (biz.email ? " · " + esc(biz.email) : "") + "</p>";
+    var warrantyContact = contactValueHtml(biz);
+    if (warrantyContact) {
+      html += "<p>לפנייה בנושא האחריות: " + warrantyContact + "</p>";
+    }
     html += "</div>";
     return html;
   }
@@ -210,7 +268,7 @@
    * idPrefix - קידומת ייחודית ל-id של תיבת הסימון (כדי לתמוך בכמה טפסים באותו עמוד).
    */
   function consentCheckboxHtml(idPrefix) {
-    var id = (idPrefix || "consent") + "MarketingOptIn";
+    var id = esc((idPrefix || "consent") + "MarketingOptIn");
     return (
       '<label for="' + id + '" style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--text-tertiary,#7a7a7a);margin-top:6px;cursor:pointer;">' +
       '<input type="checkbox" id="' + id + '" style="margin:0;" />' +
