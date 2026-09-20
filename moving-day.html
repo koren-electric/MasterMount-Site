@@ -6125,6 +6125,7 @@ footer.site-foot .foot-links a {
 }
 
 .moving-summary-row.total strong {
+  white-space: nowrap;
   color: var(--orange);
   font-family: Big Shoulders Display, sans-serif;
   font-size: 1.5rem;
@@ -8156,7 +8157,7 @@ function initMovingDay() {
       }
       rows += '<div class="moving-summary-row"><span>אחסון עד תיאום ההתקנה</span><strong>' + storageValue + "</strong></div>";
     }
-    rows += '<div class="moving-summary-row total"><span>סה"כ משוער</span><strong>' + fmt(price.total) + (price.isCustomQuote ? " + הצעת מחיר בהתאמה אישית" : "") + "</strong></div>";
+    rows += '<div class="moving-summary-row total"><span>סה"כ משוער פירוק + אחסנה + התקנה חוזרת (2 ביקורים)</span><strong>' + fmt(price.total) + (price.isCustomQuote ? " + הצעת מחיר בהתאמה אישית" : "") + "</strong></div>";
     rows += '<div class="moving-summary-row"><span class="moving-vat-note">' + (BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote({ includeShipping: false }) : "המחיר כולל מע\"מ") + '</span></div>';
     var html = '<h3 class="step-question" id="stepQuestionHeading" tabindex="-1">סיכום הבקשה שלכם</h3><div class="moving-summary">' + rows + "</div>";
     if (MOVING.isMax) {
@@ -8222,7 +8223,7 @@ function initMovingDay() {
       lines.push(storageLine);
     }
     lines.push("");
-    lines.push("💰 סה\"כ משוער: " + fmt(price.total) + (price.isCustomQuote ? " + הצעת מחיר בהתאמה אישית" : ""));
+    lines.push("💰 סה\"כ משוער פירוק + אחסנה + התקנה חוזרת (2 ביקורים): " + fmt(price.total) + (price.isCustomQuote ? " + הצעת מחיר בהתאמה אישית" : ""));
     if (MOVING.isMax) lines.push("(הסכום אינו כולל עלויות גודל/פירוק/הרכבה - ייקבעו לפי הפרטים המדויקים)");
     lines.push("");
     if (name) lines.push("שם: " + name);
