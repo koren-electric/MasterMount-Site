@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&amp;family=Noto+Sans+Hebrew:wght@400;600;700;800&amp;display=swap"/>
+<title>השוואת טלוויזיות - Master Mount</title>
+<meta name="description" content="בחרו שני דגמי טלוויזיה מהקטלוג וקבלו השוואה מלאה זה לצד זה: תמונה, חוויה חכמה, גיימינג, סאונד ומחיר."/>
+<link rel="icon" href="assets/site/favicon.png" type="image/png"/>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#faf9f6; --surface:#fff; --surface-2:#f1efe9; --border:#e1ddd4;
+  --text-primary:#20272e; --text-secondary:#55606b; --text-tertiary:#606870;
+  --blue:#20272e; --blue-ink:#faf9f6; --blue-soft:#e8eaec;
+  --orange:#ea5b24; --orange-soft:#fdeae1; --premium-text:#ba4112; --premium-oncolor:#cc4714;
+  --win-bg:#e6f3e8; --win-text:#1d6b34;
+  --shadow:0 1px 2px #20272e0f, 0 16px 34px -16px #20272e38;
+  --radius:12px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text-primary);font-family:"Noto Sans Hebrew",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.55;-webkit-text-size-adjust:100%}
+a{color:var(--blue)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip-link{position:absolute;inset-inline-start:8px;top:-60px;z-index:1000;background:var(--blue);color:var(--blue-ink);padding:12px 20px;border-radius:8px;font-weight:700;text-decoration:none;transition:top .15s}
+.skip-link:focus{top:8px}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px}
+
+/* כותרת עליונה */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brandmark img{display:block;height:34px;width:auto}
+.brandmark .logo-on-dark{display:none}
+.toplinks{display:flex;gap:6px 18px;flex-wrap:wrap;margin-inline-start:auto}
+.toplinks a{color:var(--text-secondary);text-decoration:none;font-size:.9rem;padding:6px 2px;font-weight:600}
+.toplinks a:hover{color:var(--blue);text-decoration:underline}
+
+/* כותרת העמוד */
+.page-head{padding:28px 0 8px}
+.page-head .eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.04em;color:var(--premium-text)}
+.page-head h1{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:4px 0 6px;line-height:1.2}
+.page-head p{margin:0;color:var(--text-secondary);max-width:62ch}
+
+/* בחירת דגמים */
+.picker{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 8px}
+.slot{border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);padding:12px 14px 14px;margin:0;min-width:0}
+.slot legend{font-weight:800;padding:0 8px;font-size:.95rem}
+.slot-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.slot label{display:block;font-size:.78rem;color:var(--text-secondary);margin-bottom:3px;font-weight:600}
+.slot select{width:100%;padding:9px 10px;border:1.5px solid var(--border);border-radius:9px;background:var(--surface);color:var(--text-primary);font:inherit;font-size:.92rem;min-width:0}
+.slot .model-field{grid-column:1/-1}
+.slot-foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:8px}
+.slot-picked{font-size:.82rem;color:var(--text-secondary);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn-link{background:none;border:none;color:var(--premium-text);font:inherit;font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:underline;padding:4px}
+.notice{margin:10px 0;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:.92rem}
+.notice.error{border-color:#c0392b;background:#fdecea;color:#7a1f14}
+.notice.error a{color:#7a1f14;font-weight:700}
+
+/* טבלת השוואה */
+.summary{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:18px 0 8px}
+.summary p{margin:0;font-weight:700}
+.summary .opts{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:.88rem}
+.summary label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.summary input{width:18px;height:18px;accent-color:var(--orange)}
+.legend{font-size:.8rem;color:var(--text-secondary);margin:0 0 10px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.table-wrap{border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.table-scroll{overflow-x:auto}
+table.cmp{width:100%;border-collapse:collapse;table-layout:fixed;min-width:0}
+table.cmp col.c-label{width:30%}
+table.cmp th,table.cmp td{padding:10px 12px;text-align:start;vertical-align:top;border-bottom:1px solid var(--border);overflow-wrap:anywhere}
+table.cmp thead th{background:var(--surface);vertical-align:bottom;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:2}
+table.cmp thead th.model{text-align:center}
+table.cmp thead img{display:block;margin:0 auto 6px;max-width:100%;height:96px;object-fit:contain}
+.model .m-brand{font-size:.72rem;font-weight:800;letter-spacing:.06em;color:var(--text-secondary)}
+.model .m-name{font-weight:800;font-size:1rem;direction:ltr;unicode-bidi:plaintext}
+.model .m-size{font-size:.85rem;color:var(--text-secondary)}
+.model .m-links{display:flex;flex-direction:column;gap:2px;margin-top:6px;font-size:.78rem}
+table.cmp tbody th[scope=row]{font-weight:700;background:var(--surface);position:sticky;inset-inline-start:0;z-index:1;font-size:.9rem}
+table.cmp tr.grp th{background:var(--blue);color:var(--blue-ink);font-size:.85rem;letter-spacing:.03em;padding:7px 12px;position:static}
+table.cmp tr.row-diff td,table.cmp tr.row-diff th[scope=row]{background:var(--orange-soft)}
+table.cmp tr.row-missing td,table.cmp tr.row-missing th[scope=row]{background:#f6f2e4}
+table.cmp tr.row-same td,table.cmp tr.row-same th[scope=row],table.cmp tr.row-none td,table.cmp tr.row-none th[scope=row]{color:var(--text-tertiary);font-weight:500}
+table.cmp tr.row-same th[scope=row],table.cmp tr.row-none th[scope=row]{font-weight:600}
+table.cmp td.win{background:var(--win-bg)!important;color:var(--text-primary);font-weight:800}
+.only-diff tr.row-same,.only-diff tr.row-none{display:none}
+.na{color:var(--text-tertiary);font-style:italic}
+.mk{display:inline-flex;align-items:center;gap:3px;font-size:.7rem;font-weight:800;border-radius:999px;padding:1px 8px;margin-inline-start:6px;white-space:nowrap}
+.mk-diff{background:var(--blue);color:var(--blue-ink)}
+.mk-miss{background:#e9dfb7;color:#5a4a06}
+.mk-win{background:var(--win-text);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{display:inline-flex;gap:4px;align-items:center;border:1px solid var(--border);border-radius:999px;padding:1px 9px;font-size:.8rem;background:var(--surface);font-weight:600}
+.chip.unique{border-color:var(--orange);background:#fff;font-weight:800;color:var(--text-primary)}
+.tech-link{display:block;font-size:.76rem;margin-top:3px;font-weight:600}
+
+/* קריאה לפעולה */
+.cta{margin:26px 0 8px;padding:22px 18px;border-radius:var(--radius);background:var(--blue);color:var(--blue-ink);text-align:center}
+.cta h2{margin:0 0 6px;font-size:1.25rem}
+.cta p{margin:0 0 14px;opacity:.85;font-size:.9rem}
+.cta-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:12px;background:var(--premium-oncolor);color:#fff!important;font-weight:800;font-size:1.05rem;text-decoration:none;min-height:48px}
+.cta-btn:hover{filter:brightness(1.08)}
+.cta-sub{margin-top:12px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.cta-sub button,.cta-sub a{background:none;border:1px solid #ffffff55;color:var(--blue-ink)!important;border-radius:9px;padding:8px 14px;font:inherit;font-size:.85rem;font-weight:600;cursor:pointer;text-decoration:none}
+.status{min-height:1.4em;font-size:.85rem;margin-top:6px}
+
+footer.site-foot{border-top:1px solid var(--border);padding-block:34px;margin-top:40px}
+footer.site-foot .foot-grid{max-width:1040px;margin:0 auto;padding-inline:16px;display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:space-between}
+footer.site-foot a{color:var(--text-tertiary);font-size:.85rem;text-decoration:none;display:block;padding:3px 0}
+footer.site-foot a:hover{color:var(--blue);text-decoration:underline}
+footer.site-foot p{margin:6px 0 0;color:var(--text-tertiary);font-size:.85rem}
+
+@media (max-width:720px){
+  .picker{grid-template-columns:1fr}
+  table.cmp th,table.cmp td{padding:8px 8px;font-size:.84rem}
+  table.cmp col.c-label{width:28%}
+  table.cmp thead img{height:68px}
+  .model .m-name{font-size:.86rem}
+  .mk{margin-inline-start:0;margin-top:3px;display:flex;width:fit-content}
+  .toplinks{margin-inline-start:0}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">דלג לתוכן הראשי</a>
+<header class="topbar"><div class="topbar-inner">
+  <a class="brandmark" href="index.html" aria-label="Master Mount - לעמוד הבית"><img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" alt="" aria-hidden="true"/></a>
+  <nav class="toplinks" aria-label="ניווט ראשי"><a href="index.html#products">חזרה לקטלוג הטלוויזיות</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="installation.html">הזמנת התקנה מותאמת</a></nav>
+</div></header>
+
+<main id="main-content" tabindex="-1">
+<div class="wrap">
+  <div class="page-head">
+    <span class="eyebrow">השוואה מלאה, זה לצד זה</span>
+    <h1>השוואת טלוויזיות</h1>
+    <p>בחרו שני דגמים מהקטלוג וראו מיד במה הם שונים: תמונה, חוויה חכמה, גיימינג, סאונד ומחיר. מאפיין בלי נתון מסומן "לא זמין" ולא נחשב יתרון.</p>
+  </div>
+
+  <div class="picker" id="picker"></div>
+  <div id="notice" role="status" aria-live="polite"></div>
+  <div id="result"></div>
+</div>
+</main>
+
+<footer class="site-foot"><div class="foot-grid">
+  <div><a class="brandmark" href="index.html"><img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"/></a><p>התקנה מדויקת בשבילך.</p></div>
+  <div><a href="index.html#products">טלוויזיות למכירה</a><a href="installation.html">מחשבון מחיר התקנה</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a id="footEmailLink" href="mailto:mastermount@mastermount.co.il">mastermount@mastermount.co.il</a></div>
+  <div><a href="./terms-of-use.html">תנאי שימוש</a><a href="./privacy-policy.html">מדיניות פרטיות</a><a href="./cancellation-policy.html">מדיניות ביטולים והחזרות</a><a href="./delivery-terms.html">תנאי הובלה ותוספות</a><a href="./accessibility-statement.html">הצהרת נגישות</a><a href="#" id="cookieSettingsLink">הגדרות עוגיות</a></div>
+</div></footer>
+
+<script src="./business-config.js"></script>
+<script src="./compare-schema.js"></script>
+<script src="./compare-data.js"></script>
+<script src="./compare-select.js"></script>
+<script src="./compare-core.js"></script>
+<script>
+(function () {
+  "use strict";
+  var D = window.MM_COMPARE_DATA, C = window.MM_COMPARE_CORE, S = window.MM_COMPARE_SCHEMA, SEL = window.MM_COMPARE_SEL;
+  var BIZ = window.BUSINESS_CONFIG || {};
+  var pickerEl = document.getElementById("picker"), noticeEl = document.getElementById("notice"), resultEl = document.getElementById("result");
+  if (!D || !Array.isArray(D.models) || !D.models.length) {
+    noticeEl.innerHTML = '<div class="notice error" role="alert">נתוני ההשוואה לא נטענו. <a href="index.html#products">חזרה לקטלוג</a></div>';
+    return;
+  }
+  var models = D.models.slice().sort(function (x, y) {
+    return String(x.brand).localeCompare(String(y.brand)) || (x.sizeInches || 0) - (y.sizeInches || 0) || String(x.model).localeCompare(String(y.model));
+  });
+  var bySlug = {}, byId = {};
+  models.forEach(function (m) { bySlug[m.slug] = m; byId[m.id] = m; });
+  var brands = models.map(function (m) { return m.brand; }).filter(function (b, i, a) { return a.indexOf(b) === i; });
+
+  var slots = { a: null, b: null };
+  var invalid = [];
+  var onlyDiff = false;
+  var sameMsg = false;
+  var filters = { a: { brand: "", size: "" }, b: { brand: "", size: "" } };
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function fmtPrice(n) { return typeof n === "number" ? "₪" + n.toLocaleString("he-IL") : ""; }
+  function label(m) { return m.brand + " " + m.model; }
+  function pageUrl() {
+    var p = [];
+    if (slots.a) p.push("a=" + encodeURIComponent(slots.a.slug));
+    if (slots.b) p.push("b=" + encodeURIComponent(slots.b.slug));
+    return new URL("compare.html" + (p.length ? "?" + p.join("&") : ""), location.href).href;
+  }
+
+  /* ---- טעינה ראשונית: כתובת (מקור אמת אם קיימת) אחרת הבחירה השמורה ---- */
+  (function init() {
+    var q = new URLSearchParams(location.search), qa = q.get("a"), qb = q.get("b");
+    if (qa || qb) {
+      [["a", qa], ["b", qb]].forEach(function (p) {
+        if (!p[1]) return;
+        var m = bySlug[String(p[1]).toLowerCase()];
+        if (m) slots[p[0]] = m; else invalid.push(p[1]);
+      });
+    } else {
+      var ids = SEL.get().filter(function (id) { return byId[id]; });
+      slots.a = ids[0] ? byId[ids[0]] : null; slots.b = ids[1] ? byId[ids[1]] : null;
+    }
+    if (slots.a && slots.b && slots.a === slots.b) { slots.b = null; sameMsg = true; }
+    persist(false);
+    renderAll();
+  })();
+
+  function persist(updateUrl) {
+    SEL.set([slots.a && slots.a.id, slots.b && slots.b.id].filter(Boolean));
+    if (updateUrl) { try { history.replaceState(null, "", pageUrl()); } catch (e) {} }
+  }
+
+  /* ---- בורר: מותג -> גודל -> דגם (רשימות נפתחות) ---- */
+  function slotName(k) { return k === "a" ? "דגם א'" : "דגם ב'"; }
+  function syncFiltersFromSlots() {
+    ["a", "b"].forEach(function (k) { if (slots[k]) filters[k] = { brand: slots[k].brand, size: String(slots[k].sizeInches) }; });
+  }
+  function listFor(k) {
+    var f = filters[k];
+    return models.filter(function (m) { return (!f.brand || m.brand === f.brand) && (!f.size || String(m.sizeInches) === f.size); });
+  }
+  function renderPicker() {
+    var html = "";
+    ["a", "b"].forEach(function (k) {
+      var cur = slots[k], other = slots[k === "a" ? "b" : "a"], f = filters[k];
+      var sizes = models.filter(function (m) { return !f.brand || m.brand === f.brand; }).map(function (m) { return m.sizeInches; }).filter(function (s, i, a) { return a.indexOf(s) === i; }).sort(function (x, y) { return x - y; });
+      var list = listFor(k);
+      html += '<fieldset class="slot" data-slot="' + k + '"><legend>' + slotName(k) + '</legend><div class="slot-grid">' +
+        '<div><label for="brand-' + k + '">מותג</label><select class="f-brand" id="brand-' + k + '"><option value="">כל המותגים</option>' + brands.map(function (b) { return '<option value="' + esc(b) + '"' + (b === f.brand ? " selected" : "") + '>' + esc(b) + '</option>'; }).join("") + '</select></div>' +
+        '<div><label for="size-' + k + '">גודל מסך</label><select class="f-size" id="size-' + k + '"><option value="">כל הגדלים</option>' + sizes.map(function (s) { return '<option value="' + s + '"' + (String(s) === f.size ? " selected" : "") + '>' + s + ' אינץ\'</option>'; }).join("") + '</select></div>' +
+        '<div class="model-field"><label for="model-' + k + '">דגם (' + list.length + ' דגמים ברשימה)</label><select class="f-model" id="model-' + k + '"><option value="">בחרו דגם...</option>' +
+        list.map(function (m) {
+          var taken = other && other.id === m.id;
+          return '<option value="' + esc(m.slug) + '"' + (cur && cur.id === m.id ? " selected" : "") + (taken ? " disabled" : "") + '>' + m.sizeInches + '" ' + esc(m.brand) + ' ' + esc(m.model) + (m.priceILS ? ' - ' + fmtPrice(m.priceILS) : '') + (taken ? ' (נבחר בצד השני)' : '') + '</option>';
+        }).join("") + '</select></div></div>' +
+        '<div class="slot-foot"><span class="slot-picked">' + (cur ? esc(label(cur)) : "עדיין לא נבחר דגם") + '</span>' + (cur ? '<button type="button" class="btn-link" data-clear="' + k + '">הסרת הדגם</button>' : '') + '</div></fieldset>';
+    });
+    pickerEl.innerHTML = html;
+  }
+  pickerEl.addEventListener("change", function (e) {
+    var st = e.target.closest("[data-slot]"); if (!st) return;
+    var k = st.getAttribute("data-slot"), focusId;
+    if (e.target.classList.contains("f-model")) {
+      slots[k] = e.target.value ? bySlug[e.target.value] : null;
+      invalid = []; sameMsg = false;
+      syncFiltersFromSlots();
+      persist(true); renderAll(); focusId = "model-" + k;
+    } else {
+      /* בחירה מחדש של מותג/גודל = התחלה מחדש בצד הזה: הדגם שנבחר קודם מוסר */
+      if (e.target.classList.contains("f-brand")) { filters[k] = { brand: e.target.value, size: "" }; focusId = "brand-" + k; }
+      else { filters[k].size = e.target.value; focusId = "size-" + k; }
+      if (slots[k]) { slots[k] = null; persist(true); renderAll(); } else { renderPicker(); }
+    }
+    var el = document.getElementById(focusId); if (el) el.focus();
+  });
+  pickerEl.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-clear]"); if (!b) return;
+    var k = b.getAttribute("data-clear");
+    slots[k] = null; filters[k] = { brand: "", size: "" };
+    sameMsg = false;
+    persist(true); renderAll();
+    var el = document.getElementById("model-" + k); if (el) el.focus();
+  });
+
+  /* ---- תוצאה ---- */
+  function guideHref(m) {
+    var f = C.fieldByKey("panelTech"), tech = C.getValue(m, f);
+    var anchor = C.guideAnchor(m.brand, tech);
+    return "tv-technology-guide.html" + (anchor ? "#" + anchor : "");
+  }
+  function installHref(m) {
+    return "installation.html?linkedProductId=" + encodeURIComponent(m.id) + "&linkedProductTitle=" + encodeURIComponent(m.title || label(m)) + "&linkedProductPrice=" + encodeURIComponent(m.priceILS || 0) + "&linkedSizeInches=" + encodeURIComponent(m.sizeInches || "");
+  }
+  function chipsHtml(vals, own, other, res) {
+    var uniqueSet = res.status === "diff" ? own : [];
+    return '<div class="chips">' + vals.map(function (v) {
+      var u = uniqueSet.indexOf(v) !== -1;
+      return '<span class="chip' + (u ? " unique" : "") + '"><span aria-hidden="true">' + (u ? "＋" : "✓") + '</span><bdi>' + esc(v) + '</bdi>' + (u ? '<span class="sr-only"> (רק בדגם זה)</span>' : "") + '</span>';
+    }).join("") + '</div>';
+  }
+  function cellHtml(f, val, res, side, m) {
+    var mine = side === "a" ? res.aOnly : res.bOnly;
+    var html;
+    if (C.isEmpty(val)) {
+      html = '<span class="na">' + esc(S.emptyLabel) + '</span>';
+      if (res.status === "missing-one") html += '<span class="sr-only"> (חסר נתון בדגם זה)</span>';
+      return html;
+    }
+    if (f.type === "multi") html = chipsHtml(Array.isArray(val) ? val : [val], mine, [], res);
+    else if ((f.type === "number" || f.type === "derived") && f.unit && /^[A-Za-z]+$/.test(f.unit)) html = '<span dir="ltr">' + esc(C.formatScalar(f, val)) + '</span>';
+    else html = '<bdi>' + esc(C.formatScalar(f, val)) + '</bdi>';
+    if (f.key === "panelTech") html += '<a class="tech-link" href="' + esc(guideHref(m)) + '">קראו במדריך הטכנולוגיות</a>';
+    if (res.winner === side) html += '<span class="mk mk-win"><span aria-hidden="true">✓</span> עדיף' + (f.prefer === "low" ? ' (נמוך יותר)' : f.prefer === "high" ? ' (גבוה יותר)' : '') + '</span>';
+    return html;
+  }
+  function rowHtml(r, ma, mb) {
+    var f = r.field, res = r.result, cls, mark = "";
+    if (res.status === "missing-both") { cls = "row-none"; }
+    else if (res.status === "missing-one") { cls = "row-missing"; mark = '<span class="mk mk-miss">חסר נתון</span>'; }
+    else if (res.status === "diff") { cls = "row-diff"; mark = '<span class="mk mk-diff"><span aria-hidden="true">≠</span> שונה</span>'; }
+    else cls = "row-same";
+    return '<tr class="' + cls + '"><th scope="row">' + esc(f.label) + mark + '</th>' +
+      '<td class="' + (res.winner === "a" ? "win" : "") + '">' + cellHtml(f, r.a, res, "a", ma) + '</td>' +
+      '<td class="' + (res.winner === "b" ? "win" : "") + '">' + cellHtml(f, r.b, res, "b", mb) + '</td></tr>';
+  }
+  function headCell(m, k) {
+    return '<th scope="col" class="model"><img src="' + esc(m.image) + '" alt="" loading="lazy"/><div class="m-brand">' + esc(m.brand) + '</div><div class="m-name">' + esc(m.model) + '</div><div class="m-size">' + esc(m.sizeInches) + ' אינץ\'</div>' +
+      '<div class="m-links"><a href="' + esc(installHref(m)) + '">מחשבון מחיר התקנה לדגם</a><a href="index.html#products">לקטלוג הטלוויזיות</a></div></th>';
+  }
+  function whatsappMessage(a, b) {
+    return ["שלום, אשמח לקבל הצעת מחיר על שני הדגמים הבאים:",
+      "1. " + label(a) + " (" + a.sizeInches + "\")" + (a.priceILS ? " - " + fmtPrice(a.priceILS) : ""),
+      "2. " + label(b) + " (" + b.sizeInches + "\")" + (b.priceILS ? " - " + fmtPrice(b.priceILS) : ""),
+      "", "ההשוואה שלי באתר: " + pageUrl()].join("\n");
+  }
+  function ctaHtml(a, b) {
+    var msg = whatsappMessage(a, b), on = window.CONTACT_ACTIONS_ENABLED === true && BIZ.whatsappNumber;
+    var main = on
+      ? '<a class="cta-btn" id="ctaMain" rel="noopener" target="_blank" href="https://wa.me/' + esc(BIZ.whatsappNumber) + '?text=' + encodeURIComponent(msg) + '">קבל הצעת מחיר על שני הדגמים בוואטסאפ<span class="sr-only"> (נפתח בכרטיסייה חדשה)</span></a>'
+      : '<a class="cta-btn" id="ctaMain" href="mailto:' + esc(BIZ.email || "mastermount@mastermount.co.il") + '?subject=' + encodeURIComponent("הצעת מחיר להשוואה: " + label(a) + " מול " + label(b)) + '&body=' + encodeURIComponent(msg) + '">קבל הצעת מחיר על שני הדגמים במייל</a>';
+    return '<section class="cta" aria-labelledby="ctaTitle"><h2 id="ctaTitle">אהבתם? נשלח לכם הצעה על שני הדגמים</h2><p>ההודעה נפתחת מוכנה, עם שמות שני הדגמים והקישור להשוואה הזו.</p>' + main +
+      '<div class="cta-sub"><button type="button" id="copyLinkBtn">העתקת קישור להשוואה</button><a href="index.html#products">חזרה לקטלוג</a></div><div class="status" id="ctaStatus" role="status" aria-live="polite"></div></section>';
+  }
+  function renderResult() {
+    var a = slots.a, b = slots.b;
+    if (!a || !b) {
+      var need = !a && !b ? "שני דגמים" : "עוד דגם אחד";
+      resultEl.innerHTML = '<div class="notice">בחרו ' + need + ' מהרשימות למעלה כדי לראות את ההשוואה.</div>';
+      return;
+    }
+    var cmp = C.compareModels(a, b);
+    var html = '<div class="summary"><p id="sumText">' + cmp.diffs + ' הבדלים מתוך ' + cmp.total + ' מאפיינים' + (cmp.missing ? ', ' + cmp.missing + ' מאפיינים עם נתון חסר באחד הדגמים' : '') + '</p>' +
+      '<div class="opts"><label><input type="checkbox" id="onlyDiffCb"' + (onlyDiff ? " checked" : "") + '> הצגת מאפיינים שונים בלבד</label></div></div>' +
+      '<p class="legend"><span><b aria-hidden="true">≠</b> ערכים שונים</span><span><b aria-hidden="true">✓</b> עדיף (רק במאפיינים מספריים)</span><span><b aria-hidden="true">＋</b> קיים רק בדגם הזה</span><span>"לא זמין" = אין נתון, ולא נחשב יתרון</span></p>' +
+      '<div class="table-wrap"><div class="table-scroll"><table class="cmp' + (onlyDiff ? " only-diff" : "") + '" id="cmpTable"><caption class="sr-only">השוואה בין ' + esc(label(a)) + ' לבין ' + esc(label(b)) + '</caption><colgroup><col class="c-label"><col><col></colgroup>' +
+      '<thead><tr><th scope="col"><span class="sr-only">מאפיין</span></th>' + headCell(a, "a") + headCell(b, "b") + '</tr></thead>';
+    cmp.groups.forEach(function (g) {
+      html += '<tbody data-group="' + esc(g.group.key) + '"><tr class="grp"><th scope="colgroup" colspan="3">' + esc(g.group.label) + '</th></tr>' + g.rows.map(function (r) { return rowHtml(r, a, b); }).join("") + '</tbody>';
+    });
+    html += '</table></div></div>' + '<p class="legend" style="margin-top:10px">' + esc(BIZ.vatNote ? BIZ.vatNote({ includeShipping: true }) : "המחיר כולל מע\"מ והובלה עד הבית") + '. הנתונים לפי מפרט היצרן/היבואן; ייתכנו הבדלי גרסה בין דגמים.</p>' + ctaHtml(a, b);
+    resultEl.innerHTML = html;
+    applyOnlyDiff();
+  }
+  function applyOnlyDiff() {
+    var t = document.getElementById("cmpTable"); if (!t) return;
+    t.classList.toggle("only-diff", onlyDiff);
+    Array.prototype.forEach.call(t.querySelectorAll("tbody[data-group]"), function (tb) {
+      var visible = tb.querySelectorAll("tr:not(.grp):not(.row-same):not(.row-none)").length;
+      tb.style.display = onlyDiff && !visible ? "none" : "";
+    });
+  }
+  resultEl.addEventListener("change", function (e) {
+    if (e.target.id === "onlyDiffCb") { onlyDiff = e.target.checked; applyOnlyDiff(); }
+  });
+  resultEl.addEventListener("click", function (e) {
+    if (e.target.id !== "copyLinkBtn") return;
+    var url = pageUrl(), st = document.getElementById("ctaStatus");
+    function done(ok) { if (st) st.textContent = ok ? "הקישור הועתק." : "לא ניתן להעתיק אוטומטית. הקישור בשורת הכתובת של הדפדפן."; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
+    else { try { var ta = document.createElement("textarea"); ta.value = url; document.body.appendChild(ta); ta.select(); var ok = document.execCommand("copy"); document.body.removeChild(ta); done(ok); } catch (er) { done(false); } }
+  });
+
+  function renderNotice() {
+    if (invalid.length) {
+      noticeEl.innerHTML = '<div class="notice error" role="alert">' + invalid.map(function (s) { return 'הדגם "' + esc(s) + '" לא נמצא בקטלוג'; }).join(" | ") + '. אפשר לבחור דגם אחר מהרשימות למטה, או <a href="index.html#products">לחזור לקטלוג הטלוויזיות</a>.</div>';
+    } else if (sameMsg) {
+      noticeEl.innerHTML = '<div class="notice error" role="alert">בחרתם את אותו דגם פעמיים. בחרו שני דגמים שונים.</div>';
+    } else noticeEl.innerHTML = "";
+  }
+  function renderAll() { renderPicker(); renderNotice(); renderResult(); }
+  window.addEventListener("storage", function () { /* שינוי בלשונית אחרת: לא דורסים כתובת קיימת */ });
+  window.__mmCompare = { slots: slots, renderAll: renderAll };
+})();
+</script>
+<script src="./cookie-consent.js"></script>
+</body>
+</html>
