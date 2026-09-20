@@ -10688,6 +10688,7 @@ function initMasterMount() {
     { id: "qd_mini_led", label: "QD Mini-LED", test: /(^|[^A-Za-z])QD\s*Mini\s*-?\s*LED/i },
     { id: "rgb_mini_led", label: "RGB Mini-LED", test: /(^|[^A-Za-z])RGB\s*Mini\s*-?\s*LED/i },
     { id: "mrgb", label: "MRGB", test: /MRGB|Micro\s*-?\s*RGB/i },
+    { id: "micro_rgb", label: "Micro RGB", test: /Micro\s*-?\s*RGB/i },
     { id: "mini_led", label: "Mini-LED", test: /Mini\s*-?\s*LED/i },
     { id: "crystal", label: "Crystal-UHD", test: /Crystal/i },
     { id: "led", label: "LED", test: /LED/i }
@@ -10699,6 +10700,8 @@ function initMasterMount() {
     /* Neo QLED/QNED/Mini-LED כבר מדויקות - לא מציגים גם "LED" הגנרי כשיש טכנולוגיה ספציפית */
     if (tags.length > 1 && tags.indexOf("led") >= 0) tags = tags.filter(function (id) { return id !== "led"; });
     if (tags.indexOf("neo_qled") >= 0) tags = tags.filter(function (id) { return id !== "qled"; });
+    /* Micro RGB (20.9.2026, נוסף בדשבורד כתג נפרד) - מוצר Micro RGB מוצג רק תחת "Micro RGB", לא גם תחת "MRGB" */
+    if (tags.indexOf("micro_rgb") >= 0) tags = tags.filter(function (id) { return id !== "mrgb"; });
     if (tags.indexOf("super_qd_mini_led") >= 0) tags = tags.filter(function (id) { return id !== "qd_mini_led"; });
     var hasVariant = MINI_LED_VARIANTS.some(function (id) { return tags.indexOf(id) >= 0; });
     if (hasVariant) tags = tags.filter(function (id) { return id !== "mini_led"; });
