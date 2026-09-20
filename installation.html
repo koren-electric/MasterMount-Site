@@ -8128,10 +8128,14 @@ footer.site-foot p, footer.site-foot a {
     <div id="cartPanelList" class="cart-panel-list"></div>
     <div class="cart-panel-total" id="cartPanelTotal" hidden></div>
     <div class="lead-form cart-panel-lead-form" id="cartPanelLeadForm" hidden>
-      <label for="cartLeadName" class="sr-only">שם מלא (לא חובה)</label>
-      <input type="text" id="cartLeadName" placeholder="שם מלא (לא חובה)" autocomplete="name">
-      <label for="cartLeadPhone" class="sr-only">טלפון (חובה)</label>
-      <input type="tel" id="cartLeadPhone" placeholder="טלפון (חובה)" dir="ltr" style="text-align:right;" autocomplete="tel" inputmode="tel" aria-describedby="cartLeadError">
+      <div id="cartLeadFieldsTop"></div>
+      <input type="hidden" id="cartLeadName">
+      <div class="lead-field">
+        <label class="lead-field-label" for="cartLeadPhone">טלפון<span class="req" aria-hidden="true">*</span></label>
+        <input type="tel" id="cartLeadPhone" placeholder="לדוגמה: 050-1234567" dir="ltr" style="text-align:right;" autocomplete="tel" inputmode="tel" aria-required="true" aria-describedby="cartLeadPhoneError">
+        <div class="lead-field-error" id="cartLeadPhoneError" role="alert" hidden></div>
+      </div>
+      <div id="cartLeadFieldsBottom"></div>
       <p class="cart-lead-error" id="cartLeadError" role="alert" hidden></p>
       <div class="lead-ctas"><a class="btn-accent btn-whatsapp" id="cartWhatsappBtn" hidden><span aria-hidden="true">📲 </span>שלחו את כל העגלה בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ)</span></a><a class="btn-accent cart-mail-primary" id="cartMailtoBtn" href="#"><span aria-hidden="true">✉️ </span>שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div>
       <p class="cart-lead-sent" id="cartLeadSent" role="status" hidden></p>
@@ -8173,6 +8177,7 @@ footer.site-foot p, footer.site-foot a {
 <script src="./business-config.js"></script>
 <script src="./installation-exclusions.js"></script>
 <script src="./legal-components.js"></script>
+<script src="./lead-capture.js"></script>
 <script src="./cookie-consent.js"></script>
 <script>
 
@@ -9267,8 +9272,11 @@ function initInstallation() {
       lines.push("");
     });
     lines.push("סה\"כ כללי: " + formatCartGrandTotal());
-    if (name) lines.push("שם: " + name);
-    if (phone) lines.push("טלפון: " + phone);
+    if (window.MMLead) { window.MMLead.messageLines(name, phone).forEach(function (ln) { lines.push(ln); }); }
+    else {
+      if (name) lines.push("שם: " + name);
+      if (phone) lines.push("טלפון: " + phone);
+    }
     var itemsWithPhoto = cart.filter(function (ci) { return ci.rows.some(function (r) { return r[1] === "צורפה"; }); });
     if (itemsWithPhoto.length) {
       lines.push("", "⚠️ יש לצרף כאן את תמונות מיקום ההתקנה שהועלו באתר עבור: " + itemsWithPhoto.map(function (ci) { return ci.label; }).join(", ") + " - לא נשלחות אוטומטית.");
@@ -9292,6 +9300,7 @@ function initInstallation() {
     var listEl = document.getElementById("cartPanelList");
     var totalEl = document.getElementById("cartPanelTotal");
     var formEl = document.getElementById("cartPanelLeadForm");
+    if (window.MMLead) window.MMLead.render();
     if (!cart.length) {
       emptyEl.hidden = false;
       listEl.innerHTML = "";
@@ -9386,6 +9395,13 @@ function initInstallation() {
   document.getElementById("cartPanelEmptyLink").addEventListener("click", closeCartPanel);
   document.getElementById("cartLeadName").addEventListener("input", updateCartWhatsappLink);
   document.getElementById("cartLeadPhone").addEventListener("input", updateCartWhatsappLink);
+  if (window.MMLead) {
+    /* סיכום העגלה שנשלח יחד עם פרטי הלקוח (לשמירה במעקב הלידים) */
+    window.MMLead.setCartProvider(function () {
+      var g = cartGrandTotal();
+      return { items: cart.map(function (ci) { return { label: ci.label, total: ci.itemTotal }; }), total: (g && g.numeric != null) ? g.numeric : null };
+    });
+  }
   renderCartBadge();
 
 

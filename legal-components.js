@@ -258,7 +258,7 @@
   function privacyNoticeHtml() {
     return (
       '<p class="privacy-point-of-contact-note" style="font-size:.76rem;color:var(--text-tertiary,#7a7a7a);margin-top:6px;">' +
-      'בשליחת הפנייה, הפרטים שתמסרו ישמשו ליצירת קשר ומתן הצעת מחיר. ' +
+      'בשליחת הפנייה, הפרטים שתמסרו ישמשו ליצירת קשר, מעקב פנימי מולכם, ומתן הצעת מחיר וביצוע הזמנה מול נציג. ' +
       '<a href="./privacy-policy.html" style="color:inherit;text-decoration:underline;">פרטים נוספים במדיניות הפרטיות</a>.' +
       "</p>"
     );
