@@ -4432,10 +4432,30 @@ section.block {
   overflow: hidden;
 }
 
+/* תיקון חיתוך תמונות (20.9.2026): התמונה עטופה ב-<picture> (WebP+JPG) שהוא אלמנט inline/flex-item בלי גובה
+   מוגדר, ולכן height:100% על ה-<img> לא נפתר לגובה המסגרת - התמונה קיבלה את הגובה הטבעי שלה (לתמונות
+   גבוהות עד 2.7 מגובה המסגרת) ו-overflow:hidden חתך אותה. עכשיו ה-picture/img ממלאים את המסגרת בהצבה
+   מוחלטת (inset:0) וה-object-fit:contain באמת חל - כל התמונה נראית, ממורכזת, בלי חיתוך. */
+.mount-select-card .mount-thumb-wrap {
+  position: relative;
+}
+
+.mount-select-card .mount-thumb-wrap picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
 .mount-select-card .mount-thumb-wrap img {
   object-fit: contain;
+  object-position: center;
   width: 100%;
   height: 100%;
+}
+
+.mount-select-card .mount-thumb-wrap > img {
+  position: absolute;
+  inset: 0;
 }
 
 .mount-select-card .wc-title {
