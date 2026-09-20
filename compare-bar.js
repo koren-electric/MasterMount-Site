@@ -16,10 +16,18 @@
   var css = [
     ".flat-card-cell{flex:none;display:flex;flex-direction:column;align-items:stretch;gap:6px;scroll-snap-align:start}",
     ".flat-card-cell>.flat-card{scroll-snap-align:none;flex:1 1 auto}",
-    ".cmp-pick{display:flex;align-items:center;justify-content:center;gap:7px;padding:7px 10px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text-primary);font-size:.82rem;font-weight:600;cursor:pointer;user-select:none}",
-    ".cmp-pick:hover{border-color:var(--accent)}",
-    ".cmp-pick input{width:18px;height:18px;margin:0;accent-color:var(--orange,#ea5b24);cursor:pointer}",
-    ".cmp-pick:has(input:checked){border-color:var(--orange,#ea5b24);background:var(--orange-soft,#fdeae1)}",
+    /* משבצת "להשוואה": בסגנון MASTER MOUNT - דיו כהה + כתום. בלי סימון: לבן עם מסגרת; מסומן: דיו כהה, מסגרת כתומה, וי כתום */
+    ".cmp-pick{display:flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:8px 14px;border:2px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text-primary);font-size:.86rem;font-weight:700;letter-spacing:.01em;cursor:pointer;user-select:none;transition:background .15s,border-color .15s,color .15s,box-shadow .15s}",
+    ".cmp-pick:hover{border-color:var(--orange,#ea5b24);box-shadow:0 2px 10px -4px rgba(234,91,36,.55)}",
+    ".cmp-pick .cmp-ico{width:18px;height:18px;flex:none;color:var(--orange,#ea5b24)}",
+    ".cmp-pick input{appearance:none;-webkit-appearance:none;display:grid;place-content:center;flex:none;width:22px;height:22px;margin:0;border:2px solid #20272e;border-radius:6px;background:#fff;cursor:pointer;transition:background .15s,border-color .15s}",
+    ".cmp-pick input::after{content:'';width:11px;height:6px;border-left:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(-45deg) translateY(-1px) scale(0);transition:transform .12s}",
+    ".cmp-pick input:checked{background:var(--orange,#ea5b24);border-color:var(--orange,#ea5b24)}",
+    ".cmp-pick input:checked::after{transform:rotate(-45deg) translateY(-1px) scale(1)}",
+    ".cmp-pick .cmp-on{display:none}",
+    ".cmp-pick:has(input:checked){border-color:var(--orange,#ea5b24);background:#20272e;color:#faf9f6}",
+    ".cmp-pick:has(input:checked) .cmp-on{display:inline}",
+    ".cmp-pick:has(input:checked) .cmp-off{display:none}",
     ".cmp-pick:has(input:focus-visible){outline:3px solid var(--orange,#ea5b24);outline-offset:2px}",
     "#mmCompareBar{position:fixed;inset-inline:0;bottom:var(--mm-cookie-h,0px);z-index:120;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface,#fff);border-top:2px solid var(--orange,#ea5b24);box-shadow:0 -10px 30px -12px rgba(0,0,0,.35)}",
     "#mmCompareBar[hidden]{display:none}",
@@ -108,7 +116,7 @@
       var m = byId[id];
       var label = document.createElement("label");
       label.className = "cmp-pick";
-      label.innerHTML = '<input type="checkbox" data-id="' + esc(id) + '" aria-label="הוספה להשוואה: ' + esc(m.brand + " " + m.model) + '"><span>להשוואה</span>';
+      label.innerHTML = '<input type="checkbox" data-id="' + esc(id) + '" aria-label="הוספה להשוואה: ' + esc(m.brand + " " + m.model) + '"><svg class="cmp-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14M4 9h8M12 15h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cmp-off">להשוואה</span><span class="cmp-on">נבחר להשוואה</span>';
       track.replaceChild(cell, card);
       cell.appendChild(card);
       cell.appendChild(label);
