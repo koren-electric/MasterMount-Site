@@ -8122,8 +8122,8 @@ function initMovingDay() {
   var MOVING_SIZE_OPTIONS = CATALOG.sizeTiers.map(function (t) { return { id: t.id, label: t.label }; });
   /* מחירי-מעבר-דירה עצמאיים לגמרי ממחירי-ההתקנה-הראשונית ב-CATALOG (אותם גדלים/מיקומים, סכומים
      שונים - שירות-העברה, לא התקנה-חדשה) */
-  var MOVING_SIZE_PRICES = { t1: 70, t2: 90, t3: 120, t4: 170, t5: 300 };
-  var MOVING_SCREEN_COUNT_PRICES = { 1: 160, 2: 300, 3: 430, 4: 550, 5: 650, max: 720 };
+  var MOVING_SIZE_PRICES = { t1: 80, t2: 120, t3: 190, t4: 280, t5: 400 };
+  var MOVING_SCREEN_COUNT_PRICES = { 1: 180, 2: 320, 3: 440, 4: 550, 5: 650, max: 720 };
   var MOVING_CURRENT_MOUNT_OPTIONS = [
     { id: "wall", label: "תלוי על מתקן קיר", priceILS: 90 },
     { id: "other", label: "מתקן אחר", priceILS: 90 },
@@ -8172,7 +8172,9 @@ function initMovingDay() {
     { id: "mount_new_1789862999386", name: "מתקן תקרה חשמלי למסכים עד 86\" עם הטיה - TILT עד 80 מעלות", priceILS: 1450, locationId: "ceiling", imageUrl: "assets/products/mount_new_1789862999386.jpg", imageUrlWebp: "assets/products/mount_new_1789862999386.webp" },
     { id: "mount_new_1789863280745", name: "מעלית מרהיט למסכים עד 65\"", priceILS: 1990, locationId: "special", imageUrl: "assets/products/mount_new_1789863280745.jpg", imageUrlWebp: "assets/products/mount_new_1789863280745.webp" },
     { id: "mount_new_1789864023402", name: "רצפה תקרה למסכים עד 85\" צבע שחור - התאמה אישית", priceILS: 3250, locationId: "floor_pole", imageUrl: "assets/products/mount_new_1789864023402.jpg", imageUrlWebp: "assets/products/mount_new_1789864023402.webp" },
-    { id: "mount_new_1789864214563", name: "עמוד ריצפתי למסכים עד 85\" צבע שחור - התאמה אישית", priceILS: 2650, locationId: "floor_pole", imageUrl: "assets/products/mount_new_1789864214563.jpg", imageUrlWebp: "assets/products/mount_new_1789864214563.webp" }
+    { id: "mount_new_1789864214563", name: "עמוד ריצפתי למסכים עד 85\" צבע שחור - התאמה אישית", priceILS: 2650, locationId: "floor_pole", imageUrl: "assets/products/mount_new_1789864214563.jpg", imageUrlWebp: "assets/products/mount_new_1789864214563.webp" },
+    { id: "mount_new_1789876974251", name: "התקנה על הרגליות המקוריות של המסך", priceILS: 40, locationId: "table" },
+    { id: "mount_new_1789879429669", name: "מתקן פרטי מותאם למסך אותו אני רוצה להתקין", priceILS: 0, locationId: "wall", imageUrl: "assets/products/mount_new_1789879429669.jpg", imageUrlWebp: "assets/products/mount_new_1789879429669.webp" }
   /* MOVING_MOUNT_CATALOG:END */
   ];
   var MOVING_MOUNT_GROUPS = [

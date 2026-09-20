@@ -10956,6 +10956,19 @@ function initMasterMount() {
           { heading: "מידות", items: [] },
           { heading: "ללא מעמד", items: ["רוחב 218 ס\"מ", "גובה 124.7 ס\"מ", "עובי 6.4 ס\"מ", "משקל 51.8 ק\"ג"] },
           { heading: "כולל מעמד", items: ["רוחב 218 ס\"מ", "גובה 128.5 ס\"מ", "עובי 6.4 ס\"מ", "משקל 52.8 ק\"ג", "VESA 600x400"] }
+        ] },
+      { id: "product_104", brand: "LG", model: "32LB650B6LA", sizeInches: 32, screenType: "LED",
+        title: "טלוויזיה חכמה \"32 LG LED אל ג`י דגם 32LB650B6LA", priceILS: 1290, imageUrl: "assets/products/product_104.jpg", imageUrlWebp: "assets/products/product_104.webp",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        badges: ["officialImporter"],
+        keyFeatures: ["שמע איכותי עם AI Sound", "מעבד α5 דור AI 9", "ממשק טלוויזיה חכמה עם אפליקציות מקומיות ובינלאומיות", "מערכת הפעלה webOS 26 Smart"],
+        fullSpecSections: [
+          { heading: "מאפיינים", items: ["שמע איכותי עם AI Sound", "מעבד α5 דור AI 9", "ממשק טלוויזיה חכמה עם אפליקציות מקומיות ובינלאומיות", "מערכת הפעלה webOS 26 Smart"] },
+          { heading: "מבנה ותכונות", items: ["סוג תצוגה 4K HD", "רזולוציה 1366x768 HD", "סוג תאורה Direct LED", "קצב ריענון 60 הרץ", "מעבד תמונה אלפא 5 AI 4K דור 9", "שדרוג תוכן באמצעות AI", "HDR (טווח דינאמי רחב) HDR10 / HLG", "טלוויזיה חכמה ThinQ AI", "מערכת הפעלה webOS 26", "דשבורד חכם (לוח מחוונים)", "אפליקציות מקומיות ובינלאומיות", "שיתוף תכנים מהטלפון הנייד כולל תמיכה ב- airplay 2, homekit", "חווית צפייה לאוהדי ספורט", "קצב רענון מסך Refresh rate 60Hz", "התראות ספורט"] },
+          { heading: "מפרט טכני", items: ["חווית צפייה לגיימרים", "HGiG", "מצב משחק ייחודי", "סרגל גיימינג (Game Optimizer)"] },
+          { heading: "איכות סאונד", items: ["עוצמת שמע 10 וואט", "ערוצי שמע 2", "AI Sound סאונד וירטואלי 9.1.2 ערוצים", "כוונון סאונד אקוסטי", "סנכרון שמע אלחוטי", "פורמטים נתמכים AC3(Dolby Digital), EAC3, HE-AAC, AAC, MP2, MP3, PCM, apt-XX"] },
+          { heading: "כניסות וחיבורים", items: ["Wi-Fi (Wi-Fi 5)", "Simplink (HDMI CEC)", "ערוץ החזרת אודיו HDMI - eARC (HDMI 2)", "תמיכה בבלוטות' - כן (v. 5.3)", "כניסת אינטרנט קווי 1", "כניסת HDMI - 2", "כניסת RF (אנטנה/כבל) 1", "כניסת USB - 1 (v.2.0)"] },
+          { heading: "מידות", items: ["רוחב 71.9 ס\"מ", "גובה 43 ס\"מ", "עומק 71 ס\"מ", "רוחב כולל מעמד 58.9 ס\"מ", "גובה כולל מעמד 45.6 ס\"מ", "עומק כולל מעמד שולחני 18 ס\"מ", "משקל בק\"ג 3.50", "משקל כולל מעמד 3.6 ס\"מ"] }
         ] }
     ]
   };
@@ -10965,6 +10978,7 @@ function initMasterMount() {
 
   /* ================= PRODUCT SIZE FILTER BUCKETS (browsing tvProducts by size - separate from
      CATALOG.sizeTiers, which prices installation, not browsing) ================= */
+  /* PRODUCT_SIZE_BUCKETS:BEGIN - נוצר מאוסף productSizeFilters בדשבורד ע"י scripts/sync-filters.ps1 (סדר לפי גודל, לא לפי sortOrder). לא לערוך ידנית. */
   var PRODUCT_SIZE_BUCKETS = [
     { id: "all", label: "הכל" },
     { id: "b32", label: "32\"", inches: [32] },
@@ -10974,9 +10988,12 @@ function initMasterMount() {
     { id: "b55", label: "55\"", inches: [55] },
     { id: "b65", label: "65\"", inches: [65] },
     { id: "b75", label: "75\"", inches: [75] },
+    { id: "b77", label: "77\"", inches: [77] },
+    { id: "b83", label: "83\"", inches: [83] },
     { id: "b85", label: "85\"-86\"", range: [85, 86] },
     { id: "b98", label: "98\" ומעלה", min: 98 }
   ];
+  /* PRODUCT_SIZE_BUCKETS:END */
   function productSizeBucketId(inches) {
     if (inches == null) return null;
     for (var i = 1; i < PRODUCT_SIZE_BUCKETS.length; i++) {
@@ -11866,7 +11883,7 @@ function initMasterMount() {
     { id: "neo_qled", label: "Neo QLED", test: /Neo\s*QLED/i },
     { id: "qned", label: "QNED", test: /QNED/i },
     { id: "qled", label: "QLED", test: /QLED/i },
-    { id: "nanocell", label: "NanoCell", test: /NanoCell|NANO\s*UHD/i },
+    { id: "nanocell", label: "NanoCell", test: /Nano\s*Cell|NANO\s*UHD/i },
     { id: "super_qd_mini_led", label: "Super QD Mini-LED", test: /Super\s*QD\s*Mini\s*-?\s*LED/i },
     { id: "qd_mini_led", label: "QD Mini-LED", test: /(^|[^A-Za-z])QD\s*Mini\s*-?\s*LED/i },
     { id: "rgb_mini_led", label: "RGB Mini-LED", test: /(^|[^A-Za-z])RGB\s*Mini\s*-?\s*LED/i },
@@ -12103,6 +12120,64 @@ function initMasterMount() {
     applyProductSizeFilter();
   }
   renderAllProductFilters();
+
+  /* ================= ביקורת קישור מוצרים למסנני האתר =================
+     בודקת לכל טלוויזיה פעילה שהיא מקושרת נכון לכל אחד מהמסננים שנגזרים מהמפרט: גודל מסך (מסנן גודל),
+     מותג (מסנן מותג) וטכנולוגיה (תגי טכנולוגיה), וגם שהערכים בשדות המוצר תואמים למפרט/לכותרת.
+     "מומלצים" מוחרג במכוון: זה סימון ידני של בעל האתר ולא נגזר ממפרט.
+     שימוש: window.__mmFilterAudit() מהקונסול, או ?auditfilters=1 בכתובת (הדף כותב את התוצאה ל-console.warn
+     ולאלמנט מוסתר עם המזהה MM_FILTER_AUDIT - כך scripts/check-catalog-filters.ps1 מריץ אותה ב-Edge headless). */
+  function __auditSpecValue(p, label) {
+    var out = "";
+    (p.fullSpecSections || []).forEach(function (sec) {
+      (sec.items || []).forEach(function (it) {
+        var s = String(it);
+        if (!out && s.indexOf(label + ":") === 0) out = s.slice(label.length + 1).trim();
+      });
+    });
+    return out;
+  }
+  function auditProductFilters() {
+    var problems = [];
+    function add(p, kind, msg) { problems.push({ id: p.id, model: p.model, kind: kind, msg: msg }); }
+    allActiveProducts.forEach(function (p) {
+      /* גודל מסך: מסנן הגודל, ותאימות למפרט ולכותרת */
+      if (p.sizeInches == null || !productSizeBucketId(p.sizeInches)) {
+        add(p, "size", "גודל " + p.sizeInches + " אינץ' לא מקושר לאף מסנן גודל (יופיע רק תחת \"הכל\")");
+      }
+      var specSize = parseInt(__auditSpecValue(p, "גודל מסך").replace(/[^0-9]/g, ""), 10);
+      if (specSize && specSize !== p.sizeInches) add(p, "size-spec", "sizeInches=" + p.sizeInches + " אבל במפרט \"גודל מסך\" כתוב " + specSize);
+      var tm = /(\d{2,3})\s*(?:"|״|''|אינץ)/.exec(p.title || "");
+      if (tm && parseInt(tm[1], 10) !== p.sizeInches) add(p, "size-title", "sizeInches=" + p.sizeInches + " אבל בכותרת כתוב " + tm[1]);
+      /* מותג */
+      if (!p.brand) add(p, "brand", "אין מותג - לא יופיע במסנן המותג");
+      else if ((p.title || "").toUpperCase().indexOf(String(p.brand).toUpperCase()) < 0 && String(p.model || "").toUpperCase().indexOf(String(p.brand).toUpperCase()) < 0) {
+        add(p, "brand-title", "המותג " + p.brand + " לא מופיע בכותרת או בדגם - ייתכן שהמותג שגוי");
+      }
+      /* טכנולוגיה */
+      var tags = productTechTags(p);
+      if (!tags.length) add(p, "tech", "סוג המסך \"" + p.screenType + "\" לא מתאים לאף תג טכנולוגיה - לא יופיע בסינון טכנולוגיה");
+      var panel = __auditSpecValue(p, "סוג פאנל");
+      if (panel) {
+        var specTags = productTechTags({ screenType: panel }).filter(function (t) { return t !== "led"; });
+        var missing = specTags.filter(function (t) { return tags.indexOf(t) < 0; });
+        if (missing.length) add(p, "tech-spec", "במפרט \"סוג פאנל\": " + panel + " (" + missing.map(techLabel).join(", ") + ") אבל בסוג המסך \"" + p.screenType + "\" אין תג כזה");
+      }
+    });
+    return problems;
+  }
+  window.__mmFilterAudit = function () {
+    var problems = auditProductFilters();
+    if (problems.length) console.warn("[mm-filter-audit] " + problems.length + " בעיות קישור מוצר-מסנן", problems);
+    return problems;
+  };
+  if (/[?&]auditfilters=1/.test(location.search)) {
+    var __auditPre = document.createElement("pre");
+    __auditPre.id = "MM_FILTER_AUDIT";
+    __auditPre.hidden = true;
+    __auditPre.textContent = JSON.stringify({ products: allActiveProducts.length, problems: window.__mmFilterAudit() });
+    document.body.appendChild(__auditPre);
+  }
 
   (function initProductFilterAccordion() {
     var groupIds = ["sizeFilterGroup", "brandFilterGroup", "techFilterGroup", "bestFilterGroup"];
