@@ -9025,6 +9025,22 @@ footer.site-foot a:hover {
   height: 100%;
 }
 
+/* --- 20.9.2026 (בקשת ברק): תיבת כותרת הבית - רקע בכהה של הלוגו (--brand-ink) במקום הכחול, וקו מתאר דק בצבע מנוגד לכל כיתוב:
+   הכותרת הלבנה - מתאר כתום, השורה הכתומה - מתאר לבן (text-shadow ב-8 כיוונים, אמין גם בגדלים קטנים בניגוד ל-text-stroke) --- */
+.hero-title-bubble {
+  background: var(--brand-ink);
+}
+
+.hero h1 {
+  --hero-outline: var(--brand-orange);
+  -webkit-text-stroke: 1px var(--hero-outline);
+  paint-order: stroke fill;
+}
+
+.hero h1 em {
+  --hero-outline: #fff;
+}
+
 </style>
 </head>
 <body><a class="skip-link" href="#main-content">דלג לתוכן הראשי</a><div id="modalAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
