@@ -4726,6 +4726,11 @@ section.block {
     --mm-badge-size: 54px;
   }
 }
+/* עמודת הסימנים הימנית בכרטיס באנדל: "יבואן רשמי" (קטן) צמוד לקצה הימני, כמו בכרטיסי הטלוויזיות,
+   ולא ממורכז/שמאלי מעל החותם הרחב יותר "כולל הובלה והתקנה בביקור אחד" */
+.mm-badges.mm-badges-bundle-side {
+  align-items: flex-end;
+}
 /* מיקומי הסימן על באנדלים: כרטיס - "חותם" בפינה השמאלית-עליונה של הכרטיס, בולט מעט כלפי מעלה
    לתוך ריפוד-המסלול (20px), לא לצדדים (שם הקרוסלה חותכת). חלון-הפרטים - בפינה הימנית-עליונה של
    התמונה (כפתור-הסגירה יושב בשמאל). */
@@ -10275,7 +10280,7 @@ function initMasterMount() {
   }
   /* כרטיס באנדל: עמודה ימנית - "יבואן רשמי" (אם סומן) ומתחתיו תמיד "כולל הובלה והתקנה בביקור אחד" */
   function bundleCardImporterHtml(b) {
-    return '<div class="mm-badges">' + (bundleHasImporter(b) ? importerSealSpan() : '') + deliverySealSpan() + '</div>';
+    return '<div class="mm-badges mm-badges-bundle-side">' + (bundleHasImporter(b) ? importerSealSpan() : '') + deliverySealSpan() + '</div>';
   }
   /* חלון פרטי באנדל: הסימנים על הרקע הלבן מימין לתמונה (כמו דף המוצר של טלוויזיה) */
   function bundleModalBadgesHtml(b) {
