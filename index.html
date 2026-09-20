@@ -4963,17 +4963,54 @@ section.block {
 /* לוגו-מותג קטן, בפינה הנגדית לתג "מומלץ" (שיושב ב-inset-inline-end) - תג-לבן-קבוע (לא-תלוי-
    תמה) עם border+shadow כדי שיישאר קריא גם על רקע-כרטיס-בהיר (ר' דיון-CX). */
 .flat-card-brand-logo {
-  position: absolute;
-  top: -14px;
-  inset-inline-start: 10px;
+  /* (20.9.2026) הלוגו יושב מתחת ל"לרכישה", בתוך גבולות הכרטיס (היה בפינה העליונה מחוץ לכרטיס) */
+  align-self: center;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 10px;
   box-shadow: 0 1px 4px #00000026;
-  padding: 5px 10px;
+  padding: 4px 10px;
+  margin-top: 4px;
   display: flex;
   align-items: center;
-  z-index: 2;
+}
+
+/* לוגו המותג בדף המוצר ובחלון הדיל: על הרקע הלבן משמאל לתיבת-התמונה (בצד הנגדי לסימנים שמימין).
+   רוחב המיכל = השוליים השמאליים של תיבת-התמונה (50%, עד 380px, ממורכזת). top:72px מתחת לכפתור הסגירה. */
+.item-page-brand-logo {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  width: calc((100% - min(50%, 380px)) / 2);
+  display: flex;
+  justify-content: center;
+  padding-inline: 8px;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.item-page-brand-logo .flat-card-brand-logo {
+  margin-top: 0;
+}
+
+.item-page-brand-logo .flat-card-brand-logo img {
+  height: 26px;
+  max-width: 100%;
+}
+
+@media (width <= 640px) {
+  /* במובייל התמונה ברוחב מלא ואין שוליים בצדדים: הלוגו ברצועה שמעל התמונה, בצד ימין (הצד הנגדי לכפתור הסגירה) */
+  .item-page-brand-logo {
+    top: 14px;
+    left: auto;
+    right: 16px;
+    width: auto;
+    padding-inline: 0;
+  }
+
+  .item-page-brand-logo .flat-card-brand-logo img {
+    height: 26px;
+  }
 }
 
 .flat-card-brand-logo img {
@@ -5027,15 +5064,6 @@ section.block {
   .flat-card-brand-logo img {
     height: 16px;
     max-width: 72px;
-  }
-
-  /* כרטיס עם תג "מומלץ" (53px) בכרטיס-מובייל-של-150px: הלוגו-הרחב (SAMSUNG) היה נוגע בתג - צמצום נקודתי רק לכרטיסים האלה, בלי-לשנות-את-גודל-התג-עצמו (נגישות, .72rem). */
-  .flat-card:has(.best-seller-badge) .flat-card-brand-logo {
-    padding: 4px 6px;
-  }
-
-  .flat-card:has(.best-seller-badge) .flat-card-brand-logo img {
-    max-width: 56px;
   }
 
   .flat-arrow {
@@ -11603,6 +11631,12 @@ function initMasterMount() {
     var src = BRAND_LOGOS[String(brand || "").toUpperCase()];
     return src ? '<span class="flat-card-brand-logo"><img src="' + src + '" alt=""></span>' : "";
   }
+  /* לוגו המותג בדף המוצר/חלון הדיל: על הרקע הלבן משמאל לתיבת-התמונה (ילד-ישיר של המיכל, כמו הסימנים בצד ימין).
+     alt ריק: שם המותג כבר מופיע כטקסט בדף (productPageBrand / bundleModalBrand). */
+  function brandLogoPageHtml(brand) {
+    var src = BRAND_LOGOS[String(brand || "").toUpperCase()];
+    return src ? '<div class="item-page-brand-logo"><span class="flat-card-brand-logo"><img src="' + src + '" alt=""></span></div>' : "";
+  }
 
   /* שורת "סה"כ באנדל": המחיר במשושה כהה (מסגרת כתומה) + כפתור "הוספה לעגלה" לידו */
   function bundleTotalRowHtml(b, total) {
@@ -11655,7 +11689,6 @@ function initMasterMount() {
        +aria-label תיאורי, באותו-דפוס-בדיוק שכבר-קיים-בקוד ל-.filter-group-title. */
     var __bundleCardLabel = ("פתיחת פרטי הבאנדל: " + b.brand + " " + b.model).replace(/"/g, "&quot;");
     return '<div class="flat-card" role="button" tabindex="0" aria-label="' + __bundleCardLabel + '" onclick="this.focus();window.__openBundleModal(\'' + b.id + '\')" onkeydown="if(event.key===&quot;Enter&quot;||event.key===&quot; &quot;){event.preventDefault();window.__openBundleModal(\'' + b.id + '\')}">' +
-      brandLogoChipHtml(b.brand) +
       bundleCardImporterHtml(b) +
       warrantyBadgeHtml("mm-badges-bundle") +
       '<div class="flat-card-thumb">' + bundleThumbHtml(b) + '</div>' +
@@ -11664,6 +11697,7 @@ function initMasterMount() {
       bundleSub +
       priceHtml +
       '<span class="flat-card-buy-tag">לרכישה</span>' +
+      brandLogoChipHtml(b.brand) +
     '</div>';
   }
   var bundleWheel = FlatCarousel(
@@ -11689,8 +11723,8 @@ function initMasterMount() {
       : bundleThumbHtml(b) + '<span class="media-hint">תמונות מוצר אמיתיות יתווספו בקרוב</span>';
     /* הסימנים הם ילד-ישיר של .bundle-modal (לא של תיבת-התמונה, שהיא overflow:hidden) - כמו בדף המוצר */
     var __bundleModalBox = document.getElementById("bundleModalMedia").parentNode;
-    __bundleModalBox.querySelectorAll(".mm-badges-bundle-page, .mm-chips-bundle-page").forEach(function (old) { old.remove(); });
-    document.getElementById("bundleModalMedia").insertAdjacentHTML("afterend", bundleModalBadgesHtml(b) + bundleModalChipsHtml(b));
+    __bundleModalBox.querySelectorAll(".mm-badges-bundle-page, .mm-chips-bundle-page, .item-page-brand-logo").forEach(function (old) { old.remove(); });
+    document.getElementById("bundleModalMedia").insertAdjacentHTML("afterend", bundleModalBadgesHtml(b) + bundleModalChipsHtml(b) + brandLogoPageHtml(b.brand));
     document.getElementById("bundleCtaPrice").textContent = fmt(bundleTotal) + " · כולל הובלה והתקנה";
     document.getElementById("bundleModalBrand").textContent = b.brand;
     document.getElementById("bundleModalTitle").textContent = b.name || b.model;
@@ -11879,7 +11913,6 @@ function initMasterMount() {
     var productSub = '<bdi>' + p.model + (p.sizeInches ? ' · ' + p.sizeInches + '"' : '') + '</bdi>';
     return '<div class="flat-card" role="button" tabindex="0" aria-label="' + __productCardLabel + '" onclick="this.focus();window.__openProductPage(\'' + p.id + '\')" onkeydown="if(event.key===&quot;Enter&quot;||event.key===&quot; &quot;){event.preventDefault();window.__openProductPage(\'' + p.id + '\')}">' +
       (isBestSeller(p) ? '<span class="best-seller-badge">מומלץ</span>' : '') +
-      brandLogoChipHtml(p.brand) +
       productBadgesHtml(p) +
       '<div class="flat-card-thumb">' + productThumbHtml(p) + '</div>' +
       productChipsHtml(p, false) +
@@ -11888,6 +11921,7 @@ function initMasterMount() {
       '<div class="flat-card-price">' + fmt(p.priceILS) + '</div>' +
       '<div class="flat-card-vat-note">' + (BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote() : "המחיר כולל מע\"מ") + '</div>' +
       '<span class="flat-card-buy-tag">לרכישה</span>' +
+      brandLogoChipHtml(p.brand) +
     '</div>';
   }
 
@@ -12188,8 +12222,8 @@ function initMasterMount() {
       ? catalogImgHtml(p.imageUrl, p.imageUrlWebp, String(p.title || (p.brand + " " + p.model)).replace(/"/g, "&quot;"))
       : productThumbHtml(p));
     /* סימני-מוצר: אחים של תיבת-התמונה (על הרקע הלבן של הדף), לא בתוכה - מסירים את הקודם בכל פתיחה */
-    __ppMedia.parentNode.querySelectorAll(".mm-badges-page, .mm-chips-product-page").forEach(function (old) { old.remove(); });
-    var __ppBadges = productBadgesHtml(p, true) + productChipsHtml(p, true);
+    __ppMedia.parentNode.querySelectorAll(".mm-badges-page, .mm-chips-product-page, .item-page-brand-logo").forEach(function (old) { old.remove(); });
+    var __ppBadges = productBadgesHtml(p, true) + productChipsHtml(p, true) + brandLogoPageHtml(p.brand);
     if (__ppBadges) __ppMedia.insertAdjacentHTML("afterend", __ppBadges);
     document.getElementById("productPageBrand").textContent = p.brand;
     document.getElementById("productPageTitle").textContent = p.title;
