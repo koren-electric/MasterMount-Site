@@ -7763,6 +7763,19 @@ fieldset.step-fieldset legend {
   border: 1px solid var(--premium-text);
   color: var(--premium-text);
 }
+/* 20.9.2026: סימון חזותי בכרטיס מתקן - V ירוק ל"מתאים לגודל שבחרת" ו-X אדום (בצד ימין של השורה) ל"לא מתאים".
+   צבעי סטטוס סמנטיים (ירוק/אדום כהים, ניגודיות מעל 5:1 על רקע הצ'יפ) - אין להם טוקן קיים באתר. */
+.mount-fit-icon {
+  font-weight: 900;
+}
+
+.mount-fit-icon.ok {
+  color: #17692f;
+}
+
+.mount-fit-icon.bad {
+  color: #c62828;
+}
 
 /* חותם האחריות: בדסקטופ העיגול (עיצוב הבעלים), במובייל צ'יפ טקסט קריא (14px) שאינו מכסה את התמונה */
 .mm-warranty-chip {
@@ -8841,8 +8854,8 @@ function initInstallation() {
               : '';
             /* חותם האחריות העגול (עיצוב הבעלים) נשאר בדסקטופ; במובייל הוא הוחלף בצ'יפ טקסט קריא בגודל 14px
                שאינו מכסה את התמונה (ר' CSS: .mm-warranty-chip). */
-            var sizeChipHtml = it.fit === "fit" ? '<div class="mount-size-chip fit">✓ מתאים לגודל שבחרת</div>'
-              : (it.fit === "nofit" ? '<div class="mount-size-chip nofit">לא מתאים לגודל שבחרת</div>' : '');
+            var sizeChipHtml = it.fit === "fit" ? '<div class="mount-size-chip fit"><span class="mount-fit-icon ok" aria-hidden="true">✓</span> מתאים לגודל שבחרת</div>'
+              : (it.fit === "nofit" ? '<div class="mount-size-chip nofit"><span class="mount-fit-icon bad" aria-hidden="true">✕</span> לא מתאים לגודל שבחרת</div>' : '');
             return '<div class="flat-card mount-select-card">' +
               '<div class="mm-badges"><span class="mm-badge mm-badge-warranty" role="img" aria-label="אחריות Master Mount על ההתקנה"><span aria-hidden="true" style="display:contents"><span class="mm-w-he">אחריות</span><span class="mm-w-sticker"><i></i></span><span class="mm-w-sub">על ההתקנה</span></span></span></div>' +
               '<span class="mm-warranty-chip">אחריות Master Mount על ההתקנה</span>' +
