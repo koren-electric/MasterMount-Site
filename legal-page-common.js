@@ -125,7 +125,7 @@
     });
 
     if (window.matchMedia) {
-      var mq = window.matchMedia("(min-width: 1100px)");
+      var mq = window.matchMedia("(min-width: 1280px)");
       var onChange = function () {
         if (mq.matches && isOpen()) setOpen(false, false);
       };
