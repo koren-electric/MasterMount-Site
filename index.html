@@ -12314,8 +12314,7 @@ function initMasterMount() {
     document.getElementById("productPagePrice").textContent = fmt(p.priceILS);
     var __priceNoteEl = document.getElementById("productPagePriceNote");
     if (__priceNoteEl) {
-      __priceNoteEl.textContent = "המחיר כולל מע\"מ והובלה עד הבית - אין תשלום נוסף ואין אפשרות איסוף עצמי." +
-        (IS_REGISTERED ? "" : " (הערכה, לא מחייב)");
+      __priceNoteEl.textContent = "המחיר כולל מע\"מ והובלה עד הבית - אין תשלום נוסף ואין אפשרות איסוף עצמי.";
     }
     document.getElementById("productPageWhatsapp").dataset.productId = p.id;
     document.getElementById("productPageQuickBuy").dataset.productId = p.id;

@@ -8016,11 +8016,6 @@ function initMovingDay() {
     if (link) { e.preventDefault(); e.stopPropagation(); }
   }, true);
 
-  // דגל מרכזי: האם העוסק כבר רשום ופעיל מסחרית (window.BUSINESS_CONFIG.isRegistered).
-  // בעמוד הזה התהליך כבר תמיד "בקשת הצעת מחיר" (אין עגלה/קניה) - הדגל רק מוסיף חיווי "הערכה"
-  // למחיר הרץ כש-false.
-  var IS_REGISTERED = !!(BUSINESS && BUSINESS.isRegistered);
-
   // "מה כלול ומה לא כלול" - רשימה עשירה מ-installation-exclusions.js (קובץ משותף, ניתן לעריכה).
   // תוספת יזומה (לא התבקשה במפורש בטקסט המקורי) - אותו סיכון-מחיר-דומה קיים גם בהעברת-דירה.
   if (window.renderExclusionsQa) window.renderExclusionsQa("movingQaBox", "מה כלול ומה לא כלול בשירות");
@@ -8466,7 +8461,7 @@ function initMovingDay() {
       }
       rows += '<div class="moving-summary-row"><span>אחסון עד תיאום ההתקנה</span><strong>' + storageValue + "</strong></div>";
     }
-    rows += '<div class="moving-summary-row total"><span>סה"כ משוער פירוק + אחסנה + התקנה חוזרת (2 ביקורים)</span><strong>' + fmt(price.total) + (price.isCustomQuote ? " + הצעת מחיר בהתאמה אישית" : "") + "</strong></div>";
+    rows += '<div class="moving-summary-row total"><span>סה"כ פירוק + אחסנה + התקנה חוזרת (2 ביקורים)</span><strong>' + fmt(price.total) + (price.isCustomQuote ? " + הצעת מחיר בהתאמה אישית" : "") + "</strong></div>";
     rows += '<div class="moving-summary-row"><span class="moving-vat-note">' + (BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote({ includeShipping: false }) : "המחיר כולל מע\"מ") + '</span></div>';
     var html = '<h3 class="step-question" id="stepQuestionHeading" tabindex="-1">סיכום הבקשה שלכם</h3><div class="moving-summary">' + rows + "</div>";
     if (MOVING.isMax) {
@@ -8534,7 +8529,7 @@ function initMovingDay() {
       lines.push(storageLine);
     }
     lines.push("");
-    lines.push("💰 סה\"כ משוער פירוק + אחסנה + התקנה חוזרת (2 ביקורים): " + fmt(price.total) + (price.isCustomQuote ? " + הצעת מחיר בהתאמה אישית" : ""));
+    lines.push("💰 סה\"כ פירוק + אחסנה + התקנה חוזרת (2 ביקורים): " + fmt(price.total) + (price.isCustomQuote ? " + הצעת מחיר בהתאמה אישית" : ""));
     if (MOVING.isMax) lines.push("(הסכום אינו כולל עלויות גודל/פירוק/הרכבה - ייקבעו לפי הפרטים המדויקים)");
     lines.push("");
     if (name) lines.push("שם: " + name);
@@ -8878,10 +8873,9 @@ function initMovingDay() {
     wireMovingStepEvents(step);
     if (step.type !== "movingSummary") updateMovingNextEnabled(step);
     var movingTotal = computeMovingPrice().total;
-    var movingPriceSuffix = IS_REGISTERED ? "" : " (הערכה, לא מחייב)";
-    document.getElementById("movingRunningPrice").textContent = fmt(movingTotal) + movingPriceSuffix;
+    document.getElementById("movingRunningPrice").textContent = fmt(movingTotal);
     var movingPriceAnnouncerEl = document.getElementById("movingRunningPriceAnnouncer");
-    if (movingPriceAnnouncerEl) movingPriceAnnouncerEl.textContent = "המחיר המעודכן: " + Number(movingTotal || 0).toLocaleString("he-IL") + " שקלים" + movingPriceSuffix;
+    if (movingPriceAnnouncerEl) movingPriceAnnouncerEl.textContent = "המחיר המעודכן: " + Number(movingTotal || 0).toLocaleString("he-IL") + " שקלים";
 
     /* SPA-nav (Reg.35/IS5568): title-דף + הכרזה + פוקוס-לכותרת-השלב - רק במעבר-שלב-אמיתי
        (movingStepIdx השתנה), לא בכל render-חוזר-של-אותו-שלב (כל בחירת-chip/תאריך קוראת

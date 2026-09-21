@@ -7680,7 +7680,7 @@ fieldset.step-fieldset legend {
   min-width: 44px;
 }
 
-/* מחיר רץ: הערות ליד המחיר (כולל הטלוויזיה / הערכה) קטנות וקריאות */
+/* מחיר רץ: הערות ליד המחיר (כולל הטלוויזיה) קטנות וקריאות */
 .running-price-note {
   font-family: Noto Sans Hebrew, sans-serif;
   font-size: .875rem;
@@ -8237,7 +8237,6 @@ function initInstallation() {
     var total = computePrice().total + (linkedProduct ? linkedProduct.priceILS : 0);
     var notes = [];
     if (linkedProduct) notes.push("כולל הטלוויזיה");
-    if (!IS_REGISTERED) notes.push("הערכה, לא מחייב");
     var suffix = notes.length ? " (" + notes.join(", ") + ")" : "";
     el.innerHTML = esc(fmt(total)) + (notes.length ? ' <small class="running-price-note">' + esc(notes.join(", ")) + "</small>" : "");
     var announcerEl = document.getElementById("runningPriceAnnouncer");
