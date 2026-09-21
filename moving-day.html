@@ -7864,24 +7864,22 @@ fieldset.step-fieldset legend {
   .topbar .topbar-inner,
   .tvguide-page .topbar .topbar-inner { max-width: 1240px; }
 }
-/* קישורים מהירים בסרגל העליון (21.9.2026): מוצגים רק כשההמבורגר פעיל (מתחת ל-1280px), כשורה שנייה
-   בתוך הסרגל הצמוד. שלושת הקישורים נשארים גם בתוך המגירה. מ-1280px כל התוויות כבר בסרגל עצמו. */
+/* קישורים מהירים בסרגל העליון (21.9.2026): מוצגים רק כשההמבורגר פעיל (מתחת ל-1280px). מ-920px
+   ומעלה הם יושבים באותה שורה עם הלוגו, ההמבורגר והחיפוש (ממורכזים ביניהם). מתחת ל-920px אין מקום
+   ולכן הם בשורה שנייה בתוך הסרגל. שלושת הקישורים נשארים גם בתוך המגירה. מ-1280px כל התוויות בסרגל. */
 .mm-quicklinks {
   display: none;
 }
 
 @media (width < 1280px) {
-  .mm-quicklinks {
+  .topbar .mm-quicklinks {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
     gap: 8px;
-    max-width: 1240px;
-    margin: 0 auto;
-    padding: 0 20px 8px;
   }
 
-  .mm-quicklinks a {
+  .topbar .mm-quicklinks a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -7900,28 +7898,51 @@ fieldset.step-fieldset legend {
     white-space: nowrap;
   }
 
-  .mm-quicklinks a:hover {
+  .topbar .mm-quicklinks a:hover {
     border-color: var(--accent, #2f5fce);
   }
 
-  .mm-quicklinks a:focus-visible {
+  .topbar .mm-quicklinks a:focus-visible {
     outline: 2px solid var(--accent, #2f5fce);
     outline-offset: 2px;
   }
+}
 
-  /* הסרגל הצמוד גבוה יותר בשורה שנייה: עוגנים (למשל #bundles) לא נכנסים מתחתיו */
+/* מתחת ל-920px: שורה שנייה בתוך הסרגל הצמוד. הסרגל גבוה יותר, אז העוגנים (#bundles) מקבלים רווח. */
+@media (width < 920px) {
+  .topbar .topbar-inner {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  .topbar .mm-quicklinks {
+    flex: 0 0 100%;
+    order: 10;
+    align-items: stretch;
+  }
+
   html {
     scroll-padding-top: 140px;
   }
 }
 
-@media (width <= 640px) {
-  .mm-quicklinks {
-    gap: 6px;
-    padding-inline: 12px;
+/* 920-1279px: באותה שורה עם החיפוש, ממורכזים בין ההמבורגר לחיפוש */
+@media (width >= 920px) and (width < 1280px) {
+  .topbar .menu-toggle-btn {
+    margin-inline-end: 0;
   }
 
-  .mm-quicklinks a {
+  .topbar .mm-quicklinks {
+    margin-inline: auto;
+  }
+}
+
+@media (width <= 640px) {
+  .topbar .mm-quicklinks {
+    gap: 6px;
+  }
+
+  .topbar .mm-quicklinks a {
     flex: 1 1 0;
     min-width: 0;
     padding: 4px 6px;
@@ -7940,7 +7961,8 @@ fieldset.step-fieldset legend {
     <a class="brandmark" href="index.html">
       <img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" loading="lazy" alt="Master Mount">
     </a>
-    <button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileDrawerNav"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="toplinks" aria-label="ניווט ראשי">
+    <button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileDrawerNav"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="mm-quicklinks" aria-label="קישורים מהירים"><a href="installation.html">הזמנת התקנה מותאמת</a><a href="moving-day.html">מעבר דירה</a><a href="index.html#bundles">דילים משתלמים</a></nav>
+    <nav class="toplinks" aria-label="ניווט ראשי">
       <a href="installation.html">הזמנת התקנה מותאמת</a>
       <a href="index.html#products">טלוויזיות למכירה</a><a href="compare.html">השוואת טלוויזיות</a>
       <a href="index.html#bundles">דילים משתלמים</a>
@@ -7954,7 +7976,6 @@ fieldset.step-fieldset legend {
       <span class="sr-only">(נפתח בוואטסאפ)</span>
     </a><a class="cart-badge-btn empty" id="cartBadgeBtn" href="index.html#cart" aria-label="עגלת הזמנות, ריקה"><span class="cart-disc"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7.5H6.2"></path></svg></span><span class="cart-count" id="cartBadgeCount">0</span></a><script>(function(){try{var c=JSON.parse(localStorage.getItem("mm_cart_v1")||"[]");var n=Array.isArray(c)?c.length:0;var b=document.getElementById("cartBadgeBtn");document.getElementById("cartBadgeCount").textContent=n;b.classList.toggle("empty",n===0);b.setAttribute("aria-label",n?"עגלת הזמנות, "+n+" פריטים":"עגלת הזמנות, ריקה");}catch(e){}})();</script>
   </div>
-  <nav class="mm-quicklinks" aria-label="קישורים מהירים"><a href="installation.html">הזמנת התקנה מותאמת</a><a href="moving-day.html">מעבר דירה</a><a href="index.html#bundles">דילים משתלמים</a></nav>
 </header><div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד" tabindex="-1"><button type="button" class="mobile-drawer-close" id="mobileDrawerCloseBtn" aria-label="סגירת תפריט"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><a href="installation.html">הזמנת התקנה מותאמת</a><a href="index.html#products">טלוויזיות למכירה</a><a href="compare.html">השוואת טלוויזיות</a><a href="index.html#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="index.html#how">איך זה עובד</a><a href="index.html#contact">יצירת קשר</a></nav><script>(function(){
   var btn=document.getElementById("mobileMenuToggleBtn");
   var backdrop=document.getElementById("mobileNavBackdrop");

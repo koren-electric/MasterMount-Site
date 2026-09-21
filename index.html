@@ -9086,24 +9086,22 @@ footer.site-foot a:hover {
   .topbar .topbar-inner,
   .tvguide-page .topbar .topbar-inner { max-width: 1240px; }
 }
-/* קישורים מהירים בסרגל העליון (21.9.2026): מוצגים רק כשההמבורגר פעיל (מתחת ל-1280px), כשורה שנייה
-   בתוך הסרגל הצמוד. שלושת הקישורים נשארים גם בתוך המגירה. מ-1280px כל התוויות כבר בסרגל עצמו. */
+/* קישורים מהירים בסרגל העליון (21.9.2026): מוצגים רק כשההמבורגר פעיל (מתחת ל-1280px). מ-920px
+   ומעלה הם יושבים באותה שורה עם הלוגו, ההמבורגר והחיפוש (ממורכזים ביניהם). מתחת ל-920px אין מקום
+   ולכן הם בשורה שנייה בתוך הסרגל. שלושת הקישורים נשארים גם בתוך המגירה. מ-1280px כל התוויות בסרגל. */
 .mm-quicklinks {
   display: none;
 }
 
 @media (width < 1280px) {
-  .mm-quicklinks {
+  .topbar .mm-quicklinks {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
     gap: 8px;
-    max-width: 1240px;
-    margin: 0 auto;
-    padding: 0 20px 8px;
   }
 
-  .mm-quicklinks a {
+  .topbar .mm-quicklinks a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -9122,28 +9120,51 @@ footer.site-foot a:hover {
     white-space: nowrap;
   }
 
-  .mm-quicklinks a:hover {
+  .topbar .mm-quicklinks a:hover {
     border-color: var(--accent, #2f5fce);
   }
 
-  .mm-quicklinks a:focus-visible {
+  .topbar .mm-quicklinks a:focus-visible {
     outline: 2px solid var(--accent, #2f5fce);
     outline-offset: 2px;
   }
+}
 
-  /* הסרגל הצמוד גבוה יותר בשורה שנייה: עוגנים (למשל #bundles) לא נכנסים מתחתיו */
+/* מתחת ל-920px: שורה שנייה בתוך הסרגל הצמוד. הסרגל גבוה יותר, אז העוגנים (#bundles) מקבלים רווח. */
+@media (width < 920px) {
+  .topbar .topbar-inner {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  .topbar .mm-quicklinks {
+    flex: 0 0 100%;
+    order: 10;
+    align-items: stretch;
+  }
+
   html {
     scroll-padding-top: 140px;
   }
 }
 
-@media (width <= 640px) {
-  .mm-quicklinks {
-    gap: 6px;
-    padding-inline: 12px;
+/* 920-1279px: באותה שורה עם החיפוש, ממורכזים בין ההמבורגר לחיפוש */
+@media (width >= 920px) and (width < 1280px) {
+  .topbar .menu-toggle-btn {
+    margin-inline-end: 0;
   }
 
-  .mm-quicklinks a {
+  .topbar .mm-quicklinks {
+    margin-inline: auto;
+  }
+}
+
+@media (width <= 640px) {
+  .topbar .mm-quicklinks {
+    gap: 6px;
+  }
+
+  .topbar .mm-quicklinks a {
     flex: 1 1 0;
     min-width: 0;
     padding: 4px 6px;
@@ -9155,8 +9176,8 @@ footer.site-foot a:hover {
 </style>
 </head>
 <body><a class="skip-link" href="#main-content">דלג לתוכן הראשי</a><div id="modalAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-<!--$--><header><div class="topbar"><div class="topbar-inner"><a class="brandmark" href="index.html"><img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" alt="Master Mount"/></a><button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileDrawerNav"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="toplinks"><a href="installation.html">הזמנת התקנה מותאמת</a><a href="#products">טלוויזיות למכירה</a><a href="compare.html">השוואת טלוויזיות</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="#how">איך זה עובד</a><a href="#contact">יצירת קשר</a></nav><button type="button" class="topsearch-toggle" id="topSearchOpenBtn" aria-label="פתיחת חיפוש" aria-expanded="false" aria-controls="topSearch"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.9"></circle><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"></path></svg></button><div class="topsearch" id="topSearch"><svg class="topsearch-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"></circle><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg><input type="search" id="topSearchInput" class="topsearch-input" placeholder="חיפוש באתר..." autoComplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="topSearchResults" aria-label="חיפוש באתר"/><div class="topsearch-results" id="topSearchResults" role="listbox" hidden=""></div></div><a class="top-cta" id="topWhatsappBtn" hidden rel="noopener" aria-label="פנייה בוואטסאפ (נפתח בכרטיסייה חדשה)"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.36 2 11.75c0 2.06.65 3.97 1.76 5.55L2.5 22l4.86-1.24a10.1 10.1 0 0 0 4.64 1.14c5.52 0 10-4.36 10-9.75S17.52 2 12 2Zm0 17.75c-1.5 0-2.9-.4-4.1-1.09l-.29-.17-2.88.73.77-2.8-.19-.29A7.66 7.66 0 0 1 4.15 11.75C4.15 7.46 7.66 4 12 4s7.85 3.46 7.85 7.75-3.51 7.75-7.85 7.75Zm4.3-5.8c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.17-.7-.62-1.18-1.39-1.31-1.63-.14-.24-.01-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28Z"></path></svg></a><button type="button" class="cart-badge-btn empty" id="cartBadgeBtn" aria-label="עגלת הזמנות, ריקה"><span class="cart-disc"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7.5H6.2"></path></svg></span><span class="cart-count" id="cartBadgeCount">0</span></button></div>  <nav class="mm-quicklinks" aria-label="קישורים מהירים"><a href="installation.html">הזמנת התקנה מותאמת</a><a href="moving-day.html">מעבר דירה</a><a href="#bundles">דילים משתלמים</a></nav>
-</div></header><div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד"><button type="button" class="mobile-drawer-close" id="mobileDrawerCloseBtn" aria-label="סגירת תפריט"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><a href="installation.html">הזמנת התקנה מותאמת</a><a href="#products">טלוויזיות למכירה</a><a href="compare.html">השוואת טלוויזיות</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="#how">איך זה עובד</a><a href="#contact">יצירת קשר</a></nav><script>(function(){
+<!--$--><header><div class="topbar"><div class="topbar-inner"><a class="brandmark" href="index.html"><img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" alt="Master Mount"/></a><button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileDrawerNav"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><nav class="mm-quicklinks" aria-label="קישורים מהירים"><a href="installation.html">הזמנת התקנה מותאמת</a><a href="moving-day.html">מעבר דירה</a><a href="#bundles">דילים משתלמים</a></nav>
+    <nav class="toplinks"><a href="installation.html">הזמנת התקנה מותאמת</a><a href="#products">טלוויזיות למכירה</a><a href="compare.html">השוואת טלוויזיות</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="#how">איך זה עובד</a><a href="#contact">יצירת קשר</a></nav><button type="button" class="topsearch-toggle" id="topSearchOpenBtn" aria-label="פתיחת חיפוש" aria-expanded="false" aria-controls="topSearch"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.9"></circle><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"></path></svg></button><div class="topsearch" id="topSearch"><svg class="topsearch-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"></circle><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg><input type="search" id="topSearchInput" class="topsearch-input" placeholder="חיפוש באתר..." autoComplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="topSearchResults" aria-label="חיפוש באתר"/><div class="topsearch-results" id="topSearchResults" role="listbox" hidden=""></div></div><a class="top-cta" id="topWhatsappBtn" hidden rel="noopener" aria-label="פנייה בוואטסאפ (נפתח בכרטיסייה חדשה)"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.36 2 11.75c0 2.06.65 3.97 1.76 5.55L2.5 22l4.86-1.24a10.1 10.1 0 0 0 4.64 1.14c5.52 0 10-4.36 10-9.75S17.52 2 12 2Zm0 17.75c-1.5 0-2.9-.4-4.1-1.09l-.29-.17-2.88.73.77-2.8-.19-.29A7.66 7.66 0 0 1 4.15 11.75C4.15 7.46 7.66 4 12 4s7.85 3.46 7.85 7.75-3.51 7.75-7.85 7.75Zm4.3-5.8c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.17-.7-.62-1.18-1.39-1.31-1.63-.14-.24-.01-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28Z"></path></svg></a><button type="button" class="cart-badge-btn empty" id="cartBadgeBtn" aria-label="עגלת הזמנות, ריקה"><span class="cart-disc"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7.5H6.2"></path></svg></span><span class="cart-count" id="cartBadgeCount">0</span></button></div></div></header><div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד"><button type="button" class="mobile-drawer-close" id="mobileDrawerCloseBtn" aria-label="סגירת תפריט"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><a href="installation.html">הזמנת התקנה מותאמת</a><a href="#products">טלוויזיות למכירה</a><a href="compare.html">השוואת טלוויזיות</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="#how">איך זה עובד</a><a href="#contact">יצירת קשר</a></nav><script>(function(){
 var btn=document.getElementById("mobileMenuToggleBtn");
 var backdrop=document.getElementById("mobileNavBackdrop");
 var nav=document.getElementById("mobileDrawerNav");
