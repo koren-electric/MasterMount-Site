@@ -176,6 +176,14 @@
     );
   }
 
+  /**
+   * משפט הסיום של הודעות וואטסאפ/מייל האוטומטיות (22.9.2026, לבקשת הבעלים): במקום נוסח זכות הביטול המלא
+   * (transactionCancellationNote, שנשאר למסמך ה-HTML) - הפניה קצרה לאתר, שם מפורטים הביטולים וכל פנייה אחרת.
+   */
+  function transactionInquiryNote() {
+    return "לפרטים בנוגע לביטול עסקה או לכל פנייה אחרת - ראו באתר.";
+  }
+
   /** גרסת טקסט-רגיל (לא HTML) של מסמך פרטי העסקה - להטמעה בתוך הודעת וואטסאפ/מייל */
   function transactionDocumentText(details) {
     details = details || {};
@@ -199,7 +207,7 @@
     if (hasVal(biz.legalName)) idText.push(biz.legalName);
     if (hasVal(biz.businessId)) idText.push(biz.businessId);
     lines.push(idText.length ? idText.join(" · ") : "פרטי העוסק יפורסמו עם פתיחת העסק");
-    lines.push(transactionCancellationNote());
+    lines.push(transactionInquiryNote());
     return lines.filter(Boolean).join("\n");
   }
 
