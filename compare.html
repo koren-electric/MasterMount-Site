@@ -74,7 +74,7 @@ a{color:var(--blue)}
 .table-wrap{border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:clip;box-shadow:var(--shadow)}
 .table-scroll{overflow:visible}
 table.cmp{width:100%;border-collapse:collapse;table-layout:fixed;min-width:0}
-table.cmp col.c-label{width:30%}
+table.cmp col.c-label{width:24%}
 table.cmp th,table.cmp td{padding:10px 12px;text-align:start;vertical-align:top;border-bottom:1px solid var(--border);overflow-wrap:anywhere}
 table.cmp thead th{background:var(--surface);vertical-align:bottom;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:2}
 table.cmp thead th.model{text-align:center;color:#fff;border-bottom:0;padding:10px 12px 12px}
@@ -83,6 +83,7 @@ table.cmp thead th.model.cb{background:var(--cb)}
 table.cmp .hero-row img{display:block;margin:0 auto 6px;max-width:100%;height:110px;object-fit:contain;background:#fff;border-radius:10px;padding:4px}
 table.cmp .hero-row th,table.cmp .hero-row td{vertical-align:middle;padding-block:14px}
 .model .m-tag{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.03em;background:#00000029;border:1px solid #ffffffb3;border-radius:999px;padding:0 10px;margin-bottom:4px}
+.model .m-win-tag{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:800;letter-spacing:.02em;background:#ffffff26;border:1px solid #ffffffb3;border-radius:999px;padding:0 10px;margin:0 0 4px;white-space:nowrap}
 .model .m-brand{font-size:.72rem;font-weight:800;letter-spacing:.06em;color:#fff}
 .model .m-name{font-weight:800;font-size:1rem;direction:ltr;unicode-bidi:plaintext}
 .model .m-size{font-size:.85rem;color:#fff}
@@ -108,14 +109,17 @@ table.cmp td.win{background:var(--win-bg)!important;color:var(--text-primary);fo
 .only-diff tr.row-same{display:none}
 table.cmp:not(.show-none) tr.row-none{display:none}
 .na{color:var(--text-secondary);font-style:normal}
-.mk{display:inline-flex;align-items:center;gap:3px;font-size:.7rem;font-weight:800;border-radius:999px;padding:1px 8px;margin-inline-start:6px;white-space:nowrap}
-.mk-diff{background:var(--blue);color:var(--blue-ink)}
-.mk-miss{background:#e9dfb7;color:#5a4a06}
-.mk-win{background:var(--win-text);color:#fff}
+/* נקודה קטנה ומעומעמת = "ערכים שונים", יושבת לפני שם המאפיין (לא עוד תגית-צבע בולטת אחרי הטקסט) */
+.diff-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--text-tertiary);vertical-align:middle;margin-inline-end:7px;flex:none}
 .chips{display:flex;flex-wrap:wrap;gap:4px}
 .chip{display:inline-flex;gap:4px;align-items:center;border:1px solid var(--border);border-radius:999px;padding:1px 9px;font-size:.8rem;background:var(--surface);font-weight:600}
 .chip.unique{border-color:var(--text-primary);border-width:2px;background:#fff;font-weight:800;color:var(--text-primary)}
 .tech-link{display:block;font-size:.76rem;margin-top:3px;font-weight:600}
+/* שורת-סיכום "יותר יתרונות" בתחתית הטבלה */
+table.cmp tfoot td{padding:12px;text-align:center;font-weight:800;background:var(--surface-2);border-top:2px solid var(--border)}
+table.cmp tfoot .cmp-win-name{font-weight:800}
+table.cmp tfoot tr.cmp-win-a .cmp-win-name{color:var(--ca)}
+table.cmp tfoot tr.cmp-win-b .cmp-win-name{color:var(--cb)}
 
 /* קריאה לפעולה */
 .cta{margin:26px 0 8px;padding:22px 18px;border-radius:var(--radius);background:var(--blue);color:var(--blue-ink);text-align:center}
@@ -136,10 +140,9 @@ footer.site-foot p{margin:6px 0 0;color:var(--text-tertiary);font-size:.85rem}
 @media (max-width:720px){
   .picker{grid-template-columns:1fr}
   table.cmp th,table.cmp td{padding:8px 8px;font-size:.84rem}
-  table.cmp col.c-label{width:28%}
+  table.cmp col.c-label{width:26%}
   table.cmp .hero-row img{height:72px}
   .model .m-name{font-size:.86rem}
-  .mk{margin-inline-start:0;margin-top:3px;display:flex;width:fit-content}
   .toplinks{margin-inline-start:0}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
@@ -314,22 +317,33 @@ footer.site-foot p{margin:6px 0 0;color:var(--text-tertiary);font-size:.85rem}
     else if ((f.type === "number" || f.type === "derived") && f.unit && /^[A-Za-z]+$/.test(f.unit)) html = '<span dir="ltr">' + esc(C.formatScalar(f, val)) + '</span>';
     else html = '<bdi>' + esc(C.formatScalar(f, val)) + '</bdi>';
     if (f.key === "panelTech") html += '<a class="tech-link" href="' + esc(guideHref(m)) + '">קראו במדריך הטכנולוגיות</a>';
-    if (res.winner === side) html += '<span class="mk mk-win"><span aria-hidden="true">✓</span> ' + (f.key === "priceILS" ? 'זול יותר' : 'עדיף' + (f.prefer === "low" ? ' (נמוך יותר)' : f.prefer === "high" ? ' (גבוה יותר)' : '')) + '</span>';
+    /* אין עוד תגית "עדיף/זול יותר" בתא - הערך הטוב יותר מסומן רק ברקע ירוק (td.win) + בשורת-הסיכום/סימון-הראש בסוף renderResult; שורה זו נשארת לנגישות בלבד */
+    if (res.winner === side) html += '<span class="sr-only"> (הערך הטוב יותר)</span>';
     return html;
   }
   function rowHtml(r, ma, mb) {
     var f = r.field, res = r.result, cls, mark = "";
     if (res.status === "missing-both") { cls = "row-none"; }
-    else if (res.status === "missing-one") { cls = "row-missing"; mark = '<span class="mk mk-miss">חסר נתון</span>'; }
-    else if (res.status === "diff") { cls = "row-diff"; mark = '<span class="mk mk-diff"><span aria-hidden="true">≠</span> שונה</span>'; }
+    else if (res.status === "missing-one") { cls = "row-missing"; }
+    else if (res.status === "diff") { cls = "row-diff"; mark = '<span class="diff-dot" aria-hidden="true"></span>'; }
     else cls = "row-same";
-    return '<tr class="' + cls + '"><th scope="row">' + esc(f.label) + mark + '</th>' +
+    return '<tr class="' + cls + '"><th scope="row">' + mark + esc(f.label) + (res.status === "diff" ? '<span class="sr-only"> (ערכים שונים)</span>' : "") + '</th>' +
       '<td class="ca' + (res.winner === "a" ? " win" : "") + '">' + cellHtml(f, r.a, res, "a", ma) + '</td>' +
       '<td class="cb' + (res.winner === "b" ? " win" : "") + '">' + cellHtml(f, r.b, res, "b", mb) + '</td></tr>';
   }
-  function headCell(m, k) {
-    return '<th scope="col" class="model c' + k + '" aria-labelledby="hb-' + k + ' hn-' + k + ' hs-' + k + '"><div class="m-tag">דגם ' + (k === "a" ? "א" : "ב") + '</div><div class="m-brand" id="hb-' + k + '">' + esc(m.brand) + '</div><div class="m-name" id="hn-' + k + '">' + esc(m.model) + '</div><div class="m-size" id="hs-' + k + '">' + esc(m.sizeInches) + ' אינץ\'</div>' +
+  function headCell(m, k, cmp) {
+    var isWin = cmp && cmp.winsA !== cmp.winsB && ((k === "a") === (cmp.winsA > cmp.winsB));
+    return '<th scope="col" class="model c' + k + '" aria-labelledby="hb-' + k + ' hn-' + k + ' hs-' + k + '"><div class="m-tag">דגם ' + (k === "a" ? "א" : "ב") + '</div>' +
+      (isWin ? '<div class="m-win-tag"><span aria-hidden="true">🏆</span> יותר יתרונות</div>' : '') +
+      '<div class="m-brand" id="hb-' + k + '">' + esc(m.brand) + '</div><div class="m-name" id="hn-' + k + '">' + esc(m.model) + '</div><div class="m-size" id="hs-' + k + '">' + esc(m.sizeInches) + ' אינץ\'</div>' +
       (m.priceILS ? '<div class="m-price">' + esc(fmtPrice(m.priceILS)) + '</div>' : '') + '</th>';
+  }
+  function winnerRowHtml(cmp, a, b) {
+    if (cmp.winsA === cmp.winsB) {
+      return '<tfoot><tr class="cmp-winner-row"><td colspan="3">מספר יתרונות זהה בין שני הדגמים (' + cmp.winsA + ' לכל צד)</td></tr></tfoot>';
+    }
+    var aWins = cmp.winsA > cmp.winsB, win = aWins ? a : b, n = aWins ? cmp.winsA : cmp.winsB;
+    return '<tfoot><tr class="cmp-winner-row cmp-win-' + (aWins ? "a" : "b") + '"><td colspan="3"><span aria-hidden="true">🏆</span> יותר יתרונות עבור טלוויזיה: <span class="cmp-win-name">' + esc(label(win)) + '</span> <span class="sr-only">(' + n + ' יתרונות)</span></td></tr></tfoot>';
   }
   function heroCell(m, k) {
     return '<td class="c' + k + '"><img src="' + esc(m.image) + '" alt="' + esc(label(m)) + '" loading="lazy"/><div class="hero-links"><a href="' + esc(installHref(m)) + '">מחשבון מחיר התקנה לדגם</a><a href="index.html#products">לקטלוג הטלוויזיות</a></div></td>';
@@ -361,13 +375,14 @@ footer.site-foot p{margin:6px 0 0;color:var(--text-tertiary);font-size:.85rem}
     var html = '<div class="summary"><p id="sumText">' + cmp.diffs + ' הבדלים מתוך ' + cmp.total + ' מאפיינים' + (cmp.missing ? ', ' + cmp.missing + ' מאפיינים עם נתון חסר באחד הדגמים' : '') + (noneCount ? ', ' + noneCount + ' מאפיינים ללא נתון בשני הדגמים' : '') + '</p>' +
       '<div class="opts"><label><input type="checkbox" id="onlyDiffCb"' + (onlyDiff ? " checked" : "") + '> הצגת מאפיינים שונים או חסרים בלבד</label>' +
       (noneCount ? '<label><input type="checkbox" id="showNoneCb"' + (showNone ? " checked" : "") + '> הצגת ' + noneCount + ' מאפיינים ללא נתון בשני הדגמים</label>' : '') + '</div></div>' +
-      '<p class="legend"><span><b aria-hidden="true">≠</b> ערכים שונים</span><span><b aria-hidden="true">✓</b> הערך הטוב יותר (רק במאפיינים מספריים)</span><span><b aria-hidden="true">＋</b> קיים רק בדגם הזה</span><span><b aria-hidden="true">•</b> קיים בשני הדגמים</span><span>"לא זמין" = אין נתון, ולא נחשב יתרון</span></p>' +
+      '<p class="legend"><span><span class="diff-dot" aria-hidden="true"></span> ערכים שונים</span><span>רקע ירוק בתא = הערך הטוב יותר באותו מאפיין</span><span><b aria-hidden="true">🏆</b> יותר יתרונות בדגם זה</span><span><b aria-hidden="true">＋</b> קיים רק בדגם הזה</span><span><b aria-hidden="true">•</b> קיים בשני הדגמים</span><span>"לא זמין" = אין נתון, ולא נחשב יתרון</span></p>' +
       '<div class="table-wrap"><div class="table-scroll"><table class="cmp' + (onlyDiff ? " only-diff" : "") + (showNone ? " show-none" : "") + '" id="cmpTable"><caption class="sr-only">השוואה בין ' + esc(label(a)) + ' לבין ' + esc(label(b)) + '</caption><colgroup><col class="c-label"><col><col></colgroup>' +
-      '<thead><tr><th scope="col"><span class="sr-only">מאפיין</span></th>' + headCell(a, "a") + headCell(b, "b") + '</tr></thead>' +
+      '<thead><tr><th scope="col"><span class="sr-only">מאפיין</span></th>' + headCell(a, "a", cmp) + headCell(b, "b", cmp) + '</tr></thead>' +
       '<tbody class="hero"><tr class="hero-row"><th scope="row"><span class="sr-only">תמונה וקישורים</span></th>' + heroCell(a, "a") + heroCell(b, "b") + '</tr></tbody>';
     cmp.groups.forEach(function (g) {
       html += '<tbody data-group="' + esc(g.group.key) + '"><tr class="grp"><th scope="colgroup" colspan="3">' + esc(g.group.label) + '</th></tr>' + g.rows.map(function (r) { return rowHtml(r, a, b); }).join("") + '</tbody>';
     });
+    html += winnerRowHtml(cmp, a, b);
     html += '</table></div></div><p class="notice" id="noRowsMsg" hidden>אין מאפיינים להצגה בסינון הנוכחי.</p><p class="legend" style="margin-top:10px">' + esc(BIZ.vatNote ? BIZ.vatNote({ includeShipping: true }) : "המחיר כולל מע\"מ והובלה עד הבית") + '. הנתונים לפי מפרט היצרן/היבואן; ייתכנו הבדלי גרסה בין דגמים.</p>' + ctaHtml(a, b);
     resultEl.innerHTML = html;
     applyOnlyDiff();

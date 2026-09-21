@@ -39,20 +39,26 @@ var MM_COMPARE_SCHEMA = {
     { key: "hdrFormats", group: "picture", label: "פורמטי HDR", type: "multi", options: ["HDR10", "HDR10+", "HLG", "Dolby Vision"], prefer: null },
     { key: "imageProcessor", group: "picture", label: "מעבד תמונה", type: "text", prefer: null },
     { key: "antiReflective", group: "picture", label: "ציפוי אנטי-השתקפות", type: "enum", options: ["אין", "ציפוי מקטין השתקפויות", "מסך מט"], prefer: null },
+    { key: "screenThicknessCm", group: "picture", label: "העובי הכולל של המסך", type: "number", unit: "ס\"מ", prefer: "low" },
+    { key: "viewingAngle", group: "picture", label: "זווית צפיה", type: "number", unit: "º", prefer: "high" },
 
     { key: "os", group: "smart", label: "מערכת הפעלה", type: "enum", options: ["Tizen", "webOS", "Google TV"], prefer: null },
     { key: "osUpdateYears", group: "smart", label: "שנות עדכוני תוכנה", type: "number", unit: "שנים", prefer: "high" },
-    { key: "israeliApps", group: "smart", label: "אפליקציות ישראליות", type: "multi", options: ["yes+", "פרטנר TV", "הוט", "סלקום TV", "NEXT TV"], prefer: null },
+    { key: "israeliApps", group: "smart", label: "אפליקציות ישראליות המובילות", type: "multi", options: ["yes+", "פרטנר TV", "הוט", "סלקום TV", "NEXT TV"], prefer: null },
+    { key: "builtInSmartSystem", group: "smart", label: "כולל מערכת חכמה מובנית", type: "enum", options: ["לא", "כן"], ordinal: true, prefer: "high" },
+    { key: "remoteRechargeable", group: "smart", label: "שלט רחוק נטען", type: "enum", options: ["לא", "כן"], ordinal: true, prefer: "high" },
 
     { key: "hdmi21Ports", group: "gaming", label: "כניסות HDMI 2.1", type: "number", unit: "כניסות", prefer: "high" },
-    { key: "gamingFeatures", group: "gaming", label: "תכונות גיימינג", type: "multi", options: ["VRR", "ALLM", "FreeSync", "G-Sync", "144Hz"], prefer: null },
+    { key: "gamingFeatures", group: "gaming", label: "תכונות גיימינג", type: "multi", options: ["VRR", "ALLM", "FreeSync", "G-Sync", "144Hz", "165Hz"], prefer: null },
 
     { key: "audioPowerW", group: "sound", label: "הספק שמע", type: "number", unit: "W", prefer: "high" },
-    { key: "soundTech", group: "sound", label: "טכנולוגיות סאונד", type: "multi", options: ["Dolby Atmos", "DTS:X", "DTS Virtual:X"], prefer: null },
+    { key: "soundTech", group: "sound", label: "טכנולוגיות סאונד", type: "multi", options: ["Dolby Atmos", "Dolby Digital Plus", "Dolby Digital", "Dolby Audio", "DTS:X", "DTS Virtual:X"], prefer: null },
+    { key: "hdmiArcEarc", group: "sound", label: "HDMI ARC / eARC", type: "enum", options: ["לא", "כן"], ordinal: true, prefer: "high" },
 
     { key: "bestFor", group: "fit", label: "מתאים במיוחד ל...", type: "multi", options: ["קולנוע בחדר חשוך", "חדר מואר", "גיימינג", "ספורט", "סטרימינג ותוכן כללי", "תקציב חסכוני"], prefer: null },
 
     { key: "modelYear", group: "commercial", label: "שנת דגם", type: "number", unit: "", prefer: "high", min: 2020, max: 2040, noGrouping: true },
+    { key: "powerConsumptionW", group: "commercial", label: "צריכת חשמל בעת פעולה", type: "number", unit: "W", prefer: "low" },
     { key: "priceILS", group: "commercial", label: "מחיר", type: "derived", unit: "₪", prefer: "low" }
   ]
 };
