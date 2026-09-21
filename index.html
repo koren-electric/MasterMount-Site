@@ -11986,6 +11986,7 @@ function initMasterMount() {
     { id: "micro_rgb", label: "Micro RGB", test: /Micro\s*-?\s*RGB/i },
     { id: "mini_led", label: "Mini-LED", test: /Mini\s*-?\s*LED/i },
     { id: "crystal", label: "Crystal-UHD", test: /Crystal/i },
+    { id: "uhd", label: "UHD", test: /\bUHD\b/i },
     { id: "led", label: "LED", test: /LED/i }
   ];
   var MINI_LED_VARIANTS = ["super_qd_mini_led", "qd_mini_led", "rgb_mini_led"];
@@ -11994,6 +11995,8 @@ function initMasterMount() {
     var tags = TECH_TAG_DEFS.filter(function (t) { return t.test.test(s); }).map(function (t) { return t.id; });
     /* Neo QLED/QNED/Mini-LED כבר מדויקות - לא מציגים גם "LED" הגנרי כשיש טכנולוגיה ספציפית */
     if (tags.length > 1 && tags.indexOf("led") >= 0) tags = tags.filter(function (id) { return id !== "led"; });
+    /* UHD (21.9.2026, נוסף בדשבורד) - תג כללי כמו LED: לא מוצג כשיש גם טכנולוגיה ספציפית (Crystal-UHD, NanoCell, QLED...), רק כשסוג המסך הוא UHD בלבד */
+    if (tags.indexOf("uhd") >= 0 && tags.some(function (id) { return id !== "uhd"; })) tags = tags.filter(function (id) { return id !== "uhd"; });
     if (tags.indexOf("neo_qled") >= 0) tags = tags.filter(function (id) { return id !== "qled"; });
     /* Micro RGB (20.9.2026, נוסף בדשבורד כתג נפרד) - מוצר Micro RGB מוצג רק תחת "Micro RGB", לא גם תחת "MRGB" */
     if (tags.indexOf("micro_rgb") >= 0) tags = tags.filter(function (id) { return id !== "mrgb"; });

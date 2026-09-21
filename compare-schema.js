@@ -39,7 +39,7 @@ var MM_COMPARE_SCHEMA = {
     { key: "hdrFormats", group: "picture", label: "פורמטי HDR", type: "multi", options: ["HDR10", "HDR10+", "HLG", "Dolby Vision"], prefer: null },
     { key: "imageProcessor", group: "picture", label: "מעבד תמונה", type: "text", prefer: null },
     { key: "antiReflective", group: "picture", label: "ציפוי אנטי-השתקפות", type: "enum", options: ["אין", "ציפוי מקטין השתקפויות", "מסך מט"], prefer: null },
-    { key: "screenThicknessCm", group: "picture", label: "העובי הכולל של המסך", type: "number", unit: "ס\"מ", prefer: "low" },
+    { key: "screenThicknessCm", group: "picture", label: "העובי הכולל של המסך (עובי המסך ללא מעמד)", type: "number", unit: "ס\"מ", prefer: "low" },
     { key: "viewingAngle", group: "picture", label: "זווית צפיה", type: "number", unit: "º", prefer: "high" },
 
     { key: "os", group: "smart", label: "מערכת הפעלה", type: "enum", options: ["Tizen", "webOS", "Google TV"], prefer: null },
