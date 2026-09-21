@@ -4815,6 +4815,56 @@ section.block {
   min-width: 160px;
 }
 
+/* כפתורי יצירת קשר בעגלה: אותו גובה, צורה (פיל), גופן ומשקל לשניהם, ואייקון SVG במקום אימוג'י.
+   מוגדר לפי ה-id כדי שלא יושפע מהמחלקות ש-JS מחליף לכפתור המייל (btn-accent <-> btn-ghost).
+   וואטסאפ הוא הכפתור הראשי (ממלא, רחב יותר); המייל משני (קו מתאר) באותם מידות וגופן. */
+.lead-ctas #cartWhatsappBtn, .lead-ctas #cartMailtoBtn {
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 60px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.lead-ctas #cartWhatsappBtn[hidden] {
+  display: none !important;
+}
+
+.lead-ctas #cartWhatsappBtn {
+  flex: 1.6 1 260px;
+}
+
+.lead-ctas #cartMailtoBtn {
+  flex: 1 1 150px;
+  white-space: nowrap;
+}
+
+.lead-ctas #cartMailtoBtn.btn-ghost {
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border);
+}
+
+.lead-ctas #cartMailtoBtn.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cart-cta-icon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
 .lead-fineprint {
   text-align: center;
   color: var(--text-tertiary);
@@ -8232,7 +8282,7 @@ footer.site-foot p, footer.site-foot a {
       </div>
       <div id="cartLeadFieldsBottom"></div>
       <p class="cart-lead-error" id="cartLeadError" role="alert" hidden></p>
-      <div class="lead-ctas"><a class="btn-accent btn-whatsapp" id="cartWhatsappBtn" hidden><span aria-hidden="true">📲 </span>שלחו את כל העגלה בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ)</span></a><a class="btn-accent cart-mail-primary" id="cartMailtoBtn" href="#"><span aria-hidden="true">✉️ </span>שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div>
+      <div class="lead-ctas"><a class="btn-accent btn-whatsapp" id="cartWhatsappBtn" hidden><svg class="cart-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.25-1.5A9.9 9.9 0 1 0 12.04 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.18-3.1.88.9-3.02-.2-.31A8.1 8.1 0 0 1 12.04 3.8zM8.6 7.6c-.2 0-.5.07-.75.35-.26.28-1 1-1 2.4s1.03 2.8 1.17 3c.15.2 2 3.2 4.9 4.36 2.4.95 2.9.76 3.4.72.52-.05 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34-.3-.15-1.7-.84-1.97-.94-.26-.1-.46-.14-.65.15-.2.3-.75.94-.92 1.13-.17.2-.34.22-.63.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.65-1.6-.9-2.18-.23-.56-.47-.48-.65-.49h-.55z"/></svg> שלחו את כל העגלה בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ)</span></a><a class="btn-accent cart-mail-primary" id="cartMailtoBtn" href="#"><svg class="cart-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg> שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div>
       <p class="cart-lead-sent" id="cartLeadSent" role="status" hidden></p>
       <p class="lead-fineprint">התשלום סוכם ומתבצע מחוץ לאתר.</p>
       <div id="cartPrivacyNotice"></div>
