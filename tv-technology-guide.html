@@ -7642,6 +7642,64 @@ footer.site-foot a:hover {
   display: none;
 }
 
+/* כפתורי "מוכנים לבחור?": אותה צורה, גובה, גופן ומשקל לשלושתם, ואייקוני SVG במקום אימוג'י/חץ טקסטואלי
+   (אותם אייקונים כמו בעגלה ובטופס הפנייה). המייל הוא הכפתור הראשי (ממלא), השאר משניים (קו מתאר) באותן מידות. */
+.tvguide-page .guide-cta .ctas > a {
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 10px 26px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-flex;
+}
+
+.tvguide-page .guide-cta .ctas > a[hidden] {
+  display: none !important;
+}
+
+.tvguide-page .guide-cta .ctas > a.btn-mail-primary {
+  border: 1.5px solid transparent;
+}
+
+.tvguide-page .guide-cta .ctas > a.btn-ghost {
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border);
+}
+
+.tvguide-page .guide-cta .ctas > a.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tvguide-page .guide-cta .ctas .cta-icon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
+
+@media (width <= 560px) {
+  .tvguide-page .guide-cta .ctas {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 420px;
+    margin-inline: auto;
+  }
+
+  .tvguide-page .guide-cta .ctas > a {
+    white-space: normal;
+  }
+}
+
 /* "התאמה מהירה" - התוצאה היא קישורים (כפתורים) לסעיפי הטכנולוגיה */
 .tvguide-page .quickpick-result-text .qp-lead {
   display: block;
@@ -8397,9 +8455,9 @@ if(window.matchMedia){var mq=window.matchMedia("(min-width:1280px)");var onMq=fu
     <h2>מוכנים לבחור?</h2>
     <p>עכשיו כשאתם מכירים את הטכנולוגיות - בואו נמצא לכם את הטלוויזיה והפתרון להתקנה שמתאימים בדיוק לחדר שלכם.</p>
     <div class="ctas">
-      <a class="btn-mail-primary" id="finalEmailBtn" href="mailto:mastermount@mastermount.co.il"><span aria-hidden="true">✉</span> שלחו לנו מייל</a>
-      <a class="btn-ghost" id="finalWhatsappBtn" hidden><span aria-hidden="true">📲</span> שאלו אותנו בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ)</span></a>
-      <a class="btn-ghost" href="index.html#products">לקטלוג הטלוויזיות <span aria-hidden="true">⟵</span></a>
+      <a class="btn-mail-primary" id="finalEmailBtn" href="mailto:mastermount@mastermount.co.il"><svg class="cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg> שלחו לנו מייל</a>
+      <a class="btn-ghost" id="finalWhatsappBtn" hidden><svg class="cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.25-1.5A9.9 9.9 0 1 0 12.04 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.18-3.1.88.9-3.02-.2-.31A8.1 8.1 0 0 1 12.04 3.8zM8.6 7.6c-.2 0-.5.07-.75.35-.26.28-1 1-1 2.4s1.03 2.8 1.17 3c.15.2 2 3.2 4.9 4.36 2.4.95 2.9.76 3.4.72.52-.05 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34-.3-.15-1.7-.84-1.97-.94-.26-.1-.46-.14-.65.15-.2.3-.75.94-.92 1.13-.17.2-.34.22-.63.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.65-1.6-.9-2.18-.23-.56-.47-.48-.65-.49h-.55z"/></svg> שאלו אותנו בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ)</span></a>
+      <a class="btn-ghost" href="index.html#products"><svg class="cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="12.5" rx="2.2"/><path d="M8.5 20.5h7M12 17v3.5"/></svg> לקטלוג הטלוויזיות</a>
     </div>
     <p style="font-size:.88rem;color:var(--text-tertiary);margin-top:18px;">כבר יודעים איזה מסך? בדקו כמה תעלה <a href="installation.html">התקנה על הקיר <span aria-hidden="true">←</span></a></p>
   </div>
