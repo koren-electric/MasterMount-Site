@@ -41,23 +41,23 @@ a{color:var(--blue)}
 .toplinks a:hover{color:var(--blue);text-decoration:underline}
 
 /* כותרת העמוד */
-.page-head{padding:28px 0 8px}
+.page-head{padding:14px 0 6px}
 .page-head .eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.04em;color:var(--premium-text)}
-.page-head h1{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:4px 0 6px;line-height:1.2}
-.page-head p{margin:0;color:var(--text-secondary);max-width:62ch}
+.page-head h1{font-size:clamp(1.3rem,3.6vw,1.9rem);margin:2px 0 4px;line-height:1.15}
+.page-head p{margin:0;color:var(--text-secondary);max-width:62ch;font-size:.92rem}
 
 /* בחירת דגמים */
-.picker{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 8px}
-.slot{--slot:var(--ca);--slot-tint:var(--ca-tint);border:2px solid var(--slot);border-radius:var(--radius);background:var(--slot-tint);padding:12px 14px 14px;margin:0;min-width:0}
+.picker{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 6px}
+.slot{--slot:var(--ca);--slot-tint:var(--ca-tint);border:2px solid var(--slot);border-radius:var(--radius);background:var(--slot-tint);padding:10px 12px 10px;margin:0;min-width:0}
 .slot[data-slot=b]{--slot:var(--cb);--slot-tint:var(--cb-tint)}
-.slot legend{font-weight:800;padding:3px 14px;font-size:.95rem;background:var(--slot);color:#fff;border-radius:999px}
-.slot-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.slot label{display:block;font-size:.78rem;color:var(--text-secondary);margin-bottom:3px;font-weight:600}
-.slot select{width:100%;min-height:46px;padding:9px 10px;border:2px solid var(--slot);border-radius:9px;background:#fff;color:var(--text-primary);font:inherit;font-size:.95rem;font-weight:600;min-width:0;cursor:pointer}
+.slot legend{font-weight:800;padding:2px 12px;font-size:.85rem;background:var(--slot);color:#fff;border-radius:999px}
+.slot-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.slot label{display:block;font-size:.78rem;color:var(--text-secondary);margin-bottom:2px;font-weight:600}
+.slot select{width:100%;min-height:44px;padding:7px 10px;border:2px solid var(--slot);border-radius:9px;background:#fff;color:var(--text-primary);font:inherit;font-size:.95rem;font-weight:600;min-width:0;cursor:pointer}
 .slot select:hover{box-shadow:0 0 0 3px color-mix(in srgb,var(--slot) 22%,transparent)}
 .slot .f-model{font-weight:700}
 .slot .model-field{grid-column:1/-1}
-.slot-foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:8px}
+.slot-foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;gap:8px}
 .slot-picked{font-size:.88rem;font-weight:700;color:var(--slot);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .btn-link{background:none;border:none;color:var(--premium-text);font:inherit;font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:underline;padding:8px 10px;min-height:44px}
 .notice{margin:10px 0;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:.92rem}
@@ -65,12 +65,12 @@ a{color:var(--blue)}
 .notice.error a{color:#7a1f14;font-weight:700}
 
 /* טבלת השוואה */
-.summary{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:18px 0 8px}
-.summary p{margin:0;font-weight:700}
-.summary .opts{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:.88rem}
-.summary label{display:inline-flex;align-items:center;gap:8px;cursor:pointer;min-height:44px;padding:0 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
-.summary input{width:22px;height:22px;accent-color:var(--orange)}
-.legend{font-size:.8rem;color:var(--text-secondary);margin:0 0 10px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.summary{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:8px 0 6px}
+.summary p{margin:0;font-weight:700;font-size:.92rem}
+.summary .opts{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:.85rem}
+.summary label{display:inline-flex;align-items:center;gap:8px;cursor:pointer;min-height:40px;padding:0 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.summary input{width:20px;height:20px;accent-color:var(--orange)}
+.legend{font-size:.76rem;color:var(--text-secondary);margin:0 0 6px;display:flex;flex-wrap:wrap;gap:4px 14px}
 .table-wrap{border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:clip;box-shadow:var(--shadow)}
 .table-scroll{overflow:visible}
 table.cmp{width:100%;border-collapse:collapse;table-layout:fixed;min-width:0}
