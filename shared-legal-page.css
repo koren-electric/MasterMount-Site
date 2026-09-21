@@ -557,3 +557,70 @@ footer.site-foot .foot-links a:hover {
 @media (min-width: 1280px) {
   .topbar-inner { max-width: 1240px; }
 }
+
+/* קישורים מהירים בסרגל העליון (21.9.2026): מוצגים רק כשההמבורגר פעיל (מתחת ל-1280px), כשורה שנייה
+   בתוך הסרגל הצמוד. שלושת הקישורים נשארים גם בתוך המגירה. מ-1280px כל התוויות כבר בסרגל עצמו. */
+.mm-quicklinks {
+  display: none;
+}
+
+@media (width < 1280px) {
+  .mm-quicklinks {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 8px;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 20px 8px;
+  }
+
+  .mm-quicklinks a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 40px;
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--text-primary);
+    font-size: .88rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .mm-quicklinks a:hover {
+    border-color: var(--accent, #2f5fce);
+  }
+
+  .mm-quicklinks a:focus-visible {
+    outline: 2px solid var(--accent, #2f5fce);
+    outline-offset: 2px;
+  }
+
+  /* הסרגל הצמוד גבוה יותר בשורה שנייה: עוגנים (למשל #bundles) לא נכנסים מתחתיו */
+  html {
+    scroll-padding-top: 140px;
+  }
+}
+
+@media (width <= 640px) {
+  .mm-quicklinks {
+    gap: 6px;
+    padding-inline: 12px;
+  }
+
+  .mm-quicklinks a {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 4px 6px;
+    font-size: .8rem;
+    white-space: normal;
+    text-wrap: balance;
+  }
+}
