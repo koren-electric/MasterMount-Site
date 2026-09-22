@@ -16,6 +16,14 @@
     businessId: "", // ע.מ. / ח.פ.
     businessType: "", // עוסק מורשה / חברה בע"מ וכו'
 
+    // זהות המפעיל/הפלטפורמה (מודל-פלטפורמה, 22.9.2026: Master Mount מספקת משלוח+התקנה+שירות-
+    // לקוחות; הטלוויזיה עצמה נמכרת ע"י מוכר-חיצוני, ר' קולקציית sellers ב-admin-crm ו-SellerDisclosure)
+    operatorName: "ברק אליוב",
+    brandName: "Master Mount",
+    operatorBusinessId: "", // ע.מ./ח.פ. של Master Mount עצמה - לא ידוע עדיין, ייתמלא בפתיחת עוסק
+    deliveryDays: 7,
+    deliveryProvider: "Master Mount",
+
     // כתובת ופרטי קשר
     address: "",
     phone: "+972-52-660-9971",

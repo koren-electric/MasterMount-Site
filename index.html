@@ -9127,6 +9127,15 @@ footer.site-foot a:hover {
   overflow-wrap: anywhere;
 }
 
+/* 23.9.2026: SellerDisclosure (מודל-פלטפורמה, שלב 2) - טקסט קטן ומעומעם כמו product-page-price-note, לא תג/תמונה */
+.seller-disclosure {
+  color: var(--text-tertiary);
+  font-size: .82rem;
+  line-height: 1.5;
+  margin: 10px 0;
+  overflow-wrap: anywhere;
+}
+
 /* 20.9.2026: צבע אחיד לכפתור הוואטסאפ העליון בכל העמודים (כמו במדריך הטכנולוגיות) - #128C7E: לבן עליו 4.4:1 (ה-#25d366 הישן: 2:1, נכשל בניגודיות רכיב) */
 .top-cta {
   background: #128C7E;
@@ -9263,8 +9272,10 @@ document.addEventListener("keydown",function(e){
 var mq=window.matchMedia?window.matchMedia("(min-width: 1280px)"):null;
 function onMq(ev){if(ev.matches&&isOpen())setOpen(false,false);}
 if(mq){if(mq.addEventListener)mq.addEventListener("change",onMq);else if(mq.addListener)mq.addListener(onMq);}
-})();</script><main id="main-content" tabindex="-1"><div class="hero"><div class="hero-inner hero-grid"><div class="hero-copy"><span class="hero-eyebrow"><span id="heroWarrantyLine">התקנת טלוויזיה ביתית, מקצועית וברמת גימור גבוהה.</span></span><div class="hero-title-bubble"><h1>התקנה מקצועית. מחיר מדויק ושקוף. <em>כל הפרטים גלויים מראש - בלי תוספות בשטח</em></h1></div><p class="lede">בחרו את גודל המסך, סוג המתקן ומיקום ההתקנה - וקבלו הצעת מחיר שקופה וסופית במקום. בלי הפתעות ובלי תוספות ביום ההתקנה.</p></div><div class="hero-visual" aria-hidden="true"><div class="hero-logo-mark"><img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount" loading="lazy" decoding="async"/><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount" loading="lazy" decoding="async"/></div></div></div><div class="hero-carousel" id="heroCarousel"><div class="hero-carousel-stage"><div class="hero-carousel-track" id="heroCarouselTrack"><a class="process-banner install hero-slide active" href="installation.html" data-slide="0"><img class="process-banner-strip-img" src="assets/site/hero-banner-install.jpg" alt="טלוויזיה מותקנת על מתקן תקרה בפטיו מעוצב עם נוף לגינה"><span class="process-banner-text"><span class="process-banner-eyebrow">שלב 1</span><h2>הגדירו את ההתקנה שלכם</h2><p>כל שאלה ממקדת את הצרכים שלך - המחיר מתעדכן בזמן אמת לצד כל בחירה.</p></span></a><a class="process-banner moving hero-slide" href="moving-day.html" data-slide="1"><img class="process-banner-strip-img" src="assets/site/hero-banner-moving.jpg" alt="זוג עם קופסאות על הראש מחזיק טלוויזיה, לקראת מעבר דירה" loading="lazy"><span class="process-banner-text"><span class="process-banner-eyebrow">שירות מיוחד</span><h2>עוברים דירה עם MASTER MOUNT</h2><p>עוברים דירה ולא יודעים איך להעביר את הטלוויזיות? אנחנו כאן בכדי להעניק לכם את השירות האחראי, הבטוח והמקצועי ביותר.</p></span></a><a class="process-banner bundle hero-slide" href="#bundles" data-slide="2"><img class="process-banner-strip-img" src="assets/site/hero-banner-bundle.jpg" alt="חדר תצוגה עם מגוון טלוויזיות מותקנות בפתרונות התקנה שונים" loading="lazy"><span class="process-banner-text"><span class="process-banner-eyebrow">פתרון מקצה לקצה</span><h2>טלוויזיה והתקנה מקצועית בחבילה אחת</h2><p>רוכשים חבילת פרימיום שכוללת טלוויזיה והתקנה מקצועית במועד הקרוב ביותר - הכל בחבילה אחת משתלמת</p></span></a></div><button type="button" class="hero-carousel-arrow hero-carousel-prev" id="heroCarouselPrev" aria-label="השלייד הקודם">&#8249;</button><button type="button" class="hero-carousel-arrow hero-carousel-next" id="heroCarouselNext" aria-label="השלייד הבא">&#8250;</button></div><div class="hero-carousel-dots" id="heroCarouselDots"><button type="button" class="hero-carousel-dot active" data-slide="0" aria-label="שלייד 1 מתוך 3"></button><button type="button" class="hero-carousel-dot" data-slide="1" aria-label="שלייד 2 מתוך 3"></button><button type="button" class="hero-carousel-dot" data-slide="2" aria-label="שלייד 3 מתוך 3"></button></div><button type="button" class="hero-carousel-playpause" id="heroCarouselPlayPause" aria-pressed="false"><svg id="heroCarouselPlayPauseIcon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"></rect><rect x="14" y="5" width="4" height="14"></rect></svg><span class="sr-only" id="heroCarouselPlayPauseLabel">השהיית החלפת השקופיות האוטומטית</span></button></div></div><section class="brand-banner"><img src="assets/site/brand-banner-index.jpg" alt="חמש טלוויזיות בגדלים שונים (75, 55, 65, 85 ו-43 אינץ&#x27;) על סוגי מתקנים שונים - עמוד רצפתי לתקרה, תלייה מהתקרה, זרוע קיר מתכווננת, התקנה שטוחה על קיר ועמידה רצפתית, בחדר תצוגה מודרני"/></section><section class="block" id="bundles"><div class="wrap"><div class="block-head"><span class="bundles-eyebrow">דילים משתלמים - DEALS</span><h2 class="bundles-title-en">טלוויזיה + התקנה במחיר מנצח</h2><p class="bundles-lede">הדילים הכי שווים למסכים הכי המובילים כולל התקנה מקצועית בלחיצה אחת.</p></div><div class="flat-outer"><button type="button" class="flat-arrow" id="bundleRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="bundleViewport"><div class="flat-track" id="bundleTrack"></div></div><button type="button" class="flat-arrow" id="bundleLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div><p class="flat-swipe-hint" aria-hidden="true">החליקו לצדדים לעוד דילים</p><p class="placeholder-note" id="bundlePlaceholderNote"></p></div></section><section class="block" id="bestSellersSection"><div class="wrap"><div class="block-head"><span class="block-eyebrow">הנבחרים של הלקוחות</span><h2>מומלצים</h2><span class="section-tag-en">POPULAR</span><p>הדגמים המבוקשים ביותר אצלנו - זמינים עם הובלה עד הבית.</p></div><div class="flat-outer"><button type="button" class="flat-arrow" id="bestSellersRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="bestSellersViewport"><div class="flat-track" id="bestSellersTrack"></div></div><button type="button" class="flat-arrow" id="bestSellersLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div><p class="flat-swipe-hint" aria-hidden="true">החליקו לצדדים לעוד דגמים</p></div></section><section class="block" id="products"><div class="wrap"><div class="block-head"><h2>טלוויזיות</h2><span class="section-tag-en">TV Screen</span><p>המשך לבחירת התקנה מותאמת אישית</p></div><div class="product-layout"><div class="product-filters"><div class="filter-group" id="sizeFilterGroup"><div class="filter-group-title"><span>גודל מסך</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="size-filter-grid" id="productSizeFilter"></div></div><div class="filter-group" id="brandFilterGroup"><div class="filter-group-title"><span>מותג</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productBrandFilter" role="group" aria-label="סינון לפי מותג"></div></div><div class="filter-group" id="techFilterGroup"><div class="filter-group-title"><span>טכנולוגיות</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productTechFilter" role="group" aria-label="סינון לפי טכנולוגיה"></div></div><div class="filter-group" id="bestFilterGroup"><div class="filter-group-title"><span>מומלצים</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productBestSellerFilter" role="group" aria-label="סינון נמכרים ביותר"></div></div><div class="active-filters-bar" id="activeFiltersBar" hidden=""></div><div class="product-filter-count" id="productFilterCount" aria-live="polite" aria-atomic="true"></div></div><div class="product-carousel-col"><div class="flat-outer"><button type="button" class="flat-arrow" id="productRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="productViewport"><div class="flat-track" id="productTrack"></div></div><button type="button" class="flat-arrow" id="productLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div><p class="flat-swipe-hint" aria-hidden="true">החליקו לצדדים לעוד דגמים</p><p class="placeholder-note" id="productSizeEmptyNote" hidden="">אין טלוויזיות שמתאימות לסינון שבחרתם - נסו שילוב אחר או לחצו &quot;נקה הכל&quot;.</p></div></div><p class="install-only-optout"><button type="button" class="btn-ghost" id="installOnlyBtn">רק צריך התקנה, בלי טלוויזיה? לחצו כאן</button></p></div></section><section class="block" id="how"><div class="wrap"><div class="block-head"><span class="block-eyebrow">איך זה עובד</span><h2>שקיפות מלאה, מהתחלה ועד הסוף</h2></div><div class="trust-grid"><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-nut.png" alt="" width="39" height="34"/><h3>חוויית רכישה פשוטה</h3><p class="subtitle">חיסכון חכם בעלויות, בלי לוותר על האיכות</p><p>המודל העסקי היעיל שלנו, מאפשר לנו להציע לכם מחירים הוגנים ותחרותיים מבלי להתפשר על איכות המוצרים או רמת השירות האישי. אתם נהנים מהמחיר הטוב ביותר, עם שירות מקיף שמלווה אתכם לכל אורך הדרך.</p></div><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-icon-service.svg" alt="" width="39" height="34"/><h3>שירות מקצועי</h3><p class="subtitle">הכל תחת קורת גג אחת - מהייעוץ ועד ההתקנה</p><p>אנחנו הכתובת היחידה שלכם - מהייעוץ, דרך הרכישה ועד ההתקנה. אנחנו כאן לכל שאלה, לפני ותוך כדי, ומשתדלים לחזור אליכם במהירות בכל מקרה שתצטרכו אותנו.</p></div><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-icon-price.svg" alt="" width="39" height="34"/><h3>תמחור שקוף</h3><p class="subtitle">מחיר הוגן, ללא הפתעות</p><p>אנו מאמינים בשקיפות מחירים מלאה. בקטלוג המקיף שלנו תמצאו פירוט מלא ומדויק של כל עלויות ההתקנה, מגוון הגדלים וסוגי המתקנים השונים. אין צורך בניחושים או בשיחות מקדימות - אתם רואים בדיוק את העלות המדויקת, לפני כל התחייבות.</p></div></div></div></section><section class="block" id="contact"><div class="wrap" style="max-width:620px"><div class="block-head"><span class="block-eyebrow">מוכנים להתקדם? רוצים לסגור התקנה?</span><h2>לייעוץ מותאם אישית ותיאום התקנה</h2><p>השאירו טלפון ונחזור אליכם עם הצעת מחיר מסודרת ותיאום מהיר.</p></div><div class="lead-form"><label for="leadName" class="sr-only">שם מלא (לא חובה)</label><input type="text" id="leadName" name="name" autocomplete="name" placeholder="שם מלא"/><label for="leadPhone" class="sr-only">טלפון (חובה)</label><input type="tel" id="leadPhone" name="phone" inputmode="tel" autocomplete="tel" placeholder="טלפון (חובה)" dir="ltr" style="text-align:right" aria-required="true" aria-describedby="leadPhoneError"/><div class="field-error" id="leadPhoneError" role="alert" hidden></div><div class="lead-ctas"><a class="btn-accent btn-whatsapp lead-cta-main" id="finalWhatsappBtn" hidden rel="noopener"><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.25-1.5A9.9 9.9 0 1 0 12.04 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.18-3.1.88.9-3.02-.2-.31A8.1 8.1 0 0 1 12.04 3.8zM8.6 7.6c-.2 0-.5.07-.75.35-.26.28-1 1-1 2.4s1.03 2.8 1.17 3c.15.2 2 3.2 4.9 4.36 2.4.95 2.9.76 3.4.72.52-.05 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34-.3-.15-1.7-.84-1.97-.94-.26-.1-.46-.14-.65.15-.2.3-.75.94-.92 1.13-.17.2-.34.22-.63.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.65-1.6-.9-2.18-.23-.56-.47-.48-.65-.49h-.55z"/></svg> שלחו בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-accent btn-mail-primary lead-cta-main" id="finalMailtoBtn" href="#"><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg> שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a><a class="btn-ghost lead-cta-sub" id="finalCallBtn" hidden><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3.5l1.7 4.3-2.2 1.4a11 11 0 0 0 6.3 6.3l1.4-2.2L20 15.5V19a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg> התקשרו אלינו<span class="sr-only"> (מבצע שיחת טלפון)</span></a></div><p class="lead-fineprint"><svg class="lead-fineprint-check" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>התשלום יבוצע לאחר אישור הלקוח למתן קבלת השירות שסוכם.</span></p><p class="form-status" id="leadFormStatus" role="status" aria-live="polite" hidden></p><div id="finalPrivacyNotice"></div></div></div></section></main><footer class="site-foot"><div class="wrap foot-grid"><div><div class="brandmark"><img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" alt="Master Mount"/></div><p>התקנה מדויקת בשבילך.</p></div><div class="foot-links"><a href="#products">טלוויזיות למכירה</a><a href="compare.html">השוואת טלוויזיות</a><a href="installation.html">מחשבון מחיר התקנה</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a id="footCallLink" hidden>התקשרו</a><a id="footEmailLink" href="mailto:mastermount@mastermount.co.il">mastermount@mastermount.co.il</a></div><div class="foot-links"><a href="./terms-of-use.html">תנאי שימוש</a><a href="./privacy-policy.html">מדיניות פרטיות</a><a href="./cancellation-policy.html">מדיניות ביטולים והחזרות</a><a href="./delivery-terms.html">תנאי הובלה ותוספות</a><a href="./accessibility-statement.html">הצהרת נגישות</a><a href="./weee-returns.html">החזרת ציוד חשמלי ואלקטרוני וסוללות</a><a href="#" id="cookieSettingsLink">הגדרות עוגיות</a></div></div></footer><div class="bundle-modal-overlay" id="bundleModalOverlay" hidden=""><div class="bundle-modal" role="dialog" aria-modal="true" aria-labelledby="bundleModalTitle"><button class="bundle-modal-close" id="bundleModalCloseBtn" type="button" aria-label="סגירה">✕</button><div class="bundle-modal-media" id="bundleModalMedia"></div><div class="bundle-modal-body"><div class="bundle-modal-brand" id="bundleModalBrand"></div><h3 class="bundle-modal-title" id="bundleModalTitle" tabindex="-1"></h3><div class="bundle-modal-screentype" id="bundleModalScreenType"></div><div class="bundle-modal-description" id="bundleModalDescription" hidden=""></div><div class="bundle-modal-included-wrap" id="bundleModalIncludedWrap" hidden=""><div class="bundle-modal-subheading">מה כלול בבאנדל</div><ul class="bundle-modal-features" id="bundleModalIncluded"></ul></div><div class="bundle-modal-mount" id="bundleModalMount" hidden=""></div><ul class="bundle-modal-features" id="bundleModalFeatures"></ul><div class="bundle-modal-priceblock" id="bundleModalPriceBlock"></div><div id="bundleModalLegalDisclosure"></div><div class="lead-ctas bundle-modal-ctas"><div class="bundle-cta-price" id="bundleCtaPrice"></div><a class="btn-accent btn-whatsapp" id="bundleModalWhatsapp" hidden rel="noopener"><span aria-hidden="true">📲</span> בקשו הצעה לבאנדל הזה<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-accent btn-mail-primary" id="bundleModalMailto" href="#"><span aria-hidden="true">✉️</span> בקשו הצעה במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div><div id="bundlePrivacyNotice"></div></div></div></div><div class="product-page-overlay" id="productPageOverlay" hidden=""><div class="product-page" role="dialog" aria-modal="true" aria-labelledby="productPageTitle"><button class="product-page-close" id="productPageCloseBtn" type="button" aria-label="סגירה">✕</button><div class="product-page-media" id="productPageMedia"></div><div class="product-page-body"><div class="product-page-brand" id="productPageBrand"></div><h3 class="product-page-title" id="productPageTitle" tabindex="-1"></h3><div class="product-page-meta" id="productPageMeta"></div><div class="product-page-price-row"><span class="product-page-price" id="productPagePrice"></span><button type="button" class="btn-add-cart" id="productPageAddToCart">הוספה לעגלה</button></div><div class="product-page-price-note" id="productPagePriceNote">המחיר כולל מע"מ והובלה עד הבית - אין תשלום נוסף ואין אפשרות איסוף עצמי.</div><div class="product-page-ctas"><button type="button" class="btn-accent" id="productPageWhatsapp">המשיכו להתקנה</button><button type="button" class="btn-ghost" id="productPageQuickBuy">קניה מהירה ללא התקנה</button><a class="btn-ghost" id="productPageCall" hidden><span aria-hidden="true">📞</span> התקשרו אלינו<span class="sr-only"> (מבצע שיחת טלפון)</span></a></div><button class="product-features-toggle" id="productFeaturesToggle" type="button" aria-expanded="false" aria-controls="productFeaturesBody"><span>מאפיינים</span><span class="arrow" aria-hidden="true">▾</span></button><div class="product-features-body" id="productFeaturesBody"><div class="product-features-inner" id="productFeaturesInner"></div></div><div class="product-page-warranty" id="productPageWarranty"></div><div id="productPageSchemaFields" style="font-size:.8rem;color:var(--text-tertiary,#7a7a7a);margin-top:4px;"></div><div id="productPageLegalDisclosure"></div></div></div></div><div class="cart-panel-overlay" id="cartPanelOverlay" hidden=""><div class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cartPanelTitle"><button class="product-page-close" id="cartPanelCloseBtn" type="button" aria-label="סגירה">✕</button><h3 id="cartPanelTitle" tabindex="-1">העגלה שלכם</h3><div id="cartPanelEmpty" class="cart-panel-empty" hidden=""><p>העגלה ריקה. בחרו טלוויזיה או הגדירו התקנה כדי להתחיל.</p><a class="btn-accent" href="#products" id="cartPanelEmptyLink">לבחירת טלוויזיה</a></div><div id="cartPanelList" class="cart-panel-list"></div><div class="cart-panel-total" id="cartPanelTotal" hidden=""></div><div class="lead-form cart-panel-lead-form" id="cartPanelLeadForm" hidden=""><div id="cartLeadFieldsTop"></div><input type="hidden" id="cartLeadName" name="name"/><div class="lead-field"><label class="lead-field-label" for="cartLeadPhone">טלפון<span class="req" aria-hidden="true">*</span></label><input type="tel" id="cartLeadPhone" name="phone" inputmode="tel" autocomplete="tel" placeholder="לדוגמה: 050-1234567" dir="ltr" style="text-align:right" aria-required="true" aria-describedby="cartLeadPhoneError"/><div class="field-error lead-field-error" id="cartLeadPhoneError" role="alert" hidden></div></div><div id="cartLeadFieldsBottom"></div><div class="lead-ctas"><a class="btn-accent btn-whatsapp" id="cartWhatsappBtn" hidden rel="noopener"><svg class="cart-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.25-1.5A9.9 9.9 0 1 0 12.04 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.18-3.1.88.9-3.02-.2-.31A8.1 8.1 0 0 1 12.04 3.8zM8.6 7.6c-.2 0-.5.07-.75.35-.26.28-1 1-1 2.4s1.03 2.8 1.17 3c.15.2 2 3.2 4.9 4.36 2.4.95 2.9.76 3.4.72.52-.05 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34-.3-.15-1.7-.84-1.97-.94-.26-.1-.46-.14-.65.15-.2.3-.75.94-.92 1.13-.17.2-.34.22-.63.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.65-1.6-.9-2.18-.23-.56-.47-.48-.65-.49h-.55z"/></svg> שלחו את כל העגלה בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-accent btn-mail-primary" id="cartMailtoBtn" href="#"><svg class="cart-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg> שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div><p class="lead-fineprint">התשלום סוכם ומתבצע מחוץ לאתר.</p><p class="form-status" id="cartFormStatus" role="status" aria-live="polite" hidden></p><div id="cartPrivacyNotice"></div></div></div><!--/$-->
+})();</script><main id="main-content" tabindex="-1"><div class="hero"><div class="hero-inner hero-grid"><div class="hero-copy"><span class="hero-eyebrow"><span id="heroWarrantyLine">התקנת טלוויזיה ביתית, מקצועית וברמת גימור גבוהה.</span></span><div class="hero-title-bubble"><h1>התקנה מקצועית. מחיר מדויק ושקוף. <em>כל הפרטים גלויים מראש - בלי תוספות בשטח</em></h1></div><p class="lede">בחרו את גודל המסך, סוג המתקן ומיקום ההתקנה - וקבלו הצעת מחיר שקופה וסופית במקום. בלי הפתעות ובלי תוספות ביום ההתקנה.</p></div><div class="hero-visual" aria-hidden="true"><div class="hero-logo-mark"><img class="logo-on-light" src="assets/site/logo-light.png" alt="Master Mount" loading="lazy" decoding="async"/><img class="logo-on-dark" src="assets/site/logo-dark.png" alt="Master Mount" loading="lazy" decoding="async"/></div></div></div><div class="hero-carousel" id="heroCarousel"><div class="hero-carousel-stage"><div class="hero-carousel-track" id="heroCarouselTrack"><a class="process-banner install hero-slide active" href="installation.html" data-slide="0"><img class="process-banner-strip-img" src="assets/site/hero-banner-install.jpg" alt="טלוויזיה מותקנת על מתקן תקרה בפטיו מעוצב עם נוף לגינה"><span class="process-banner-text"><span class="process-banner-eyebrow">שלב 1</span><h2>הגדירו את ההתקנה שלכם</h2><p>כל שאלה ממקדת את הצרכים שלך - המחיר מתעדכן בזמן אמת לצד כל בחירה.</p></span></a><a class="process-banner moving hero-slide" href="moving-day.html" data-slide="1"><img class="process-banner-strip-img" src="assets/site/hero-banner-moving.jpg" alt="זוג עם קופסאות על הראש מחזיק טלוויזיה, לקראת מעבר דירה" loading="lazy"><span class="process-banner-text"><span class="process-banner-eyebrow">שירות מיוחד</span><h2>עוברים דירה עם MASTER MOUNT</h2><p>עוברים דירה ולא יודעים איך להעביר את הטלוויזיות? אנחנו כאן בכדי להעניק לכם את השירות האחראי, הבטוח והמקצועי ביותר.</p></span></a><a class="process-banner bundle hero-slide" href="#bundles" data-slide="2"><img class="process-banner-strip-img" src="assets/site/hero-banner-bundle.jpg" alt="חדר תצוגה עם מגוון טלוויזיות מותקנות בפתרונות התקנה שונים" loading="lazy"><span class="process-banner-text"><span class="process-banner-eyebrow">פתרון מקצה לקצה</span><h2>טלוויזיה והתקנה מקצועית בחבילה אחת</h2><p>רוכשים חבילת פרימיום שכוללת טלוויזיה והתקנה מקצועית במועד הקרוב ביותר - הכל בחבילה אחת משתלמת</p></span></a></div><button type="button" class="hero-carousel-arrow hero-carousel-prev" id="heroCarouselPrev" aria-label="השלייד הקודם">&#8249;</button><button type="button" class="hero-carousel-arrow hero-carousel-next" id="heroCarouselNext" aria-label="השלייד הבא">&#8250;</button></div><div class="hero-carousel-dots" id="heroCarouselDots"><button type="button" class="hero-carousel-dot active" data-slide="0" aria-label="שלייד 1 מתוך 3"></button><button type="button" class="hero-carousel-dot" data-slide="1" aria-label="שלייד 2 מתוך 3"></button><button type="button" class="hero-carousel-dot" data-slide="2" aria-label="שלייד 3 מתוך 3"></button></div><button type="button" class="hero-carousel-playpause" id="heroCarouselPlayPause" aria-pressed="false"><svg id="heroCarouselPlayPauseIcon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"></rect><rect x="14" y="5" width="4" height="14"></rect></svg><span class="sr-only" id="heroCarouselPlayPauseLabel">השהיית החלפת השקופיות האוטומטית</span></button></div></div><section class="brand-banner"><img src="assets/site/brand-banner-index.jpg" alt="חמש טלוויזיות בגדלים שונים (75, 55, 65, 85 ו-43 אינץ&#x27;) על סוגי מתקנים שונים - עמוד רצפתי לתקרה, תלייה מהתקרה, זרוע קיר מתכווננת, התקנה שטוחה על קיר ועמידה רצפתית, בחדר תצוגה מודרני"/></section><section class="block" id="bundles"><div class="wrap"><div class="block-head"><span class="bundles-eyebrow">דילים משתלמים - DEALS</span><h2 class="bundles-title-en">טלוויזיה + התקנה במחיר מנצח</h2><p class="bundles-lede">הדילים הכי שווים למסכים הכי המובילים כולל התקנה מקצועית בלחיצה אחת.</p></div><div class="flat-outer"><button type="button" class="flat-arrow" id="bundleRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="bundleViewport"><div class="flat-track" id="bundleTrack"></div></div><button type="button" class="flat-arrow" id="bundleLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div><p class="flat-swipe-hint" aria-hidden="true">החליקו לצדדים לעוד דילים</p><p class="placeholder-note" id="bundlePlaceholderNote"></p></div></section><section class="block" id="bestSellersSection"><div class="wrap"><div class="block-head"><span class="block-eyebrow">הנבחרים של הלקוחות</span><h2>מומלצים</h2><span class="section-tag-en">POPULAR</span><p>הדגמים המבוקשים ביותר אצלנו - זמינים עם הובלה עד הבית.</p></div><div class="flat-outer"><button type="button" class="flat-arrow" id="bestSellersRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="bestSellersViewport"><div class="flat-track" id="bestSellersTrack"></div></div><button type="button" class="flat-arrow" id="bestSellersLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div><p class="flat-swipe-hint" aria-hidden="true">החליקו לצדדים לעוד דגמים</p></div></section><section class="block" id="products"><div class="wrap"><div class="block-head"><h2>טלוויזיות</h2><span class="section-tag-en">TV Screen</span><p>המשך לבחירת התקנה מותאמת אישית</p></div><div class="product-layout"><div class="product-filters"><div class="filter-group" id="sizeFilterGroup"><div class="filter-group-title"><span>גודל מסך</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="size-filter-grid" id="productSizeFilter"></div></div><div class="filter-group" id="brandFilterGroup"><div class="filter-group-title"><span>מותג</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productBrandFilter" role="group" aria-label="סינון לפי מותג"></div></div><div class="filter-group" id="techFilterGroup"><div class="filter-group-title"><span>טכנולוגיות</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productTechFilter" role="group" aria-label="סינון לפי טכנולוגיה"></div></div><div class="filter-group" id="bestFilterGroup"><div class="filter-group-title"><span>מומלצים</span><span class="filter-group-arrow" aria-hidden="true">&#9662;</span></div><div class="filter-chip-row" id="productBestSellerFilter" role="group" aria-label="סינון נמכרים ביותר"></div></div><div class="active-filters-bar" id="activeFiltersBar" hidden=""></div><div class="product-filter-count" id="productFilterCount" aria-live="polite" aria-atomic="true"></div></div><div class="product-carousel-col"><div class="flat-outer"><button type="button" class="flat-arrow" id="productRightBtn" aria-label="הבא"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></button><div class="flat-viewport" id="productViewport"><div class="flat-track" id="productTrack"></div></div><button type="button" class="flat-arrow" id="productLeftBtn" aria-label="הקודם"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg></button></div><p class="flat-swipe-hint" aria-hidden="true">החליקו לצדדים לעוד דגמים</p><p class="placeholder-note" id="productSizeEmptyNote" hidden="">אין טלוויזיות שמתאימות לסינון שבחרתם - נסו שילוב אחר או לחצו &quot;נקה הכל&quot;.</p></div></div><p class="install-only-optout"><button type="button" class="btn-ghost" id="installOnlyBtn">רק צריך התקנה, בלי טלוויזיה? לחצו כאן</button></p></div></section><section class="block" id="how"><div class="wrap"><div class="block-head"><span class="block-eyebrow">איך זה עובד</span><h2>שקיפות מלאה, מהתחלה ועד הסוף</h2></div><div class="trust-grid"><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-nut.png" alt="" width="39" height="34"/><h3>חוויית רכישה פשוטה</h3><p class="subtitle">חיסכון חכם בעלויות, בלי לוותר על האיכות</p><p>המודל העסקי היעיל שלנו, מאפשר לנו להציע לכם מחירים הוגנים ותחרותיים מבלי להתפשר על איכות המוצרים או רמת השירות האישי. אתם נהנים מהמחיר הטוב ביותר, עם שירות מקיף שמלווה אתכם לכל אורך הדרך.</p></div><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-icon-service.svg" alt="" width="39" height="34"/><h3>שירות מקצועי</h3><p class="subtitle">הכל תחת קורת גג אחת - מהייעוץ ועד ההתקנה</p><p>אנחנו הכתובת היחידה שלכם - מהייעוץ, דרך הרכישה ועד ההתקנה. אנחנו כאן לכל שאלה, לפני ותוך כדי, ומשתדלים לחזור אליכם במהירות בכל מקרה שתצטרכו אותנו.</p></div><div class="trust-card"><img class="ti ti-nut" src="assets/site/mm-icon-price.svg" alt="" width="39" height="34"/><h3>תמחור שקוף</h3><p class="subtitle">מחיר הוגן, ללא הפתעות</p><p>אנו מאמינים בשקיפות מחירים מלאה. בקטלוג המקיף שלנו תמצאו פירוט מלא ומדויק של כל עלויות ההתקנה, מגוון הגדלים וסוגי המתקנים השונים. אין צורך בניחושים או בשיחות מקדימות - אתם רואים בדיוק את העלות המדויקת, לפני כל התחייבות.</p></div></div></div></section><section class="block" id="contact"><div class="wrap" style="max-width:620px"><div class="block-head"><span class="block-eyebrow">מוכנים להתקדם? רוצים לסגור התקנה?</span><h2>לייעוץ מותאם אישית ותיאום התקנה</h2><p>השאירו טלפון ונחזור אליכם עם הצעת מחיר מסודרת ותיאום מהיר.</p></div><div class="lead-form"><label for="leadName" class="sr-only">שם מלא (לא חובה)</label><input type="text" id="leadName" name="name" autocomplete="name" placeholder="שם מלא"/><label for="leadPhone" class="sr-only">טלפון (חובה)</label><input type="tel" id="leadPhone" name="phone" inputmode="tel" autocomplete="tel" placeholder="טלפון (חובה)" dir="ltr" style="text-align:right" aria-required="true" aria-describedby="leadPhoneError"/><div class="field-error" id="leadPhoneError" role="alert" hidden></div><div class="lead-ctas"><a class="btn-accent btn-whatsapp lead-cta-main" id="finalWhatsappBtn" hidden rel="noopener"><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.25-1.5A9.9 9.9 0 1 0 12.04 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.18-3.1.88.9-3.02-.2-.31A8.1 8.1 0 0 1 12.04 3.8zM8.6 7.6c-.2 0-.5.07-.75.35-.26.28-1 1-1 2.4s1.03 2.8 1.17 3c.15.2 2 3.2 4.9 4.36 2.4.95 2.9.76 3.4.72.52-.05 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34-.3-.15-1.7-.84-1.97-.94-.26-.1-.46-.14-.65.15-.2.3-.75.94-.92 1.13-.17.2-.34.22-.63.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.65-1.6-.9-2.18-.23-.56-.47-.48-.65-.49h-.55z"/></svg> שלחו בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-accent btn-mail-primary lead-cta-main" id="finalMailtoBtn" href="#"><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg> שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a><a class="btn-ghost lead-cta-sub" id="finalCallBtn" hidden><svg class="lead-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3.5l1.7 4.3-2.2 1.4a11 11 0 0 0 6.3 6.3l1.4-2.2L20 15.5V19a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg> התקשרו אלינו<span class="sr-only"> (מבצע שיחת טלפון)</span></a></div><p class="lead-fineprint"><svg class="lead-fineprint-check" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>התשלום מתואם מולנו לאחר אישור ההזמנה, ואינו מתבצע באתר.</span></p><p class="form-status" id="leadFormStatus" role="status" aria-live="polite" hidden></p><div id="finalPrivacyNotice"></div></div></div></section></main><footer class="site-foot"><div class="wrap foot-grid"><div><div class="brandmark"><img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" alt="Master Mount"/></div><p>התקנה מדויקת בשבילך.</p><p id="footOperatorLine"></p></div><div class="foot-links"><a href="#products">טלוויזיות למכירה</a><a href="compare.html">השוואת טלוויזיות</a><a href="installation.html">מחשבון מחיר התקנה</a><a href="#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a id="footCallLink" hidden>התקשרו</a><a id="footEmailLink" href="mailto:mastermount@mastermount.co.il">mastermount@mastermount.co.il</a></div><div class="foot-links"><a href="./terms-of-use.html">תנאי שימוש</a><a href="./privacy-policy.html">מדיניות פרטיות</a><a href="./cancellation-policy.html">מדיניות ביטולים והחזרות</a><a href="./delivery-terms.html">תנאי הובלה ותוספות</a><a href="./accessibility-statement.html">הצהרת נגישות</a><a href="./weee-returns.html">החזרת ציוד חשמלי ואלקטרוני וסוללות</a><a href="#" id="cookieSettingsLink">הגדרות עוגיות</a></div></div></footer><div class="bundle-modal-overlay" id="bundleModalOverlay" hidden=""><div class="bundle-modal" role="dialog" aria-modal="true" aria-labelledby="bundleModalTitle"><button class="bundle-modal-close" id="bundleModalCloseBtn" type="button" aria-label="סגירה">✕</button><div class="bundle-modal-media" id="bundleModalMedia"></div><div class="bundle-modal-body"><div class="bundle-modal-brand" id="bundleModalBrand"></div><h3 class="bundle-modal-title" id="bundleModalTitle" tabindex="-1"></h3><div class="bundle-modal-screentype" id="bundleModalScreenType"></div><div class="bundle-modal-description" id="bundleModalDescription" hidden=""></div><div class="bundle-modal-included-wrap" id="bundleModalIncludedWrap" hidden=""><div class="bundle-modal-subheading">מה כלול בבאנדל</div><ul class="bundle-modal-features" id="bundleModalIncluded"></ul></div><div class="bundle-modal-mount" id="bundleModalMount" hidden=""></div><ul class="bundle-modal-features" id="bundleModalFeatures"></ul><div class="bundle-modal-priceblock" id="bundleModalPriceBlock"></div><div id="bundleModalSellerDisclosure"></div><div id="bundleModalLegalDisclosure"></div><div class="lead-ctas bundle-modal-ctas"><div class="bundle-cta-price" id="bundleCtaPrice"></div><a class="btn-accent btn-whatsapp" id="bundleModalWhatsapp" hidden rel="noopener"><span aria-hidden="true">📲</span> בקשו הצעה לבאנדל הזה<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-accent btn-mail-primary" id="bundleModalMailto" href="#"><span aria-hidden="true">✉️</span> בקשו הצעה במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div><div id="bundlePrivacyNotice"></div></div></div></div><div class="product-page-overlay" id="productPageOverlay" hidden=""><div class="product-page" role="dialog" aria-modal="true" aria-labelledby="productPageTitle"><button class="product-page-close" id="productPageCloseBtn" type="button" aria-label="סגירה">✕</button><div class="product-page-media" id="productPageMedia"></div><div class="product-page-body"><div class="product-page-brand" id="productPageBrand"></div><h3 class="product-page-title" id="productPageTitle" tabindex="-1"></h3><div class="product-page-meta" id="productPageMeta"></div><div class="product-page-price-row"><span class="product-page-price" id="productPagePrice"></span><button type="button" class="btn-add-cart" id="productPageAddToCart">הוספה לעגלה</button></div><div class="product-page-price-note" id="productPagePriceNote">המחיר כולל מע"מ והובלה עד הבית - אין תשלום נוסף ואין אפשרות איסוף עצמי.</div><div class="product-page-ctas"><button type="button" class="btn-accent" id="productPageWhatsapp">המשיכו להתקנה</button><button type="button" class="btn-ghost" id="productPageQuickBuy">קניה מהירה ללא התקנה</button><a class="btn-ghost" id="productPageCall" hidden><span aria-hidden="true">📞</span> התקשרו אלינו<span class="sr-only"> (מבצע שיחת טלפון)</span></a></div><button class="product-features-toggle" id="productFeaturesToggle" type="button" aria-expanded="false" aria-controls="productFeaturesBody"><span>מאפיינים</span><span class="arrow" aria-hidden="true">▾</span></button><div class="product-features-body" id="productFeaturesBody"><div class="product-features-inner" id="productFeaturesInner"></div></div><div class="product-page-warranty" id="productPageWarranty"></div><div id="productPageSchemaFields" style="font-size:.8rem;color:var(--text-tertiary,#7a7a7a);margin-top:4px;"></div><div id="productPageSellerDisclosure"></div><div id="productPageLegalDisclosure"></div></div></div></div><div class="cart-panel-overlay" id="cartPanelOverlay" hidden=""><div class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cartPanelTitle"><button class="product-page-close" id="cartPanelCloseBtn" type="button" aria-label="סגירה">✕</button><h3 id="cartPanelTitle" tabindex="-1">העגלה שלכם</h3><div id="cartPanelEmpty" class="cart-panel-empty" hidden=""><p>העגלה ריקה. בחרו טלוויזיה או הגדירו התקנה כדי להתחיל.</p><a class="btn-accent" href="#products" id="cartPanelEmptyLink">לבחירת טלוויזיה</a></div><div id="cartPanelList" class="cart-panel-list"></div><div class="cart-panel-total" id="cartPanelTotal" hidden=""></div><div class="lead-form cart-panel-lead-form" id="cartPanelLeadForm" hidden=""><div id="cartLeadFieldsTop"></div><input type="hidden" id="cartLeadName" name="name"/><div class="lead-field"><label class="lead-field-label" for="cartLeadPhone">טלפון<span class="req" aria-hidden="true">*</span></label><input type="tel" id="cartLeadPhone" name="phone" inputmode="tel" autocomplete="tel" placeholder="לדוגמה: 050-1234567" dir="ltr" style="text-align:right" aria-required="true" aria-describedby="cartLeadPhoneError"/><div class="field-error lead-field-error" id="cartLeadPhoneError" role="alert" hidden></div></div><div id="cartLeadFieldsBottom"></div><div class="lead-ctas"><a class="btn-accent btn-whatsapp" id="cartWhatsappBtn" hidden rel="noopener"><svg class="cart-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.25-1.5A9.9 9.9 0 1 0 12.04 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.18-3.1.88.9-3.02-.2-.31A8.1 8.1 0 0 1 12.04 3.8zM8.6 7.6c-.2 0-.5.07-.75.35-.26.28-1 1-1 2.4s1.03 2.8 1.17 3c.15.2 2 3.2 4.9 4.36 2.4.95 2.9.76 3.4.72.52-.05 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34-.3-.15-1.7-.84-1.97-.94-.26-.1-.46-.14-.65.15-.2.3-.75.94-.92 1.13-.17.2-.34.22-.63.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.65-1.6-.9-2.18-.23-.56-.47-.48-.65-.49h-.55z"/></svg> שלחו את כל העגלה בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ, בכרטיסייה חדשה)</span></a><a class="btn-accent btn-mail-primary" id="cartMailtoBtn" href="#"><svg class="cart-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg> שלחו במייל<span class="sr-only"> (נפתח בתוכנת המייל)</span></a></div><p class="lead-fineprint">התשלום מתואם מולנו לאחר אישור ההזמנה, ואינו מתבצע באתר.</p><p class="form-status" id="cartFormStatus" role="status" aria-live="polite" hidden></p><div id="cartPrivacyNotice"></div></div></div><!--/$-->
 <script src="./business-config.js"></script>
+<script src="./footer-common.js"></script>
+<script src="./sellers-data.js"></script>
 <script src="./legal-components.js"></script>
 <script src="./lead-capture.js"></script>
 <script src="./compare-data.js"></script>
@@ -9333,12 +9344,14 @@ function initMasterMount() {
 
   // שדות-סכימה-אופציונליים למוצר: energyRating/energyLabelImage (לא-ידועים, נשארים ריקים),
   // modelNumber/manufacturerWarranty (נופלים לשדות-הקיימים p.model/p.warrantyText אם לא-מוגדרים
-  // ישירות), importerName (מחולץ-בפועל מתוך p.warrantyText - כל 18 המוצרים כבר כוללים משפט
-  // קבוע בתבנית 'ע"י <שם היבואן>, היבואן הרשמי' - לא-מומצא, רק-נקרא-מטקסט-קיים-אמיתי).
+  // ישירות), importerName (מחולץ-בפועל מתוך p.warrantyText, בפורמט הקבוע-מ-23.9.2026
+  // 'אחריות ל- N חודשים ע"י <שם-יבואן-עברי>' - לא-מומצא, רק-נקרא-מטקסט-קיים-אמיתי; כל 104
+  // המוצרים כבר-בפורמט-הזה, לפי brands.importerName של המותג). עד 23.9.2026 הפורמט הישן היה
+  // "ע\"י היבואן הרשמי" בלי שם-ממשי, שמעולם לא-תאם את הרגקס-הישן [חסר-פסיק] - ר' CLAUDE.md.
   function getProductSchemaFields(p) {
     var importerName = null;
     if (p.warrantyText) {
-      var m = p.warrantyText.match(/ע"י\s+([^,]+),\s*היבואן הרשמי/);
+      var m = p.warrantyText.match(/ע"י\s+(.+)$/);
       if (m) importerName = m[1].trim();
     }
     return {
@@ -9348,22 +9361,6 @@ function initMasterMount() {
       importerName: importerName,
       manufacturerWarranty: p.manufacturerWarranty || p.warrantyText || null
     };
-  }
-
-  // פותח חלון חדש עם תעודת-אחריות מוכנה-להדפסה (window.print() דפדפני רגיל, בלי שרת PDF).
-  function openWarrantyCertificateWindow(details) {
-    if (!window.warrantyCertificateHtml) return;
-    var w = window.open("", "_blank");
-    if (!w) return;
-    w.document.write(
-      '<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><title>תעודת אחריות</title>' +
-      '<style>body{font-family:Arial,sans-serif;padding:32px;max-width:640px;margin:0 auto;}h4{font-size:1.3rem;}p{line-height:1.7;}</style></head><body>' +
-      window.warrantyCertificateHtml(details) +
-      '</body></html>'
-    );
-    w.document.close();
-    w.focus();
-    setTimeout(function () { w.print(); }, 300);
   }
 
   // כותרת ה-hero: מספר-חודשי-האחריות מוצג רק אם warrantyMonths_installation מוגדר בקונפיג -
@@ -9453,7 +9450,8 @@ function initMasterMount() {
     tvProducts: [
       { id: "product_1", brand: "SAMSUNG", model: "UE32H5000F", sizeInches: 32, screenType: "LED HD",
         title: "טלוויזיה חכמה 32\" SAMSUNG HD סמסונג דגם UE32H5000F", priceILS: 980, imageUrl: "assets/products/product_1.jpg", imageUrlWebp: "assets/products/product_1.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["HDR - ניגודיות משופרת עם צבעים כהים עשירים וצבעים בהירים בוהקים", "PurColor - מגוון רחב של צבעים באיכות מיטבית לחוויה תוססת ונאמנה למציאות", "אבטחת Samsung Knox - הגנה רב-שכבתית על הנתונים הרגישים", "מערכת הפעלה Samsung Tizen OS"],
         fullSpecSections: [
@@ -9464,7 +9462,8 @@ function initMasterMount() {
         ] },
       { id: "product_3", brand: "TCL", model: "32S5K", sizeInches: 32, screenType: "QLED (Google TV)",
         title: "טלוויזיה חכמה טיסיאל TCL 32\" GOOGLE TV QLED דגם 32S5K", priceILS: 1040, imageUrl: "assets/products/product_3.jpg", imageUrlWebp: "assets/products/product_3.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED", "מערכת הפעלה Google TV", "תומך HDR10, HDR10+ ו-HLG לשיפור הניגודיות", "סאונד איכותי עם תמיכה בטכנולוגיית Dolby Audio"],
         fullSpecSections: [
@@ -9476,7 +9475,8 @@ function initMasterMount() {
         ] },
       { id: "product_4", brand: "SAMSUNG", model: "UE43F6000F", sizeInches: 43, screenType: "LED FHD",
         title: "טלוויזיה 43\" SAMSUNG FHD סמסונג דגם UE43F6000F", priceILS: 1050, imageUrl: "assets/products/product_4.jpg", imageUrlWebp: "assets/products/product_4.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["רזולוציית Full HD - פי שניים מהבהירות של HD רגיל, לתמונה עשירה וברורה במיוחד", "PurColor - צבעים מכוונים בעדינות לתמונה תוססת ומציאותית", "משפר ניגודיות - עומק תמונה רב יותר עם התאמת ניגודיות לכל סצנה", "מערכת הפעלה Samsung Tizen - אפליקציות, Samsung TV Plus וניהול יומיומי עם Daily+"],
         fullSpecSections: [
@@ -9486,7 +9486,8 @@ function initMasterMount() {
         ] },
       { id: "product_5", brand: "SAMSUNG", model: "UE43U8000H", sizeInches: 43, screenType: "LED (Crystal UHD)",
         title: "טלוויזיה חכמה 43\" SAMSUNG UHD סמסונג דגם UE43U8000H", priceILS: 1550, imageUrl: "assets/products/product_5.jpg", imageUrlWebp: "assets/products/product_5.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["Crystal Processor 4K - שדרוג תמונה וסאונד ברזולוציית 4K אמיתית", "HDR10+ - ניגודיות ופירוט משופרים באזורים כהים ובהירים כאחד", "Gaming Hub - גישה למשחקי ענן ללא קונסולה, עם VRR ו-ALLM", "מערכת הפעלה Tizen עם Samsung TV Plus - בידור וסטרימינג ללא הגבלה"],
         fullSpecSections: [
@@ -9501,7 +9502,8 @@ function initMasterMount() {
         ] },
       { id: "product_6", brand: "SAMSUNG", model: "UE43M70H", sizeInches: 43, screenType: "Mini LED",
         title: "טלוויזיה חכמה 43\" SAMSUNG MINI LED סמסונג דגם UE43M70H", priceILS: 1790, imageUrl: "assets/products/product_6.jpg", imageUrlWebp: "assets/products/product_6.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Mini LED - שליטה מדויקת בבהירות ובניגודיות לתמונה עשירה ועמוקה", "Pure Spectrum Colour - גוונים טבעיים ומדויקים במיוחד", "Motion Xcelerator - תנועה חלקה וברורה, מותאם גם לגיימינג עם VRR ו-ALLM", "עיצוב MetalStream דק וחסר-שוליים"],
         fullSpecSections: [
@@ -9515,7 +9517,8 @@ function initMasterMount() {
         ] },
       { id: "product_7", brand: "SAMSUNG", model: "QE43QN70H", sizeInches: 43, screenType: "Neo QLED",
         title: "טלוויזיה חכמה 43\" SAMSUNG QLED סמסונג דגם QE43QN70H", priceILS: 2390, imageUrl: "assets/products/product_7.jpg", imageUrlWebp: "assets/products/product_7.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["Quantum Mini LED - שליטה מדויקת בתאורה לפרטים, בהירות וניגודיות יוצאי דופן", "NQ4 AI Processor - עיבוד תמונה חכם סצנה אחר סצנה", "AI Football Mode ו-AI Gaming Optimiser - הגדרות אוטומטיות המותאמות לספורט וגיימינג", "Samsung Vision AI Companion - עוזר חכם לאינטראקציה טבעית עם הטלוויזיה"],
@@ -9526,7 +9529,8 @@ function initMasterMount() {
         ] },
       { id: "product_8", brand: "LG", model: "43NU840B6LA", sizeInches: 43, screenType: "NanoCell (NANO UHD)",
         title: "טלוויזיה חכמה 43\" LG NANO UHD AI אל ג'י דגם 43NU840B6LA", priceILS: 1590, imageUrl: "assets/products/product_8.jpg", imageUrlWebp: "assets/products/product_8.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך NANO UHD ברזולוציית 4K - צבעים עשירים ופרטים חדים לסרטים, סדרות ומשחקים", "מעבד Alpha 7 AI 4K דור 9 - שדרוג תכנים ל-4K ושיפור תמונה וסאונד בזמן אמת", "מערכת הפעלה webOS 26 - ממשק חכם, עד 5 שנות שדרוגים", "AI Sound Pro - סאונד וירטואלי 9.1.2 ערוצים לחוויית שמע עשירה"],
         fullSpecSections: [
@@ -9540,7 +9544,8 @@ function initMasterMount() {
         ] },
       { id: "product_9", brand: "LG", model: "43NU850B6LA", sizeInches: 43, screenType: "NanoCell (NANO UHD)",
         title: "טלוויזיה חכמה 43 אינץ' LG NANO UHD AI NU85 אל ג'י דגם 43NU850B6LA", priceILS: 1690, imageUrl: "assets/products/product_8.jpg", imageUrlWebp: "assets/products/product_8.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["Nano Detail Enhancer - עומק ומרקם משופרים לתמונת 4K מציאותית יותר", "AI Hub עם חוויות-AI מתקדמות מבוססות Google Gemini ו-Microsoft Copilot, מאובטח ב-LG Shield", "מעבד Alpha 7 AI דור 9 - אופטימיזציית תמונה וסאונד לפי ז'אנר והעדפות אישיות", "AI Sound Pro - סאונד וירטואלי 9.1.2 ערוצים"],
         fullSpecSections: [
@@ -9556,7 +9561,8 @@ function initMasterMount() {
         ] },
       { id: "product_10", brand: "LG", model: "43QNED70B6T", sizeInches: 43, screenType: "QNED MiniLED",
         title: "טלוויזיה חכמה 43\" LG QNED AI MINI LED 4K אל ג'י דגם 43QNED70B6T", priceILS: 1750, imageUrl: "assets/products/product_10.jpg", imageUrlWebp: "assets/products/product_10.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["Dynamic QNED Color - נפח צבע 100% ובינה מלאכותית לצבעים חיים ומדויקים", "QNED MiniLED עם עמעום מקומי מתקדם - ניגודיות גבוהה ופירוט חד גם בסצנות כהות", "מעבד Alpha 7 AI 4K דור 9 - תמונה וסאונד ברורים וחדים", "webOS Re:New Program - עד 4 שנות שדרוגים על פני תקופה של 5 שנים"],
@@ -9574,7 +9580,8 @@ function initMasterMount() {
         ] },
       { id: "product_11", brand: "TCL", model: "43S5K", sizeInches: 43, screenType: "QLED (Google TV)",
         title: "טלוויזיה חכמה 43\" TCL QLED טי.סי.אל דגם 43S5K", priceILS: 1320, imageUrl: "assets/products/product_11.jpg", imageUrlWebp: "assets/products/product_11.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["טכנולוגיית QLED עם נקודות קוונטיות - צבעים חזקים ומדויקים כמו בחיים האמיתיים", "מסך Full HD - תמונה מפורטת פי 2 ממסך HD רגיל", "תמיכה ב-HDR10 עם ניתוח תמונה חכם והתאמה דינמית לשיפור הניגודיות", "מערכת הפעלה Google TV"],
@@ -9585,7 +9592,8 @@ function initMasterMount() {
         ] },
       { id: "product_12", brand: "SAMSUNG", model: "UE50U8000H", sizeInches: 50, screenType: "LED (Crystal UHD)",
         title: "טלוויזיה חכמה 50\" SAMSUNG UHD סמסונג דגם UE50U8000H", priceILS: 1920, imageUrl: "assets/products/product_12.jpg", imageUrlWebp: "assets/products/product_12.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מעבד Crystal Processor 4K - שדרוג תמונה וסאונד ברזולוציית 4K אמיתית", "PurColour - צבעים טבעיים ועשירים, עם HDR10+ לעומק ופירוט משופרים", "Motion Xcelerator לשיפור החלקות בתנועה, Filmmaker Mode ומצב כדורגל ייעודי", "מערכת הפעלה Tizen Smart TV עם Gaming Hub, VRR ו-ALLM"],
         fullSpecSections: [
@@ -9601,7 +9609,8 @@ function initMasterMount() {
         ] },
       { id: "product_13", brand: "SAMSUNG", model: "UE50M70H", sizeInches: 50, screenType: "Mini LED",
         title: "טלוויזיה חכמה 50\" SAMSUNG MINI LED סמסונג דגם UE50M70H", priceILS: 2190, imageUrl: "assets/products/product_13.jpg", imageUrlWebp: "assets/products/product_13.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Mini LED עם מעבד Mini LED Processor 4K לשליטה מדויקת בבהירות ובניגודיות", "Pure Spectrum Colour ו-HDR10+ לגוונים טבעיים ועשירים, עם Supreme Mini LED Dimming", "Samsung Vision AI Companion ומערכת הפעלה Tizen Smart TV, כולל Gaming Hub ו-VRR", "עיצוב MetalStream דק עם מסגרת 3 Bezel-less וגב מסודר לכבלים"],
         fullSpecSections: [
@@ -9616,7 +9625,8 @@ function initMasterMount() {
         ] },
       { id: "product_14", brand: "SAMSUNG", model: "QE50QN70H", sizeInches: 50, screenType: "Neo QLED",
         title: "טלוויזיה חכמה 50\" SAMSUNG QLED סמסונג דגם QE50QN70H", priceILS: 2840, imageUrl: "assets/products/product_14.jpg", imageUrlWebp: "assets/products/product_14.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Quantum Mini LED עם מעבד NQ4 AI Processor לשיפור התמונה סצנה אחר סצנה", "NQ HDR ו-HDR10+ Adaptive לניגודיות וצבעים מדויקים, עם Color Booster Pro", "AI Football Mode, AI Gaming Optimiser ו-Gaming Hub לחוויית ספורט וגיימינג משופרת", "Samsung Vision AI Companion, עיצוב AirSlim דק במיוחד ומערכת הפעלה Tizen Smart TV"],
         fullSpecSections: [
@@ -9629,7 +9639,8 @@ function initMasterMount() {
         ] },
       { id: "product_15", brand: "LG", model: "50NU850B6LA", sizeInches: 50, screenType: "LED (NANO UHD)",
         title: "טלוויזיה חכמה 50\" LG NANO UHD AI NU85 אל ג'י דגם 50NU850B6LA", priceILS: 1990, imageUrl: "assets/products/product_15.jpg", imageUrlWebp: "assets/products/product_15.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["צבעים טהורים בשילוב פרטים מדהימים בזכות טכנולוגיית NANO UHD", "מעבד AI 4K אלפא 7 דור 9 לתמונה וצליל ברורים וחדים יותר", "תוכנית webOS Re:New Program המבטיחה עד 5 שנים של שדרוגים", "שדרוג תוכן לאיכות 4K באמצעות בינה מלאכותית"],
         fullSpecSections: [
@@ -9646,7 +9657,8 @@ function initMasterMount() {
         ] },
       { id: "product_16", brand: "LG", model: "50QNED70B6T", sizeInches: 50, screenType: "QNED (Mini LED)",
         title: "טלוויזיה חכמה 50\" LG QNED AI QNED70 MINI LED אל ג'י דגם 50QNED70B6T", priceILS: 2140, imageUrl: "assets/products/product_16.jpg", imageUrlWebp: "assets/products/product_16.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["צבעים חיים ומדויקים בזכות טכנולוגיית Dynamic QNED Color עם נפח צבע 100%", "פירוט חד ומדויק עם טכנולוגיית MiniLED ועמעום מקומי מתקדם", "מעבד AI 4K אלפא 7 דור 9 לתמונה וצליל ברורים וחדים", "תוכנית webOS Re:New Program המבטיחה 4 שנים של שדרוגים על פני תקופה של 5 שנים"],
         fullSpecSections: [
@@ -9664,7 +9676,8 @@ function initMasterMount() {
         ] },
       { id: "product_17", brand: "TCL", model: "50S5K", sizeInches: 50, screenType: "QLED (Google TV)",
         title: "טלוויזיה חכמה 50\" TCL QLED טי.סי.אל דגם 50S5K", priceILS: 1330, imageUrl: "assets/products/product_17.jpg", imageUrlWebp: "assets/products/product_17.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["טלוויזיה חכמה QLED עם מערכת הפעלה Google TV, פאנל VA ועיצוב Slim Design דק ואלגנטי", "טכנולוגיית צבעים קוונטיים להרחבת טווח הצבעים, עם תמיכה ב-HDR10+ ו-HLG", "Google Cast מובנה לשידור מהטלפון למסך, ופרופיל ייעודי לילדים (Kid's Profile)", "תמיכה בשמע Dolby Audio עם הספק שמע 2x10W"],
         fullSpecSections: [
@@ -9677,7 +9690,8 @@ function initMasterMount() {
         ] },
       { id: "product_18", brand: "TCL", model: "50C6K", sizeInches: 50, screenType: "QLED Mini LED",
         title: "טלוויזיה חכמה 50\" TCL 4K MINI LED טי.סי.אל דגם 50C6K", priceILS: 2490, imageUrl: "assets/products/product_18.jpg", imageUrlWebp: "assets/products/product_18.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מסך QLED Mini LED עם 512 אזורי עמעום נפרדים (FALD) ועוצמת הארה HDR עד 1000nits", "קצב רענון תמונה עד 144Hz ומעבד תמונה AiPQ Pro, תומך HDR10+, Dolby Vision IQ, IMAX Enhanced ו-HLG", "מערכת סאונד ONKYO 2.1Ch בעוצמה כוללת של 40W עם תמיכה ב-Dolby Atmos ו-DTS Virtual:X", "מערכת הפעלה Google TV, זווית צפייה רחבה עד 178° ותמיכה ב-AMD FreeSync Pro"],
@@ -9692,7 +9706,8 @@ function initMasterMount() {
         ] },
       { id: "product_19", brand: "LG", model: "55QNED70B6T", sizeInches: 55, screenType: "QNED",
         title: "טלוויזיה חכמה \"LG QNED AI MINI LED 4K 55 אל ג`י דגם 55QNED70B6T", priceILS: 2550, imageUrl: "assets/products/product_19.jpg", imageUrlWebp: "assets/products/product_19.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["צבעים חיים ומדויקים", "עמעום מקומי מתקדם", "בינה מלאכותית מהדור הבא", "טכנולוגיית תצוגה משופרת"],
@@ -9714,7 +9729,8 @@ function initMasterMount() {
         ] },
       { id: "product_20", brand: "SAMSUNG", model: "UE55U8000H", sizeInches: 55, screenType: "UHD",
         title: "טלוויזיה חכמה \"55 SAMSUNG UHD סמסונג דגם UE55U8000H", priceILS: 1940, imageUrl: "assets/products/product_20.jpg", imageUrlWebp: "assets/products/product_20.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מעבד Crystal Processor 4K", "משפר צבעים להעצמת הבעת הצבעים", "סוג מוצר LED", "HDR10+ תמיכה"],
         fullSpecSections: [
@@ -9731,7 +9747,8 @@ function initMasterMount() {
         ] },
       { id: "product_21", brand: "TCL", model: "55P7L", sizeInches: 55, screenType: "QLED",
         title: "טלוויזיה חכמה \"55 TCL QLED טי.סי.אל דגם 55P7L", priceILS: 2350, imageUrl: "assets/products/product_21.jpg", imageUrlWebp: "assets/products/product_21.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED 4K", "מערכת הפעלה Google TV", "זווית צפייה רחבה במיוחד עד 178°", "מסך דק בעיצוב מודרני"],
         fullSpecSections: [
@@ -9745,7 +9762,8 @@ function initMasterMount() {
         ] },
       { id: "product_22", brand: "LG", model: "55NU850B6LA", sizeInches: 55, screenType: "NANO CELL UHD",
         title: "טלוויזיה חכמה 55 אינץ LG NANO UHD AI NU85 אל ג`י דגם 55NU850B6LA", priceILS: 1980, imageUrl: "assets/products/product_22.jpg", imageUrlWebp: "assets/products/product_22.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["צבעים טהורים בשילוב פרטים מדהימים", "מעבד AI 4K אלפא 7 דור 9", "תוכנית  webOS Re:New Program", "שדרוג תוכן לאיכות 4K באמצעות בינה מלאכותית"],
         fullSpecSections: [
@@ -9766,7 +9784,8 @@ function initMasterMount() {
         ] },
       { id: "product_23", brand: "SAMSUNG", model: "UE55M70H", sizeInches: 55, screenType: "QLED MINI LED",
         title: "טלוויזיה חכמה \"55 SAMSUNG MINI LED סמסונג דגם UE55M70H", priceILS: 2390, imageUrl: "assets/products/product_23.jpg", imageUrlWebp: "assets/products/product_23.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Mini LED", "חוויית צפייה חכמה", "רזולוציה 3840 × 2160", "קצב רענון 50Hz"],
         fullSpecSections: [
@@ -9782,7 +9801,8 @@ function initMasterMount() {
         ] },
       { id: "product_24", brand: "TCL", model: "55P8K", sizeInches: 55, screenType: "QLED",
         title: "טלוויזיה חכמה \"55 TCL QLED טי.סי.אל דגם 55P8K", priceILS: 2280, imageUrl: "assets/products/product_24.jpg", imageUrlWebp: "assets/products/product_24.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED 4K", "מערכת הפעלה Google TV", "זווית צפייה רחבה במיוחד עד 178°", "מסך דק בעיצוב מודרני"],
         fullSpecSections: [
@@ -9800,7 +9820,8 @@ function initMasterMount() {
         ] },
       { id: "product_25", brand: "SAMSUNG", model: "UE55M80H", sizeInches: 55, screenType: "MINI LED",
         title: "טלוויזיה חכמה \"55 SAMSUNG MINI LED סמסונג דגם UE55M80H", priceILS: 2390, imageUrl: "assets/products/product_25.jpg", imageUrlWebp: "assets/products/product_25.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["סוג מוצר LED", "טכנולוגיית תצוגה Mini LED", "HDR Mini LED HDR", "עיצוב MetalStream במראה דק ומודרני"],
         fullSpecSections: [
@@ -9818,7 +9839,8 @@ function initMasterMount() {
         ] },
       { id: "product_26", brand: "SAMSUNG", model: "QE55QN70H", sizeInches: 55, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"55 SAMSUNG QLED סמסונג דגם QE55QN70H", priceILS: 2990, imageUrl: "assets/products/product_26.jpg", imageUrlWebp: "assets/products/product_26.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["Quantum Mini LED שליטה מדויקת באזורי התאורה", "רזולוציית 4K UHD ‏3840×2160", "מעבד NQ4 AI Processor", "AirSlim עיצוב דק במיוחד"],
         fullSpecSections: [
@@ -9831,7 +9853,8 @@ function initMasterMount() {
         ] },
       { id: "product_27", brand: "TCL", model: "55P8L", sizeInches: 55, screenType: "QD Mini-LED",
         title: "טלוויזיה חכמה \"55 TCL QD-MINI LED טי.סי.אל דגם 55P8L", priceILS: 2640, imageUrl: "assets/products/product_27.jpg", imageUrlWebp: "assets/products/product_27.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["פאנל HVA", "קצב רענון טבעי 144Hz", "תמיכה ב־4K 144Hz", "מערכת שמע 2.0 ערוצים"],
         fullSpecSections: [
@@ -9843,7 +9866,8 @@ function initMasterMount() {
         ] },
       { id: "product_28", brand: "SAMSUNG", model: "QE55QN80H", sizeInches: 55, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"55 SAMSUNG MINI LED סמסונג דגם QE55QN80H", priceILS: 3838, imageUrl: "assets/products/product_28.jpg", imageUrlWebp: "assets/products/product_28.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["שליטה מדויקת בתמונה", "SmartThings תמיכה בבית חכם", "עיצוב דק ואלגנטי", "סוג מוצר Neo QLED"],
         fullSpecSections: [
@@ -9857,7 +9881,8 @@ function initMasterMount() {
         ] },
       { id: "product_29", brand: "LG", model: "55MRGB85B6C", sizeInches: 55, screenType: "MRGB",
         title: "טלוויזיה חכמה \"55 LG MINI RGB EVO AI אל ג`י דגם 55MRGB85B6C", priceILS: 3340, imageUrl: "assets/products/product_29.jpg", imageUrlWebp: "assets/products/product_29.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["גודל מסך 55 אינץ'", "סוג תצוגה Mini RGB evo AI", "רזולוציה 4K Ultra HD", "מעבד α8 AI 4K Gen3"],
         fullSpecSections: [
@@ -9867,7 +9892,8 @@ function initMasterMount() {
         ] },
       { id: "product_30", brand: "TCL", model: "55C7L", sizeInches: 55, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה 55\" TCL 4K SQD-MINI LED טי.סי.אל דגם 55C7L", priceILS: 4290, imageUrl: "assets/products/product_30.jpg", imageUrlWebp: "assets/products/product_30.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["עוצמת הארה גבוהה", "מעבד בינה מלאכותית", "יציאת שמע דיגיטלית", "טכנולוגיות גיימינג מתקדמות"],
         fullSpecSections: [
@@ -9881,7 +9907,8 @@ function initMasterMount() {
         ] },
       { id: "product_31", brand: "SAMSUNG", model: "QE55LS03H", sizeInches: 55, screenType: "QLED",
         title: "טלוויזיה חכמה \"55 SAMSUNG THE FRAME QLED סמסונג דגם QE55LS03H", priceILS: 4280, imageUrl: "assets/products/product_31.jpg", imageUrlWebp: "assets/products/product_31.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["עיצוב מסגרת מודרני המשתלב בחלל", "רזולוציית 4K UHD ‏3840×2160", "מערכת הפעלה Tizen Smart TV", "FreeSync Premium"],
         fullSpecSections: [
@@ -9894,7 +9921,8 @@ function initMasterMount() {
         ] },
       { id: "product_32", brand: "TCL", model: "55A300", sizeInches: 55, screenType: "QLED",
         title: "טלוויזיה חכמה \"55 QLED כולל סאונד בר TCL טי.סי.אל דגם 55A300 PRO", priceILS: 5590, imageUrl: "assets/products/product_32.jpg", imageUrlWebp: "assets/products/product_32.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED 4K", "עיצוב ייחודי מסך בגימור מט המונע השתקפויות", "מערכת ההפעלה הטובה בעולם של Google TV", "סאונד בר בעוצמה של 230W"],
         fullSpecSections: [
@@ -9910,7 +9938,8 @@ function initMasterMount() {
         ] },
       { id: "product_33", brand: "LG", model: "OLED55C66LA", sizeInches: 55, screenType: "OLED",
         title: "טלוויזיה חכמה 55 אינץ` LG OLED אל ג`י דגם OLED55C66LA", priceILS: 5390, imageUrl: "assets/products/product_33.jpg", imageUrlWebp: "assets/products/product_33.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מעבד אלפא 11 AI 4K לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות", "צבע שחור מוחלט וצבעוניות מושלמת", "תמונה וצליל משופרים מבוססי בינה מלאכותית"],
@@ -9936,7 +9965,8 @@ function initMasterMount() {
         ] },
       { id: "product_34", brand: "SAMSUNG", model: "QE55S85H", sizeInches: 55, screenType: "OLED",
         title: "טלוויזיה חכמה \"55 SAMSUNG OLED 4K סמסונג דגם QE55S85H", priceILS: 5100, imageUrl: "assets/products/product_34.jpg", imageUrlWebp: "assets/products/product_34.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["פיקסלים בתאורה עצמית", "מעבד תמונה חכם NQ4 AI Gen2 המבוסס על בינה מלאכותית", "שיפור אוטומטי של תכנים לרזולוציית 4K", "עיצוב דק עם מסגרת מינימלית בארבעת צדי המסך"],
@@ -9962,7 +9992,8 @@ function initMasterMount() {
         ] },
       { id: "product_35", brand: "SAMSUNG", model: "MRE55R85H", sizeInches: 55, screenType: "Micro RGB",
         title: "טלוויזיה חכמה \"55 SAMSUNG MICRO RGB סמסונג דגם MRE55R85H", priceILS: 5940, imageUrl: "assets/products/product_35.jpg", imageUrlWebp: "assets/products/product_35.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["עיצוב Monolith Edge", "תאורת LED אחורית RGB", "רזולוציה 3840 × 2160", "שדרוג תמונה 4K AI Upscaling"],
         fullSpecSections: [
@@ -9973,7 +10004,8 @@ function initMasterMount() {
         ] },
       { id: "product_36", brand: "SAMSUNG", model: "QE55LS03HW", sizeInches: 55, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"55 SAMSUNG THE FRAME PRO QLED סמסונג דגם QE55LS03HW", priceILS: 5990, imageUrl: "assets/products/product_36.jpg", imageUrlWebp: "assets/products/product_36.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["סוג תצוגה Neo QLED", "עיצוב מסגרת מודרני", "רזולוציה 3840×2160", "קצב רענון 144Hz"],
@@ -9987,7 +10019,8 @@ function initMasterMount() {
         ] },
       { id: "product_37", brand: "SAMSUNG", model: "UE65U8000H", sizeInches: 65, screenType: "Crystal-UHD",
         title: "טלוויזיה חכמה \"65 SAMSUNG UHD סמסונג דגם UE65U8000H", priceILS: 2550, imageUrl: "assets/products/product_37.jpg", imageUrlWebp: "assets/products/product_37.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מעבד Crystal Processor 4K", "משפר צבעים להעצמת הבעת הצבעים", "סוג מוצר LED", "HDR10+ תמיכה"],
         fullSpecSections: [
@@ -10005,7 +10038,8 @@ function initMasterMount() {
         ] },
       { id: "product_38", brand: "LG", model: "65NU850B6LA", sizeInches: 65, screenType: "NanoCell",
         title: "טלוויזיה חכמה \"65 LG NANO UHD AI אל ג`י דגם 65NU850B6LA", priceILS: 2250, imageUrl: "assets/products/product_38.jpg", imageUrlWebp: "assets/products/product_38.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["Nano Detail Enhancer מנתח כל פריים כדי לשפר את הניגודיות", "טכנולוגיית Upscaling (הגדלת רזולוציה) 4K", "צליל היקפי סוחף עם Virtual 9.1.2 Ch", "מעבד alpha 7 AI 4K Gen9"],
         fullSpecSections: [
@@ -10032,7 +10066,8 @@ function initMasterMount() {
         ] },
       { id: "product_39", brand: "SAMSUNG", model: "UE65M70H", sizeInches: 65, screenType: "Mini-LED",
         title: "טלוויזיה חכמה \"65 SAMSUNG MINI LED סמסונג דגם UE65M70H", priceILS: 2589, imageUrl: "assets/products/product_39.jpg", imageUrlWebp: "assets/products/product_39.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Mini LED", "חוויית צפייה חכמה", "רזולוציה 3840 × 2160", "קצב רענון 50Hz"],
         fullSpecSections: [
@@ -10048,7 +10083,8 @@ function initMasterMount() {
         ] },
       { id: "product_40", brand: "TCL", model: "65P6L", sizeInches: 65, screenType: "LED",
         title: "טלוויזיה חכמה \"65 TCL UHD טי.סי.אל דגם 65P6L", priceILS: 2480, imageUrl: "assets/products/product_40.jpg", imageUrlWebp: "assets/products/product_40.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית 4K UHD DLED TV", "מערכת הפעלה Google TV", "צג מתקדם בטכנולוגיית HVA", "זווית צפייה רחבה במיוחד עד 178°"],
         fullSpecSections: [
@@ -10063,7 +10099,8 @@ function initMasterMount() {
         ] },
       { id: "product_41", brand: "LG", model: "65QNED70B6T", sizeInches: 65, screenType: "QNED + Mini-LED",
         title: "טלוויזיה חכמה 65 אינץ` LG QNED AI QNED70 MINI LED אל ג`י דגם 65QNED70B6T", priceILS: 2690, imageUrl: "assets/products/product_41.jpg", imageUrlWebp: "assets/products/product_41.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["צבעים חיים ומדויקים", "פירוט חד ומדויק עם טכנולוגיית MiniLED", "מעבד AI 4K אלפא 7 דור 9", "תוכנית  webOS Re:New Program"],
         fullSpecSections: [
@@ -10087,7 +10124,8 @@ function initMasterMount() {
         ] },
       { id: "product_42", brand: "TCL", model: "65P7L", sizeInches: 65, screenType: "QLED",
         title: "טלוויזיה חכמה \"65 TCL QLED טי.סי.אל דגם 65P7L", priceILS: 2690, imageUrl: "assets/products/product_42.jpg", imageUrlWebp: "assets/products/product_42.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED 4K", "מערכת הפעלה Google TV", "זווית צפייה רחבה במיוחד עד 178°", "מסך דק בעיצוב מודרני"],
         fullSpecSections: [
@@ -10101,7 +10139,8 @@ function initMasterMount() {
         ] },
       { id: "product_43", brand: "SAMSUNG", model: "UE65M80H", sizeInches: 65, screenType: "Mini-LED",
         title: "טלוויזיה חכמה \"65 SAMSUNG MINI LED סמסונג דגם UE65M80H", priceILS: 2550, imageUrl: "assets/products/product_43.jpg", imageUrlWebp: "assets/products/product_43.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["סוג מוצר LED", "טכנולוגיית תצוגה Mini LED", "HDR Mini LED HDR", "עיצוב MetalStream במראה דק ומודרני"],
         fullSpecSections: [
@@ -10119,7 +10158,8 @@ function initMasterMount() {
         ] },
       { id: "product_44", brand: "TCL", model: "65P8L", sizeInches: 65, screenType: "QD Mini-LED",
         title: "טלוויזיה חכמה \"65 TCL QD-MINI LED טי.סי.אל דגם 65P8L", priceILS: 3090, imageUrl: "assets/products/product_44.jpg", imageUrlWebp: "assets/products/product_44.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["פאנל HVA", "קצב רענון טבעי 144Hz", "תמיכה ב־4K 144Hz", "מערכת שמע 2.0 ערוצים"],
@@ -10132,7 +10172,8 @@ function initMasterMount() {
         ] },
       { id: "product_45", brand: "LG", model: "65MRGB85B6C", sizeInches: 65, screenType: "MRGB",
         title: "טלוויזיה חכמה 65\" LG 4K MINI RGB AI אל ג`י דגם 65MRGB85B6C", priceILS: 3840, imageUrl: "assets/products/product_45.jpg", imageUrlWebp: "assets/products/product_45.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["טכנולוגיית RGB Primary Color Pro", "SMART TV מתקדם", "מעבד Alpha 8 AI Gen 3", "חוויית צפייה מתקדמת"],
@@ -10150,7 +10191,8 @@ function initMasterMount() {
         ] },
       { id: "product_46", brand: "SAMSUNG", model: "QE65QN70H", sizeInches: 65, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG QLED סמסונג דגם QE65QN70H", priceILS: 3580, imageUrl: "assets/products/product_46.jpg", imageUrlWebp: "assets/products/product_46.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["Quantum Mini LED שליטה מדויקת באזורי התאורה", "רזולוציית 4K UHD ‏3840×2160", "מעבד NQ4 AI Processor", "AirSlim עיצוב דק במיוחד"],
         fullSpecSections: [
@@ -10163,7 +10205,8 @@ function initMasterMount() {
         ] },
       { id: "product_47", brand: "LG", model: "OLED65B66LA", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה \"65 LG OLED אל ג`י דגם OLED65B66LA", priceILS: 4680, imageUrl: "assets/products/product_47.jpg", imageUrlWebp: "assets/products/product_47.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך OLED 4K בגודל 65 אינץ'", "מעבד α8 AI 4K דור 3", "צבע שחור מוחלט ו-100% נפח צבע", "קצב רענון טבעי 120Hz"],
         fullSpecSections: [
@@ -10181,7 +10224,8 @@ function initMasterMount() {
         ] },
       { id: "product_48", brand: "SAMSUNG", model: "QE65QN80H", sizeInches: 65, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG MINI LED סמסונג דגם QE65QN80H", priceILS: 4890, imageUrl: "assets/products/product_48.jpg", imageUrlWebp: "assets/products/product_48.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["שליטה מדויקת בתמונה", "SmartThings תמיכה בבית חכם", "עיצוב דק ואלגנטי", "סוג מוצר Neo QLED"],
         fullSpecSections: [
@@ -10195,7 +10239,8 @@ function initMasterMount() {
         ] },
       { id: "product_49", brand: "SAMSUNG", model: "QE65LS03H", sizeInches: 65, screenType: "QLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG THE FRAME QLED סמסונג דגם QE65LS03H", priceILS: 4980, imageUrl: "assets/products/product_49.jpg", imageUrlWebp: "assets/products/product_49.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["עיצוב מסגרת מודרני המשתלב בחלל", "רזולוציית 4K UHD ‏3840×2160", "מערכת הפעלה Tizen Smart TV", "FreeSync Premium"],
         fullSpecSections: [
@@ -10208,7 +10253,8 @@ function initMasterMount() {
         ] },
       { id: "product_50", brand: "SAMSUNG", model: "QE65S85H", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG OLED 4K סמסונג דגם QE65S85H", priceILS: 4990, imageUrl: "assets/products/product_50.jpg", imageUrlWebp: "assets/products/product_50.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["פיקסלים בתאורה עצמית", "מעבד תמונה חכם NQ4 AI Gen2 המבוסס על בינה מלאכותית", "שיפור אוטומטי של תכנים לרזולוציית 4K", "עיצוב דק עם מסגרת מינימלית בארבעת צדי המסך"],
         fullSpecSections: [
@@ -10234,7 +10280,8 @@ function initMasterMount() {
         ] },
       { id: "product_51", brand: "LG", model: "OLED65CS6VA", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה \"65 LG EVO AI אל ג`י דגם OLED65CS6VA", priceILS: 5390, imageUrl: "assets/products/product_51.jpg", imageUrlWebp: "assets/products/product_51.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["גודל מסך 65 אינץ'", "רזולוציה 3840×2160 (4K Ultra HD)", "טכנולוגיית OLED evo", "עיצוב דק במיוחד"],
         fullSpecSections: [
@@ -10251,7 +10298,8 @@ function initMasterMount() {
         ] },
       { id: "product_52", brand: "TCL", model: "65C7L", sizeInches: 65, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה 65\" TCL 4K SQD-MINI LED טי.סי.אל דגם 65C7L", priceILS: 5590, imageUrl: "assets/products/product_52.jpg", imageUrlWebp: "assets/products/product_52.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["עוצמת הארה גבוהה", "מעבד בינה מלאכותית", "יציאת שמע דיגיטלית", "טכנולוגיות גיימינג מתקדמות"],
         fullSpecSections: [
@@ -10265,7 +10313,8 @@ function initMasterMount() {
         ] },
       { id: "product_53", brand: "SAMSUNG", model: "QE65S90H", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG OLED 4K סמסונג דגם QE65S90H", priceILS: 6800, imageUrl: "assets/products/product_53.jpg", imageUrlWebp: "assets/products/product_53.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מסך OLED עם פיקסלים מאירים עצמאית", "רזולוציית 4K", "מעבד NQ4 AI Gen3", "OLED HDR"],
@@ -10280,7 +10329,8 @@ function initMasterMount() {
         ] },
       { id: "product_54", brand: "TCL", model: "65C8L", sizeInches: 65, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה 65\" TCL 4K SQD-MINI LED טי.סי.אל דגם 65C8L", priceILS: 6900, imageUrl: "assets/products/product_54.jpg", imageUrlWebp: "assets/products/product_54.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["עוצמת הארה גבוהה", "מעבד בינה מלאכותית", "יציאת שמע דיגיטלית", "טכנולוגיות גיימינג מתקדמות"],
@@ -10295,7 +10345,8 @@ function initMasterMount() {
         ] },
       { id: "product_55", brand: "LG", model: "OLED65C66LA", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה 65 אינץ` LG 4K OLED אל ג`י דגם OLED65C66LA", priceILS: 6900, imageUrl: "assets/products/product_55.jpg", imageUrlWebp: "assets/products/product_55.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מעבד אלפא 11 AI 4K  לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות", "צבע שחור מוחלט וצבעוניות מושלמת", "תמונה וצליל משופרים מבוססי בינה מלאכותית"],
@@ -10320,7 +10371,8 @@ function initMasterMount() {
         ] },
       { id: "product_56", brand: "SAMSUNG", model: "QE65LS03HW", sizeInches: 65, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG THE FRAME PRO QLED סמסונג דגם QE65LS03HW", priceILS: 7990, imageUrl: "assets/products/product_56.jpg", imageUrlWebp: "assets/products/product_56.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["סוג תצוגה Neo QLED", "עיצוב מסגרת מודרני", "רזולוציה 3840×2160", "קצב רענון 144Hz"],
         fullSpecSections: [
@@ -10333,7 +10385,8 @@ function initMasterMount() {
         ] },
       { id: "product_57", brand: "LG", model: "OLED65G66LW", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה 65 אינץ` LG 4K OLED אל ג`י דגם OLED65G66LW", priceILS: 8400, imageUrl: "assets/products/product_57.jpg", imageUrlWebp: "assets/products/product_57.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מעבד אלפא 11 AI 4K  לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות", "צבע שחור מוחלט וצבעוניות מושלמת", "תמונה וצליל משופרים מבוססי בינה מלאכותית"],
@@ -10357,7 +10410,8 @@ function initMasterMount() {
         ] },
       { id: "product_58", brand: "SAMSUNG", model: "MRE65R85H", sizeInches: 65, screenType: "Micro RGB",
         title: "טלוויזיה חכמה \"65 SAMSUNG MICRO RGB סמסונג דגם MRE65R85H", priceILS: 8440, imageUrl: "assets/products/product_58.jpg", imageUrlWebp: "assets/products/product_58.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["עיצוב Monolith Edge", "תאורת LED אחורית RGB", "רזולוציה 3840 × 2160", "שדרוג תמונה 4K AI Upscaling"],
@@ -10369,7 +10423,8 @@ function initMasterMount() {
         ] },
       { id: "product_59", brand: "SAMSUNG", model: "QE65S95H", sizeInches: 65, screenType: "OLED",
         title: "טלוויזיה חכמה \"65 SAMSUNG OLED סמסונג דגם QE65S95H", priceILS: 10990, imageUrl: "assets/products/product_59.jpg", imageUrlWebp: "assets/products/product_59.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מסך ללא מסגרת ב-4 צדדים", "פאנל OLED עם פיקסלים בתאורה עצמית", "זווית צפייה רחבה במיוחד", "רזולוציה 3840 × 2160 4K"],
@@ -10382,7 +10437,8 @@ function initMasterMount() {
         ] },
       { id: "product_60", brand: "SAMSUNG", model: "MRE65R95H", sizeInches: 65, screenType: "Micro RGB",
         title: "טלוויזיה חכמה \"65 SAMSUNG MICRO RGB סמסונג דגם MRE65R95H", priceILS: 16700, imageUrl: "assets/products/product_60.jpg", imageUrlWebp: "assets/products/product_60.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["טכנולוגיית Micro RGB", "עיצוב Infinity Air", "רזולוציה 3840 × 2160", "שדרוג תמונה 4K AI Pro"],
@@ -10395,7 +10451,8 @@ function initMasterMount() {
         ] },
       { id: "product_61", brand: "LG", model: "75NU850B6LA", sizeInches: 75, screenType: "NanoCell",
         title: "טלוויזיה חכמה 75\" LG NANO UHD אל ג`י דגם 75NU850B6LA", priceILS: 2890, imageUrl: "assets/products/product_61.jpg", imageUrlWebp: "assets/products/product_61.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מעבד בינה מלאכותית", "שלט חכם", "חיבור רשת WIFI מובנה", "דפדפן אינטרנט פתוח מובנה"],
         fullSpecSections: [
@@ -10416,7 +10473,8 @@ function initMasterMount() {
         ] },
       { id: "product_62", brand: "SAMSUNG", model: "UE75U8000H", sizeInches: 75, screenType: "Crystal-UHD",
         title: "טלוויזיה חכמה \"75 SAMSUNG UHD סמסונג דגם UE75U8000H", priceILS: 2990, imageUrl: "assets/products/product_62.jpg", imageUrlWebp: "assets/products/product_62.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["סוג תצוגה LED", "עיצוב MetalStream דק", "רזולוציה 3840×2160 4K UHD", "קצב רענון 50Hz"],
         fullSpecSections: [
@@ -10427,7 +10485,8 @@ function initMasterMount() {
         ] },
       { id: "product_63", brand: "SAMSUNG", model: "UE75M70H", sizeInches: 75, screenType: "Mini-LED",
         title: "טלוויזיה חכמה \"75 SAMSUNG MINI LED סמסונג דגם UE75M70H", priceILS: 3390, imageUrl: "assets/products/product_63.jpg", imageUrlWebp: "assets/products/product_63.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Mini LED", "חוויית צפייה חכמה", "רזולוציה 3840 × 2160", "קצב רענון 50Hz"],
         fullSpecSections: [
@@ -10444,7 +10503,8 @@ function initMasterMount() {
         ] },
       { id: "product_64", brand: "LG", model: "75QNED70B6T", sizeInches: 75, screenType: "QNED",
         title: "טלוויזיה חכמה \"LG QNED AI MINI LED 4K 75 אל ג`י דגם 75QNED70B6T", priceILS: 3640, imageUrl: "assets/products/product_64.jpg", imageUrlWebp: "assets/products/product_64.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["צבעים חיים ומדויקים", "עמעום מקומי מתקדם", "בינה מלאכותית מהדור הבא", "טכנולוגיית תצוגה משופרת"],
         fullSpecSections: [
@@ -10467,7 +10527,8 @@ function initMasterMount() {
         ] },
       { id: "product_65", brand: "TCL", model: "75P7L", sizeInches: 75, screenType: "QLED",
         title: "טלוויזיה חכמה \"75 TCL QLED טי.סי.אל דגם 75P7L", priceILS: 3690, imageUrl: "assets/products/product_65.jpg", imageUrlWebp: "assets/products/product_65.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED 4K", "מערכת הפעלה Google TV", "זווית צפייה רחבה במיוחד עד 178°", "מסך דק בעיצוב מודרני"],
         fullSpecSections: [
@@ -10481,7 +10542,8 @@ function initMasterMount() {
         ] },
       { id: "product_66", brand: "SAMSUNG", model: "UE75M80H", sizeInches: 75, screenType: "Mini-LED",
         title: "טלוויזיה חכמה \"75 SAMSUNG MINI LED סמסונג דגם UE75M80H", priceILS: 3840, imageUrl: "assets/products/product_66.jpg", imageUrlWebp: "assets/products/product_66.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["סוג מוצר LED", "טכנולוגיית תצוגה Mini LED", "HDR Mini LED HDR", "עיצוב MetalStream במראה דק ומודרני"],
         fullSpecSections: [
@@ -10499,7 +10561,8 @@ function initMasterMount() {
         ] },
       { id: "product_67", brand: "TCL", model: "75P8L", sizeInches: 75, screenType: "QLED",
         title: "טלוויזיה חכמה 75\" TCL 4K QLED טי.סי.אל דגם 75P8L", priceILS: 3950, imageUrl: "assets/products/product_67.jpg", imageUrlWebp: "assets/products/product_67.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["צג מתקדם", "מנגנון להחלקת תנועה", "טכנולוגיות גיימינג מתקדמות", "טכנולוגיית שליטה בתאורה האחורית"],
@@ -10513,7 +10576,8 @@ function initMasterMount() {
         ] },
       { id: "product_68", brand: "LG", model: "75MRGB85B6C", sizeInches: 75, screenType: "MRGB",
         title: "טלוויזיה חכמה 75\" LG 4K MINI RGB AI אל ג`י דגם 75MRGB85B6C", priceILS: 5490, imageUrl: "assets/products/product_68.jpg", imageUrlWebp: "assets/products/product_68.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית RGB Primary Color Pro", "SMART TV מתקדם", "מעבד Alpha 8 AI Gen 3", "חוויית צפייה מתקדמת"],
         fullSpecSections: [
@@ -10531,7 +10595,8 @@ function initMasterMount() {
         ] },
       { id: "product_69", brand: "SAMSUNG", model: "QE75QN70H", sizeInches: 75, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"75 SAMSUNG QLED סמסונג דגם QE75QN70H", priceILS: 5450, imageUrl: "assets/products/product_69.jpg", imageUrlWebp: "assets/products/product_69.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["Quantum Mini LED שליטה מדויקת באזורי התאורה", "רזולוציית 4K UHD ‏3840×2160", "מעבד NQ4 AI Processor", "AirSlim עיצוב דק במיוחד"],
         fullSpecSections: [
@@ -10544,7 +10609,8 @@ function initMasterMount() {
         ] },
       { id: "product_70", brand: "SAMSUNG", model: "UE85M80H", sizeInches: 85, screenType: "Mini-LED",
         title: "טלוויזיה חכמה \"85 SAMSUNG MINI LED סמסונג דגם UE85M80H", priceILS: 5790, imageUrl: "assets/products/product_70.jpg", imageUrlWebp: "assets/products/product_70.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["סוג מוצר LED", "טכנולוגיית תצוגה Mini LED", "HDR Mini LED HDR", "עיצוב MetalStream במראה דק ומודרני"],
         fullSpecSections: [
@@ -10561,7 +10627,8 @@ function initMasterMount() {
         ] },
       { id: "product_71", brand: "TCL", model: "75C7L", sizeInches: 75, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה 75\" TCL 4K SQD-MINI LED טי.סי.אל דגם 75C7L", priceILS: 7500, imageUrl: "assets/products/product_71.jpg", imageUrlWebp: "assets/products/product_71.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["עוצמת הארה גבוהה", "מעבד בינה מלאכותית", "יציאת שמע דיגיטלית", "טכנולוגיות גיימינג מתקדמות"],
         fullSpecSections: [
@@ -10574,7 +10641,8 @@ function initMasterMount() {
         ] },
       { id: "product_72", brand: "TCL", model: "75A300", sizeInches: 75, screenType: "QLED",
         title: "טלוויזיה חכמה \"75 QLED כולל סאונד בר TCL טי.סי.אל דגם 75A300 PRO", priceILS: 9340, imageUrl: "assets/products/product_72.jpg", imageUrlWebp: "assets/products/product_72.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מסך בטכנולוגיית QLED 4K", "עיצוב ייחודי מסך בגימור מט המונע השתקפויות", "סאונד בר בעוצמה של 230W", "תמיכה בטכנולוגיית Dolby Audio"],
@@ -10589,7 +10657,8 @@ function initMasterMount() {
         ] },
       { id: "product_73", brand: "TCL", model: "75C8L", sizeInches: 75, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה 75\" TCL 4K SQD-MINI LED טי.סי.אל דגם 75C8L", priceILS: 9950, imageUrl: "assets/products/product_73.jpg", imageUrlWebp: "assets/products/product_73.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["עוצמת הארה גבוהה", "מעבד בינה מלאכותית", "יציאת שמע דיגיטלית", "טכנולוגיות גיימינג מתקדמות"],
         fullSpecSections: [
@@ -10603,7 +10672,8 @@ function initMasterMount() {
         ] },
       { id: "product_74", brand: "SAMSUNG", model: "QE75LS03HW", sizeInches: 75, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"75 SAMSUNG QLED THE FRAME PRO סמסונג דגם QE75LS03HW", priceILS: 10900, imageUrl: "assets/products/product_74.jpg", imageUrlWebp: "assets/products/product_74.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["סוג תצוגה Neo QLED", "עיצוב מסגרת מודרני", "רזולוציה 3840×2160", "קצב רענון 144Hz"],
         fullSpecSections: [
@@ -10616,7 +10686,8 @@ function initMasterMount() {
         ] },
       { id: "product_75", brand: "SAMSUNG", model: "MRE75R95H", sizeInches: 75, screenType: "Micro RGB",
         title: "טלוויזיה חכמה \"75 SAMSUNG MICRO RGB סמסונג דגם MRE75R95H", priceILS: 22000, imageUrl: "assets/products/product_75.jpg", imageUrlWebp: "assets/products/product_75.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["טכנולוגיית Micro RGB", "עיצוב Infinity Air", "רזולוציה 3840 × 2160", "שדרוג תמונה 4K AI Pro"],
@@ -10629,7 +10700,8 @@ function initMasterMount() {
         ] },
       { id: "product_76", brand: "LG", model: "OLED77B66LA", sizeInches: 77, screenType: "OLED",
         title: "טלוויזיה חכמה \"LG OLED AI 4K 77 אל ג`י דגם OLED77B66LA", priceILS: 7990, imageUrl: "assets/products/product_76.jpg", imageUrlWebp: "assets/products/product_76.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["חוויית קולנוע אמיתית", "צבעוניות מושלמת", "צליל ברורים וחדים", "בינה מלאכותית מופעלים"],
         fullSpecSections: [
@@ -10650,7 +10722,8 @@ function initMasterMount() {
         ] },
       { id: "product_77", brand: "SAMSUNG", model: "QE77S85H", sizeInches: 77, screenType: "OLED",
         title: "טלוויזיה חכמה \"77 SAMSUNG OLED 4K סמסונג דגם QE77S85H", priceILS: 7900, imageUrl: "assets/products/product_77.jpg", imageUrlWebp: "assets/products/product_77.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["פיקסלים בתאורה עצמית", "מעבד תמונה חכם NQ4 AI Gen2 המבוסס על בינה מלאכותית", "שיפור אוטומטי של תכנים לרזולוציית 4K", "עיצוב דק עם מסגרת מינימלית בארבעת צדי המסך"],
         fullSpecSections: [
@@ -10675,7 +10748,8 @@ function initMasterMount() {
         ] },
       { id: "product_78", brand: "SAMSUNG", model: "QE77S90H", sizeInches: 77, screenType: "OLED",
         title: "טלוויזיה חכמה \"77 SAMSUNG OLED 4K סמסונג דגם QE77S90H", priceILS: 10490, imageUrl: "assets/products/product_78.jpg", imageUrlWebp: "assets/products/product_78.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך OLED עם פיקסלים מאירים עצמאית", "רזולוציית 4K", "מעבד NQ4 AI Gen3", "OLED HDR"],
         fullSpecSections: [
@@ -10689,7 +10763,8 @@ function initMasterMount() {
         ] },
       { id: "product_79", brand: "LG", model: "OLED77C66LA", sizeInches: 77, screenType: "OLED",
         title: "טלוויזיה חכמה \"LG OLED EVO AI 4K 77 אל ג`י דגם OLED77C66LA", priceILS: 11790, imageUrl: "assets/products/product_79.jpg", imageUrlWebp: "assets/products/product_79.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["חוויית קולנוע אמיתית", "צבעוניות מושלמת", "צליל ברורים וחדים", "בינה מלאכותית מופעלים"],
         fullSpecSections: [
@@ -10712,7 +10787,8 @@ function initMasterMount() {
         ] },
       { id: "product_80", brand: "LG", model: "OLED77G66LW", sizeInches: 77, screenType: "OLED",
         title: "טלוויזיה חכמה 77 אינץ` LG 4K OLED אל ג`י דגם OLED77G66LW", priceILS: 13780, imageUrl: "assets/products/product_80.jpg", imageUrlWebp: "assets/products/product_80.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מעבד אלפא 11 AI 4K  לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות", "צבע שחור מוחלט וצבעוניות מושלמת", "תמונה וצליל משופרים מבוססי בינה מלאכותית"],
@@ -10737,7 +10813,8 @@ function initMasterMount() {
         ] },
       { id: "product_81", brand: "SAMSUNG", model: "QE77S95H", sizeInches: 77, screenType: "OLED",
         title: "טלוויזיה חכמה \"77 SAMSUNG OLED סמסונג דגם QE77S95H", priceILS: 15990, imageUrl: "assets/products/product_81.jpg", imageUrlWebp: "assets/products/product_81.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מסך ללא מסגרת ב-4 צדדים", "פאנל OLED עם פיקסלים בתאורה עצמית", "זווית צפייה רחבה במיוחד", "רזולוציה 3840 × 2160 4K"],
@@ -10750,7 +10827,8 @@ function initMasterMount() {
         ] },
       { id: "product_82", brand: "SAMSUNG", model: "QE83S85H", sizeInches: 83, screenType: "OLED",
         title: "טלוויזיה חכמה \"83 SAMSUNG OLED 4K סמסונג דגם QE83S85H", priceILS: 12200, imageUrl: "assets/products/product_82.jpg", imageUrlWebp: "assets/products/product_82.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["פיקסלים בתאורה עצמית", "מעבד תמונה חכם NQ4 AI Gen2 המבוסס על בינה מלאכותית", "שיפור אוטומטי של תכנים לרזולוציית 4K", "עיצוב דק עם מסגרת מינימלית בארבעת צדי המסך"],
         fullSpecSections: [
@@ -10775,7 +10853,8 @@ function initMasterMount() {
         ] },
       { id: "product_83", brand: "SAMSUNG", model: "QE83S95H", sizeInches: 83, screenType: "OLED",
         title: "טלוויזיה חכמה \"83 SAMSUNG OLED סמסונג דגם QE83S95H", priceILS: 25700, imageUrl: "assets/products/product_83.jpg", imageUrlWebp: "assets/products/product_83.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך ללא מסגרת ב-4 צדדים", "פאנל OLED עם פיקסלים בתאורה עצמית", "זווית צפייה רחבה במיוחד", "רזולוציה 3840 × 2160 4K"],
         fullSpecSections: [
@@ -10787,7 +10866,8 @@ function initMasterMount() {
         ] },
       { id: "product_84", brand: "SAMSUNG", model: "QE83S90H", sizeInches: 83, screenType: "OLED",
         title: "טלוויזיה חכמה \"83 SAMSUNG OLED 4K סמסונג דגם QE83S90H", priceILS: 15390, imageUrl: "assets/products/product_84.jpg", imageUrlWebp: "assets/products/product_84.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מסך OLED עם פיקסלים מאירים עצמאית", "רזולוציית 4K", "מעבד NQ4 AI Gen3", "OLED HDR"],
@@ -10802,7 +10882,8 @@ function initMasterMount() {
         ] },
       { id: "product_85", brand: "LG", model: "OLED83C66LA", sizeInches: 83, screenType: "OLED",
         title: "טלוויזיה חכמה 83 אינץ` LG OLED אל ג`י דגם OLED83C66LA", priceILS: 15700, imageUrl: "assets/products/product_85.jpg", imageUrlWebp: "assets/products/product_85.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מעבד אלפא 11 AI 4K לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות", "צבע שחור מוחלט וצבעוניות מושלמת", "webOS Re:New Program"],
@@ -10828,7 +10909,8 @@ function initMasterMount() {
         ] },
       { id: "product_86", brand: "LG", model: "OLED83G66LW", sizeInches: 83, screenType: "OLED",
         title: "טלוויזיה חכמה 83 אינץ` LG 4K OLED אל ג`י דגם OLED83G66LW", priceILS: 21300, imageUrl: "assets/products/product_86.jpg", imageUrlWebp: "assets/products/product_86.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מעבד אלפא 11 AI 4K  לתמונה וצליל חדים וברורים", "תמונה בהירה יותר הודות למשפר הבהירות", "צבע שחור מוחלט וצבעוניות מושלמת", "תמונה וצליל משופרים מבוססי בינה מלאכותית"],
         fullSpecSections: [
@@ -10851,7 +10933,8 @@ function initMasterMount() {
         ] },
       { id: "product_87", brand: "LG", model: "85NU850B6LA", sizeInches: 85, screenType: "NanoCell",
         title: "טלוויזיה חכמה \"85 LG NANO אל ג`י דגם 85NU850B6LA", priceILS: 4500, imageUrl: "assets/products/product_87.jpg", imageUrlWebp: "assets/products/product_87.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך 85 אינץ׳ ברזולוציית 4K UHD", "גימור דק ומודרני", "חוויית צפייה רחבה וסוחפת", "Home Hub לשליטה במכשירים חכמים תואמים"],
         fullSpecSections: [
@@ -10863,7 +10946,8 @@ function initMasterMount() {
         ] },
       { id: "product_88", brand: "SAMSUNG", model: "UE85M70H", sizeInches: 85, screenType: "Mini-LED",
         title: "טלוויזיה חכמה \"85 SAMSUNG MINI LED סמסונג דגם UE85M70H", priceILS: 5200, imageUrl: "assets/products/product_88.jpg", imageUrlWebp: "assets/products/product_88.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Mini LED", "חוויית צפייה חכמה", "רזולוציה 3840 × 2160", "קצב רענון 60Hz"],
         fullSpecSections: [
@@ -10880,7 +10964,8 @@ function initMasterMount() {
         ] },
       { id: "product_89", brand: "SAMSUNG", model: "UE85U8000H", sizeInches: 85, screenType: "Crystal-UHD",
         title: "טלוויזיה חכמה \"85 SAMSUNG UHD סמסונג דגם UE85U8000H", priceILS: 4850, imageUrl: "assets/products/product_89.jpg", imageUrlWebp: "assets/products/product_89.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מעבד Crystal Processor 4K", "משפר צבעים להעצמת הבעת הצבעים", "סוג מוצר LED", "HDR10+ תמיכה"],
         fullSpecSections: [
@@ -10898,7 +10983,8 @@ function initMasterMount() {
         ] },
       { id: "product_90", brand: "LG", model: "85QNED70B6T", sizeInches: 85, screenType: "QNED + Mini-LED",
         title: "טלוויזיה חכמה 85 אינץ` LG QNED AI MINI LED אל ג`י דגם 85QNED70B6T", priceILS: 5600, imageUrl: "assets/products/product_90.jpg", imageUrlWebp: "assets/products/product_90.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["צבעים חיים ומדויקים", "פירוט חד ומדויק", "מעבד AI 4K אלפא 7 דור 9", "תוכנית webOS Re:New Program"],
@@ -10921,7 +11007,8 @@ function initMasterMount() {
         ] },
       { id: "product_91", brand: "TCL", model: "85P8L", sizeInches: 85, screenType: "QLED",
         title: "טלוויזיה חכמה 85\" TCL 4K QLED טי.סי.אל דגם 85P8L", priceILS: 5800, imageUrl: "assets/products/product_91.jpg", imageUrlWebp: "assets/products/product_91.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["צג מתקדם", "מנגנון להחלקת תנועה", "טכנולוגיות גיימינג מתקדמות", "טכנולוגיית שליטה בתאורה האחורית"],
@@ -10935,7 +11022,8 @@ function initMasterMount() {
         ] },
       { id: "product_92", brand: "SAMSUNG", model: "QE85QN70H", sizeInches: 85, screenType: "Neo QLED + Mini-LED",
         title: "טלוויזיה חכמה \"85 SAMSUNG QLED סמסונג דגם QE85QN70H", priceILS: 7490, imageUrl: "assets/products/product_92.jpg", imageUrlWebp: "assets/products/product_92.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["Quantum Mini LED שליטה מדויקת באזורי התאורה", "רזולוציית 4K UHD ‏3840×2160", "מעבד NQ4 AI Processor", "AirSlim עיצוב דק במיוחד"],
         fullSpecSections: [
@@ -10948,7 +11036,8 @@ function initMasterMount() {
         ] },
       { id: "product_93", brand: "TCL", model: "85C7L", sizeInches: 85, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה 85\" TCL 4K SQD-MINI LED טי.סי.אל דגם 85C7L", priceILS: 9900, imageUrl: "assets/products/product_93.jpg", imageUrlWebp: "assets/products/product_93.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["עוצמת הארה גבוהה", "מעבד בינה מלאכותית", "יציאת שמע דיגיטלית", "טכנולוגיות גיימינג מתקדמות"],
         fullSpecSections: [
@@ -10961,7 +11050,8 @@ function initMasterMount() {
         ] },
       { id: "product_94", brand: "SAMSUNG", model: "QE85QN80H", sizeInches: 85, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"85 SAMSUNG MINI LED סמסונג דגם QE85QN80H", priceILS: 10490, imageUrl: "assets/products/product_94.jpg", imageUrlWebp: "assets/products/product_94.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["שליטה מדויקת בתמונה", "SmartThings תמיכה בבית חכם", "עיצוב דק ואלגנטי", "סוג מוצר Neo QLED"],
         fullSpecSections: [
@@ -10975,7 +11065,8 @@ function initMasterMount() {
         ] },
       { id: "product_95", brand: "TCL", model: "85C8L", sizeInches: 85, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה \"85 TCL SQD-MINI LED טי.סי.אל דגם 85C8L", priceILS: 13900, imageUrl: "assets/products/product_95.jpg", imageUrlWebp: "assets/products/product_95.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["פאנל LCD בטכנולוגיית SQD-Mini LED", "בהירות שיא של עד 6000 nits", "מערכת הפעלה Google TV", "מערכת שמע DTS Premium Sound"],
@@ -10989,7 +11080,8 @@ function initMasterMount() {
         ] },
       { id: "product_96", brand: "SAMSUNG", model: "QE85LS03HW", sizeInches: 85, screenType: "Neo QLED",
         title: "טלוויזיה חכמה \"85 SAMSUNG THE FRAME PRO QLED סמסונג דגם QE85LS03HW", priceILS: 14900, imageUrl: "assets/products/product_96.jpg", imageUrlWebp: "assets/products/product_96.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["סוג תצוגה Neo QLED", "עיצוב מסגרת מודרני", "רזולוציה 3840×2160", "קצב רענון 144Hz"],
         fullSpecSections: [
@@ -11002,7 +11094,8 @@ function initMasterMount() {
         ] },
       { id: "product_97", brand: "SAMSUNG", model: "MRE85R95H", sizeInches: 85, screenType: "Micro RGB",
         title: "טלוויזיה חכמה \"85 SAMSUNG MICRO RGB סמסונג דגם MRE85R95H", priceILS: 30900, imageUrl: "assets/products/product_97.jpg", imageUrlWebp: "assets/products/product_97.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["טכנולוגיית Micro RGB", "עיצוב Infinity Air", "רזולוציה 3840 × 2160", "שדרוג תמונה 4K AI Pro"],
         fullSpecSections: [
@@ -11014,7 +11107,8 @@ function initMasterMount() {
         ] },
       { id: "product_98", brand: "LG", model: "86MRGB85B6C", sizeInches: 86, screenType: "MRGB",
         title: "טלוויזיה חכמה \"86 LG MINI RGB EVO AI אל ג`י דגם 86MRGB85B6C", priceILS: 7100, imageUrl: "assets/products/product_98.jpg", imageUrlWebp: "assets/products/product_98.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מסך Mini RGB evo AI בגודל 86 אינץ'", "רזולוציית 4K Ultra HD", "מעבד α8 AI 4K Gen3", "מערכת הפעלה webOS"],
@@ -11025,7 +11119,8 @@ function initMasterMount() {
         ] },
       { id: "product_99", brand: "LG", model: "98NU850B6LB", sizeInches: 98, screenType: "NanoCell",
         title: "טלוויזיה חכמה 98 אינץ` LG NANO UHD AI אל ג`י דגם 98NU850B6LB", priceILS: 6600, imageUrl: "assets/products/product_99.jpg", imageUrlWebp: "assets/products/product_99.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["צבעים טהורים בשילוב פרטים מדהימים", "מעבד AI 4K אלפא 8 דור 3", "תוכנית webOS Re:New Program", "שדרוג תוכן לאיכות 4K באמצעות בינה מלאכותית"],
         fullSpecSections: [
@@ -11045,7 +11140,8 @@ function initMasterMount() {
         ] },
       { id: "product_100", brand: "SAMSUNG", model: "UE98U9000H", sizeInches: 98, screenType: "Crystal-UHD",
         title: "טלוויזיה חכמה \"98 SAMSUNG UHD סמסונג דגם UE98U9000H", priceILS: 6990, imageUrl: "assets/products/product_100.jpg", imageUrlWebp: "assets/products/product_100.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך 98 אינץ'", "רזולוציית 4K UHD ‏3840×2160", "מעבד NQ4 AI Gen2", "תצוגה חכמה של גווני שחור"],
         fullSpecSections: [
@@ -11058,7 +11154,8 @@ function initMasterMount() {
         ] },
       { id: "product_101", brand: "TCL", model: "98C7L", sizeInches: 98, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה 98\" TCL 4K SQD-MINI LED טי.סי.אל דגם 98C7L", priceILS: 12890, imageUrl: "assets/products/product_101.jpg", imageUrlWebp: "assets/products/product_101.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["עוצמת הארה גבוהה", "מעבד בינה מלאכותית", "יציאת שמע דיגיטלית", "טכנולוגיות גיימינג מתקדמות"],
@@ -11073,7 +11170,8 @@ function initMasterMount() {
         ] },
       { id: "product_102", brand: "TCL", model: "98C8L", sizeInches: 98, screenType: "Super QD Mini-LED",
         title: "טלוויזיה חכמה \"98 TCL SQD-MINI LED טי.סי.אל דגם 98C8L", priceILS: 17900, imageUrl: "assets/products/product_102.jpg", imageUrlWebp: "assets/products/product_102.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["פאנל LCD בטכנולוגיית SQD-Mini LED", "בהירות שיא של עד 6000 nits", "מערכת הפעלה Google TV", "מערכת שמע DTS Premium Sound"],
         fullSpecSections: [
@@ -11086,7 +11184,8 @@ function initMasterMount() {
         ] },
       { id: "product_103", brand: "TCL", model: "98C6K", sizeInches: 98, screenType: "QLED + Mini-LED",
         title: "טלוויזיה חכמה \"98 TCL QD-MINI LED טי.סי.אל דגם 98C6K", priceILS: 8500, imageUrl: "assets/products/product_103.jpg", imageUrlWebp: "assets/products/product_103.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י סי דאטה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["מסך בטכנולוגיית QLED Mini LED", "מערכת הפעלה Google TV", "זווית צפייה רחבה במיוחד עד 178°", "מסך דק בעיצוב מודרני ללא מסגרת"],
         fullSpecSections: [
@@ -11103,7 +11202,8 @@ function initMasterMount() {
         ] },
       { id: "product_104", brand: "LG", model: "32LB650B6LA", sizeInches: 32, screenType: "LED",
         title: "טלוויזיה חכמה \"32 LG LED אל ג`י דגם 32LB650B6LA", priceILS: 1290, imageUrl: "assets/products/product_104.jpg", imageUrlWebp: "assets/products/product_104.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ח.י אלקטרוניקה",
+        sellerId: "koren",
         badges: ["officialImporter"],
         keyFeatures: ["שמע איכותי עם AI Sound", "מעבד α5 דור AI 9", "ממשק טלוויזיה חכמה עם אפליקציות מקומיות ובינלאומיות", "מערכת הפעלה webOS 26 Smart"],
         fullSpecSections: [
@@ -11116,7 +11216,8 @@ function initMasterMount() {
         ] },
       { id: "product_105", brand: "SAMSUNG", model: "QE55S90H ", sizeInches: 55, screenType: "OLED",
         title: "טלוויזיה חכמה \"55 SAMSUNG OLED 4K סמסונג דגם QE55S90H ", priceILS: 5400, imageUrl: "assets/products/product_105.jpg", imageUrlWebp: "assets/products/product_105.webp",
-        warrantyText: "אחריות ל- 12 חודשים ע\"י היבואן הרשמי",
+        warrantyText: "אחריות ל- 12 חודשים ע\"י ניופרו",
+        sellerId: "koren",
         badges: ["officialImporter"],
         bestSeller: true,
         keyFeatures: ["מסך OLED עם פיקסלים מאירים עצמאית", "רזולוציית 4K", "מעבד NQ4 AI Gen3", "OLED HDR"],
@@ -11414,6 +11515,29 @@ function initMasterMount() {
     var g = cartGrandTotal();
     return g.hasCustom ? fmt(g.numeric) + " + הצעת מחיר בהתאמה אישית" : fmt(g.numeric);
   }
+  /* 23.9.2026 (מודל-פלטפורמה, שלב 3): מי מוכר טלוויזיה נתונה - קורא sellers-data.js, לא-תלוי-בשום
+     טקסט-קשיח. bundleSellerId משתמש-חוזר באותו-חיפוש-brand+model-מול-CATALOG.tvProducts שכבר
+     נבנה בשלב 2 (פתיחת מודל-הבאנדל) - בונדלים לא-נושאים sellerId משל-עצמם. */
+  function sellerDisplayNameFor(sellerId) {
+    var s = sellerId && window.MM_SELLERS_DATA && window.MM_SELLERS_DATA.sellers ? window.MM_SELLERS_DATA.sellers[sellerId] : null;
+    return s && s.displayName ? s.displayName : null;
+  }
+  function bundleSellerId(b) {
+    var p = CATALOG.tvProducts.filter(function (x) { return x.brand === b.brand && x.model === b.model; })[0];
+    return p ? p.sellerId : null;
+  }
+  /* פריט-עגלה → שם-מוכר (או null אם אין טלוויזיה מקושרת לפריט, למשל התקנה-בלבד) */
+  function tvSellerNameForCartItem(ci) {
+    if (ci.productId) {
+      var p = findIn(CATALOG.tvProducts, ci.productId);
+      return sellerDisplayNameFor(p ? p.sellerId : null);
+    }
+    if (ci.bundleId) {
+      var b = findIn(CATALOG.tvBundles, ci.bundleId);
+      return b ? sellerDisplayNameFor(bundleSellerId(b)) : null;
+    }
+    return null;
+  }
   function removeCartItem(cartItemId) {
     cart = cart.filter(function (ci) { return ci.cartItemId !== cartItemId; });
     saveCartToStorage();
@@ -11458,8 +11582,8 @@ function initMasterMount() {
     }
     if (window.transactionDocumentText) {
       lines.push("", "----------", window.transactionDocumentText({
-        items: cart.map(function (ci) { return { title: ci.label, priceILS: ci.itemTotal }; }),
-        totalILS: cartGrandTotal()
+        items: cart.map(function (ci) { return { title: ci.label, priceILS: ci.itemTotal, sellerName: tvSellerNameForCartItem(ci) || undefined }; }),
+        totalILS: cartGrandTotal().numeric /* 23.9.2026: תוקן - cartGrandTotal() מחזיר אובייקט {numeric,hasCustom}, לא מספר; fmtIls היה מחזיר "" בשקט על האובייקט */
       }));
     }
     return lines;
@@ -11767,17 +11891,22 @@ function initMasterMount() {
   function bundleTransactionDocLines(b, total) {
     if (!window.transactionDocumentText) return [];
     return ["", "----------", window.transactionDocumentText({
-      items: [{ title: b.brand + " " + b.model, priceILS: total }],
+      items: [{ title: b.brand + " " + b.model, priceILS: total, sellerName: sellerDisplayNameFor(bundleSellerId(b)) || undefined }],
       totalILS: total
     })];
   }
+  /* 23.9.2026 (שלב 3): "נמכר ע"י X" נוסף צמוד-לשורת-הבאנדל עצמה, בדיוק כמו ברשומת-עגלה רגילה */
+  function bundleQuickBuyLine(b, total) {
+    var sellerName = sellerDisplayNameFor(bundleSellerId(b));
+    return "שלום! מעוניין/ת בבאנדל " + b.brand + " " + b.model + (sellerName ? ' (נמכר ע"י ' + sellerName + ")" : "") + " (כולל התקנה) - מחיר: " + fmt(total) + ".";
+  }
   function bundleWhatsappLink(b, total) {
-    var lines = ["שלום! מעוניין/ת בבאנדל " + b.brand + " " + b.model + " (כולל התקנה) - מחיר: " + fmt(total) + "."].concat(bundleTransactionDocLines(b, total));
+    var lines = [bundleQuickBuyLine(b, total)].concat(bundleTransactionDocLines(b, total));
     return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent(lines.join("\n"));
   }
   function bundleMailtoLink(b, total) {
     return buildMailtoLink("בקשת הצעה לבאנדל " + b.brand + " " + b.model + " - Master Mount",
-      ["שלום! מעוניין/ת בבאנדל " + b.brand + " " + b.model + " (כולל התקנה) - מחיר: " + fmt(total) + "."].concat(bundleTransactionDocLines(b, total)));
+      [bundleQuickBuyLine(b, total)].concat(bundleTransactionDocLines(b, total)));
   }
   /* WebP-with-JPG-fallback markup for a catalog item's photo. imageUrlWebp is optional -
      falls back to a plain <img> (imageUrl only) if it's missing, so older/未-migrated items
@@ -11836,7 +11965,7 @@ function initMasterMount() {
         bundleId: b.id,
         label: title,
         rows: [
-          ["באנדל", title, total],
+          ["באנדל", title + (sellerDisplayNameFor(bundleSellerId(b)) ? ' (נמכר ע"י ' + sellerDisplayNameFor(bundleSellerId(b)) + ")" : ""), total],
           ["הובלה והתקנה", "כלולות בבאנדל (" + bundleMountLabel(b) + ")", null]
         ],
         isCustomQuote: false,
@@ -11930,6 +12059,17 @@ function initMasterMount() {
         })()) + __bundleVatNoteHtml;
     var __bundleAddBtn = document.getElementById("bundleAddToCart");
     if (__bundleAddBtn) __bundleAddBtn.addEventListener("click", function () { window.__addBundleToCart(b.id); });
+    var __bundleSellerDisclosureEl = document.getElementById("bundleModalSellerDisclosure");
+    if (__bundleSellerDisclosureEl && window.sellerDisclosureHtml) {
+      /* לבאנדלים אין warrantyText/sellerId משלהם (נערכים ידנית, ר' scripts/sync-tvproducts.ps1) -
+         מאותרים לפי מותג+דגם מתוך CATALOG.tvProducts, שכבר-סונכרן מה-DB (23.9.2026, מודל-פלטפורמה שלב 2) */
+      var __bundleTvProduct = CATALOG.tvProducts.filter(function (p) { return p.brand === b.brand && p.model === b.model; })[0];
+      __bundleSellerDisclosureEl.innerHTML = window.sellerDisclosureHtml({
+        sellerId: __bundleTvProduct ? __bundleTvProduct.sellerId : undefined,
+        brand: b.brand,
+        warrantyText: __bundleTvProduct ? __bundleTvProduct.warrantyText : undefined
+      });
+    }
     var __bundleDisclosureEl = document.getElementById("bundleModalLegalDisclosure");
     if (__bundleDisclosureEl && window.legalDisclosureHtml) {
       __bundleDisclosureEl.innerHTML = window.legalDisclosureHtml({
@@ -12400,7 +12540,7 @@ function initMasterMount() {
       productId: product.id,
       label: product.title,
       rows: [
-        ["טלוויזיה", product.title, product.priceILS],
+        ["טלוויזיה", product.title + (sellerDisplayNameFor(product.sellerId) ? ' (נמכר ע"י ' + sellerDisplayNameFor(product.sellerId) + ")" : ""), product.priceILS],
         ["הובלה עד הבית", "כלולה", null],
         ["התקנה", "לא נבחרה בהזמנה זו", null]
       ],
@@ -12425,7 +12565,7 @@ function initMasterMount() {
         productId: product.id,
         label: product.title,
         rows: [
-          ["טלוויזיה", product.title, product.priceILS],
+          ["טלוויזיה", product.title + (sellerDisplayNameFor(product.sellerId) ? ' (נמכר ע"י ' + sellerDisplayNameFor(product.sellerId) + ")" : ""), product.priceILS],
           ["הובלה עד הבית", "כלולה", null],
           ["התקנה", "לא נבחרה בהזמנה זו", null]
         ],
@@ -12489,6 +12629,17 @@ function initMasterMount() {
         __schemaEl.innerHTML += '<img src="' + __schema.energyLabelImage + '" alt="תווית אנרגטית" style="max-height:60px;margin-top:6px;">';
       }
     }
+    // כפתור "🖨️ הצג תעודת אחריות להדפסה" (ו-openWarrantyCertificateWindow שהזין אותו) הוסרו
+    // לחלוטין 23.9.2026 לבקשת ברק - הצגת פרטי-האחריות נשארת רק בתוך גילוי-הנאות עצמו (השורה
+    // "אחריות:" ב-legalDisclosureHtml, מוצגת רק כשמוגדר warrantyMonths_installation בקונפיג).
+    var __sellerDisclosureEl = document.getElementById("productPageSellerDisclosure");
+    if (__sellerDisclosureEl && window.sellerDisclosureHtml) {
+      __sellerDisclosureEl.innerHTML = window.sellerDisclosureHtml({
+        sellerId: p.sellerId,
+        brand: p.brand,
+        warrantyText: p.warrantyText
+      });
+    }
     var __disclosureEl = document.getElementById("productPageLegalDisclosure");
     if (__disclosureEl && window.legalDisclosureHtml) {
       __disclosureEl.innerHTML = window.legalDisclosureHtml({
@@ -12497,18 +12648,7 @@ function initMasterMount() {
         description: (p.fullSpecSections && p.fullSpecSections[0] && p.fullSpecSections[0].items && p.fullSpecSections[0].items[0]) || p.title,
         deliveryText: "עד 7 ימי עסקים, הובלה עד הבית",
         isService: false
-      }) + '<button type="button" class="warranty-cert-link" data-product-id="' + p.id + '" style="margin-top:8px;background:none;border:none;text-decoration:underline;cursor:pointer;font-size:.82rem;color:var(--accent,#1a73e8);padding:0;"><span aria-hidden="true">🖨️</span> הצג תעודת אחריות להדפסה</button>';
-      var __certBtn = __disclosureEl.querySelector(".warranty-cert-link");
-      if (__certBtn) {
-        __certBtn.addEventListener("click", function () {
-          openWarrantyCertificateWindow({
-            productOrServiceTitle: p.title,
-            warrantyMonths: BUSINESS && BUSINESS.warrantyMonths_installation,
-            included: "המוצר עצמו ותקינותו הטכנית, בהתאם לתנאי היצרן.",
-            excluded: "נזק שנגרם משימוש לא נכון, תקלה שאינה קשורה לפגם ייצור."
-          });
-        });
-      }
+      });
     }
 
     document.getElementById("productFeaturesInner").innerHTML = (p.fullSpecSections || []).map(function (sec) {

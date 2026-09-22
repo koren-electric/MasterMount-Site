@@ -109,6 +109,53 @@
     return html;
   }
 
+  /**
+   * SellerDisclosure - גילוי "מי מוכר את הטלוויזיה" (מודל-פלטפורמה, 23.9.2026). שונה מ-
+   * legalDisclosureHtml למעלה (שמתאר את העסקה הכללית מול Master Mount, כולל פרטי-עוסק/מחיר/
+   * מדיניות-ביטולים) - זה עוסק ספציפית בזהות-המוכר-בפועל של הטלוויזיה עצמה (כרגע תמיד KOREN,
+   * אבל בנוי לתמוך במוכרים נוספים בעתיד) ובזהות נותן-האחריות עליה. מוצג מתחת למחיר בכל מקום
+   * שמוצגת בו טלוויזיה-עם-מחיר: עמוד מוצר, כרטיס דיל, עמוד השוואה.
+   * כל הנתונים נשאבים מ-window.MM_SELLERS_DATA (sellers/brands, מיוצא מה-DB ע"י
+   * scripts/sync-sellers.ps1) - אין שום טקסט מוטבע-בקוד. אם אין נתוני-מוכר בכלל (הקובץ לא
+   * נטען, או ה-sellerId המבוקש לא קיים) - מוחזרת מחרוזת ריקה, לא-גילוי-חלקי/שבור.
+   * opts: { sellerId, brand, warrantyText } - כולם אופציונליים:
+   *   - sellerId: ברירת-מחדל "koren" (המוכר היחיד-כרגע לכל הקטלוג).
+   *   - brand + warrantyText: אם שניהם סופקו, מחולץ מהם מספר-חודשי-האחריות (regex על
+   *     warrantyText, בפורמט הקבוע "אחריות ל- N חודשים ע"י <יבואן>" - ר' CLAUDE.md) ושם-היבואן
+   *     (מ-brands[brand].importerName). אם הוחסרו (למשל בעמוד-השוואה, שם מוצגים שני דגמים
+   *     שונים ו"פעם אחת בעמוד" מספיקה לפי הדרישה המקורית) - מוצג משפט-אחריות כללי שמפנה
+   *     לעמוד המוצר, בלי להמציא מספר-חודשים משותף-כוזב לשני הדגמים.
+   */
+  function sellerDisclosureHtml(opts) {
+    opts = opts || {};
+    var D = window.MM_SELLERS_DATA || {};
+    var sellers = D.sellers || {};
+    var brands = D.brands || {};
+    var biz = window.BUSINESS_CONFIG || {};
+    var seller = sellers[opts.sellerId || "koren"];
+    if (!seller || !hasVal(seller.displayName)) return "";
+
+    var idParts = [];
+    if (hasVal(seller.legalName)) idParts.push(esc(seller.legalName));
+    if (hasVal(seller.companyId)) idParts.push('ח.פ. ' + esc(seller.companyId));
+    if (hasVal(seller.address)) idParts.push(esc(seller.address));
+    if (hasVal(seller.phone)) idParts.push(phoneBdi(seller.phone));
+
+    var sentence1 = "הטלוויזיה נמכרת על ידי " + esc(seller.displayName) + (idParts.length ? " — " + idParts.join(", ") : "") + ".";
+    var sentence2 = "המשלוח, ההתקנה והשירות — " + esc(biz.brandName || "Master Mount") + ".";
+
+    var sentence3 = "";
+    if (opts.brand && opts.warrantyText) {
+      var brandInfo = brands[opts.brand];
+      var m = String(opts.warrantyText).match(/ל-\s*(\d+)\s*חודשים/);
+      var importerHeb = brandInfo && hasVal(brandInfo.importerName) ? String(brandInfo.importerName).split("\\")[0].trim() : "";
+      if (m && importerHeb) sentence3 = "אחריות: " + m[1] + " חודשים על ידי " + esc(importerHeb) + ".";
+    }
+    if (!sentence3) sentence3 = "תקופת האחריות ופרטיה משתנים לפי יבואן הדגם - מוצגים בעמוד המוצר.";
+
+    return '<p class="seller-disclosure">' + sentence1 + " " + sentence2 + " " + sentence3 + "</p>";
+  }
+
   function isSaleActive(sale) {
     if (!sale || !sale.startDate || !sale.endDate) return false;
     var now = new Date();
@@ -184,12 +231,22 @@
     return "לפרטים בנוגע לביטול עסקה או לכל פנייה אחרת - ראו באתר.";
   }
 
-  /** גרסת טקסט-רגיל (לא HTML) של מסמך פרטי העסקה - להטמעה בתוך הודעת וואטסאפ/מייל */
+  /** גרסת טקסט-רגיל (לא HTML) של מסמך פרטי העסקה - להטמעה בתוך הודעת וואטסאפ/מייל
+   * details: { items: [{title, qty, priceILS, sellerName}], totalILS, customerName }
+   * - כל item יכול לשאת sellerName אופציונלי (23.9.2026, מודל-פלטפורמה שלב 3) - כשקיים,
+   *   מוצג "(נמכר ע"י X)" צמוד לשורת-הפריט עצמה (לא-רק-כותרת-כללית, כי עגלה יכולה לכלול גם
+   *   פריטי-התקנה-בלבד/אביזרים שלא נמכרים ע"י אותו-גורם).
+   */
   function transactionDocumentText(details) {
     details = details || {};
     var biz = window.BUSINESS_CONFIG || {};
     var inquiryId = "MM-" + Date.now().toString(36).toUpperCase();
     var lines = [];
+    /* כותרת-מסמך-הפנייה מזהה תמיד את המפעיל (Master Mount) - operatorName קבוע-קיים
+       ("ברק אליוב"), operatorBusinessId מתווסף רק כשיתמלא (כרגע ריק - לא מוצג). */
+    var headerLine = "Master Mount" + (hasVal(biz.operatorName) ? " — " + biz.operatorName : "");
+    if (hasVal(biz.operatorBusinessId)) headerLine += ", ע.מ. " + biz.operatorBusinessId;
+    lines.push(headerLine);
     lines.push("מסמך פרטי עסקה");
     lines.push("מספר פנייה: " + inquiryId);
     lines.push("תאריך: " + new Date().toLocaleDateString("he-IL"));
@@ -198,6 +255,7 @@
       var line = "- " + it.title;
       if (it.qty) line += " × " + it.qty;
       if (it.priceILS !== undefined) line += " - " + fmtIls(it.priceILS);
+      if (hasVal(it.sellerName)) line += ' (נמכר ע"י ' + it.sellerName + ")";
       lines.push(line);
     });
     if (details.totalILS !== undefined) {
@@ -256,6 +314,7 @@
   }
 
   window.legalDisclosureHtml = legalDisclosureHtml;
+  window.sellerDisclosureHtml = sellerDisclosureHtml;
   window.isSaleActive = isSaleActive;
   window.saleBadgeHtml = saleBadgeHtml;
   window.transactionDocumentHtml = transactionDocumentHtml;

@@ -86,6 +86,7 @@
   <p>אנו עשויים להעביר פרטים רלוונטיים (כגון שם, טלפון וכתובת) לצדדים שלישיים לצורך מתן השירות
   בלבד, ובהיקף המצומצם הנדרש:</p>
   <ul>
+    <li id="legalSellerRecipientLine" hidden></li>
     <li>ספקי הובלה - לצורך אספקת המוצר לביתכם.</li>
     <li>צוותי התקנה מטעמנו - לצורך תיאום וביצוע ההתקנה.</li>
     <li>כלי אנליטיקה/מדידה (במידה ויופעלו) - בכפוף להסכמתכם לעוגיות לא-חיוניות, ראו מדיניות העוגיות
@@ -110,6 +111,7 @@
     <div>
       <a class="brandmark" href="./index.html"><img class="logo-on-light" src="./assets/site/logo-light-sm.png" alt="Master Mount" width="232" height="136" loading="lazy" /><img class="logo-on-dark" src="./assets/site/logo-dark-sm.png" alt="" width="232" height="136" loading="lazy" /></a>
       <p>התקנה מדויקת בשבילך.</p>
+      <p id="footOperatorLine"></p>
     </div>
     <div class="foot-links">
       <a href="./index.html#products">טלוויזיות למכירה</a>
@@ -134,6 +136,8 @@
 </footer>
 <script src="./cookie-consent.js"></script>
 <script src="./business-config.js"></script>
+<script src="./footer-common.js"></script>
+<script src="./sellers-data.js"></script>
 <script src="./legal-page-common.js"></script>
 <script>
   (function () {
@@ -142,10 +146,28 @@
     var name = hasLegalName ? biz.legalName : "Master Mount";
     document.getElementById("legalBizName").textContent = name;
     var businessIdVal = biz.businessId && String(biz.businessId).trim();
-    var controllerLine = "האחראי על המידע הנאסף הוא " + name +
+    /* 23.9.2026 (מודל-פלטפורמה, שלב 6): כל עוד legalName ריק (העוסק טרם נפתח), "האחראי על המידע"
+       מזוהה גם דרך operatorName ("Master Mount — ברק אליוב") - אותה נוסחה בדיוק כמו כותרת-recap
+       בשלב 3 ושורת-הפוטר בשלב 5. ברגע שlegalName יתמלא - הוא-עצמו כבר-מזהה חד-משמעית, אין-צורך-
+       להוסיף-אליו operatorName. */
+    var operatorNameVal = biz.operatorName && String(biz.operatorName).trim();
+    var controllerName = hasLegalName ? name : (name + (operatorNameVal ? " — " + operatorNameVal : ""));
+    var controllerLine = "האחראי על המידע הנאסף הוא " + controllerName +
       (businessIdVal ? ", מספר עוסק " + businessIdVal : "") + ".";
     var controllerEl = document.getElementById("legalControllerLine");
     if (controllerEl) controllerEl.textContent = controllerLine;
+
+    /* סעיף 6 (העברת מידע לצדדים שלישיים) - שורה נוספת: מוכר-הטלוויזיה (מודל-פלטפורמה, שלב 6) -
+       data-driven מ-sellers-data.js, לא-שם-קשיח. מוסתרת אם אין-נתוני-מוכר זמינים מכל סיבה. */
+    var sellerEl = document.getElementById("legalSellerRecipientLine");
+    if (sellerEl) {
+      var sellersData = (window.MM_SELLERS_DATA && window.MM_SELLERS_DATA.sellers) || {};
+      var korenSeller = sellersData.koren;
+      if (korenSeller && korenSeller.displayName) {
+        sellerEl.textContent = "מוכר הטלוויזיה (" + korenSeller.displayName + ") - לצורך השלמת עסקת הרכישה שביצעתם.";
+        sellerEl.hidden = false;
+      }
+    }
   })();
 </script>
 </body>

@@ -56,6 +56,9 @@
     if (document.getElementById("mmCookieStyle")) return;
     var st = document.createElement("style");
     st.id = "mmCookieStyle";
+    /* 23.9.2026 (מודל-פלטפורמה, שלב 7): "אישור"/"דחייה" חייבים משקל-שווה - הוסרה דריסת-מילוי
+       שהייתה-רק-על .mm-cc-accept (רקע-בהיר-מלא מול outline-שקוף על .mm-cc-decline) - שני-הכפתורים
+       משתמשים-עכשיו-רק-בכלל-הבסיסי-המשותף (.mm-cc-btn), זהים-לחלוטין (גודל/צבע/גבול/מילוי). */
     st.textContent =
       "#mmCookieBanner{position:fixed;left:0;right:0;bottom:0;z-index:150;display:flex;align-items:center;gap:8px;" +
       "padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));box-sizing:border-box;direction:rtl;" +
@@ -68,7 +71,6 @@
       "#mmCookieBanner .mm-cc-btn{box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;margin:0;" +
       "border-radius:8px;border:1px solid var(--on-dark,#f3f4f6);background:transparent;color:var(--on-dark,#f3f4f6);" +
       "font-family:inherit;font-size:13px;font-weight:600;line-height:1.2;cursor:pointer}" +
-      "#mmCookieBanner .mm-cc-accept{background:var(--on-dark,#f3f4f6);color:var(--brand-ink,#20272e)}" +
       "#mmCookieBanner .mm-cc-btn:focus-visible,#mmCookieBanner .mm-cc-text a:focus-visible{" +
       "outline:3px solid var(--brand-orange-2,#ff8a52);outline-offset:2px}" +
       "@media (min-width:640px){#mmCookieBanner{gap:16px;padding:12px 24px calc(12px + env(safe-area-inset-bottom,0px))}" +
