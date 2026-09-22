@@ -6915,6 +6915,124 @@ footer.site-foot a:hover {
   font-weight: 600;
 }
 
+/* טבלת "השוואה מהירה בין המותגים" - עיצוב מיוחד: מסגרת-כרטיס, כותרות בצבע-המותג (אותם צבעים
+   כמו סעיפי brand-block למטה בעמוד), אייקון לכל שורת-פרמטר, פס-שני מודגש (zebra, דסקטופ בלבד -
+   לא-מתנגש עם עיצוב-הכרטיס-לכל-שורה שכבר קיים במובייל), ותג-הובלה קטן לערך-המוביל בשורות
+   שיש-בהן-הבדל-עובדתי-ברור. */
+.tvguide-page .compare-frame {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 6px;
+}
+
+.tvguide-page .compare-frame .compare-scroll {
+  border-radius: 15px;
+}
+
+.tvguide-page table.compare.compare-brands thead th[data-brand-col] {
+  border-top: 3px solid var(--brand);
+  padding-top: 15px;
+  text-align: center;
+}
+
+.tvguide-page .compare-brand-name {
+  color: var(--brand);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-family: Big Shoulders Display, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.tvguide-page table.compare.compare-brands tbody th {
+  font-weight: 700;
+}
+
+.tvguide-page .compare-row-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-tertiary);
+  vertical-align: -3px;
+  margin-inline-end: 8px;
+  flex-shrink: 0;
+}
+
+.tvguide-page table.compare.compare-brands tbody td {
+  text-align: center;
+}
+
+.tvguide-page .compare-lead {
+  align-items: center;
+  gap: 7px;
+  font-weight: 800;
+  display: inline-flex;
+}
+
+.tvguide-page .compare-lead-badge {
+  background: var(--brand);
+  color: var(--bg);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+.tvguide-page .compare-lead-badge svg {
+  width: 11px;
+  height: 11px;
+}
+
+.tvguide-page .compare-highlight-row th,
+.tvguide-page .compare-highlight-row td {
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+}
+
+.tvguide-page .compare-highlight-row th {
+  border-start-start-radius: 12px;
+}
+
+.tvguide-page .compare-highlight-row td:last-child {
+  border-start-end-radius: 12px;
+}
+
+.tvguide-page .compare-source-note {
+  color: var(--text-tertiary);
+  text-align: center;
+  margin-top: 14px;
+  font-size: .85rem;
+}
+
+/* min-width+padding נעולים לדסקטופ בלבד (query נפרד, > 640px) - לא unscoped, כי
+   .compare-brands עם 3 מחלקות-סלקטור מנצח בספציפיות את ה-override הקיים למובייל
+   (table.compare עם 2 מחלקות בלבד, ב-@media width<=640px) גם בלי קשר לסדר-קוד/media;
+   min-width:640px unscoped היה כופה רוחב-דסקטופ ומייצר גלישה אופקית גם ב-390px */
+@media (width > 640px) {
+  .tvguide-page table.compare.compare-brands {
+    min-width: 640px;
+  }
+
+  .tvguide-page table.compare.compare-brands th,
+  .tvguide-page table.compare.compare-brands td {
+    padding: 15px 18px;
+  }
+
+  .tvguide-page table.compare.compare-brands tbody tr:not(.compare-highlight-row):nth-child(even) {
+    background: var(--surface-2);
+  }
+}
+
+@media (width <= 640px) {
+  .tvguide-page table.compare.compare-brands tbody td {
+    text-align: start;
+  }
+}
+
 .tvguide-page .guide-cta {
   text-align: center;
   padding-block: 56px;
@@ -7777,7 +7895,8 @@ footer.site-foot a:hover {
 /* ערכת כהה: צבע המותג הכהה (כחול/בורדו/טורקיז) מתערבב עם צבע הטקסט הראשי כדי לשמור על ניגודיות */
 @supports (color: color-mix(in lab, red, red)) {
   [data-theme="dark"] .tvguide-page .brand-pill,
-  [data-theme="dark"] .tvguide-page .tier-highlight {
+  [data-theme="dark"] .tvguide-page .tier-highlight,
+  [data-theme="dark"] .tvguide-page .compare-brand-name {
     color: color-mix(in srgb, var(--brand) 30%, var(--text-primary));
   }
 }
@@ -8434,19 +8553,53 @@ if(window.matchMedia){var mq=window.matchMedia("(min-width:1280px)");var onMq=fu
       <h2>השוואה מהירה בין המותגים</h2>
       <p>לעין ציפור, לפני שממשיכים לקטלוג</p>
     </div>
-    <div class="compare-scroll" tabindex="0" role="region" aria-label="טבלת השוואה בין המותגים">
-      <table class="compare">
-        <thead>
-          <tr><th></th><th>SAMSUNG</th><th>LG</th><th>TCL</th></tr>
-        </thead>
-        <tbody>
-          <tr><th>מערכת הפעלה</th><td data-label="SAMSUNG">Tizen</td><td data-label="LG">webOS</td><td data-label="TCL">Google TV</td></tr>
-          <tr><th>פורמט HDR</th><td data-label="SAMSUNG"><bdi dir="ltr">HDR10+</bdi></td><td data-label="LG">Dolby Vision</td><td data-label="TCL"><bdi dir="ltr">HDR10+</bdi> וגם Dolby Vision</td></tr>
-          <tr class="compare-note-row"><td></td><td colspan="3" style="font-size:.875rem;color:var(--text-tertiary);font-weight:400;">כל הטלוויזיות תומכות גם ב-HDR10 וב-HLG הבסיסיים.</td></tr>
-          <tr><th>חוזק בולט</th><td data-label="SAMSUNG">בהירות + Quantum Dot + גיימינג מובנה</td><td data-label="LG">OLED מוביל + חוויית צפייה קולנועית</td><td data-label="TCL">ערך לכסף + גמישות HDR</td></tr>
-        </tbody>
-      </table>
+    <div class="compare-frame">
+      <div class="compare-scroll" tabindex="0" role="region" aria-label="טבלת השוואה בין המותגים">
+        <table class="compare compare-brands">
+          <thead>
+            <tr>
+              <th></th>
+              <th data-brand-col="samsung" style="--brand:#1c3a63;"><span class="compare-brand-name">SAMSUNG</span></th>
+              <th data-brand-col="lg" style="--brand:#a8264a;"><span class="compare-brand-name">LG</span></th>
+              <th data-brand-col="tcl" style="--brand:#0f7a82;"><span class="compare-brand-name">TCL</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th><svg class="compare-row-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.4"/><rect x="13" y="4" width="7" height="7" rx="1.4"/><rect x="4" y="13" width="7" height="7" rx="1.4"/><rect x="13" y="13" width="7" height="7" rx="1.4"/></svg>מערכת הפעלה</th>
+              <td data-label="SAMSUNG">Tizen</td>
+              <td data-label="LG">webOS</td>
+              <td data-label="TCL">Google TV</td>
+            </tr>
+            <tr>
+              <th><svg class="compare-row-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.6v3M12 18.4v3M4.3 4.3l2.1 2.1M17.6 17.6l2.1 2.1M2.6 12h3M18.4 12h3M4.3 19.7l2.1-2.1M17.6 6.4l2.1-2.1"/></svg>פורמטי HDR</th>
+              <td data-label="SAMSUNG"><bdi dir="ltr">HDR10+</bdi> (ללא Dolby Vision)</td>
+              <td data-label="LG">Dolby Vision בדגמי הפרימיום (OLED ומעלה)</td>
+              <td data-label="TCL"><bdi dir="ltr">HDR10+</bdi> וגם Dolby Vision, ברוב הדגמים</td>
+            </tr>
+            <tr>
+              <th><svg class="compare-row-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2l7 3v5.4c0 4.6-3 8.5-7 9.6-4-1.1-7-5-7-9.6V6.2l7-3z"/><path d="M9 12l2 2 4-4"/></svg>עדכוני תוכנה (ממוצע)</th>
+              <td data-label="SAMSUNG"><span class="compare-lead"><span class="compare-lead-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>עד 7 שנים</span></td>
+              <td data-label="LG">5 שנים</td>
+              <td data-label="TCL">2-3 שנים</td>
+            </tr>
+            <tr>
+              <th><svg class="compare-row-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2.6" width="8" height="18.8" rx="3"/><circle cx="12" cy="7" r=".9"/><path d="M10 11h4M10 14h4M10 17h4"/></svg>שלט רחוק נטען</th>
+              <td data-label="SAMSUNG"><span class="compare-lead"><span class="compare-lead-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>ברוב הדגמים</span></td>
+              <td data-label="LG">לא כלול</td>
+              <td data-label="TCL">לא כלול</td>
+            </tr>
+            <tr class="compare-highlight-row">
+              <th><svg class="compare-row-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 3.4l2.7 5.4 5.9.9-4.3 4.2 1 5.9L12 16.9l-5.3 2.9 1-5.9-4.3-4.2 5.9-.9L12 3.4z"/></svg>חוזק בולט</th>
+              <td data-label="SAMSUNG">בהירות + Quantum Dot + גיימינג מובנה</td>
+              <td data-label="LG">OLED מוביל + חוויית צפייה קולנועית</td>
+              <td data-label="TCL">ערך לכסף + הספק שמע מובנה גבוה</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+    <p class="compare-source-note">מבוסס על קטלוג הטלוויזיות שלנו, ומתעדכן באופן שוטף.</p>
   </div>
 </section>
 
