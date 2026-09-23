@@ -4540,6 +4540,14 @@ section.block {
   display: flex;
 }
 
+/* 23.9.2026 (בקשת ברק - שלב 5, "בשורה אחת"): מבטל את max-width:640px הגנרי, רק עבור שורת
+   אפשרויות-הסתרת-הכבלים - כדי שכל האפשרויות ייכנסו בשורה אחת ברוחב-דסקטופ-רגיל (.config-body
+   רחב בהרבה מ-640px). flex-wrap נשאר פעיל - במסכים צרים האפשרויות עדיין עוטפות כרגיל, אין
+   דרך "לאלץ" שורה-בודדת גם במובייל בלי לשבור שימושיות. */
+#cableOptionsGrid {
+  max-width: none;
+}
+
 .multi-chip {
   border: 1.5px solid var(--border);
   background: var(--surface-2);
@@ -4614,30 +4622,6 @@ section.block {
   max-width: 440px;
   margin: 0 auto 24px;
   font-size: .95rem;
-}
-
-.photo-box {
-  text-align: center;
-  max-width: 320px;
-  margin: 0 auto;
-}
-
-.photo-preview-wrap {
-  margin-bottom: 14px;
-}
-
-.photo-preview-wrap img {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  max-width: 100%;
-  margin: 0 auto;
-  display: block;
-}
-
-.photo-actions {
-  flex-direction: column;
-  gap: 8px;
-  display: flex;
 }
 
 .wall-other-input {
@@ -4886,31 +4870,48 @@ section.block {
   font-size: .78rem;
 }
 
+/* 23.9.2026 (בקשת ברק - שלב 8, "פחות מתריע"): הוחלף מתיבת-אזהרה-בולטת (רקע-גרדיאנט-כתום,
+   טקסט לבן-מודגש) לפתק-מידע שקט ומצומצם - הכיתוב עדיין מוסבר, אבל לא נראה כמו שגיאה/אזהרה. */
 .order-review-notice {
   align-items: flex-start;
-  gap: 10px;
-  background: linear-gradient(135deg, #ea5b2426, #ff8a5217);
-  border: 1px solid #ea5b2459;
-  border-radius: 12px;
-  margin-top: 20px;
-  padding: 14px 18px;
+  gap: 8px;
+  background: none;
+  border: 1px solid #ffffff26;
+  border-radius: 10px;
+  margin-top: 16px;
+  padding: 10px 14px;
   display: flex;
 }
 
 .order-review-notice svg {
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
-  color: var(--brand-orange-2);
-  margin-top: 1px;
+  width: 16px;
+  height: 16px;
+  color: #f3f4f68c;
+  margin-top: 2px;
 }
 
 .order-review-notice p {
-  color: #fff;
-  font-size: .95rem;
-  font-weight: 700;
-  line-height: 1.55;
+  color: #f3f4f68c;
+  font-size: .82rem;
+  font-weight: 400;
+  line-height: 1.5;
   margin: 0;
+}
+
+/* 23.9.2026 (בקשת ברק - שלב 8, "כפתור קטן יותר"): #addToCartBtn הוא הכפתור היחיד בתוך .lead-ctas
+   בסיכום-השלב (בשונה מזוג-הכפתורים ברוחב-מלא בעגלה הסופית) - flex:1 הגנרי של ".lead-ctas button"
+   היה מותח אותו לרוחב-מלא. סקופ ל-class-נוסף (.lead-ctas-summary) בלבד, לא נוגע ב-.lead-ctas/
+   .btn-accent המשותפים לשאר האתר (עגלה, hero וכו'). */
+.lead-ctas-summary {
+  justify-content: center;
+}
+
+.lead-ctas-summary #addToCartBtn {
+  flex: none;
+  min-width: 220px;
+  padding: 12px 28px;
+  font-size: .94rem;
 }
 
 .config-shell {
@@ -4966,10 +4967,6 @@ section.block {
 
 .config-shell .sub-question {
   color: var(--on-dark-dim);
-}
-
-.config-shell .photo-preview-wrap img {
-  border-color: #ffffff29;
 }
 
 .config-shell .flat-card, .config-shell .multi-chip, .config-shell .extra-row {
@@ -7984,13 +7981,6 @@ fieldset.step-fieldset legend {
   color: var(--brand-orange-2);
 }
 
-/* תמונת מיקום: תצוגה מקדימה מוגבלת בגובה כדי שכפתור "הבא" לא יידחק מתחת לקפל */
-.photo-preview-wrap img {
-  max-height: min(240px, 38vh);
-  width: auto;
-  object-fit: contain;
-}
-
 /* סיכום/הזמנה: כפתורים בשורה מלאה במסך צר, רדיוס לא אליפטי */
 @media (width <= 520px) {
   .lead-ctas a, .lead-ctas button {
@@ -8404,12 +8394,12 @@ function initInstallation() {
     if (link) { e.preventDefault(); e.stopPropagation(); }
   }, true);
 
-  // דגל מרכזי: האם העוסק כבר רשום ופעיל מסחרית (window.BUSINESS_CONFIG.isRegistered).
-  // false = המחשבון נשאר פעיל (מידע לגיטימי), אך הכפתור הסופי מבקש הצעת-מחיר במקום להוסיף-לעגלה,
-  // ועגלת ה-installation.html מוסתרת. true = הכל חוזר להתנהגות הרגילה, כמו היום.
-  var IS_REGISTERED = !!(BUSINESS && BUSINESS.isRegistered);
-  if (!IS_REGISTERED) {
-  }
+  /* 23.9.2026 (בקשת ברק - שלב 8): IS_REGISTERED (window.BUSINESS_CONFIG.isRegistered) הוסר
+     מכאן - שלב-הסיכום עבר לכפתור "הוסיפו לעגלה" אחיד לכולם (לא-מבחין-בין-רשום/לא-רשום יותר).
+     נבדק לפני ההסרה: ה-if(!IS_REGISTERED){} הישן היה גוף-ריק (התנהגות-ה-JS כבר תמיד-הייתה
+     זהה משני הצדדים - התגית "העגלה מוסתרת" בהערה-שנמחקה מעולם לא-מומשה בפועל) - אין השפעה
+     על שום דבר אחר. window.BUSINESS_CONFIG.isRegistered/business-config.js עצמם לא נגעו -
+     ייתכן שדפים אחרים באתר עדיין תלויים בדגל הזה בהקשר משלהם. */
 
   // פותח חלון חדש עם תעודת-אחריות מוכנה-להדפסה (window.print() דפדפני רגיל, בלי שרת PDF).
   function openWarrantyCertificateWindow(details) {
@@ -8828,15 +8818,18 @@ function initInstallation() {
         keyFeatures: ["למסכים 17 עד 43 אינץ׳, עד 15 ק״ג", "טווח גובה רחב 710 עד 1240 מ״מ למרכז מסך", "סיבוב מסך עד 90 מעלות לצפייה אנכית", "מדף מתכוונן וארגונית אחסון בגב המסך", "הטיה אנכית 5 מעלות מעלה עד 10 מעלות מטה"] }
     ],
     wallMaterials: [
-      { id: "concrete", name: "בטון" },
-      { id: "blocks", name: "בלוקים" },
-      { id: "drywall", name: "גבס" },
-      { id: "other", name: "אחר", freeText: true }
+      { id: "concrete", name: "בטון", priceILS: 0 },
+      { id: "blocks", name: "בלוקים", priceILS: 0 },
+      { id: "drywall", name: "גבס", priceILS: 0 },
+      { id: "wall_new_1790129249857", name: "עץ", priceILS: 0 },
+      { id: "wall_new_1790129392181", name: "בטון מזוין \\ ממד", priceILS: 100 },
+      { id: "other", name: "אחר", priceILS: 0, freeText: true }
     ],
     cableConcealment: [
+      { id: "none", name: "אין צורך בהסתרת הכבלים", priceILS: 0 },
+      { id: "cable_new_1790133825613", name: "עמוד סטטי בהתאם לתשתית", priceILS: 0 },
       { id: "existing_conduit", name: "השחלה בתשתית קיימת", priceILS: 70 },
       { id: "hidden_wall_channel", name: "תשתית נסתרת בקיר גבס (עד 1.5 מ׳)", priceILS: 400, needsWallMaterial: true },
-      { id: "none", name: "אין צורך בהסתרת הכבלים", priceILS: 0 },
       { id: "conduit_sleeve", name: "צינור שרשור לאיסוף כבלים (עד 1.2 מ׳)", priceILS: 140, needsColor: true }
     ],
     extraHardware: [
@@ -8848,6 +8841,24 @@ function initInstallation() {
       { id: "surge_protector", name: "מגן ברקים לטלוויזיה", priceILS: 110 }
     ]
   };
+
+  /* 23.9.2026 (בקשת ברק - שלב 4 חדש): "מה סוג הרצפה עליה נתקין?" - נשאלת רק בהתקנה-על-עמוד-
+     רצפתי-סטטי (floor_pole) וגם רק כשנבחר אחד משלושת המתקנים הספציפיים ב-
+     FLOOR_TYPE_TRIGGER_MOUNT_IDS למטה (לא לכל מתקן-עמוד-רצפתי). כולן 0₪ - מידע-בלבד. */
+  var FLOOR_TYPES = [
+    { id: "bare_concrete", name: "בטון חשוף / אפוקסי", priceILS: 0 },
+    { id: "tile", name: "אריחי קרמיקה / פורצלן / גרניט", priceILS: 0 },
+    { id: "laminate_vinyl", name: "פרקט למינציה / ויניל צף", priceILS: 0 },
+    { id: "solid_wood", name: "פרקט עץ מלא", priceILS: 0 }
+  ];
+  /* mountProducts שרק עבורם שלב-סוג-הרצפה נפתח (ר' ה-skip של שלב floorTypeId ב-STEPS) */
+  var FLOOR_TYPE_TRIGGER_MOUNT_IDS = ["mount_new_1789879429669", "mount_new_1789864214563", "mount_new_1789864023402"];
+
+  /* 23.9.2026 (בקשת ברק - שלב 7 חדש): בחירת מותג+גודל-מסך-בפועל מרשימות סגורות, במקום שדה-
+     טקסט-חופשי אחד ("איזה דגם מתקינים"). סדר-המותגים קבוע-לפי-בקשה - לא למיין/לשנות בלי
+     בקשה מפורשת. "אחר" תמיד אחרון, פותח שדה-טקסט-חופשי (tvBrandOther). */
+  var TV_BRANDS = ["סמסונג", "אל ג'י", "טי סי אל", "הייסנס", "סוני", "פיליפס", "דרימי", "שיאומי", "האייר", "אחר"];
+  var TV_SIZES = [32, 40, 42, 43, 48, 50, 55, 58, 65, 70, 75, 85, 86, 98, 100, 110, 115];
 
   function sizeTierIdForInches(inches) {
     var ranges = [
@@ -8910,9 +8921,15 @@ function initInstallation() {
   var URL_LINKED_SIZE_INCHES = Number(new URLSearchParams(location.search).get("linkedSizeInches")) || null;
 
   /* ================= CONFIGURATOR ================= */
+  /* 23.9.2026 (בקשת ברק - שלב-4/5/7/8 שוכתבו): מסירים לגמרי את שלב-התמונה (photoDataUrl/
+     photoFileName) - שלב 4 הופך לבחירת-סוג-קיר (wallMaterialId, רק בהתקנה-על-קיר) או
+     סוג-רצפה (floorTypeId, רק בעמוד-רצפתי-סטטי+מתקן-ספציפי) - שני שדות נפרדים, לעולם לא-
+     שניהם-יחד (skip-conditions בלעדיים-הדדית ב-STEPS). cableId מתחיל כברירת-מחדל "none"
+     (לא null) - "אין צורך בהסתרת הכבלים" תמיד-מסומן-מראש. installOnlyTvModel (טקסט-חופשי)
+     הוחלף בבחירה-מרשימה: tvBrand (+ tvBrandOther כש"אחר") ו-tvSizeInches. */
   var sel;
   function resetSel() {
-    sel = { installLocationId: null, sizeTierId: null, mountProductId: null, photoDataUrl: null, photoFileName: null, cableId: null, wallMaterialId: null, wallMaterialOther: "", cableColor: null, extraQty: {}, linkedProductId: null, installOnlyTvModel: "" };
+    sel = { installLocationId: null, sizeTierId: null, mountProductId: null, wallMaterialId: null, wallMaterialOther: "", floorTypeId: null, cableId: "none", cableColor: null, extraQty: {}, linkedProductId: null, tvBrand: null, tvBrandOther: "", tvSizeInches: null };
   }
   resetSel();
   if (URL_LINKED_PRODUCT) {
@@ -8943,27 +8960,26 @@ function initInstallation() {
     return (range[1] >= tier[1] && range[0] <= tier[0]) ? "fit" : "nofit";
   }
 
-  /* ---- שמירת מצב ב-sessionStorage (רענון/חזרה לא מוחקים את הבחירות; ללא תמונה - גדולה מדי) ---- */
+  /* ---- שמירת מצב ב-sessionStorage (רענון/חזרה לא מוחקים את הבחירות) ---- */
   var STATE_KEY = "mm_install_state_v1";
   function persistState() {
     try {
       var copy = JSON.parse(JSON.stringify(sel));
-      copy.photoDataUrl = null;
-      copy.photoFileName = null;
       sessionStorage.setItem(STATE_KEY, JSON.stringify({ sel: copy, step: curStepIdx, linked: sel.linkedProductId || null }));
     } catch (e) {}
   }
   function clearPersistedState() { try { sessionStorage.removeItem(STATE_KEY); } catch (e) {} }
   function sanitizeSel(raw) {
-    var s = { installLocationId: null, sizeTierId: null, mountProductId: null, photoDataUrl: null, photoFileName: null, cableId: null, wallMaterialId: null, wallMaterialOther: "", cableColor: null, extraQty: {}, linkedProductId: null, installOnlyTvModel: "" };
+    var s = { installLocationId: null, sizeTierId: null, mountProductId: null, wallMaterialId: null, wallMaterialOther: "", floorTypeId: null, cableId: "none", cableColor: null, extraQty: {}, linkedProductId: null, tvBrand: null, tvBrandOther: "", tvSizeInches: null };
     if (!raw || typeof raw !== "object") return s;
     if (findIn(CATALOG.installLocations, raw.installLocationId)) s.installLocationId = raw.installLocationId;
     if (findIn(CATALOG.sizeTiers, raw.sizeTierId)) s.sizeTierId = raw.sizeTierId;
     var mp = findIn(CATALOG.mountProducts, raw.mountProductId);
     if (mp && s.installLocationId && mp.locationIds.indexOf(s.installLocationId) >= 0 && s.installLocationId !== "special") s.mountProductId = mp.id;
-    if (findIn(CATALOG.cableConcealment, raw.cableId)) s.cableId = raw.cableId;
     if (findIn(CATALOG.wallMaterials, raw.wallMaterialId)) s.wallMaterialId = raw.wallMaterialId;
     s.wallMaterialOther = String(raw.wallMaterialOther || "").slice(0, 120);
+    if (findIn(FLOOR_TYPES, raw.floorTypeId)) s.floorTypeId = raw.floorTypeId;
+    if (findIn(CATALOG.cableConcealment, raw.cableId)) s.cableId = raw.cableId;
     if (raw.cableColor === "שחור" || raw.cableColor === "לבן") s.cableColor = raw.cableColor;
     if (raw.extraQty && typeof raw.extraQty === "object") {
       CATALOG.extraHardware.forEach(function (e) {
@@ -8971,7 +8987,9 @@ function initInstallation() {
         if (q > 0 && q < 100) s.extraQty[e.id] = q;
       });
     }
-    s.installOnlyTvModel = String(raw.installOnlyTvModel || "").slice(0, 120);
+    if (TV_BRANDS.indexOf(raw.tvBrand) !== -1) s.tvBrand = raw.tvBrand;
+    s.tvBrandOther = String(raw.tvBrandOther || "").slice(0, 120);
+    if (TV_SIZES.indexOf(Number(raw.tvSizeInches)) !== -1) s.tvSizeInches = Number(raw.tvSizeInches);
     return s;
   }
 
@@ -8991,10 +9009,20 @@ function initInstallation() {
           .map(function (m, i) { return { id: m.id, title: m.name, subtitle: fmt(m.priceILS), imageUrl: m.imageUrl, imageUrlWebp: m.imageUrlWebp, features: m.keyFeatures, fit: mountFitState(m), _i: i }; })
           .sort(function (a, b) { return (order[a.fit] - order[b.fit]) || (a._i - b._i); });
       } },
-    { id: "photo", q: "תמונה של מיקום ההתקנה", type: "photo" },
+    /* 23.9.2026 (בקשת ברק): שלב 4 - שני-מסלולים-בלעדיים-הדדית (תנאי-skip הפוכים בדיוק, לעולם
+       לא-שניהם-יחד): "wall" -> סוג-קיר (עם תמחור, 100₪ רק בטון-מזוין/ממ"ד); "floor_pole"+
+       אחד-משלושת-המתקנים-הספציפיים -> סוג-רצפה (מידע-בלבד, 0₪ לכולן). כל שאר המיקומים
+       (table/cart/ceiling/special, וגם floor_pole עם מתקן-אחר) מדלגים על שניהם - ישר-לשלב-5. */
+    { id: "wallMaterialId", q: "מאיזה חומר עשוי הקיר?", type: "wallMaterial",
+      skip: function () { return sel.installLocationId !== "wall"; } },
+    { id: "floorTypeId", q: "מה סוג הרצפה עליה נתקין?", type: "single",
+      skip: function () { return !(sel.installLocationId === "floor_pole" && FLOOR_TYPE_TRIGGER_MOUNT_IDS.indexOf(sel.mountProductId) !== -1); },
+      options: function () { return FLOOR_TYPES.map(function (f) { return { id: f.id, title: f.name, subtitle: fmt(f.priceILS) }; }); } },
     { id: "cableId", q: "איך תרצו להסתיר את הכבלים?", type: "cable" },
     { id: "extraIds", q: "תוספות", type: "extras" },
-    { id: "tvModelText", q: "איזה דגם טלוויזיה מתקינים?", type: "tvModel",
+    /* 23.9.2026: הוחלף משדה-טקסט-חופשי-בודד (installOnlyTvModel) לבחירה מרשימות-סגורות (מותג+
+       גודל-מסך-בפועל) - type ייעודי, ר' renderTvBrandSizeStep. */
+    { id: "tvBrandSize", q: "איזה טלוויזיה מתקינים?", type: "tvBrandSize",
       skip: function () { return !!sel.linkedProductId; } },
     { id: "summary", q: "", type: "summary" }
   ];
@@ -9012,6 +9040,10 @@ function initInstallation() {
     /* בהתקנה מיוחדת אין בחירת מתקן (השלב מדולג) - מתקן שנבחר קודם לא נספר */
     var mountProduct = sel.installLocationId === "special" ? null : findIn(CATALOG.mountProducts, sel.mountProductId);
     var mountPrice = mountProduct ? mountProduct.priceILS : 0;
+    /* 23.9.2026: סוג-קיר (שלב 4) - רק בהתקנה-על-קיר; 100₪ בטון-מזוין/ממ"ד, 0₪ לכל השאר.
+       סוג-רצפה (floorTypeId) לא-נכנס לחישוב-המחיר בכלל - כל האפשרויות שלו 0₪ בהגדרה. */
+    var wallMaterial = sel.installLocationId === "wall" ? findIn(CATALOG.wallMaterials, sel.wallMaterialId) : null;
+    var wallMaterialPrice = wallMaterial ? wallMaterial.priceILS : 0;
     var cable = findIn(CATALOG.cableConcealment, sel.cableId);
     var cablePrice = cable ? cable.priceILS : 0;
     var extrasPrice = 0;
@@ -9022,8 +9054,8 @@ function initInstallation() {
       if (item && item.priceILS != null) extrasPrice += item.priceILS * qty;
     });
     return {
-      locPrice: locPrice, sizePrice: sizePrice, mountPrice: mountPrice, cablePrice: cablePrice, extrasPrice: extrasPrice,
-      total: locPrice + sizePrice + mountPrice + cablePrice + extrasPrice,
+      locPrice: locPrice, sizePrice: sizePrice, mountPrice: mountPrice, wallMaterialPrice: wallMaterialPrice, cablePrice: cablePrice, extrasPrice: extrasPrice,
+      total: locPrice + sizePrice + mountPrice + wallMaterialPrice + cablePrice + extrasPrice,
       isCustomQuote: !!(loc && loc.priceILS == null)
     };
   }
@@ -9140,14 +9172,14 @@ function initInstallation() {
           });
         });
       }
-    } else if (step.type === "photo") {
-      renderPhotoStep(body, step);
+    } else if (step.type === "wallMaterial") {
+      renderWallMaterialStep(body, step);
     } else if (step.type === "cable") {
       renderCableStep(body, step);
     } else if (step.type === "extras") {
       renderExtrasStep(body, step);
-    } else if (step.type === "tvModel") {
-      renderTvModelStep(body, step);
+    } else if (step.type === "tvBrandSize") {
+      renderTvBrandSizeStep(body, step);
     } else if (step.type === "summary") {
       renderSummary(body);
     }
@@ -9165,53 +9197,77 @@ function initInstallation() {
     configStepHasRenderedOnce = true;
   }
 
-  function renderTvModelStep(body, step) {
+  /* 23.9.2026 (בקשת ברק - שלב 4, סוג-קיר): מוצג רק כש-installLocationId==="wall" (ר. ה-skip
+     ב-STEPS). אותה תבנית radiogroup בדיוק כמו renderCableStep, מקודמת לשלב-עצמאי (הייתה עד
+     עכשיו תת-שאלה בתוך שלב-הכבלים כשנבחר "תשתית נסתרת בקיר גבס" - ר. renderCableStep's
+     renderSubOptions למטה, שממשיכה-לשרת רק את המקרה-הנדיר של קיר-לא-קיר-ההתקנה). */
+  function renderWallMaterialStep(body, step) {
+    var opts = CATALOG.wallMaterials;
     body.innerHTML = '<h3 class="step-question" id="stepQuestionHeading" tabindex="-1">' + step.q + '</h3>' +
-      '<p class="photo-step-hint" id="tvModelHint">כדי שהצוות יגיע מוכן עם הציוד הנכון - ספרו לנו איזו טלוויזיה (יצרן/דגם/גודל) מתקינים.</p>' +
-      '<label for="tvModelInput" class="sr-only">' + step.q + '</label>' +
-      '<input type="text" id="tvModelInput" class="wall-other-input" value="' + esc(sel.installOnlyTvModel || "") + '" placeholder="למשל: Samsung 55 אינץ" aria-describedby="tvModelHint" maxlength="120">';
-    document.getElementById("tvModelInput").addEventListener("input", function (e) { sel.installOnlyTvModel = e.target.value; persistState(); });
+      '<div class="multi-grid" id="wallMaterialStepGrid" role="radiogroup" aria-labelledby="stepQuestionHeading">' + opts.map(function (o) {
+        var isActive = sel.wallMaterialId === o.id;
+        return '<div class="multi-chip' + (isActive ? " active" : "") + '" data-id="' + o.id + '"><div class="wc-title">' + esc(o.name) + '</div><div class="wc-sub">' + (o.priceILS ? '<bdi dir="ltr">+' + esc(fmt(o.priceILS)) + '</bdi>' : "0 ₪") + '</div></div>';
+      }).join("") + '</div>' +
+      (sel.wallMaterialId === "other" ? '<label for="wallMaterialOtherInput" class="sr-only">פרטו את סוג הקיר</label><input type="text" id="wallMaterialOtherInput" class="wall-other-input" placeholder="פרטו את סוג הקיר" value="' + esc(sel.wallMaterialOther || "") + '" maxlength="120">' : '');
+
+    wireChipRadioGroup(
+      document.getElementById("wallMaterialStepGrid"), ".multi-chip",
+      function (chip) { return chip.dataset.id === sel.wallMaterialId; },
+      function (chip) {
+        sel.wallMaterialId = chip.dataset.id;
+        if (sel.wallMaterialId !== "other") sel.wallMaterialOther = "";
+        persistState();
+        setRunningPrice();
+        renderWallMaterialStep(body, step);
+      }
+    );
+    var otherInput = document.getElementById("wallMaterialOtherInput");
+    if (otherInput) otherInput.addEventListener("input", function () { sel.wallMaterialOther = otherInput.value; persistState(); });
   }
 
-  function renderPhotoStep(body, step) {
+  /* 23.9.2026 (בקשת ברק - שלב 7, בחירה-מרשימות במקום טקסט-חופשי): מותג+גודל-מסך אמיתי, לא
+     "דגם" חופשי - נשמר ב-sel.tvBrand/tvBrandOther/tvSizeInches (ר. TV_BRANDS/TV_SIZES למעלה).
+     כמו הגרסה הישנה (installOnlyTvModel) - שלב אופציונלי, לא חוסם "הבא" (ר. stepComplete). */
+  function renderTvBrandSizeStep(body, step) {
     body.innerHTML = '<h3 class="step-question" id="stepQuestionHeading" tabindex="-1">' + step.q + '</h3>' +
-      '<p class="photo-step-hint">על מנת למקסם ולדייק את השירות שנרצה להעניק לך, באפשרותך להוסיף תמונה של מיקום ההתקנה המיועד (אופציונלי בלבד).</p>' +
-      '<div class="photo-box" id="photoBox">' +
-        (sel.photoDataUrl
-          ? '<div class="photo-preview-wrap"><img src="' + sel.photoDataUrl + '" alt=""><div class="photo-actions"><button type="button" class="btn-ghost" id="photoRemoveBtn">הסר תמונה</button></div></div>'
-          : '<label class="btn-ghost" for="photoInput" style="display:inline-flex;cursor:pointer;"><span aria-hidden="true">📷 </span>העלאת תמונה</label>') +
-        '<input type="file" id="photoInput" accept="image/*" class="sr-only">' +
-      '</div>' +
-      '<p class="photo-step-hint">שימו לב: לא ניתן לצרף את התמונה אוטומטית מהאתר. בבקשת ההצעה במייל, צרפו את התמונה ידנית להודעה.</p>';
+      '<p class="photo-step-hint" id="tvBrandSizeHint">כדי שהצוות יגיע מוכן עם הציוד הנכון - ספרו לנו איזו טלוויזיה מתקינים.</p>' +
+      '<label for="tvBrandSelect" class="sub-question">יצרן</label>' +
+      '<select id="tvBrandSelect" class="wall-other-input" aria-describedby="tvBrandSizeHint"><option value="">בחרו יצרן</option>' +
+        TV_BRANDS.map(function (b) { return '<option value="' + esc(b) + '"' + (sel.tvBrand === b ? " selected" : "") + '>' + esc(b) + '</option>'; }).join("") +
+      '</select>' +
+      (sel.tvBrand === "אחר" ? '<label for="tvBrandOtherInput" class="sr-only">פרטו את יצרן הטלוויזיה</label><input type="text" id="tvBrandOtherInput" class="wall-other-input" placeholder="פרטו את יצרן הטלוויזיה" value="' + esc(sel.tvBrandOther || "") + '" maxlength="120">' : '') +
+      '<label for="tvSizeSelect" class="sub-question">גודל מסך</label>' +
+      '<select id="tvSizeSelect" class="wall-other-input"><option value="">בחרו גודל</option>' +
+        TV_SIZES.map(function (n) { return '<option value="' + n + '"' + (sel.tvSizeInches === n ? " selected" : "") + '>' + n + '&quot;</option>'; }).join("") +
+      '</select>';
 
-    var input = document.getElementById("photoInput");
-    input.addEventListener("change", function (e) {
-      var file = e.target.files && e.target.files[0];
-      if (!file) return;
-      var reader = new FileReader();
-      reader.onload = function (ev) {
-        sel.photoDataUrl = ev.target.result;
-        sel.photoFileName = file.name;
-        renderConfigStep();
-      };
-      reader.readAsDataURL(file);
+    document.getElementById("tvBrandSelect").addEventListener("change", function (e) {
+      sel.tvBrand = e.target.value || null;
+      if (sel.tvBrand !== "אחר") sel.tvBrandOther = "";
+      persistState();
+      renderTvBrandSizeStep(body, step);
     });
-    var removeBtn = document.getElementById("photoRemoveBtn");
-    if (removeBtn) {
-      removeBtn.addEventListener("click", function () {
-        sel.photoDataUrl = null;
-        sel.photoFileName = null;
-        renderConfigStep();
-      });
-    }
+    var otherInput = document.getElementById("tvBrandOtherInput");
+    if (otherInput) otherInput.addEventListener("input", function () { sel.tvBrandOther = otherInput.value; persistState(); });
+    document.getElementById("tvSizeSelect").addEventListener("change", function (e) {
+      sel.tvSizeInches = e.target.value ? Number(e.target.value) : null;
+      persistState();
+    });
   }
 
   function renderCableStep(body, step) {
-    var opts = CATALOG.cableConcealment;
+    /* 23.9.2026 (בקשת ברק): בהתקנה-על-עגלה-ניידת (cart) מוצגות רק שתי-האפשרויות "אין צורך
+       בהסתרת הכבלים" ו"צינור שרשור לאיסוף כבלים" - שאר האפשרויות לא רלוונטיות לעגלה נגררת. */
+    var opts = sel.installLocationId === "cart"
+      ? CATALOG.cableConcealment.filter(function (o) { return o.id === "none" || o.id === "conduit_sleeve"; })
+      : CATALOG.cableConcealment;
+    /* בחירה קודמת שכבר לא-ברשימה-המצומצמת (למשל חזרה-אחורה-ושינוי-מיקום-ל-cart) חוזרת לברירת-
+       המחדל "אין צורך בהסתרת הכבלים", לא נשארת "תקועה" על אפשרות שכבר לא מוצגת. */
+    if (!opts.some(function (o) { return o.id === sel.cableId; })) sel.cableId = "none";
     body.innerHTML = '<h3 class="step-question" id="stepQuestionHeading" tabindex="-1">' + step.q + '</h3>' +
       '<div class="multi-grid" id="cableOptionsGrid" role="radiogroup" aria-labelledby="stepQuestionHeading">' + opts.map(function (o) {
         var isActive = sel.cableId === o.id;
-        return '<div class="multi-chip' + (isActive ? " active" : "") + '" data-id="' + o.id + '"><div class="wc-title">' + esc(o.name) + '</div><div class="wc-sub">' + (o.priceILS ? '<bdi dir="ltr">+' + esc(fmt(o.priceILS)) + '</bdi>' : "כלול") + '</div></div>';
+        return '<div class="multi-chip' + (isActive ? " active" : "") + '" data-id="' + o.id + '"><div class="wc-title">' + esc(o.name) + '</div><div class="wc-sub">' + (o.priceILS ? '<bdi dir="ltr">+' + esc(fmt(o.priceILS)) + '</bdi>' : "0 ₪") + '</div></div>';
       }).join("") + '</div>' +
       '<div id="cableSubOptions"></div>';
 
@@ -9219,7 +9275,10 @@ function initInstallation() {
       var cable = findIn(CATALOG.cableConcealment, sel.cableId);
       var subEl = document.getElementById("cableSubOptions");
       if (!cable) { subEl.innerHTML = ""; return; }
-      if (cable.needsWallMaterial) {
+      /* 23.9.2026: כש-installLocationId==="wall" סוג-הקיר כבר נאסף בשלב 4 העצמאי (wallMaterialId) -
+         שאלה נוספת כאן הייתה כפולה. תת-השאלה הזו נשארת רק למקרה-הקצה שבו נבחר "תשתית נסתרת
+         בקיר גבס" בהתקנה שאינה-על-קיר (למשל עמוד רצפתי עם השחלה דרך קיר-גבס סמוך). */
+      if (cable.needsWallMaterial && sel.installLocationId !== "wall") {
         subEl.innerHTML = '<h4 class="sub-question" id="wallMaterialHeading">מאיזה חומר עשוי הקיר?</h4><div class="multi-grid" id="wallMaterialGrid" role="radiogroup" aria-labelledby="wallMaterialHeading">' +
           CATALOG.wallMaterials.map(function (m) {
             var isActive = sel.wallMaterialId === m.id;
@@ -9251,7 +9310,9 @@ function initInstallation() {
 
     function activateCableChip(chip) {
       sel.cableId = chip.dataset.id;
-      if (sel.cableId !== "hidden_wall_channel") { sel.wallMaterialId = null; sel.wallMaterialOther = ""; }
+      /* 23.9.2026: לא-לנקות wallMaterialId כשמדובר בהתקנה-על-קיר - זו הבחירה מ"שלב 4",
+         לא שייכת לתת-השאלה-של-שלב-הכבלים הזה, ולא-אמורה-להימחק רק כי הוחלפה אפשרות-כבלים. */
+      if (sel.installLocationId !== "wall" && sel.cableId !== "hidden_wall_channel") { sel.wallMaterialId = null; sel.wallMaterialOther = ""; }
       if (sel.cableId !== "conduit_sleeve") { sel.cableColor = null; }
       renderSubOptions();
       setRunningPrice();
@@ -9307,9 +9368,12 @@ function initInstallation() {
     var mountProduct = findIn(CATALOG.mountProducts, sel.mountProductId);
     var cable = findIn(CATALOG.cableConcealment, sel.cableId);
     var wallMaterial = findIn(CATALOG.wallMaterials, sel.wallMaterialId);
+    var floorType = findIn(FLOOR_TYPES, sel.floorTypeId);
 
+    /* 23.9.2026: תואם את התנאי-המתוקן ב-renderCableStep - סוג-הקיר מוצג כאן רק במקרה-הקצה
+       (needsWallMaterial על התקנה שאינה-על-קיר); בהתקנה-על-קיר יש-לו שורת-סיכום עצמאית למטה. */
     var cableDetail = cable ? cable.name : "-";
-    if (cable && cable.needsWallMaterial) {
+    if (cable && cable.needsWallMaterial && sel.installLocationId !== "wall") {
       var wallName = wallMaterial ? (wallMaterial.id === "other" ? (sel.wallMaterialOther || "אחר") : wallMaterial.name) : "";
       if (wallName) cableDetail += " (קיר " + wallName + ")";
     }
@@ -9324,15 +9388,31 @@ function initInstallation() {
       else extrasLines.push(e.name + " × " + qty);
     });
 
+    /* 23.9.2026: הוחלף מטקסט-חופשי (installOnlyTvModel) לבחירת מותג+גודל מרשימות סגורות. */
+    var tvBrandSizeLine = null;
+    if (!product && sel.tvBrand) {
+      var brandTxt = sel.tvBrand === "אחר" ? (sel.tvBrandOther || "אחר") : sel.tvBrand;
+      tvBrandSizeLine = brandTxt + (sel.tvSizeInches ? ", " + sel.tvSizeInches + '"' : "");
+    }
+
     var rows = [
       product ? ["טלוויזיה", product.title + (tvSellerDisplayName() ? ' (נמכר ע"י ' + tvSellerDisplayName() + ")" : ""), product.priceILS] : null,
       ["מיקום התקנה", loc ? loc.name : "-", (loc && loc.priceILS == null) ? "לפי הצעת מחיר" : p.locPrice],
       ["גודל מסך", size ? size.label : "-", p.sizePrice],
       sel.installLocationId !== "special" ? ["סוג מתקן", mountProduct ? mountProduct.name : "-", p.mountPrice] : null,
-      ["תמונת מיקום ההתקנה", sel.photoDataUrl ? "צורפה" : "לא צורפה", null],
+      /* שני שלבים חדשים (23.9.2026), בלעדיים-הדדית: סוג-קיר (רק התקנה-על-קיר, עם תמחור) וסוג-
+         רצפה (רק עמוד-רצפתי-סטטי עם מתקן ספציפי, מידע-בלבד 0₪) - ר. STEPS/computePrice. */
+      sel.installLocationId === "wall" ? ["סוג קיר", wallMaterial ? (wallMaterial.id === "other" ? (sel.wallMaterialOther || "אחר") : wallMaterial.name) : "-", p.wallMaterialPrice] : null,
+      /* 23.9.2026: נגזר-מחדש מהתנאי-המלא-של-שלב-4 (לא רק "sel.floorTypeId truthy") - כדי
+         שערך-שריד-מבחירת-מתקן-קודמת (לפני שהוחלף למתקן-שאינו-מפעיל-את-השלב) לא-יישאר-מוצג-
+         בטעות בסיכום, גם אם עדיין יושב ב-sel. */
+      (sel.installLocationId === "floor_pole" && FLOOR_TYPE_TRIGGER_MOUNT_IDS.indexOf(sel.mountProductId) !== -1 && sel.floorTypeId)
+        ? ["סוג רצפה", floorType ? floorType.name : "-", 0] : null,
       ["הסתרת כבלים", cableDetail, p.cablePrice],
+      /* 23.9.2026 (בקשת ברק): שורה קבועה לכל התקנה-על-עמוד-רצפתי-סטטי, ללא תלות בבחירת-הכבלים. */
+      sel.installLocationId === "floor_pole" ? ["השחלת כבלים", "כלולה בהתאם לתשתית המוכנה בעת ההתקנה", 0] : null,
       extrasLines.length ? ["תוספות", extrasLines.join(", "), p.extrasPrice] : null,
-      (!product && sel.installOnlyTvModel) ? ["דגם הטלוויזיה הקיים", sel.installOnlyTvModel, null] : null
+      tvBrandSizeLine ? ["טלוויזיה שמתקינים", tvBrandSizeLine, null] : null
     ].filter(Boolean);
 
     return { rows: rows, hasTbdExtra: hasTbdExtra };
@@ -9352,8 +9432,11 @@ function initInstallation() {
       '<div class="summary-row total"><span>סה"כ' + (product ? " (כולל הטלוויזיה)" : "") + '</span><span class="val">' + formatItemTotal(itemTotal, p.isCustomQuote) + '</span></div>' +
       '<div class="summary-row"><span class="summary-vat-note">' + esc(BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote({ includeShipping: !!product }) : "המחיר כולל מע\"מ") + '</span></div></div>' +
       '<div class="order-review-notice"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"></circle><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg><p>הצוות שלנו יבדוק את בקשתכם לוודא את תקינות ההזמנה, במידה וימצאו אי התאמות נעדכן אתכם בהקדם.</p></div>' +
-      '<div class="lead-ctas"><button type="button" class="btn-accent" id="addToCartBtn">' + (IS_REGISTERED ? '<span aria-hidden="true">🛒 </span>הוסיפו לעגלה' : '<span aria-hidden="true">📩 </span>בקשו הצעת מחיר') + '</button></div>' +
-      '<p class="lead-fineprint">' + (IS_REGISTERED ? "אפשר להוסיף עוד טלוויזיה/התקנה לעגלה לפני שליחת הכל בהודעה אחת." : "נשלח אליכם פירוט וסיכום מחיר - התשלום עצמו יסוכם מולנו בנפרד.") + '</p>' +
+      /* 23.9.2026 (בקשת ברק): כפתור אחיד לכולם - "הוסיפו לעגלה", לא-עוד "בקשו הצעת מחיר"
+         מותנה-רישום (ר. ההערה למעלה, ליד openWarrantyCertificateWindow). lead-ctas-summary
+         מכווץ/ממרכז רק את הכפתור-הבודד-הזה, לא נוגע ב-.lead-ctas המשותפת. */
+      '<div class="lead-ctas lead-ctas-summary"><button type="button" class="btn-accent" id="addToCartBtn"><span aria-hidden="true">🛒 </span>הוסיפו לעגלה</button></div>' +
+      '<p class="lead-fineprint">אפשר להוסיף עוד טלוויזיה/התקנה לעגלה לפני שליחת הכל בהודעה אחת.</p>' +
       (window.legalDisclosureHtml ? cleanLegalDisclosureHtml(window.legalDisclosureHtml({
         title: "התקנת טלוויזיה" + (product ? " + " + product.title : ""),
         priceILS: itemTotal,
@@ -9385,6 +9468,11 @@ function initInstallation() {
   function stepComplete(step) {
     if (step.type === "single") return !!sel[step.id];
     if (step.type === "cable") return !!sel.cableId;
+    /* 23.9.2026: לסוג-הקיר (type ייעודי, לא "single") יש השפעת-תמחור אמיתית (100₪ בטון-מזוין/
+       ממ"ד) - חובה לבחור כדי להמשיך, בדיוק כמו כל שלב-"single" אחר (מיקום/גודל/מתקן/סוג-רצפה -
+       האחרון כן type:"single" ולכן כבר-מכוסה ע"י הענף למעלה). רק שלב-הטלוויזיה (tvBrandSize)
+       נשאר אופציונלי-באמת - נופל ל-return true הכללי בסוף. */
+    if (step.type === "wallMaterial") return !!sel.wallMaterialId;
     return true;
   }
   /* השלב המרוחק ביותר שמותר להגיע אליו: הראשון שעוד לא הושלם בו הבחירה החובה */
@@ -9451,10 +9539,12 @@ function initInstallation() {
     var product = sel.linkedProductId ? URL_LINKED_PRODUCT : null;
     var built = buildSummaryRows(p, product);
     var itemTotal = (product ? product.priceILS : 0) + p.total;
+    /* 23.9.2026: installOnlyTvModel (טקסט-חופשי) הוחלף ב-tvBrand/tvBrandOther/tvSizeInches. */
+    var tvLabel = sel.tvBrand ? (sel.tvBrand === "אחר" ? (sel.tvBrandOther || "אחר") : sel.tvBrand) + (sel.tvSizeInches ? " " + sel.tvSizeInches + '"' : "") : null;
     cart.push({
       cartItemId: "ci_" + Date.now() + "_" + Math.random().toString(36).slice(2),
       productId: sel.linkedProductId || null,
-      label: product ? product.title : (sel.installOnlyTvModel ? "התקנה - " + sel.installOnlyTvModel : "התקנה (ללא טלוויזיה)"),
+      label: product ? product.title : (tvLabel ? "התקנה - " + tvLabel : "התקנה (ללא טלוויזיה)"),
       rows: built.rows,
       isCustomQuote: p.isCustomQuote,
       itemTotal: itemTotal
@@ -9504,10 +9594,6 @@ function initInstallation() {
     else {
       if (name) lines.push("שם: " + name);
       if (phone) lines.push("טלפון: " + phone);
-    }
-    var itemsWithPhoto = cart.filter(function (ci) { return ci.rows.some(function (r) { return r[1] === "צורפה"; }); });
-    if (itemsWithPhoto.length) {
-      lines.push("", "⚠️ יש לצרף כאן את תמונות מיקום ההתקנה שהועלו באתר עבור: " + itemsWithPhoto.map(function (ci) { return ci.label; }).join(", ") + " - לא נשלחות אוטומטית.");
     }
     if (window.transactionDocumentText) {
       lines.push("", "----------", window.transactionDocumentText({
