@@ -15,6 +15,9 @@
   --blue:#20272e; --blue-ink:#faf9f6; --blue-soft:#e8eaec;
   --orange:#ea5b24; --orange-soft:#fdeae1; --premium-text:#ba4112; --premium-oncolor:#cc4714;
   --win-bg:#e6f3e8; --win-text:#1d6b34;
+  /* 23.9.2026: טוקנים שהיו חסרים כאן אך כבר קיימים (בערכים זהים) בשאר עמודי האתר - נדרשים
+     ל-CSS הסרגל/עגלה שהוטמע עכשיו למטה (ר' "23.9.2026 - הסרגל הפך אחיד עם שאר האתר"). */
+  --orange-ink:#fff; --accent:var(--blue); --accent-ink:var(--blue-ink); --accent-soft:var(--blue-soft);
   /* זהות צבע לכל דגם: כחול מעומעם לדגם א', כתום מעומעם לדגם ב' (כיתוב לבן עליהם, ניגודיות מעל 5:1) */
   --ca:#35547a; --ca-tint:#f1f5fa; --ca-tint-2:#e0e9f4;
   --cb:#b04c1c; --cb-tint:#fdf3ec; --cb-tint-2:#fbe3d3;
@@ -31,14 +34,53 @@ a{color:var(--blue)}
 :focus-visible{outline:3px solid var(--orange);outline-offset:2px}
 .wrap{max-width:1040px;margin:0 auto;padding-inline:16px}
 
-/* כותרת עליונה */
-.topbar{background:var(--surface);border-bottom:1px solid var(--border)}
-.topbar-inner{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+/* כותרת עליונה - 23.9.2026: הסרגל הפך אחיד עם שאר האתר (index/cart/installation/וכו') - לוגו+
+   ניווט-8-קישורים+וואטסאפ+עגלה-עם-מיני-עגלה-נפתחת, אותם class-ים/CSS בדיוק (הועתק משם, מותאם
+   לטוקני-הצבע-הזהים שכבר קיימים בעמוד הזה). ההמבורגר/מגירת-הניווט-הישנים לא הובאו לכאן בכוונה -
+   הם ממילא display:none!important בכל שאר עמודי האתר היום (23.9.2026, "8 קישורים תמיד בשורה
+   אחת שנשברת-לשורה-שנייה ולא נגללת") - כך שאין הבדל-מראה בהשמטתם, ופחות קוד-מת לתחזק. */
+header{z-index:30;position:sticky;top:0}
+.topbar{z-index:30;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0}
+.topbar-inner{align-items:center;gap:12px;max-width:1080px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:nowrap}
+.brandmark{display:flex;align-items:center;gap:8px;flex-shrink:0;min-height:44px;text-decoration:none}
 .brandmark img{display:block;height:34px;width:auto}
 .brandmark .logo-on-dark{display:none}
-.toplinks{display:flex;gap:6px 18px;flex-wrap:wrap;margin-inline-start:auto}
-.toplinks a{color:var(--text-secondary);text-decoration:none;font-size:.9rem;padding:6px 2px;font-weight:600;min-height:44px;display:inline-flex;align-items:center}
-.toplinks a:hover{color:var(--blue);text-decoration:underline}
+.toplinks{display:flex;flex-wrap:wrap;row-gap:2px;gap:2px;margin-inline-end:auto;min-width:0}
+.toplinks a{color:var(--text-primary);text-decoration:none;font-size:.88rem;padding:0 9px;font-weight:600;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center;border-radius:999px}
+.toplinks a:hover{background:var(--surface-2);color:var(--text-primary)}
+.top-cta{position:relative;background:transparent;color:#fff;border:none;flex-shrink:0;justify-content:center;align-items:center;width:44px;height:44px;padding:0;text-decoration:none;display:flex}
+.top-cta::before{content:"";position:absolute;inset:4px;border-radius:50%;background:#128C7E;box-shadow:0 2px 6px #00000026}
+.top-cta svg{position:relative;width:19px;height:19px}
+.top-cta:hover{filter:brightness(1.06)}
+.cart-badge-wrap{position:relative;display:inline-flex;align-items:center}
+.cart-badge-btn{position:relative;background:transparent;color:var(--orange-ink);border:none;padding:0;flex-shrink:0;align-items:center;justify-content:center;width:44px;height:44px;min-height:44px;min-width:44px;cursor:pointer;text-decoration:none;display:flex}
+.cart-badge-btn .cart-disc{width:36px;height:36px;border-radius:50%;background:var(--premium-oncolor);color:var(--orange-ink);box-shadow:0 2px 6px #00000026;justify-content:center;align-items:center;transition:filter .15s ease,transform .15s ease;display:flex}
+.cart-badge-btn:hover .cart-disc{filter:brightness(1.08);transform:translateY(-1px)}
+.cart-badge-btn:focus-visible .cart-disc{outline:2px solid var(--accent);outline-offset:2px}
+.cart-badge-btn .cart-count{position:absolute;top:0;right:0;min-width:20px;height:20px;padding:0 5px;box-sizing:border-box;border-radius:10px;background:#20272e;color:#fff;border:2px solid var(--surface);font-size:.75rem;font-weight:800;line-height:16px;text-align:center;pointer-events:none}
+.cart-badge-btn.empty .cart-count{display:none}
+.mini-cart-dropdown{position:absolute;z-index:40;top:calc(100% + 10px);inset-inline-start:0;width:min(370px,calc(100vw - 32px));max-height:min(70vh,520px);background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:18px;text-align:start;color:var(--text-primary);font-weight:400;overflow-y:auto}
+.mini-cart-dropdown[hidden]{display:none}
+.mini-cart-title{margin:0 0 12px;font-size:.98rem;font-weight:800}
+.mini-cart-empty{margin:0;padding:10px 0 4px;font-size:.88rem;color:var(--text-secondary)}
+.mini-cart-list{display:flex;flex-direction:column;gap:12px;margin:0 0 14px;padding:0;list-style:none}
+.mini-cart-item{display:flex;align-items:center;gap:10px}
+.mini-cart-item-thumb{width:46px;height:46px;border-radius:9px;object-fit:contain;background:var(--surface-2);border:1px solid var(--border);flex-shrink:0;padding:3px}
+.mini-cart-item-thumb-fallback{width:46px;height:46px;border-radius:9px;background:var(--surface-2);border:1px solid var(--border);flex-shrink:0}
+.mini-cart-item-body{flex:1;min-width:0}
+.mini-cart-item-label{font-size:.83rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mini-cart-item-meta{font-size:.77rem;color:var(--text-secondary);margin-top:2px}
+.mini-cart-qty-stepper{display:inline-flex;align-items:center;gap:8px;margin-top:6px;border:1px solid var(--border);border-radius:8px;padding:2px}
+.mini-cart-qty-btn{width:22px;height:22px;border-radius:6px;border:none;background:var(--surface-2);color:var(--text-primary);font-size:.85rem;line-height:1;display:flex;align-items:center;justify-content:center}
+.mini-cart-qty-btn:hover{background:var(--border)}
+.mini-cart-qty-val{min-width:16px;text-align:center;font-size:.8rem;font-weight:700}
+.mini-cart-item-remove{background:transparent;border:none;color:var(--text-tertiary);padding:6px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.mini-cart-item-remove:hover{background:var(--surface-2);color:var(--orange)}
+.mini-cart-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:12px;margin-bottom:14px;border-top:1px solid var(--border);font-weight:800;font-size:.95rem}
+.mini-cart-dropdown .btn-accent{display:block;width:100%;text-align:center}
+.btn-accent{background:var(--accent);color:var(--accent-ink);border:none;border-radius:999px;align-items:center;gap:8px;padding:13px 26px;font-size:.98rem;font-weight:700;text-decoration:none;display:inline-flex}
+.btn-accent:hover{filter:brightness(1.06)}
+@media (width<=480px){.topbar-inner{gap:8px;padding-inline:12px}}
 
 /* כותרת העמוד */
 .page-head{padding:14px 0 6px}
@@ -154,7 +196,19 @@ footer.site-foot p{margin:6px 0 0;color:var(--text-tertiary);font-size:.85rem}
 <a class="skip-link" href="#main-content">דלג לתוכן הראשי</a>
 <header class="topbar"><div class="topbar-inner">
   <a class="brandmark" href="index.html" aria-label="Master Mount - לעמוד הבית"><img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" alt="" aria-hidden="true"/></a>
-  <nav class="toplinks" aria-label="ניווט ראשי"><a href="index.html#products">חזרה לקטלוג הטלוויזיות</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="installation.html">הזמנת התקנה מותאמת</a></nav>
+  <nav class="toplinks" aria-label="ניווט ראשי">
+    <a href="installation.html">הזמנת התקנה מותאמת</a>
+    <a href="index.html#products">טלוויזיות למכירה</a><a href="compare.html">השוואת טלוויזיות</a>
+    <a href="index.html#bundles">דילים משתלמים</a>
+    <a href="moving-day.html">מעבר דירה</a>
+    <a href="tv-technology-guide.html">מדריך טכנולוגיות</a>
+    <a href="index.html#how">איך זה עובד</a>
+    <a href="index.html#contact">יצירת קשר</a>
+  </nav>
+  <a class="top-cta" id="topWhatsappBtn" hidden rel="noopener" aria-label="יצירת קשר בוואטסאפ">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C6.48 2 2 6.36 2 11.75c0 2.06.65 3.97 1.76 5.55L2.5 22l4.86-1.24a10.1 10.1 0 0 0 4.64 1.14c5.52 0 10-4.36 10-9.75S17.52 2 12 2Zm0 17.75c-1.5 0-2.9-.4-4.1-1.09l-.29-.17-2.88.73.77-2.8-.19-.29A7.66 7.66 0 0 1 4.15 11.75C4.15 7.46 7.66 4 12 4s7.85 3.46 7.85 7.75-3.51 7.75-7.85 7.75Zm4.3-5.8c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.17-.7-.62-1.18-1.39-1.31-1.63-.14-.24-.01-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28Z"/></svg>
+    <span class="sr-only">(נפתח בוואטסאפ)</span>
+  </a><div class="cart-badge-wrap"><button type="button" class="cart-badge-btn empty" id="cartBadgeBtn" aria-label="עגלת הזמנות, ריקה" aria-haspopup="true" aria-expanded="false" aria-controls="miniCartDropdown"><span class="cart-disc"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7.5H6.2"></path></svg></span><span class="cart-count" id="cartBadgeCount">0</span></button><div class="mini-cart-dropdown" id="miniCartDropdown" role="dialog" aria-labelledby="miniCartTitle" hidden><h3 class="mini-cart-title" id="miniCartTitle" tabindex="-1">העגלה שלכם</h3><p class="mini-cart-empty" id="miniCartEmpty" hidden>העגלה ריקה. בחרו טלוויזיה או הגדירו התקנה כדי להתחיל.</p><ul class="mini-cart-list" id="miniCartList"></ul><div class="mini-cart-total" id="miniCartTotal" hidden></div><a class="btn-accent" id="miniCartContinueBtn" href="cart.html" hidden>המשך לעגלת הקניות ותשלום</a></div></div>
 </div></header>
 
 <main id="main-content" tabindex="-1">
@@ -440,6 +494,193 @@ footer.site-foot p{margin:6px 0 0;color:var(--text-tertiary);font-size:.85rem}
   }
   function renderAll() { renderPicker(); renderNotice(); renderResult(); }
   window.__mmCompare = { slots: slots, renderAll: renderAll };
+})();
+</script>
+<script>
+/* ================= סרגל עליון: וואטסאפ + מיני-עגלה (23.9.2026, אותו רכיב בדיוק כמו שאר
+   עמודי האתר - ר' cart.html) - script נפרד ועצמאי מה-IIFE של טבלת-ההשוואה שמעל, כדי שסרגל/
+   עגלה ימשיכו לעבוד גם אם נתוני-ההשוואה עצמם (compare-data.js) לא נטענו/ריקים. */
+(function () {
+  "use strict";
+  var BUSINESS = window.BUSINESS_CONFIG;
+  var CONTACT_ACTIONS_ENABLED = !!(BUSINESS && BUSINESS.contactActionsEnabled === true);
+  function genericWhatsappLink() {
+    return "https://wa.me/" + BUSINESS.whatsappNumber + "?text=" + encodeURIComponent("שלום! אשמח לפרטים על התקנת טלוויזיה דרך Master Mount.");
+  }
+  if (CONTACT_ACTIONS_ENABLED) {
+    var topWa = document.getElementById("topWhatsappBtn");
+    if (topWa) {
+      topWa.href = genericWhatsappLink();
+      topWa.target = "_blank";
+      topWa.rel = "noopener";
+      topWa.hidden = false;
+    }
+  }
+
+  function escapeHtmlMM(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function fmt(n) { return "₪" + Math.round(Number(n) || 0).toLocaleString("he-IL"); }
+
+  /* ================= CART (משותפת עם שאר עמודי האתר - דרך mm_cart_v1) ================= */
+  var CART_STORAGE_KEY = "mm_cart_v1";
+  function sanitizeCartText(v) {
+    return String(v == null ? "" : v).replace(/<[^>]*>/g, "").replace(/[<>]/g, "").trim();
+  }
+  function sanitizeCartItem(ci) {
+    if (!ci || typeof ci !== "object" || Array.isArray(ci)) return null;
+    var label = sanitizeCartText(ci.label);
+    if (!label) return null;
+    var out = {};
+    Object.keys(ci).forEach(function (k) { out[k] = ci[k]; });
+    out.label = label;
+    var total = Number(ci.itemTotal);
+    out.itemTotal = isFinite(total) && total >= 0 ? total : 0;
+    out.cartItemId = String(ci.cartItemId == null ? "" : ci.cartItemId).replace(/[^A-Za-z0-9_\-]/g, "") || ("ci_" + Date.now() + "_" + Math.random().toString(36).slice(2));
+    out.isCustomQuote = !!ci.isCustomQuote;
+    out.rows = (Array.isArray(ci.rows) ? ci.rows : []).filter(Array.isArray).map(function (r) {
+      var price = r[2];
+      return [sanitizeCartText(r[0]), sanitizeCartText(r[1]), typeof price === "number" && isFinite(price) ? price : null];
+    });
+    var qty = Math.round(Number(ci.qty));
+    out.qty = isFinite(qty) && qty >= 1 ? Math.min(qty, 99) : 1;
+    return out;
+  }
+  function loadCartFromStorage() {
+    try {
+      var raw = localStorage.getItem(CART_STORAGE_KEY);
+      var parsed = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(parsed)) return [];
+      return parsed.map(sanitizeCartItem).filter(Boolean);
+    } catch (e) { return []; }
+  }
+  function saveCartToStorage() {
+    try { localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart)); } catch (e) {}
+  }
+  var cart = loadCartFromStorage();
+  function cartLineTotal(ci) { return ci.itemTotal * (ci.qty || 1); }
+  function formatLineTotal(ci) { return ci.isCustomQuote ? fmt(cartLineTotal(ci)) + " + הצעת מחיר בהתאמה אישית" : fmt(cartLineTotal(ci)); }
+  function cartGrandTotal() {
+    var numeric = 0, hasCustom = false;
+    cart.forEach(function (ci) { numeric += cartLineTotal(ci); if (ci.isCustomQuote) hasCustom = true; });
+    return { numeric: numeric, hasCustom: hasCustom };
+  }
+
+  /* תמונת-פריט: נפתרת מ-compare-data.js (כבר נטען לעמוד הזה ממילא) עבור טלוויזיות; לבאנדלים -
+     מיפוי-קבוע-קטן (7 באנדלים בלבד, ר' README) - אותו מקור בדיוק כמו שאר עמודי האתר. */
+  var MM_BUNDLE_IMAGES = {
+    "bundle_7": "assets/products/bundle_7.jpg", "bundle_8": "assets/products/bundle_8.jpg",
+    "bundle_9": "assets/products/bundle_9.jpg", "bundle_10": "assets/products/bundle_10.jpg",
+    "bundle_11": "assets/products/bundle_11.jpg", "bundle_12": "assets/products/bundle_12.jpg",
+    "bundle_13": "assets/products/bundle_13.jpg"
+  };
+  function cartItemImageHtml(ci, cls, fallbackCls) {
+    var img = null;
+    if (ci.productId && window.MM_COMPARE_DATA) {
+      var models = window.MM_COMPARE_DATA.models || [];
+      for (var i = 0; i < models.length; i++) { if (models[i].id === ci.productId) { img = models[i].image || models[i].imageFallback; break; } }
+    } else if (ci.bundleId) {
+      img = MM_BUNDLE_IMAGES[ci.bundleId] || null;
+    }
+    return img ? '<img class="' + cls + '" src="' + img + '" alt="" loading="lazy">' : '<span class="' + fallbackCls + '" aria-hidden="true"></span>';
+  }
+
+  function changeCartItemQty(cartItemId, delta) {
+    var ci = cart.filter(function (x) { return x.cartItemId === cartItemId; })[0];
+    if (!ci) return;
+    var next = (ci.qty || 1) + delta;
+    if (next <= 0) { removeCartItem(cartItemId); return; }
+    ci.qty = Math.min(99, next);
+    saveCartToStorage();
+    renderAll();
+  }
+  function removeCartItem(cartItemId) {
+    cart = cart.filter(function (ci) { return ci.cartItemId !== cartItemId; });
+    saveCartToStorage();
+    renderAll();
+  }
+
+  function renderCartBadge() {
+    var btn = document.getElementById("cartBadgeBtn");
+    if (!btn) return;
+    document.getElementById("cartBadgeCount").textContent = cart.length;
+    btn.classList.toggle("empty", cart.length === 0);
+    btn.hidden = cart.length === 0;
+    var countLabel = cart.length === 0 ? "עגלת הזמנות, ריקה" : "עגלת הזמנות, " + cart.length + " פריטים";
+    btn.setAttribute("aria-label", countLabel);
+  }
+  function renderMiniCart() {
+    var emptyEl = document.getElementById("miniCartEmpty");
+    var listEl = document.getElementById("miniCartList");
+    var totalEl = document.getElementById("miniCartTotal");
+    var continueBtn = document.getElementById("miniCartContinueBtn");
+    if (!emptyEl) return;
+    if (!cart.length) {
+      emptyEl.hidden = false; listEl.innerHTML = ""; totalEl.hidden = true; continueBtn.hidden = true;
+      return;
+    }
+    emptyEl.hidden = true; totalEl.hidden = false; continueBtn.hidden = false;
+    listEl.innerHTML = cart.map(function (ci) {
+      var qty = ci.qty || 1;
+      var __removeLabel = escapeHtmlMM("הסרת " + ci.label + " מהעגלה");
+      var __decLabel = escapeHtmlMM("הפחתת כמות: " + ci.label);
+      var __incLabel = escapeHtmlMM("הוספת כמות: " + ci.label);
+      var __id = escapeHtmlMM(ci.cartItemId);
+      return '<li class="mini-cart-item">' + cartItemImageHtml(ci, "mini-cart-item-thumb", "mini-cart-item-thumb-fallback") +
+        '<div class="mini-cart-item-body"><div class="mini-cart-item-label">' + escapeHtmlMM(ci.label) + '</div>' +
+        '<div class="mini-cart-item-meta">' + escapeHtmlMM(formatLineTotal(ci)) + '</div>' +
+        '<div class="mini-cart-qty-stepper"><button type="button" class="mini-cart-qty-btn" data-qty-dec="' + __id + '" aria-label="' + __decLabel + '">&#8722;</button><span class="mini-cart-qty-val">' + qty + '</span><button type="button" class="mini-cart-qty-btn" data-qty-inc="' + __id + '" aria-label="' + __incLabel + '">+</button></div>' +
+        '</div><button type="button" class="mini-cart-item-remove" data-cart-item-id="' + __id + '" aria-label="' + __removeLabel + '"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m2 0-1 13a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 7"/></svg></button></li>';
+    }).join("");
+    listEl.querySelectorAll("[data-cart-item-id]").forEach(function (btn) { btn.addEventListener("click", function () { removeCartItem(btn.dataset.cartItemId); }); });
+    listEl.querySelectorAll("[data-qty-dec]").forEach(function (btn) { btn.addEventListener("click", function () { changeCartItemQty(btn.dataset.qtyDec, -1); }); });
+    listEl.querySelectorAll("[data-qty-inc]").forEach(function (btn) { btn.addEventListener("click", function () { changeCartItemQty(btn.dataset.qtyInc, 1); }); });
+    var __grand = cartGrandTotal();
+    totalEl.innerHTML = '<span>סה"כ כללי</span><span>' + escapeHtmlMM(fmt(__grand.numeric)) + (__grand.hasCustom ? ' <span style="font-weight:400;font-size:.8em">+ הצעת מחיר</span>' : '') + '</span>';
+  }
+  var __miniCartOutsideHandler = null, __miniCartKeyHandler = null;
+  function openMiniCart() {
+    renderMiniCart();
+    var dropdown = document.getElementById("miniCartDropdown");
+    var btn = document.getElementById("cartBadgeBtn");
+    if (!dropdown || !btn) return;
+    dropdown.hidden = false;
+    var ddRect = dropdown.getBoundingClientRect();
+    var parentRect = dropdown.offsetParent.getBoundingClientRect();
+    var mcMargin = 10;
+    var mcViewportW = document.documentElement.clientWidth;
+    var mcDesiredLeft = Math.max(mcMargin, Math.min(ddRect.right - ddRect.width, mcViewportW - ddRect.width - mcMargin));
+    dropdown.style.insetInlineStart = "auto";
+    dropdown.style.right = "auto";
+    dropdown.style.left = (mcDesiredLeft - parentRect.left) + "px";
+    btn.setAttribute("aria-expanded", "true");
+    document.getElementById("miniCartTitle").focus();
+    __miniCartOutsideHandler = function (e) { if (!dropdown.contains(e.target) && e.target !== btn && !btn.contains(e.target)) closeMiniCart(false); };
+    __miniCartKeyHandler = function (e) { if (e.key === "Escape") closeMiniCart(true); };
+    document.addEventListener("click", __miniCartOutsideHandler, true);
+    document.addEventListener("keydown", __miniCartKeyHandler);
+  }
+  function closeMiniCart(returnFocus) {
+    var dropdown = document.getElementById("miniCartDropdown");
+    var btn = document.getElementById("cartBadgeBtn");
+    if (!dropdown || dropdown.hidden) return;
+    dropdown.hidden = true;
+    btn.setAttribute("aria-expanded", "false");
+    if (__miniCartOutsideHandler) { document.removeEventListener("click", __miniCartOutsideHandler, true); __miniCartOutsideHandler = null; }
+    if (__miniCartKeyHandler) { document.removeEventListener("keydown", __miniCartKeyHandler); __miniCartKeyHandler = null; }
+    if (returnFocus) btn.focus();
+  }
+  var __cartBadgeBtnEl = document.getElementById("cartBadgeBtn");
+  if (__cartBadgeBtnEl) {
+    __cartBadgeBtnEl.addEventListener("click", function () {
+      var dropdown = document.getElementById("miniCartDropdown");
+      if (dropdown.hidden) openMiniCart(); else closeMiniCart(false);
+    });
+  }
+  function renderAll() { renderCartBadge(); renderMiniCart(); }
+  renderAll();
 })();
 </script>
 <script src="./cookie-consent.js"></script>
