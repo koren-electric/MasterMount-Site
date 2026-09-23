@@ -4611,11 +4611,14 @@ section.block {
   display: flex;
 }
 
+/* --- 23.9.2026 (בקשת ברק): חיצי-הקרוסלה בעיגולים כהים, כמו החיצים בבאנרים המתחלפים למעלה (לא-
+   שקוף בכוונה, בשונה מ-.hero-carousel-arrow - שם השקיפות משרתת ריחוף-מעל-תמונה, וכאן העיגול
+   יושב על רקע-עמוד רגיל ולא צריך את זה) --- */
 .flat-arrow {
   z-index: 2;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text-secondary);
+  border: 1px solid var(--brand-ink);
+  background: var(--brand-ink);
+  color: #fff;
   cursor: pointer;
   border-radius: 50%;
   flex: none;
@@ -4623,13 +4626,14 @@ section.block {
   align-items: center;
   width: 44px;
   height: 44px;
-  transition: color .2s, border-color .2s, opacity .2s;
+  transition: background-color .2s, border-color .2s, opacity .2s;
   display: flex;
 }
 
 .flat-arrow:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  background: var(--brand-orange);
+  border-color: var(--brand-orange);
+  color: #fff;
 }
 
 .flat-arrow.is-disabled {

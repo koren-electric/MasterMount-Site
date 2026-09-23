@@ -4188,11 +4188,12 @@ section.block {
   display: flex;
 }
 
+/* --- 23.9.2026 (בקשת ברק): חיצי-הקרוסלה בעיגולים כהים, כמו החיצים בבאנרים המתחלפים למעלה --- */
 .flat-arrow {
   z-index: 2;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text-secondary);
+  border: 1px solid var(--brand-ink);
+  background: var(--brand-ink);
+  color: #fff;
   cursor: pointer;
   border-radius: 50%;
   flex: none;
@@ -4200,13 +4201,14 @@ section.block {
   align-items: center;
   width: 52px;
   height: 52px;
-  transition: color .2s, border-color .2s, opacity .2s;
+  transition: background-color .2s, border-color .2s, opacity .2s;
   display: flex;
 }
 
 .flat-arrow:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  background: var(--brand-orange);
+  border-color: var(--brand-orange);
+  color: #fff;
 }
 
 .flat-arrow.is-disabled {
@@ -5029,16 +5031,21 @@ section.block {
   color: #ffffffb8;
 }
 
+/* --- 23.9.2026 (בקשת ברק): חץ כהה כמו בשאר האתר, אבל עם מסגרת בהירה (var(--on-dark)) - בלי
+   זה העיגול הכהה כמעט נבלע בתוך הרקע הכהה-גרדיאנט של .config-shell עצמו (נבדק ויזואלית,
+   ניגודיות-עיגול-מול-פאנל הייתה כמעט אפסית בלי המסגרת) - אותה שיטה כבר קיימת ב-.hero-carousel-
+   arrow (FIX-16) לאותה בעיה בדיוק, של חץ-כהה שיושב על משטח-כהה --- */
 .config-shell .flat-arrow {
-  color: var(--brand-ink);
-  background: #fff;
-  border-color: #20272e14;
+  color: #fff;
+  background: var(--brand-ink);
+  border: 2px solid var(--on-dark);
   box-shadow: 0 10px 22px -12px #0a0d1073;
 }
 
 .config-shell .flat-arrow:hover {
-  border-color: var(--brand-ink);
-  color: var(--brand-ink);
+  background: var(--brand-orange);
+  border-color: var(--brand-orange);
+  color: #fff;
 }
 
 .config-shell .wall-other-input, .config-shell .lead-form input {
