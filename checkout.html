@@ -8742,6 +8742,14 @@ fieldset.step-fieldset legend {
     var btn = document.getElementById("cartBadgeBtn");
     if (!dropdown || !btn) return;
     dropdown.hidden = false;
+    var ddRect = dropdown.getBoundingClientRect();
+    var parentRect = dropdown.offsetParent.getBoundingClientRect();
+    var mcMargin = 10;
+    var mcViewportW = document.documentElement.clientWidth;
+    var mcDesiredLeft = Math.max(mcMargin, Math.min(ddRect.right - ddRect.width, mcViewportW - ddRect.width - mcMargin));
+    dropdown.style.insetInlineStart = "auto";
+    dropdown.style.right = "auto";
+    dropdown.style.left = (mcDesiredLeft - parentRect.left) + "px";
     btn.setAttribute("aria-expanded", "true");
     document.getElementById("miniCartTitle").focus();
     __miniCartOutsideHandler = function (e) { if (!dropdown.contains(e.target) && e.target !== btn && !btn.contains(e.target)) closeMiniCart(false); };

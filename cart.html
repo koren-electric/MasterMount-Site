@@ -8353,6 +8353,101 @@ fieldset.step-fieldset legend {
   font-weight: 800;
   margin-bottom: 10px;
 }
+.cart-accessory-tile-thumb-fallback {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: var(--surface-2);
+  margin-bottom: 10px;
+}
+.cart-accessory-tile-features {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  font-size: .8rem;
+  color: var(--text-secondary);
+  text-align: start;
+}
+.cart-accessory-tile-features li {
+  position: relative;
+  padding-inline-start: 16px;
+  margin-bottom: 3px;
+}
+.cart-accessory-tile-features li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: .55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--premium-text);
+}
+.cart-accessory-tile-field {
+  margin-bottom: 10px;
+  text-align: start;
+}
+.cart-accessory-tile-field label {
+  display: block;
+  font-size: .78rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.cart-accessory-size-select {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: .85rem;
+}
+.cart-accessory-color-swatches {
+  display: flex;
+  gap: 8px;
+}
+.cart-accessory-color-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  padding: 0;
+}
+.cart-accessory-color-swatch[aria-pressed="true"] {
+  border-color: var(--premium-text);
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--premium-text);
+}
+.cart-accessory-tile-qty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.cart-accessory-qty-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.cart-accessory-qty-val {
+  min-width: 22px;
+  display: inline-block;
+  text-align: center;
+  font-weight: 700;
+}
+.cart-accessory-add-btn {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: .88rem;
+}
 </style>
 </head>
 <body>
@@ -8482,6 +8577,7 @@ fieldset.step-fieldset legend {
 <script src="./sellers-data.js"></script>
 <script src="./legal-components.js"></script>
 <script src="./compare-data.js"></script>
+<script src="./accessories-data.js"></script>
 <script src="./cookie-consent.js"></script>
 <script>
   var BUSINESS = window.BUSINESS_CONFIG;
@@ -8573,6 +8669,122 @@ fieldset.step-fieldset legend {
     renderAll();
   }
 
+  /* ================= אביזרים נלווים (quick-add, cart.html בלבד) - accessories-data.js =========
+     נתונים מגיעים מ-window.MM_ACCESSORIES_DATA (מיוצר ע"י scripts/sync-accessories.ps1). הרשת
+     נבנית פעם אחת בעליית העמוד (לא בכל renderAll) כדי לא לאפס בחירת גודל/צבע/כמות שבתהליך;
+     "הוסף לעגלה" בלבד נוגע ב-cart/renderAll. */
+  function accessorySelectedPrice(item, sizeId) {
+    if (item.hasSizes && item.sizePricing && item.sizePricing.length) {
+      var m = item.sizePricing.filter(function (sp) { return sp.sizeId === sizeId; })[0];
+      return m ? m.priceILS : item.sizePricing[0].priceILS;
+    }
+    return item.priceILS;
+  }
+  function buildAccessoryTileHtml(item, sizesById, colorsById) {
+    var thumbHtml = item.image
+      ? '<img src="' + item.image + '" alt="" loading="lazy">'
+      : '<span class="cart-accessory-tile-thumb-fallback" aria-hidden="true"></span>';
+    var featuresHtml = (item.keyFeatures || []).length
+      ? '<ul class="cart-accessory-tile-features">' + item.keyFeatures.map(function (f) { return '<li>' + escapeHtmlMM(f) + '</li>'; }).join("") + '</ul>'
+      : '';
+    var validSizes = item.hasSizes ? (item.sizePricing || []).map(function (sp) { return sizesById[sp.sizeId]; }).filter(Boolean) : [];
+    var sizeHtml = '';
+    if (validSizes.length) {
+      sizeHtml = '<div class="cart-accessory-tile-field"><label for="acc-size-' + escapeHtmlMM(item.id) + '">גודל</label>' +
+        '<select class="cart-accessory-size-select" id="acc-size-' + escapeHtmlMM(item.id) + '" data-accessory-size="' + escapeHtmlMM(item.id) + '">' +
+        validSizes.map(function (sz) { return '<option value="' + escapeHtmlMM(sz.id) + '">' + escapeHtmlMM(sz.label) + '</option>'; }).join("") +
+        '</select></div>';
+    }
+    var validColors = item.hasColors ? (item.colorIds || []).map(function (cid) { return colorsById[cid]; }).filter(Boolean) : [];
+    var colorHtml = '';
+    if (validColors.length) {
+      colorHtml = '<div class="cart-accessory-tile-field"><label>צבע</label><div class="cart-accessory-color-swatches" data-accessory-colors="' + escapeHtmlMM(item.id) + '">' +
+        validColors.map(function (c, i) {
+          return '<button type="button" class="cart-accessory-color-swatch" style="background:' + escapeHtmlMM(c.hex || "#ccc") + '" data-color-id="' + escapeHtmlMM(c.id) + '" aria-label="' + escapeHtmlMM(c.label) + '" aria-pressed="' + (i === 0 ? "true" : "false") + '"></button>';
+        }).join("") + '</div></div>';
+    }
+    var initialPrice = accessorySelectedPrice(item, validSizes[0] ? validSizes[0].id : null);
+    return '<div class="cart-accessory-tile" data-accessory-id="' + escapeHtmlMM(item.id) + '">' +
+      thumbHtml +
+      '<div class="cart-accessory-tile-title">' + escapeHtmlMM(item.name) + '</div>' +
+      featuresHtml + sizeHtml + colorHtml +
+      '<div class="cart-accessory-tile-price" data-accessory-price="' + escapeHtmlMM(item.id) + '">' + escapeHtmlMM(fmt(initialPrice)) + '</div>' +
+      '<div class="cart-accessory-tile-qty"><button type="button" class="cart-accessory-qty-btn" data-accessory-qty-dec="' + escapeHtmlMM(item.id) + '" aria-label="הפחתת כמות">&#8722;</button><span class="cart-accessory-qty-val" data-accessory-qty-val="' + escapeHtmlMM(item.id) + '">1</span><button type="button" class="cart-accessory-qty-btn" data-accessory-qty-inc="' + escapeHtmlMM(item.id) + '" aria-label="הוספת כמות">+</button></div>' +
+      '<button type="button" class="btn-accent cart-accessory-add-btn" data-accessory-add="' + escapeHtmlMM(item.id) + '">הוסף לעגלה</button>' +
+      '</div>';
+  }
+  function wireAccessoryTiles(items, sizesById, colorsById) {
+    var byId = {}; items.forEach(function (it) { byId[it.id] = it; });
+    document.querySelectorAll("[data-accessory-size]").forEach(function (sel) {
+      sel.addEventListener("change", function () {
+        var item = byId[sel.dataset.accessorySize];
+        var priceEl = document.querySelector('[data-accessory-price="' + item.id + '"]');
+        if (priceEl) priceEl.textContent = fmt(accessorySelectedPrice(item, sel.value));
+      });
+    });
+    document.querySelectorAll("[data-accessory-colors]").forEach(function (wrap) {
+      wrap.querySelectorAll("[data-color-id]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          wrap.querySelectorAll("[data-color-id]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+          btn.setAttribute("aria-pressed", "true");
+        });
+      });
+    });
+    document.querySelectorAll("[data-accessory-qty-dec]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var valEl = document.querySelector('[data-accessory-qty-val="' + btn.dataset.accessoryQtyDec + '"]');
+        valEl.textContent = Math.max(1, (parseInt(valEl.textContent, 10) || 1) - 1);
+      });
+    });
+    document.querySelectorAll("[data-accessory-qty-inc]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var valEl = document.querySelector('[data-accessory-qty-val="' + btn.dataset.accessoryQtyInc + '"]');
+        valEl.textContent = Math.min(99, (parseInt(valEl.textContent, 10) || 1) + 1);
+      });
+    });
+    document.querySelectorAll("[data-accessory-add]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var item = byId[btn.dataset.accessoryAdd];
+        var tile = btn.closest(".cart-accessory-tile");
+        var sizeSel = tile.querySelector("[data-accessory-size]");
+        var sizeId = sizeSel ? sizeSel.value : null;
+        var colorBtn = tile.querySelector('[data-color-id][aria-pressed="true"]');
+        var colorId = colorBtn ? colorBtn.dataset.colorId : null;
+        var qty = parseInt(tile.querySelector("[data-accessory-qty-val]").textContent, 10) || 1;
+        var price = accessorySelectedPrice(item, sizeId);
+        var rows = [];
+        if (sizeId && sizesById[sizeId]) rows.push(["גודל", sizesById[sizeId].label, null]);
+        if (colorId && colorsById[colorId]) rows.push(["צבע", colorsById[colorId].label, null]);
+        var cartItemId = "acc_" + item.id + (sizeId ? "_" + sizeId : "") + (colorId ? "_" + colorId : "");
+        var existing = cart.filter(function (ci) { return ci.cartItemId === cartItemId; })[0];
+        if (existing) {
+          existing.qty = Math.min(99, (existing.qty || 1) + qty);
+        } else {
+          cart.push({
+            cartItemId: cartItemId, label: item.name, rows: rows, isCustomQuote: false,
+            itemTotal: price, qty: qty, accessoryId: item.id, accessorySizeId: sizeId || null, accessoryColorId: colorId || null
+          });
+        }
+        saveCartToStorage();
+        renderAll();
+        openMiniCart();
+      });
+    });
+  }
+  function renderCartAccessories() {
+    var sectionEl = document.getElementById("cartAccessoriesSection");
+    var gridEl = document.getElementById("cartAccessoriesGrid");
+    if (!sectionEl || !gridEl) return;
+    var data = window.MM_ACCESSORIES_DATA;
+    var items = (data && Array.isArray(data.items)) ? data.items : [];
+    if (!items.length) { sectionEl.hidden = true; return; }
+    sectionEl.hidden = false;
+    var sizesById = {}; (data.sizes || []).forEach(function (s) { sizesById[s.id] = s; });
+    var colorsById = {}; (data.colors || []).forEach(function (c) { colorsById[c.id] = c; });
+    gridEl.innerHTML = items.map(function (it) { return buildAccessoryTileHtml(it, sizesById, colorsById); }).join("");
+    wireAccessoryTiles(items, sizesById, colorsById);
+  }
+
   /* ================= עמוד העגלה המלא ================= */
   function renderCartPage() {
     var emptyEl = document.getElementById("cartPageEmpty");
@@ -8658,6 +8870,14 @@ fieldset.step-fieldset legend {
     var btn = document.getElementById("cartBadgeBtn");
     if (!dropdown || !btn) return;
     dropdown.hidden = false;
+    var ddRect = dropdown.getBoundingClientRect();
+    var parentRect = dropdown.offsetParent.getBoundingClientRect();
+    var mcMargin = 10;
+    var mcViewportW = document.documentElement.clientWidth;
+    var mcDesiredLeft = Math.max(mcMargin, Math.min(ddRect.right - ddRect.width, mcViewportW - ddRect.width - mcMargin));
+    dropdown.style.insetInlineStart = "auto";
+    dropdown.style.right = "auto";
+    dropdown.style.left = (mcDesiredLeft - parentRect.left) + "px";
     btn.setAttribute("aria-expanded", "true");
     document.getElementById("miniCartTitle").focus();
     __miniCartOutsideHandler = function (e) { if (!dropdown.contains(e.target) && e.target !== btn && !btn.contains(e.target)) closeMiniCart(false); };
@@ -8684,6 +8904,7 @@ fieldset.step-fieldset legend {
   }
   function renderAll() { renderCartBadge(); renderCartPage(); renderMiniCart(); }
   renderAll();
+  renderCartAccessories();
 </script>
 </body>
 </html>
