@@ -4647,7 +4647,15 @@ section.block {
   height: 20px;
 }
 
+/* --- 23.9.2026: container-type:inline-size הופך את .flat-viewport לנקודת-ייחוס ל-100cqw
+   (ר' .flat-card למטה) - זה מה שבאמת פותר את "כרטיס-חצוי-בקצה": אם .flat-card היה מחושב
+   באחוזים רגילים (%) הוא היה נפתר מול .flat-track (ההורה-הישיר), וברגע ש-.flat-track נושא
+   padding אופקי משלו (למשל override עתידי) - האחוז "מפספס" בדיוק כמות-הריפוד הזו, והתוצאה
+   בפועל היא שארית-לא-מכוסה בקצה-הגלילה-האחרון (נתפס-בפועל-ותוקן בקרוסלת-מתקני-ההתקנה,
+   ר' installation.html). cqw מתעלם-לגמרי מריפוד-הורים-ביניים, נפתר-תמיד ישירות מול רוחב-
+   התוכן-הנקי של .flat-viewport עצמו - בטוח מבנית, לא-תלוי-בכמה-ריפוד-יש-לטראק. */
 .flat-viewport {
+  container-type: inline-size;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   flex: 1 1 auto;
@@ -4660,8 +4668,15 @@ section.block {
   display: none;
 }
 
+/* --- 23.9.2026 (בקשת ברק): לעולם לא להציג כרטיס-חצוי בקצה קרוסלה - רוחב-הכרטיס עבר מ-190px
+   קבוע לנוסחת-calc (ביחס ל-100cqw - רוחב .flat-viewport עצמו, ר' ההערה למעלה) שמחלקת בדיוק
+   ל-N כרטיסים-שלמים בלי שארית. N נקבע ע"י --flat-visible (ברירת-מחדל 4 כאן, override לפי
+   רוחב-מסך למטה - FIX-25). כשיש יותר-מ-N כרטיסים הם פשוט גולשים מעבר לרוחב-הטראק (אין
+   flex-wrap, .flat-viewport כבר overflow-x:auto) ונגללים כרגיל - אף פעם לא נחתך כרטיס-חלקי. */
 .flat-track {
-  gap: 14px;
+  --flat-visible: 4;
+  --flat-gap: 14px;
+  gap: var(--flat-gap);
   padding: 14px 2px 6px;
   display: flex;
 }
@@ -4678,7 +4693,7 @@ section.block {
   flex-direction: column;
   justify-content: center;
   gap: 8px;
-  width: 190px;
+  width: calc((100cqw - (var(--flat-visible) - 1) * var(--flat-gap)) / var(--flat-visible));
   padding: 14px 12px;
   border-radius: 14px;
   transition: border-color .2s, box-shadow .2s;
@@ -5093,9 +5108,8 @@ section.block {
 }
 
 @media (width <= 640px) {
-  .flat-card {
-    width: 150px;
-  }
+  /* 23.9.2026: רוחב-הכרטיס הקבוע (150px) הוסר מכאן - נשלט עכשיו ע"י --flat-visible (ר' FIX-25
+     למטה), אחרת הכלל הקבוע-הזה היה דורס בשקט את נוסחת-האחוזים בכל רוחב-מסך ≤640px. */
 
   .flat-card-title {
     font-size: .8rem;
@@ -8808,7 +8822,30 @@ footer.site-foot a:hover {
   }
 }
 
-/* --- FIX-25: קרוסלות (דילים / מומלצים / טלוויזיות) במובייל: החלקה, כרטיס וחצי, טקסט קריא --- */
+/* --- FIX-25: קרוסלות (דילים / מומלצים / טלוויזיות) במובייל: החלקה, טקסט קריא --- */
+/* --- 23.9.2026 (בקשת ברק): "כרטיס וחצי" (הצצה חלקית לכרטיס הבא, כדי לרמז שניתן לגלול) הוסר -
+   ברק ביקש שלעולם לא יופיע כרטיס חצוי בשום קרוסלה, כולל במובייל. --flat-visible יורד בהדרגה
+   ככל שהמסך מצטמצם (4 ברירת-מחדל למעלה ← 3 בטאבלט ← 2 בפלאפון גדול/לרוחב ← 1 בפלאפון רגיל)
+   כדי שרוחב-הכרטיס (הנוסחה למעלה) יישאר סביר בכל רוחב - שלושת הכללים חייבים לשבת באותו סדר
+   הזה (הרחב-קודם, הצר-אחרון), כי בכל רוחב-מסך צר-מספיק שלושתם חלים יחד ומנצח האחרון-בקובץ. */
+@media (width <= 860px) {
+  .flat-track {
+    --flat-visible: 3;
+  }
+}
+
+@media (width <= 640px) {
+  .flat-track {
+    --flat-visible: 2;
+  }
+}
+
+@media (width <= 480px) {
+  .flat-track {
+    --flat-visible: 1;
+  }
+}
+
 @media (width <= 640px) {
   .flat-arrow {
     display: none;
@@ -8816,10 +8853,6 @@ footer.site-foot a:hover {
 
   .flat-swipe-hint {
     display: block;
-  }
-
-  .flat-card {
-    width: min(58vw, 220px);
   }
 
   .flat-card-title {

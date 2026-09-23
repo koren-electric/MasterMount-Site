@@ -4222,7 +4222,13 @@ section.block {
   height: 22px;
 }
 
+/* --- 23.9.2026: container-type:inline-size הופך את .flat-viewport לנקודת-ייחוס ל-100cqw (ר'
+   .flat-card למטה) - קריטי כאן כי .flat-track נושא כאן padding אופקי משלו (ר' override בהמשך
+   הקובץ, ~20px) - אחוזים (%) רגילים היו נפתרים מול .flat-track (מינוס הריפוד שלו), לא מול
+   הרוחב-האמיתי-הנראה-לעין של .flat-viewport - וזה בדיוק מה שגרם בפועל לשארית-קטנה-חצי-נחתכת
+   בקצה-הגלילה (נתפס-ותוקן, ר' דיון-QA 23.9.2026). cqw מתעלם לגמרי מריפוד-הורים-ביניים. */
 .flat-viewport {
+  container-type: inline-size;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   flex: 1 1 auto;
@@ -4235,8 +4241,16 @@ section.block {
   display: none;
 }
 
+/* --- 23.9.2026 (בקשת ברק): לעולם לא להציג כרטיס-חצוי בקצה קרוסלה (כולל קרוסלות בחירת-מתקן
+   באשף ההתקנה) - רוחב-הכרטיס עבר מ-px קבוע לנוסחת-calc ביחס ל-100cqw (ר' ההערה למעלה על
+   .flat-viewport). שני משתני-כמות נפרדים: --flat-visible לכרטיסי-בחירה-רגילים, --mount-visible
+   לכרטיסי-בחירת-מתקן (.mount-select-card, עשירים-יותר בתוכן - תמונה+badge+רשימת-מאפיינים -
+   נשארים בכוונה רחבים-יותר, אותו יחס-רוחב שכבר-היה-קיים-קודם, 270px מול 194px ≈ פי-1.4). */
 .flat-track {
-  gap: 16px;
+  --flat-visible: 4;
+  --mount-visible: 3;
+  --flat-gap: 16px;
+  gap: var(--flat-gap);
   padding: 6px 4px 14px;
   display: flex;
 }
@@ -4254,7 +4268,7 @@ section.block {
   justify-content: center;
   align-items: center;
   gap: 9px;
-  width: 194px;
+  width: calc((100cqw - (var(--flat-visible) - 1) * var(--flat-gap)) / var(--flat-visible));
   min-height: 140px;
   padding: 20px 16px;
   border-radius: 16px;
@@ -4313,7 +4327,7 @@ section.block {
   text-align: start;
   align-items: stretch;
   gap: 8px;
-  width: 270px;
+  width: calc((100cqw - (var(--mount-visible) - 1) * var(--flat-gap)) / var(--mount-visible));
   min-height: 300px;
   padding: 18px;
 }
@@ -4402,12 +4416,8 @@ section.block {
 }
 
 @media (width <= 640px) {
-  .flat-card {
-    width: 160px;
-  }
-  .flat-card.mount-select-card {
-    width: 230px;
-  }
+  /* 23.9.2026: שני רוחבי-הכרטיס הקבועים (160px / 230px) הוסרו מכאן - נשלטים עכשיו ע"י
+     --flat-visible / --mount-visible (ר' ההגדרה למעלה + התוספת ב-@media(width<=860px)). */
   .flat-arrow {
     width: 42px;
     height: 42px;
@@ -7879,11 +7889,21 @@ fieldset.step-fieldset legend {
     border-radius: 999px;
   }
 }
-@media (width <= 640px) {
-  .flat-card.mount-select-card {
-    width: min(230px, 100%);
-    max-width: calc(100% - 8px);
+/* 23.9.2026: --flat-visible/--mount-visible יורדים בהדרגה ככל שהמסך מצטמצם, כדי שרוחב-הכרטיס
+   (הנוסחה שהוגדרה למעלה על .flat-track) יישאר סביר בכל רוחב, בלי לחתוך כרטיס לעולם. */
+@media (width <= 860px) {
+  .flat-track {
+    --flat-visible: 3;
+    --mount-visible: 2;
   }
+}
+
+@media (width <= 640px) {
+  .flat-track {
+    --flat-visible: 2;
+    --mount-visible: 1;
+  }
+  /* רוחב-הכרטיס הקבוע (min(230px,100%)) הוסר מכאן - נשלט עכשיו ע"י --mount-visible למעלה. */
   .flat-arrow {
     display: none;
   }
