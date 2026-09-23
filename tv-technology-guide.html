@@ -6979,6 +6979,29 @@ footer.site-foot a:hover {
   font-size: .92rem;
 }
 
+/* קישור-טקסט עם חץ - הודגש כדי שיהיה ברור מיד שזה קישור לחיצה, לא עוד טקסט רגיל */
+.tvguide-page .link-arrow {
+  color: var(--orange);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: color .15s ease;
+}
+.tvguide-page .link-arrow:hover,
+.tvguide-page .link-arrow:focus-visible {
+  color: var(--premium-text);
+}
+.tvguide-page .link-arrow .arrow-ico {
+  display: inline-block;
+  font-weight: 400;
+  transition: transform .15s ease;
+}
+.tvguide-page .link-arrow:hover .arrow-ico,
+.tvguide-page .link-arrow:focus-visible .arrow-ico {
+  transform: translateX(-4px);
+}
+
 .tvguide-page .tier-cols {
   grid-template-columns: 1fr 1fr;
   gap: 16px;
@@ -8399,7 +8422,7 @@ if(window.matchMedia){var mq=window.matchMedia("(min-width:1280px)");var onMq=fu
         <strong>שני מושגים נוספים שכדאי להכיר:</strong> תוכן HDR מגיע עם "הוראות" לצבע ובהירות - <strong>HDR10</strong> הוא הבסיס שכל טלוויזיה תומכת בו, ו-<strong><bdi dir="ltr">HDR10+</bdi></strong> ו-<strong>Dolby Vision</strong> הם שני שדרוגים מתחרים שמתאימים את ההוראות לכל סצנה בנפרד. טלוויזיה תומכת רק במה שהיא תומכת - וזה משתנה בין המותגים (פירוט בכל מותג בהמשך). בנוסף, <strong>תדר רענון גבוה</strong> (120Hz ומעלה) חשוב בעיקר לגיימרים ולתוכן ספורט/אקשן מהיר - התמונה זזה בצורה חלקה יותר, בלי טשטוש תנועה. שני מנגנונים נלווים חשובים כאן: <strong>VRR</strong> (התאמת קצב הרענון למשחק, למניעת קרעים בתמונה) ו-<strong>ALLM</strong> (מעבר אוטומטי למצב משחק).
       </div>
       <div class="basics-note" id="idan-plus">
-        <span aria-hidden="true">📡</span> רוצים לקלוט ערוצים בחינם? שידורי עידן+ (כאן 11, 12, 13 ועוד) נקלטים דרך אנטנה. ודאו שבטלוויזיה יש ממיר מובנה שתומך בתקן DVB-T2, ושיש לכם אנטנה מתאימה. <a href="https://www.rashut2.org.il/הפצת-שידורים/המדריך-להתחברות-עידןplus" target="_blank" rel="noopener">למדריך הרשמי של הרשות השנייה <span aria-hidden="true">←</span><span class="sr-only"> (נפתח בכרטיסייה חדשה)</span></a>
+        <span aria-hidden="true">📡</span> רוצים לקלוט ערוצים בחינם? שידורי עידן+ (כאן 11, 12, 13 ועוד) נקלטים דרך אנטנה. ודאו שבטלוויזיה יש ממיר מובנה שתומך בתקן DVB-T2, ושיש לכם אנטנה מתאימה. <a href="https://www.rashut2.org.il/הפצת-שידורים/המדריך-להתחברות-עידןplus" target="_blank" rel="noopener" class="link-arrow">למדריך הרשמי של הרשות השנייה <span class="arrow-ico" aria-hidden="true">←</span><span class="sr-only"> (נפתח בכרטיסייה חדשה)</span></a>
       </div>
     </div>
   </div>
@@ -8516,7 +8539,7 @@ if(window.matchMedia){var mq=window.matchMedia("(min-width:1280px)");var onMq=fu
           <span class="tier-badge">דגל</span>
         </div>
         <p class="tier-highlight">שלושה צבעי לד עצמאיים בכל נקודת תאורה - הדגל החדש של סמסונג, במקום Neo QLED</p>
-        <p class="tier-explain">הטכנולוגיה המתקדמת ביותר של סמסונג ב-LCD, ומ-2026 היא הדגל הרשמי של המותג - במקום Neo QLED. הושקה ב-2025 במסך 115 אינץ', ובסדרת 2026 זמינה גם בגדלים ביתיים: 55, 65, 75, 85, 100 ו-115 אינץ'. תאורת רקע בנויה מנקודות אדום/ירוק/כחול זעירות ונפרדות, במקום לד לבן עם פילטר צבע - טווח צבעים עצום ובהירות יוצאת דופן (<a href="#basics-microled">מה ההבדל מ-Micro-LED? <span aria-hidden="true">←</span></a>).</p>
+        <p class="tier-explain">הטכנולוגיה המתקדמת ביותר של סמסונג ב-LCD, ומ-2026 היא הדגל הרשמי של המותג - במקום Neo QLED. הושקה ב-2025 במסך 115 אינץ', ובסדרת 2026 זמינה גם בגדלים ביתיים: 55, 65, 75, 85, 100 ו-115 אינץ'. תאורת רקע בנויה מנקודות אדום/ירוק/כחול זעירות ונפרדות, במקום לד לבן עם פילטר צבע - טווח צבעים עצום ובהירות יוצאת דופן (<a href="#basics-microled" class="link-arrow">מה ההבדל מ-Micro-LED? <span class="arrow-ico" aria-hidden="true">←</span></a>).</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>טווח הצבעים הרחב ביותר שסמסונג הציעה אי פעם</li>
@@ -8706,7 +8729,7 @@ if(window.matchMedia){var mq=window.matchMedia("(min-width:1280px)");var onMq=fu
           <span class="tier-badge">בקרוב בישראל</span>
         </div>
         <p class="tier-highlight">תאורת רקע מנקודות אדום/ירוק/כחול נפרדות - הדגל הצבעוני של TCL</p>
-        <p class="tier-explain">תאורת רקע מנקודות צבע נפרדות במקום לד-לבן+פילטר, בדומה ל-Micro RGB של סמסונג (<a href="#basics-microled">מה ההבדל מ-Micro-LED? <span aria-hidden="true">←</span></a>). ב-SQD Mini-LED, TCL הוסיפה שכבת נקודות קוונטים (Quantum Dot) על גבי תאורת ה-RGB, שמכסה את כל תקן הצבע BT.2020 ומצמצמת את דליפת הצבע האופיינית לדגמי RGB Mini-LED מתחרים. בדגל X11L יש עד 20,000 אזורי עמעום ובהירות שיא של עד 10,000 ניט.</p>
+        <p class="tier-explain">תאורת רקע מנקודות צבע נפרדות במקום לד-לבן+פילטר, בדומה ל-Micro RGB של סמסונג (<a href="#basics-microled" class="link-arrow">מה ההבדל מ-Micro-LED? <span class="arrow-ico" aria-hidden="true">←</span></a>). ב-SQD Mini-LED, TCL הוסיפה שכבת נקודות קוונטים (Quantum Dot) על גבי תאורת ה-RGB, שמכסה את כל תקן הצבע BT.2020 ומצמצמת את דליפת הצבע האופיינית לדגמי RGB Mini-LED מתחרים. בדגל X11L יש עד 20,000 אזורי עמעום ובהירות שיא של עד 10,000 ניט.</p>
         <div class="tier-cols">
           <div class="tier-pros"><h4>יתרונות</h4><ul>
             <li>טווח צבעים מהרחבים ביותר בשוק, עם דליפת צבע מינימלית</li>
@@ -8801,7 +8824,7 @@ if(window.matchMedia){var mq=window.matchMedia("(min-width:1280px)");var onMq=fu
       <a class="btn-ghost" id="finalWhatsappBtn" hidden><svg class="cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.25-1.5A9.9 9.9 0 1 0 12.04 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.18-3.1.88.9-3.02-.2-.31A8.1 8.1 0 0 1 12.04 3.8zM8.6 7.6c-.2 0-.5.07-.75.35-.26.28-1 1-1 2.4s1.03 2.8 1.17 3c.15.2 2 3.2 4.9 4.36 2.4.95 2.9.76 3.4.72.52-.05 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34-.3-.15-1.7-.84-1.97-.94-.26-.1-.46-.14-.65.15-.2.3-.75.94-.92 1.13-.17.2-.34.22-.63.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.65-1.6-.9-2.18-.23-.56-.47-.48-.65-.49h-.55z"/></svg> שאלו אותנו בוואטסאפ<span class="sr-only"> (נפתח בוואטסאפ)</span></a>
       <a class="btn-ghost" href="index.html#products"><svg class="cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="12.5" rx="2.2"/><path d="M8.5 20.5h7M12 17v3.5"/></svg> לקטלוג הטלוויזיות</a>
     </div>
-    <p style="font-size:.88rem;color:var(--text-tertiary);margin-top:18px;">כבר יודעים איזה מסך? בדקו כמה תעלה <a href="installation.html">התקנה על הקיר <span aria-hidden="true">←</span></a></p>
+    <p style="font-size:.88rem;color:var(--text-tertiary);margin-top:18px;">כבר יודעים איזה מסך? בדקו כמה תעלה <a href="installation.html" class="link-arrow">התקנה על הקיר <span class="arrow-ico" aria-hidden="true">←</span></a></p>
   </div>
 </section>
 </main>
