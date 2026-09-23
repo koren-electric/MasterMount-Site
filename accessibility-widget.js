@@ -5,9 +5,10 @@
  * כבר קיימת בקוד-המקור, ר' README-accessibility.md - הכלי הזה לא מחליף אותה.
  *
  * עצמאי-לגמרי (IIFE), בדיוק כמו cookie-consent.js/compare-bar.js: מזריק את ה-<style> וה-DOM
- * שלו לבד, לא דורש שום שינוי-markup בקבצי ה-HTML מלבד תג <script src> יחיד. משתמש ב-
- * --mm-cookie-h (אותו משתנה-CSS שכבר קובע cookie-consent.js) כדי לזוז אוטומטית מעל באנר-
- * העוגיות, ובטוקני-הצבע/מיתוג הקיימים של האתר בלבד.
+ * שלו לבד, לא דורש שום שינוי-markup בקבצי ה-HTML מלבד תג <script src> יחיד. ממוקם בחלקו העליון
+ * של העמוד (לא בתחתית) - --mm-a11y-header-h הוא משתנה-CSS משלו (אותו דפוס בדיוק כמו --mm-cookie-h
+ * הקיים ב-cookie-consent.js), נמדד חי מגובה ה-.topbar כדי לזוז אוטומטית מתחת לכותרת-הדביקה בכל
+ * עמוד, ובטוקני-הצבע/מיתוג הקיימים של האתר בלבד.
  *
  * שני toggle-ים (קורא-טקסט, שליטה-קולית) תלויים ב-Web Speech API - נתמכים במלואם בכרום
  * בלבד; מזוהים אוטומטית (feature detection) ומוצגים כ"לא נתמך" בדפדפן אחר, לא נכשלים בשקט.
@@ -104,6 +105,26 @@
     }, 30);
   }
 
+  /**
+   * ממקם את הכפתור/הפאנל בחלקו העליון של העמוד, מתחת לכותרת-הדביקה (.topbar) בכל עמוד -
+   * אותו דפוס בדיוק כמו syncSpacer ב-cookie-consent.js, רק --mm-a11y-header-h במקום --mm-cookie-h.
+   */
+  var headerResizeObserver = null;
+  function syncHeaderHeight() {
+    var topbar = document.querySelector(".topbar");
+    var h = topbar ? Math.ceil(topbar.getBoundingClientRect().height) : 0;
+    document.documentElement.style.setProperty("--mm-a11y-header-h", h + "px");
+  }
+  function wireHeaderHeightSync() {
+    syncHeaderHeight();
+    var topbar = document.querySelector(".topbar");
+    if (topbar && typeof ResizeObserver !== "undefined") {
+      headerResizeObserver = new ResizeObserver(syncHeaderHeight);
+      headerResizeObserver.observe(topbar);
+    }
+    window.addEventListener("resize", syncHeaderHeight);
+  }
+
   /* ---------- CSS ---------- */
 
   function ensureStyle() {
@@ -111,22 +132,26 @@
     var st = document.createElement("style");
     st.id = "mmA11yStyle";
     st.textContent =
-      "#mmA11yToggle{position:fixed;left:16px;bottom:calc(var(--mm-cookie-h,0px) + 16px);z-index:400;" +
+      "#mmA11yToggle{position:fixed;left:16px;top:calc(var(--mm-a11y-header-h,64px) + 16px);z-index:400;" +
       "width:52px;height:52px;border-radius:50%;border:2px solid var(--brand-orange-ink,#fff);" +
       "background:var(--brand-orange,#ea5b24);color:var(--brand-orange-ink,#fff);cursor:pointer;" +
       "display:flex;align-items:center;justify-content:center;padding:0;" +
       "box-shadow:var(--shadow,0 4px 16px rgba(0,0,0,.3));transition:transform .15s ease}" +
       "#mmA11yToggle:hover{transform:scale(1.06)}" +
       "#mmA11yToggle:focus-visible{outline:3px solid var(--brand-orange-2,#ff8a52);outline-offset:3px}" +
-      "#mmA11yToggle svg{width:28px;height:28px}" +
+      "#mmA11yToggle svg{width:30px;height:30px;display:block}" +
+      /* direction:ltr כאן בכוונה - זה רק קובע את ציר-ה-flex של העטיפה (שממוקמת בפועל בצד
+         שמאל, פיזית), לא את כיוון-הטקסט; #mmA11yPanel מצהיר direction:rtl משלו לתוכן. בלי זה,
+         justify-content:flex-start היה נפתר לפי ה-rtl של <html> ופותח את הפאנל בצד ימין - לא
+         תואם לכפתור שיושב תמיד ב-left הפיזי. */
       "#mmA11yOverlay{position:fixed;inset:0;z-index:410;background:rgba(0,0,0,.35);display:flex;" +
-      "align-items:flex-end;justify-content:flex-start;padding:16px}" +
+      "direction:ltr;align-items:flex-start;justify-content:flex-start;padding:16px}" +
       "#mmA11yOverlay[hidden]{display:none}" +
       "#mmA11yPanel{width:min(360px,calc(100vw - 32px));max-height:min(640px,calc(100vh - 32px));" +
       "overflow-y:auto;background:var(--surface,#fff);color:var(--text-primary,#20272e);" +
       "border:1px solid var(--border,#e1ddd4);border-radius:16px;box-shadow:var(--shadow,0 16px 40px rgba(0,0,0,.35));" +
       "padding:16px;box-sizing:border-box;direction:rtl;font-family:inherit;" +
-      "margin-bottom:calc(52px + var(--mm-cookie-h,0px) + 24px)}" +
+      "margin-top:calc(var(--mm-a11y-header-h,64px) + 52px + 24px)}" +
       "#mmA11yPanel:focus{outline:none}" +
       ".mm-a11y-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}" +
       ".mm-a11y-head h2{font-size:16px;font-weight:800;margin:0;color:var(--text-primary,#20272e)}" +
@@ -164,7 +189,7 @@
       ".mm-a11y-statement-link:hover{opacity:.9}" +
       ".mm-a11y-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;" +
       "clip:rect(0,0,0,0);white-space:nowrap;border:0}" +
-      ".mm-a11y-listening-badge{position:fixed;left:16px;bottom:calc(var(--mm-cookie-h,0px) + 76px);z-index:400;" +
+      ".mm-a11y-listening-badge{position:fixed;left:16px;top:calc(var(--mm-a11y-header-h,64px) + 76px);z-index:400;" +
       "background:#c62828;color:#fff;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:800;" +
       "box-shadow:0 4px 14px rgba(0,0,0,.3);display:flex;align-items:center;gap:6px}" +
       "#mmA11yVkWrap{position:fixed;left:0;right:0;bottom:0;z-index:405;background:var(--brand-ink,#20272e);" +
@@ -196,18 +221,22 @@
       /* --- הדגשת-פוקוס לניווט-מקלדת --- */
       "html.mm-a11y-kb-highlight *:focus-visible{outline:4px solid #ffbf47!important;outline-offset:2px!important;" +
       "box-shadow:0 0 0 6px rgba(255,191,71,.35)!important}" +
-      "@media (max-width:480px){#mmA11yToggle{width:46px;height:46px;left:12px;bottom:calc(var(--mm-cookie-h,0px) + 12px)}" +
-      "#mmA11yToggle svg{width:24px;height:24px}#mmA11yOverlay{padding:8px}" +
-      "#mmA11yPanel{margin-bottom:calc(46px + var(--mm-cookie-h,0px) + 20px)}}";
+      "@media (max-width:480px){#mmA11yToggle{width:46px;height:46px;left:12px;top:calc(var(--mm-a11y-header-h,64px) + 12px)}" +
+      "#mmA11yToggle svg{width:26px;height:26px}#mmA11yOverlay{padding:8px}" +
+      "#mmA11yPanel{margin-top:calc(var(--mm-a11y-header-h,64px) + 46px + 20px)}}";
     document.head.appendChild(st);
   }
 
   /* ---------- אייקון-נגישות (SVG אוניברסלי, אדם בתוך עיגול) ---------- */
 
+  /* אדם-בתוך-הכפתור, ממורכז מדויק ב-viewBox 24x24 (bbox אמיתי אומת: x:[5,19] כבר-ממורכז,
+     y:[4,21.56] - translate(0,-0.78) מיישר גם את ציר-ה-y למרכז מדויק, כדי שהמירכוז-החזותי
+     בתוך הכפתור העגול (flex center) יהיה מדויק לפיקסל ולא רק "בערך". */
   var TOGGLE_ICON_SVG =
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">' +
+    '<g transform="translate(0,-0.78)">' +
     '<path d="M12 4a2 2 0 110 4 2 2 0 010-4zm7 6a1 1 0 010 2h-4.4l1.8 4.7v.02l1.6 4.1a1 1 0 01-1.86.74l-1.9-4.87h-2.48l-1.9 4.87a1 1 0 01-1.86-.74l1.6-4.1v-.02l1.8-4.7H5a1 1 0 010-2h14z"/>' +
-    "</svg>";
+    "</g></svg>";
 
   var ITEM_DEFS = [
     { action: "screenReader", icon: "🔊", label: "תמיכה בקוראי מסך" },
@@ -840,6 +869,7 @@
   /* ---------- אתחול ---------- */
 
   function init() {
+    wireHeaderHeightSync();
     buildMarkup();
     wireEvents();
     applyState();
