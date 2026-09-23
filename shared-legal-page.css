@@ -645,3 +645,16 @@ footer.site-foot .foot-links a:hover {
     text-wrap: balance;
   }
 }
+
+/* 23.9.2026 - ברק: לחזור למצב-ללא-המבורגר בסרגל-העליון, בדיוק כמו 4 העמודים הראשיים - ר'
+   index.html לפירוט המלא/מדידות. */
+.menu-toggle-btn { display: none !important; }
+.mm-quicklinks { display: none !important; }
+.topbar-inner { flex-wrap: nowrap !important; }
+.toplinks {
+  display: flex !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  min-width: 0;
+}

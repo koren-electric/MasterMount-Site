@@ -8205,6 +8205,24 @@ footer.site-foot p, footer.site-foot a {
     text-wrap: balance;
   }
 }
+
+/* 23.9.2026 - ברק: לחזור למצב-ללא-המבורגר, כל 8 האפשרויות תמיד גלויות בשורה אחת. אם אין מקום
+   בשורה - שורת-הניווט עצמה גוללת אופקית (לא נשברת לשורה שנייה, לא מתכווצת ל-hamburger), כדי
+   לשמור על גובה-סרגל מינימלי. נמדד ב-Edge headless (320-1600px): 0 גלישה אופקית של העמוד,
+   גובה הסרגל תמיד 61-69px (במקום 105-154px עם הכמוסות הישנות). מ-1440px ומעלה כל 8 הקישורים
+   נכנסים בבת-אחת בלי גלילה; מתחת לזה יש פס-גלילה-דק בתוך שורת-הניווט בלבד. דורס את שני הבלוקים
+   שמעל (המבורגר מ-20.9.2026, כמוסות-mm-quicklinks מ-21.9.2026) - נשארים בקוד בלי שינוי, רק
+   לא-פעילים יותר. */
+.menu-toggle-btn { display: none !important; }
+.mm-quicklinks { display: none !important; }
+.topbar-inner { flex-wrap: nowrap !important; }
+.toplinks {
+  display: flex !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  min-width: 0;
+}
 </style>
 </head>
 <body>

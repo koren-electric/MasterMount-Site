@@ -8064,6 +8064,26 @@ footer.site-foot a:hover {
     text-wrap: balance;
   }
 }
+
+/* 23.9.2026 - ברק: לחזור למצב-ללא-המבורגר, כל 8 האפשרויות תמיד גלויות בשורה אחת - וגם לתקן
+   שהעמוד הזה יתנהג בדיוק כמו שאר עמודי האתר (עד עכשיו, 641-1279px הציג פה גם את ההמבורגר וגם
+   את שורת-הניווט-המלאה יחד, כי בלוק overflow-x:auto ישן שכבר היה בעמוד הזה [שורות ~6417/7549
+   למעלה] דרס בשקט את בלוק "נקודת-מעבר-אחידה" שנוסף אחר-כך ב-20.9.2026). אם אין מקום בשורה -
+   שורת-הניווט עצמה גוללת אופקית (לא נשברת לשורה שנייה, לא מתכווצת ל-hamburger), כדי לשמור על
+   גובה-סרגל מינימלי - בדיוק כמו שאר 3 העמודים הראשיים. דורס את כל הבלוקים שמעל, כולל
+   ה-.tvguide-page-prefixed הישנים - נשארים בקוד בלי שינוי, רק לא-פעילים יותר. */
+.menu-toggle-btn { display: none !important; }
+.mm-quicklinks { display: none !important; }
+.topbar-inner,
+.tvguide-page .topbar-inner { flex-wrap: nowrap !important; }
+.toplinks,
+.tvguide-page .toplinks {
+  display: flex !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  min-width: 0;
+}
 </style>
 </head>
 <body>
