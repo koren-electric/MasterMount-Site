@@ -4194,14 +4194,33 @@ body.mobile-nav-open {
   position: relative;
 }
 
+/* 23.9.2026 (בקשת ברק): החצים עברו ממיקום-צף-מעל-פינות-התמונה (position:absolute) לחברי-flex
+   שיושבים מחוץ לתמונה משני צדדיה - אותו עיקרון בדיוק כמו קרוסלות-הטלוויזיות (.flat-outer/
+   .flat-arrow/.flat-viewport). .hero-carousel-track מתכווץ (flex:1) כדי לפנות מקום לעיגולים. */
 .hero-carousel-stage {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .hero-carousel-track {
   position: relative;
   border-radius: 18px;
   overflow: hidden;
+  flex: 1 1 auto;
+  min-width: 0;
+  order: 2;
+}
+
+/* הבא (next) קודם ב-DOM אבל אמור להופיע מימין (RTL) והקודם (prev) משמאל - במקום לשכתב את
+   סדר-ה-DOM (שהיה מחייב לחתוך את בלוק-השקופיות הענק שיושב ביניהם), נשלט חזותית עם order בלבד */
+.hero-carousel-prev {
+  order: 3;
+}
+
+.hero-carousel-next {
+  order: 1;
 }
 
 .process-banner.install.hero-slide,
@@ -4297,7 +4316,8 @@ body.mobile-nav-open {
 }
 
 .hero-carousel-arrow {
-  z-index: 5;
+  z-index: 2;
+  flex: none;
   border: 1px solid rgba(255, 255, 255, .55);
   background: rgba(10, 14, 20, .35);
   backdrop-filter: blur(3px);
@@ -4311,8 +4331,6 @@ body.mobile-nav-open {
   align-items: center;
   font-size: 1.15rem;
   display: flex;
-  position: absolute;
-  top: 12px;
   cursor: pointer;
   transition: background-color .15s, border-color .15s;
 }
@@ -4320,14 +4338,6 @@ body.mobile-nav-open {
 .hero-carousel-arrow:hover {
   background: rgba(10, 14, 20, .55);
   border-color: #fff;
-}
-
-.hero-carousel-prev {
-  inset-inline-start: 12px;
-}
-
-.hero-carousel-next {
-  inset-inline-end: 12px;
 }
 
 .hero-carousel-dots {
@@ -4491,12 +4501,16 @@ body.mobile-nav-open {
 .brand-banner-carousel {
   max-width: 1600px;
   margin: 0 auto;
+  padding-inline: 12px;
   position: relative;
 }
 
 .brand-banner-track {
   position: relative;
   overflow: hidden;
+  flex: 1 1 auto;
+  min-width: 0;
+  order: 2;
 }
 
 .brand-banner img.brand-banner-slide {
@@ -9174,10 +9188,9 @@ footer.site-foot a:hover {
   }
 
   .hero-carousel-arrow {
-    width: 44px;
-    height: 44px;
-    top: calc((min(100vw, 1080px) - 32px) / var(--hero-img-ratio, 2) / 2 - 22px);
-    font-size: 1.5rem;
+    width: 38px;
+    height: 38px;
+    font-size: 1.2rem;
   }
 }
 
