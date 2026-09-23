@@ -35,7 +35,7 @@ var MM_COMPARE_SCHEMA = {
     { key: "resolution", group: "picture", label: "רזולוציה", type: "enum", options: ["HD", "Full HD", "4K", "8K"], ordinal: true, prefer: "high" },
     { key: "refreshRate", group: "picture", label: "קצב רענון", type: "number", unit: "Hz", prefer: "high" },
     { key: "peakBrightness", group: "picture", label: "בהירות שיא", type: "number", unit: "ניט", prefer: "high" },
-    { key: "localDimming", group: "picture", label: "עמעום מקומי", type: "enum", options: ["אין", "Edge", "Direct", "Mini LED", "פיקסל בודד"], prefer: null },
+    { key: "localDimming", group: "picture", label: "עמעום מקומי", type: "enum", options: ["אין", "Edge", "Direct", "Mini LED", "Micro LED", "פיקסל בודד"], prefer: null },
     { key: "hdrFormats", group: "picture", label: "פורמטי HDR", type: "multi", options: ["HDR10", "HDR10+", "HLG", "Dolby Vision"], prefer: null },
     { key: "imageProcessor", group: "picture", label: "מעבד תמונה", type: "text", prefer: null },
     { key: "antiReflective", group: "picture", label: "ציפוי אנטי-השתקפות", type: "enum", options: ["אין", "ציפוי מקטין השתקפויות", "מסך מט"], prefer: null },
