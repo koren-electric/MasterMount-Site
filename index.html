@@ -12956,8 +12956,14 @@ function initMasterMount() {
     setProductFeaturesOpen(this.getAttribute("aria-expanded") !== "true");
   });
   document.getElementById("productPageWhatsapp").addEventListener("click", function () {
+    /* 23.9.2026 (תוקן, ר' CLAUDE.md): closeProductPage() הרגילה הייתה מתזמנת history.go(-1)
+       מאוחר (60ms, מנגנון-"כפתור-אחורה-סוגר-מודל") - וזה התנגש עם הניווט-המיידי-בעמוד-שלם
+       שמיד-אחריו (__startInstallForProduct, location.href לעמוד-התקנה) - כשה-go(-1) מגיע
+       בזמן שהניווט-לעמוד-אחר עדיין-לא-הושלם, הוא מבטל-אותו-בשקט (נבדק-ואומת ישירות: הניווט
+       פשוט לא-קורה). כאן משתמשים ב-closeModalA11y(...,fromHistory=true) - סוגר-את-המודל
+       בלי-לתזמן-history.go בכלל, כי ממילא עוזבים-את-העמוד-הזה - אין-מה-"לנקות" בהיסטוריה. */
     var id = this.dataset.productId;
-    closeProductPage();
+    closeModalA11y(document.getElementById("productPageOverlay"), true);
     window.__startInstallForProduct(id);
   });
   document.getElementById("productPageQuickBuy").addEventListener("click", function () {
