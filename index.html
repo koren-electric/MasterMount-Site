@@ -5024,6 +5024,16 @@ section.block {
   overflow: hidden;
 }
 
+/* 23.9.2026 (בקשת ברק): בקרוסלת-הדילים ("bundleTrack") הכותרת היא הכיתוב-השיווקי-המלא של
+   הדיל (b.name) - ה-clamp-הכללי-למעלה (2 שורות, גם ב-3 במובייל) חתך-אותו-באמצע-משפט. נדרס
+   רק-כאן (סלקטור-ID+class, מנצח-בכל-רוחב-מסך ללא-תלות-בסדר-מדיה-קוארי) - שאר הקרוסלות
+   (מומלצים/כל-המוצרים ב-#productTrack, ובחירת-מתקן באשף-ההתקנה) לא-נגעו, נשארות-מקוצרות. */
+#bundleTrack .flat-card-title {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
 .flat-card-sub {
   color: var(--text-tertiary);
   font-variant-numeric: tabular-nums;
