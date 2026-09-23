@@ -132,14 +132,17 @@
     var st = document.createElement("style");
     st.id = "mmA11yStyle";
     st.textContent =
+      /* אין border עיצובי על הכפתור עצמו בכוונה - האיור עצמו (למטה) כבר-כולל את הטבעת-הכפולה
+         כחלק מהצורה, בדיוק כמו בתמונת-הייחוס של ברק; border נוסף כאן היה יוצר טבעת-שלישית-
+         מיותרת סביב שתי-הטבעות-שכבר-מצוירות. */
       "#mmA11yToggle{position:fixed;left:16px;top:calc(var(--mm-a11y-header-h,64px) + 16px);z-index:400;" +
-      "width:52px;height:52px;border-radius:50%;border:2px solid var(--brand-orange-ink,#fff);" +
+      "width:52px;height:52px;border-radius:50%;border:none;" +
       "background:var(--brand-orange,#ea5b24);color:var(--brand-orange-ink,#fff);cursor:pointer;" +
       "display:flex;align-items:center;justify-content:center;padding:0;" +
       "box-shadow:var(--shadow,0 4px 16px rgba(0,0,0,.3));transition:transform .15s ease}" +
       "#mmA11yToggle:hover{transform:scale(1.06)}" +
       "#mmA11yToggle:focus-visible{outline:3px solid var(--brand-orange-2,#ff8a52);outline-offset:3px}" +
-      "#mmA11yToggle svg{width:30px;height:30px;display:block}" +
+      "#mmA11yToggle svg{width:42px;height:42px;display:block}" +
       /* direction:ltr כאן בכוונה - זה רק קובע את ציר-ה-flex של העטיפה (שממוקמת בפועל בצד
          שמאל, פיזית), לא את כיוון-הטקסט; #mmA11yPanel מצהיר direction:rtl משלו לתוכן. בלי זה,
          justify-content:flex-start היה נפתר לפי ה-rtl של <html> ופותח את הפאנל בצד ימין - לא
@@ -222,21 +225,28 @@
       "html.mm-a11y-kb-highlight *:focus-visible{outline:4px solid #ffbf47!important;outline-offset:2px!important;" +
       "box-shadow:0 0 0 6px rgba(255,191,71,.35)!important}" +
       "@media (max-width:480px){#mmA11yToggle{width:46px;height:46px;left:12px;top:calc(var(--mm-a11y-header-h,64px) + 12px)}" +
-      "#mmA11yToggle svg{width:26px;height:26px}#mmA11yOverlay{padding:8px}" +
+      "#mmA11yToggle svg{width:36px;height:36px}#mmA11yOverlay{padding:8px}" +
       "#mmA11yPanel{margin-top:calc(var(--mm-a11y-header-h,64px) + 46px + 20px)}}";
     document.head.appendChild(st);
   }
 
   /* ---------- אייקון-נגישות (SVG אוניברסלי, אדם בתוך עיגול) ---------- */
 
-  /* אדם-בתוך-הכפתור, ממורכז מדויק ב-viewBox 24x24 (bbox אמיתי אומת: x:[5,19] כבר-ממורכז,
-     y:[4,21.56] - translate(0,-0.78) מיישר גם את ציר-ה-y למרכז מדויק, כדי שהמירכוז-החזותי
-     בתוך הכפתור העגול (flex center) יהיה מדויק לפיקסל ולא רק "בערך". */
+  /* איור-הייחוס-המדויק של ברק: אדם (ראש עגול, מוט-ידיים אופקי, גו, שתי רגליים נפתחות) בתוך
+     טבעת-כפולה (שני עיגולים-קווים קונצנטריים) - צורה זהה, רק בצבעי-currentColor (יורש-לבן על
+     הכפתור-הכתום, ותומך אוטומטית ב-html.mm-a11y-contrast). viewBox 100x100 לנוחות-חישוב
+     בלבד - לא-משנה את גודל-הרינדור בפועל (נשלט ע"י CSS width/height על ה-svg). כל נקודות-
+     הצורה נבדקו-חשבונית שנשארות בתוך הטבעת-הפנימית (r=39.2) עם שולי-ביטחון, בלי לגעת בה. */
   var TOGGLE_ICON_SVG =
-    '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">' +
-    '<g transform="translate(0,-0.78)">' +
-    '<path d="M12 4a2 2 0 110 4 2 2 0 010-4zm7 6a1 1 0 010 2h-4.4l1.8 4.7v.02l1.6 4.1a1 1 0 01-1.86.74l-1.9-4.87h-2.48l-1.9 4.87a1 1 0 01-1.86-.74l1.6-4.1v-.02l1.8-4.7H5a1 1 0 010-2h14z"/>' +
-    "</g></svg>";
+    '<svg viewBox="0 0 100 100" fill="none" aria-hidden="true" focusable="false">' +
+    '<circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="3.4"/>' +
+    '<circle cx="50" cy="50" r="39.2" stroke="currentColor" stroke-width="2.6"/>' +
+    '<circle cx="50" cy="27.5" r="9" fill="currentColor"/>' +
+    '<rect x="17" y="40" width="66" height="10" rx="5" fill="currentColor"/>' +
+    '<rect x="41.5" y="36" width="17" height="26" rx="6" fill="currentColor"/>' +
+    '<path d="M58.5,59 L67,84 L56,84 L50,61 Z" fill="currentColor"/>' +
+    '<path d="M41.5,59 L33,84 L44,84 L50,61 Z" fill="currentColor"/>' +
+    "</svg>";
 
   var ITEM_DEFS = [
     { action: "screenReader", icon: "🔊", label: "תמיכה בקוראי מסך" },
