@@ -48,6 +48,35 @@ header{z-index:30;position:sticky;top:0}
 .toplinks{display:flex;flex-wrap:wrap;row-gap:2px;gap:2px;margin-inline-end:auto;min-width:0}
 .toplinks a{color:var(--text-primary);text-decoration:none;font-size:.88rem;padding:0 9px;font-weight:600;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center;border-radius:999px}
 .toplinks a:hover{background:var(--surface-2);color:var(--text-primary)}
+/* 24.9.2026 - ברק: "התוויות בסרגל הכלים במובייל תופסות חצי מהמסך" - הוספת המבורגר+מגירת-
+   ניווט לעמוד הזה (הושמטו בכוונה ב-23.9.2026 כי אז ההמבורגר היה כבוי-לגמרי בכל שאר העמוד -
+   ר' index.html לפירוט המלא/מדידות). זהה-בייטים ל-CSS/JS שכבר קיים ועובד שם, רק בפורמט-
+   השורה-הקומפקטי של הקובץ הזה. */
+.menu-toggle-btn{display:none;align-items:center;justify-content:center;position:relative;z-index:3;flex-shrink:0;width:44px;height:44px;min-width:44px;padding:0;border:none;border-radius:999px;background:transparent;color:var(--text-primary);cursor:pointer}
+.menu-toggle-btn:hover{background:var(--surface-2)}
+.menu-toggle-btn:focus-visible,.mobile-drawer-close:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.menu-toggle-icon-close{display:none}
+body.mobile-nav-open .menu-toggle-icon-open{display:none}
+body.mobile-nav-open .menu-toggle-icon-close{display:block}
+.mobile-drawer-nav{display:none}
+.mobile-nav-backdrop{display:none;position:fixed;inset:0;z-index:190;background:rgba(0,0,0,.45)}
+body.mobile-nav-open .mobile-nav-backdrop{display:block}
+body.mobile-nav-open{overflow:hidden}
+.mobile-drawer-close{display:flex;align-items:center;justify-content:center;align-self:flex-start;flex-shrink:0;width:44px;height:44px;margin:0 0 6px;padding:0;border:none;border-radius:999px;background:transparent;color:var(--text-primary);cursor:pointer}
+.mobile-drawer-close:hover{background:var(--surface-2)}
+@media (width < 1280px){
+  .menu-toggle-btn{display:inline-flex;margin-inline-end:auto}
+  .toplinks{display:none}
+  .mobile-drawer-nav{position:fixed;top:0;right:0;bottom:0;z-index:200;display:flex;width:min(300px,84vw);flex-direction:column;align-items:stretch;gap:4px;padding:12px 20px 24px;background:var(--bg);border-left:1px solid var(--border);box-shadow:-8px 0 24px rgba(0,0,0,.18);overflow-y:auto;transform:translateX(100%);visibility:hidden;transition:transform .25s ease, visibility 0s linear .25s}
+  body.mobile-nav-open .mobile-drawer-nav{transform:translateX(0);visibility:visible;transition:transform .25s ease, visibility 0s}
+  .mobile-drawer-nav a{color:var(--text-primary);padding:12px 14px;min-height:44px;box-sizing:border-box;display:flex;align-items:center;font-size:.95rem;border-radius:10px;text-decoration:none}
+  .mobile-drawer-nav a:hover{background:var(--surface-2)}
+  .mobile-drawer-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+}
+@media (width >= 1280px){
+  body.mobile-nav-open{overflow:visible}
+  body.mobile-nav-open .mobile-nav-backdrop{display:none}
+}
 .top-cta{position:relative;background:transparent;color:#fff;border:none;flex-shrink:0;justify-content:center;align-items:center;width:44px;height:44px;padding:0;text-decoration:none;display:flex}
 .top-cta::before{content:"";position:absolute;inset:4px;border-radius:50%;background:#128C7E;box-shadow:0 2px 6px #00000026}
 .top-cta svg{position:relative;width:19px;height:19px}
@@ -118,6 +147,12 @@ header{z-index:30;position:sticky;top:0}
 table.cmp{width:100%;border-collapse:collapse;table-layout:fixed;min-width:0}
 table.cmp col.c-label{width:24%}
 table.cmp th,table.cmp td{padding:10px 12px;text-align:start;vertical-align:top;border-bottom:1px solid var(--border);overflow-wrap:anywhere}
+/* 24.9.2026 (QA מובייל, פוליש-קל): עמודת-שם-המאפיין (th[scope=row], ~24-26% מהרוחב) שברה
+   מילים-עבריות-רגילות-באמצע ב-360px (למשל "טכנולוגי"/"ת פאנל") כי overflow-wrap:anywhere
+   שובר-בכל-מקום-אפשרי גם כשיש-נקודת-שבירה-טבעית (רווח) - break-word שובר-רק-כשאין-ברירה
+   (מילה-בודדת-ארוכה-מדי), עדיין מונע-גלישה-אמיתית באותה מידה. ממוקד רק לעמודה-הצרה-הזו - שאר
+   התאים (ערכים/תגיות) נשארים anywhere, כפי-שהיו. */
+table.cmp th[scope="row"]{overflow-wrap:break-word}
 table.cmp thead th{background:var(--surface);vertical-align:bottom;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:2}
 table.cmp thead th.model{text-align:center;color:#fff;border-bottom:0;padding:10px 12px 12px}
 table.cmp thead th.model.ca{background:var(--ca)}
@@ -196,6 +231,7 @@ footer.site-foot p{margin:6px 0 0;color:var(--text-tertiary);font-size:.85rem}
 <a class="skip-link" href="#main-content">דלג לתוכן הראשי</a>
 <header class="topbar"><div class="topbar-inner">
   <a class="brandmark" href="index.html" aria-label="Master Mount - לעמוד הבית"><img class="logo-on-light" src="assets/site/logo-light-sm.png" width="58" height="34" alt="Master Mount"/><img class="logo-on-dark" src="assets/site/logo-dark-sm.png" width="58" height="34" alt="" aria-hidden="true"/></a>
+  <button type="button" class="menu-toggle-btn" id="mobileMenuToggleBtn" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileDrawerNav"><svg class="menu-toggle-icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg><svg class="menu-toggle-icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button>
   <nav class="toplinks" aria-label="ניווט ראשי">
     <a href="installation.html">הזמנת התקנה מותאמת</a>
     <a href="index.html#products">טלוויזיות למכירה</a><a href="compare.html">השוואת טלוויזיות</a>
@@ -210,6 +246,41 @@ footer.site-foot p{margin:6px 0 0;color:var(--text-tertiary);font-size:.85rem}
     <span class="sr-only">(נפתח בוואטסאפ)</span>
   </a><div class="cart-badge-wrap"><button type="button" class="cart-badge-btn empty" id="cartBadgeBtn" aria-label="עגלת הזמנות, ריקה" aria-haspopup="true" aria-expanded="false" aria-controls="miniCartDropdown"><span class="cart-disc"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7.5H6.2"></path></svg></span><span class="cart-count" id="cartBadgeCount">0</span></button><div class="mini-cart-dropdown" id="miniCartDropdown" role="dialog" aria-labelledby="miniCartTitle" hidden><h3 class="mini-cart-title" id="miniCartTitle" tabindex="-1">העגלה שלכם</h3><p class="mini-cart-empty" id="miniCartEmpty" hidden>העגלה ריקה. בחרו טלוויזיה או הגדירו התקנה כדי להתחיל.</p><ul class="mini-cart-list" id="miniCartList"></ul><div class="mini-cart-total" id="miniCartTotal" hidden></div><a class="btn-accent" id="miniCartContinueBtn" href="cart.html" hidden>המשך לעגלת הקניות ותשלום</a></div></div>
 </div></header>
+<div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div><nav class="mobile-drawer-nav" id="mobileDrawerNav" aria-label="ניווט נייד"><button type="button" class="mobile-drawer-close" id="mobileDrawerCloseBtn" aria-label="סגירת תפריט"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button><a href="installation.html">הזמנת התקנה מותאמת</a><a href="index.html#products">טלוויזיות למכירה</a><a href="compare.html">השוואת טלוויזיות</a><a href="index.html#bundles">דילים משתלמים</a><a href="moving-day.html">מעבר דירה</a><a href="tv-technology-guide.html">מדריך טכנולוגיות</a><a href="index.html#how">איך זה עובד</a><a href="index.html#contact">יצירת קשר</a></nav>
+<script>(function(){
+var btn=document.getElementById("mobileMenuToggleBtn");
+var backdrop=document.getElementById("mobileNavBackdrop");
+var nav=document.getElementById("mobileDrawerNav");
+var closeBtn=document.getElementById("mobileDrawerCloseBtn");
+if(!btn||!backdrop||!nav)return;
+function isOpen(){return document.body.classList.contains("mobile-nav-open");}
+function setOpen(open,restoreFocus){
+  document.body.classList.toggle("mobile-nav-open",open);
+  btn.setAttribute("aria-expanded",open?"true":"false");
+  btn.setAttribute("aria-label",open?"סגירת תפריט":"פתיחת תפריט");
+  if(open){if(closeBtn)closeBtn.focus();}
+  else if(restoreFocus){btn.focus();}
+}
+btn.addEventListener("click",function(){setOpen(!isOpen(),true);});
+if(closeBtn)closeBtn.addEventListener("click",function(){setOpen(false,true);});
+backdrop.addEventListener("click",function(){setOpen(false,true);});
+nav.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){setOpen(false,false);});});
+document.addEventListener("keydown",function(e){
+  if(!isOpen())return;
+  if(e.key==="Escape"){setOpen(false,true);return;}
+  if(e.key==="Tab"){
+    var f=nav.querySelectorAll("button,a[href]");
+    if(!f.length)return;
+    var first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    else if(!nav.contains(document.activeElement)){e.preventDefault();first.focus();}
+  }
+});
+var mq=window.matchMedia?window.matchMedia("(min-width: 1280px)"):null;
+function onMq(ev){if(ev.matches&&isOpen())setOpen(false,false);}
+if(mq){if(mq.addEventListener)mq.addEventListener("change",onMq);else if(mq.addListener)mq.addListener(onMq);}
+})();</script>
 
 <main id="main-content" tabindex="-1">
 <div class="wrap">

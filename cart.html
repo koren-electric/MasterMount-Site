@@ -7959,14 +7959,20 @@ fieldset.step-fieldset legend {
    הניווט לגלול אופקית (פס-גלילה-דק) כשאין מקום ל-8 הקישורים; הוחלף לגלישה-לשורה-שנייה
    (flex-wrap במקום overflow-x) - 0 גלילה בכל רוחב (גם לא בתוך השורה עצמה), רק גובה-סרגל
    גדל בהתאם. (עמוד זה בלי תיבת-חיפוש בסרגל - ר' index.html ל-.topbar-search-row הנפרדת שם.) */
-.menu-toggle-btn { display: none !important; }
+/* 24.9.2026 - ברק: "התוויות בסרגל הכלים במובייל תופסות חצי מהמסך" - ר' index.html לפירוט
+   המלא. הוגבל ל->=1280px בלבד כדי שההמבורגר+מגירה (כבר בנויים, @media (width < 1280px)
+   למעלה) יחזרו למובייל, בלי לגעת בהתנהגות-הדסקטופ. */
 .mm-quicklinks { display: none !important; }
-.topbar-inner { flex-wrap: nowrap !important; }
-.toplinks {
-  display: flex !important;
-  flex-wrap: wrap;
-  row-gap: 2px;
-  min-width: 0;
+
+@media (width >= 1280px) {
+  .menu-toggle-btn { display: none !important; }
+  .topbar-inner { flex-wrap: nowrap !important; }
+  .toplinks {
+    display: flex !important;
+    flex-wrap: wrap;
+    row-gap: 2px;
+    min-width: 0;
+  }
 }
 </style>
 <style>
@@ -8171,6 +8177,12 @@ fieldset.step-fieldset legend {
   border-radius: 16px;
   padding: 6px 22px;
   box-shadow: var(--shadow);
+  /* 24.9.2026 (מציאת-QA-מובייל): .cart-page-items הוא grid-item של .cart-page-layout (הטור
+     1fr) - grid-items מקבלים min-width:auto כברירת-מחדל, שגורם-להם-לסרב-להתכווץ-מתחת-לרוחב-
+     התוכן-המינימלי-של-הצאצאים. .cart-page-row-thumb/.cart-page-row-actions הם flex-shrink:0
+     (בכוונה, לא-רוצים-שהם-יתכווצו), אז-בלי min-width:0 כאן, ה-.cart-page-items כולו נדחף-
+     לרוחב-התוכן-המלא ומחליק את כל-הדף-אופקית במובייל. */
+  min-width: 0;
 }
 .cart-page-row {
   display: flex;
@@ -8269,6 +8281,35 @@ fieldset.step-fieldset legend {
 .cart-page-row-remove:hover {
   background: var(--surface-2);
   color: var(--orange);
+}
+/* 24.9.2026 (QA מובייל): thumb(86px, flex-shrink:0) + actions(~285-445px, flex-shrink:0) לבד
+   כבר עוברים את הרוחב-הזמין בטלפון (390px), לפני שנותר שום מקום לתווית - ה-min-width:0 שמעל
+   פותר-רק-את-גלישת-הדף, אבל התווית עדיין-נדחסת-כמעט-לאפס (עבור פריט-הצעה-מותאמת-אישית, שהתג
+   שלה "0₪ + הצעת מחיר בהתאמה אישית" ארוך-בפרט, ל-0px ממש). שורת-הפעולות (כמות/מחיר/הסרה)
+   יורדת לשורה-נפרדת-מלאה-רוחב מתחת ל-thumb+תווית, במקום-להתחרות-איתם על-הרוחב. */
+@media (width <= 640px) {
+  .cart-page-row {
+    flex-wrap: wrap;
+  }
+  .cart-page-row-thumb,
+  .cart-page-row-thumb-fallback {
+    width: 64px;
+    height: 64px;
+  }
+  .cart-page-row-actions {
+    flex-basis: 100%;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  /* אזור-מגע: 30px/35px היו-מתחת-לסף-הנגישות. 40px (מטרה-קבוצתית, סטפר-כמות-צמוד) ו-~44px
+     (כפתור-הסרה עצמאי, פעולה-הרסנית-יותר) - אותו עיקרון-מדורג כבר קיים בפרויקט. */
+  .cart-page-qty-btn {
+    width: 40px;
+    height: 40px;
+  }
+  .cart-page-row-remove {
+    padding: 13px;
+  }
 }
 .cart-page-summary {
   background: var(--surface);

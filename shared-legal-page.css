@@ -647,14 +647,20 @@ footer.site-foot .foot-links a:hover {
 }
 
 /* 23.9.2026 - ברק: לחזור למצב-ללא-המבורגר בסרגל-העליון, בדיוק כמו 4 העמודים הראשיים - ר'
-   index.html לפירוט המלא/מדידות. */
-.menu-toggle-btn { display: none !important; }
+   index.html לפירוט המלא/מדידות.
+   24.9.2026 - ברק: "התוויות בסרגל הכלים במובייל תופסות חצי מהמסך" - הוגבל ל->=1280px בלבד
+   כדי שההמבורגר+מגירה (כבר בנויים, @media (width < 1280px) למעלה) יחזרו למובייל בכל דפי
+   המשפט, בלי לגעת בהתנהגות-הדסקטופ. */
 .mm-quicklinks { display: none !important; }
-.topbar-inner { flex-wrap: nowrap !important; }
-.toplinks {
-  display: flex !important;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  min-width: 0;
+
+@media (width >= 1280px) {
+  .menu-toggle-btn { display: none !important; }
+  .topbar-inner { flex-wrap: nowrap !important; }
+  .toplinks {
+    display: flex !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    min-width: 0;
+  }
 }

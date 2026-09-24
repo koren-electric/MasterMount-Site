@@ -8369,14 +8369,20 @@ footer.site-foot p, footer.site-foot a {
    הניווט לגלול אופקית (פס-גלילה-דק) כשאין מקום ל-8 הקישורים; הוחלף לגלישה-לשורה-שנייה
    (flex-wrap במקום overflow-x) - 0 גלילה בכל רוחב (גם לא בתוך השורה עצמה), רק גובה-סרגל
    גדל בהתאם. (עמוד זה בלי תיבת-חיפוש בסרגל - ר' index.html ל-.topbar-search-row הנפרדת שם.) */
-.menu-toggle-btn { display: none !important; }
+/* 24.9.2026 - ברק: "התוויות בסרגל הכלים במובייל תופסות חצי מהמסך" - ר' index.html לפירוט
+   המלא. הוגבל ל->=1280px בלבד כדי שההמבורגר+מגירה (כבר בנויים, @media (width < 1280px)
+   למעלה) יחזרו למובייל, בלי לגעת בהתנהגות-הדסקטופ. */
 .mm-quicklinks { display: none !important; }
-.topbar-inner { flex-wrap: nowrap !important; }
-.toplinks {
-  display: flex !important;
-  flex-wrap: wrap;
-  row-gap: 2px;
-  min-width: 0;
+
+@media (width >= 1280px) {
+  .menu-toggle-btn { display: none !important; }
+  .topbar-inner { flex-wrap: nowrap !important; }
+  .toplinks {
+    display: flex !important;
+    flex-wrap: wrap;
+    row-gap: 2px;
+    min-width: 0;
+  }
 }
 </style>
 </head>
