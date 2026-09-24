@@ -147,14 +147,26 @@
          שמאל, פיזית), לא את כיוון-הטקסט; #mmA11yPanel מצהיר direction:rtl משלו לתוכן. בלי זה,
          justify-content:flex-start היה נפתר לפי ה-rtl של <html> ופותח את הפאנל בצד ימין - לא
          תואם לכפתור שיושב תמיד ב-left הפיזי. */
+      /* 24.9.2026 (מיקום כפתור/תפריט הנגישות, בקשת ברק): --mm-a11y-panel-top הוא מקור-האמת
+         היחיד לגובה-שנתפס-מעל-הפאנל (כותרת+כפתור+רווח) - margin-top ו-max-height (למטה)
+         חייבים-לנבוע-משתיהן-מאותו-משתנה. קודם היו-שני-חישובים-עצמאיים-לגמרי (margin-top חישב
+         כותרת+52+24, max-height חישב min(640px,100vh-32px) בלי-לדעת-על-כך) - נמדד-בפועל
+         (iPhone SE, 375x667): הפאנל-נחתך-ב-192px, "הצהרת נגישות"+כפתור-האיפוס-בתחתית-הפאנל
+         היו-בלתי-נגישים-לגמרי (גם overflow-y:auto-הפנימי-של-הפאנל לא-עזר - הוא-גולל-רק-תוכן-
+         בתוך-הפאנל, לא-את-מיקום-הפאנל-על-העמוד). גם הוצמד-הכפתור-קרוב-יותר-לראש-העמוד (הרווח
+         בין-הכפתור-לפאנל צומצם 24px→10px) - פחות-שטח-מבוזבז-מעל, יותר-גובה-אמיתי-לפאנל. */
       "#mmA11yOverlay{position:fixed;inset:0;z-index:410;background:rgba(0,0,0,.35);display:flex;" +
-      "direction:ltr;align-items:flex-start;justify-content:flex-start;padding:16px}" +
+      "overflow-y:auto;" +
+      "direction:ltr;align-items:flex-start;justify-content:flex-start;padding:var(--mm-a11y-overlay-pad,16px)}" +
       "#mmA11yOverlay[hidden]{display:none}" +
-      "#mmA11yPanel{width:min(360px,calc(100vw - 32px));max-height:min(640px,calc(100vh - 32px));" +
+      ":root{--mm-a11y-panel-top:calc(var(--mm-a11y-header-h,64px) + 52px + 10px);" +
+      "--mm-a11y-panel-bottom-gap:16px;--mm-a11y-overlay-pad:16px}" +
+      "#mmA11yPanel{width:min(360px,calc(100vw - 32px));" +
+      "max-height:min(640px,calc(100vh - var(--mm-a11y-overlay-pad) - var(--mm-a11y-panel-top) - var(--mm-a11y-panel-bottom-gap)));" +
       "overflow-y:auto;background:var(--surface,#fff);color:var(--text-primary,#20272e);" +
       "border:1px solid var(--border,#e1ddd4);border-radius:16px;box-shadow:var(--shadow,0 16px 40px rgba(0,0,0,.35));" +
       "padding:16px;box-sizing:border-box;direction:rtl;font-family:inherit;" +
-      "margin-top:calc(var(--mm-a11y-header-h,64px) + 52px + 24px)}" +
+      "margin-top:var(--mm-a11y-panel-top)}" +
       "#mmA11yPanel:focus{outline:none}" +
       ".mm-a11y-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}" +
       ".mm-a11y-head h2{font-size:16px;font-weight:800;margin:0;color:var(--text-primary,#20272e)}" +
@@ -226,7 +238,12 @@
       "box-shadow:0 0 0 6px rgba(255,191,71,.35)!important}" +
       "@media (max-width:480px){#mmA11yToggle{width:46px;height:46px;left:12px;top:calc(var(--mm-a11y-header-h,64px) + 12px)}" +
       "#mmA11yToggle img{width:36px;height:36px}#mmA11yOverlay{padding:8px}" +
-      "#mmA11yPanel{margin-top:calc(var(--mm-a11y-header-h,64px) + 46px + 20px)}}";
+      /* --mm-a11y-panel-top/--mm-a11y-panel-bottom-gap/--mm-a11y-overlay-pad בלבד - לא עוד
+         margin-top/max-height נפרדים על #mmA11yPanel כאן: הכלל שכבר-מוצהר-למעלה קורא מהמשתנים
+         האלה, אז דריסת-ערכיהם-כאן (כפתור קטן-יותר 46px, רווח-מכווץ-יותר 8px, ריפוד-8px תואם
+         ל-#mmA11yOverlay padding:8px שכבר-למעלה) מספיקה - אין-סיכון-שתי-נוסחאות-נפרדות-שוב. */
+      ":root{--mm-a11y-panel-top:calc(var(--mm-a11y-header-h,64px) + 46px + 8px);" +
+      "--mm-a11y-panel-bottom-gap:8px;--mm-a11y-overlay-pad:8px}}";
     document.head.appendChild(st);
   }
 
