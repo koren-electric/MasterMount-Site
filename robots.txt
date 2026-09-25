@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /cart.html
+Disallow: /checkout.html
+
+Sitemap: https://mastermount.co.il/sitemap.xml
