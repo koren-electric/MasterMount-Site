@@ -9500,13 +9500,23 @@ footer.site-foot a:hover {
   }
 }
 
-/* עוברים דירה - באנר-מלא (2026-09-23): תמונת-דגל יחידה עם כל הכיתוב כבר-מוטמע-בתוכה
-   (hero-banner-moving-full.jpg) - מחליפה את הרכיב הרגיל (תמונה+שכבת-טקסט-HTML) רק בשקופית
-   הזו. install/bundle לא-מושפעים כלל - כל סלקטור כאן ממוקד ל-.moving-full-banner בלבד. */
-.process-banner.moving-full-banner .process-banner-text {
-  display: none !important;
-}
+/* עוברים דירה - באנר-מלא (2026-09-23): תמונת-דגל יחידה (hero-banner-moving-full.jpg,
+   2400x565) עם הכיתוב השיווקי כבר-מעוצב-בתוכה כפיקסלים - מחליפה את הרכיב הרגיל (תמונה+
+   שכבת-טקסט-HTML) **בדסקטופ בלבד** (ר' @media(width>860px) מיד-למטה, לא-שונה). install/
+   bundle לא-מושפעים כלל. ⚠️ 25.9.2026 (ברק דיווח שבמובייל "לא מוצג כמו שצריך") - במובייל
+   הוחזר-המבנה-הרגיל (תמונה+span.process-banner-text, כמו-install/bundle) - היחס-הקיצוני
+   של-הבאנר (~4.25:1) פשוט-לא-מתאים-לצורת-הכרטיס-הגבוהה-במובייל, ר' ההערה-המלאה-והמפורטת
+   (כולל-שני-ניסיונות-שנכשלו-ואומתו-כשגויים בפועל) בתוך @media(width<=860px) למטה. */
 @media (width > 860px) {
+  /* .process-banner-text חזרה-להיות-חלק-מה-HTML של השקופית הזו (25.9.2026, ר' ההערה-
+     המלאה-למטה) - כדי-שהיא-תהיה-שמישה-במובייל. בדסקטופ הטקסט-כבר-מוטמע-בפיקסלי-התמונה-
+     עצמה (hero-banner-moving-full.jpg), אז ה-span צריך-להישאר-מוסתר-לגמרי כאן - נבדק-ישירות
+     (getBoundingClientRect) ובלי-הכלל-הזה יצא display:block, visibility:visible, קופסה-
+     אמיתית 61x735px (לא-0x0!) - בעייתי-הן-חזותית (אפשרי-חפיפה) והן-לקוראי-מסך (הכרזה-כפולה
+     על-אותו-מידע, גם-מה-alt וגם-מה-span). */
+  .process-banner.moving-full-banner .process-banner-text {
+    display: none !important;
+  }
   .process-banner.moving-full-banner.hero-slide .process-banner-strip-img {
     flex: 1 1 100% !important;
     width: 100% !important;
@@ -9517,19 +9527,33 @@ footer.site-foot a:hover {
   }
 }
 @media (width <= 860px) {
-  /* הפלאח עדיין נמתח לגובה-המשותף שקובעות שקופיות install/bundle (מבנה-ה-crossfade
-     המשותף, grid-area:1/1) - התמונה שומרת על היחס-האמיתי שלה (לא נמתחת/נחתכת) וממורכזת
-     אנכית בתוך התיבה, על רקע תואם (#f1efe9) שנטמע-חלק בלי תפר גלוי. */
-  .process-banner.moving-full-banner.hero-slide {
-    justify-content: center !important;
-  }
+  /* ⚠️ תוקן-25.9.2026 (ברק דיווח על מובייל שהפלאח "לא מוצג כמו שצריך") - שני-ניסיונות-קודמים
+     נכשלו, מתועדים-כאן-במלואם לפי "אין מחיקה, רק הוספה/שיפור":
+     ניסיון 1: הוסרה-לגמרי-מה-HTML של השקופית .process-banner-text (בהנחה שהיא-"דולפת"
+     דרך display:none) - לא-פתר-כלום, כי הטקסט-הנראה-בפועל מעולם-לא-היה-אותו-span - הוא
+     חלק-מפיקסלי-התמונה-עצמה (hero-banner-moving-full.jpg מעוצבת-בכוונה עם התמונה+הטקסט-
+     השיווקי כבר-מוטמעים-יחד בקובץ, ר' ההערה-המקורית-מ-23.9.2026 - "אשליה-אופטית" שהטעתה-
+     תחילה, כי span.process-banner-text (שכבר-הוסתר-כהלכה) קיים-בדיוק-לצד-תמונה-שנראית-דומה).
+     ניסיון 2: height:100% במקום aspect-ratio:2400/565 (הרעיון: לתת-לתמונה-למלא את-כל-גובה-
+     התא-המשותף, כמו-בדסקטופ) - **אומת ישירות (getBoundingClientRect) שהקופסה-אכן-גדלה
+     ל-360px, אבל השטח-הריק-לא-נעלם**: object-fit:contain על-תמונה-ברוחב-קיצוני (2400x565,
+     ~4.25:1) בתוך-קופסה-גבוהה-וצרה (373x360px, כמעט 1:1) עדיין-מצמצם אותה חזרה ל-373x88px
+     בפועל (מוגבל-לפי-הצד-הצר-יותר - רוחב, לא-גובה) - **שום שילוב CSS sizing לא-יכול לגרום-
+     לתמונה-ברוחב-4.25:1 למלא-קופסה-כמעט-מרובעת בלי-לחתוך-אותה**. זו לא-בעיית-CSS, זו התאמה-
+     מבנית-שגויה בין תמונת-הבאנר-הרחבה (מעוצבת-לדסקטופ-רחב) לבין-צורת-הכרטיס-הגבוהה-במובייל.
+     **התיקון הסופי**: במובייל בלבד, חוזרים-למבנה-הרגיל (תמונה חתוכה + span.process-banner-
+     text חזרה-בHTML, בדיוק-כמו-install/bundle) - object-fit:cover עם-object-position:left
+     (חיתוך-פיזי, לא-תלוי-RTL) מציג רק-את-חצי-התמונה-השמאלי (התמונה-האמיתית של הזוג-עם-
+     הטלוויזיה, לא-חלק-הטקסט הימני) ביחס-הרגיל var(--hero-img-ratio,2.8)/1 - זהה-לחלוטין-
+     לאיך-install/bundle כבר-עובדים-נכון-במובייל. דסקטופ (@media width>860px למעלה) *לא*
+     שונה כלל - שם התמונה-הרחבה-המלאה עדיין-עובדת-מצוין (יש-שם-מספיק-רוחב). */
   .process-banner.moving-full-banner.hero-slide .process-banner-strip-img {
     flex: none !important;
     width: 100% !important;
     height: auto !important;
-    aspect-ratio: 2400 / 565 !important;
-    object-fit: contain !important;
-    background: #f1efe9;
+    aspect-ratio: var(--hero-img-ratio, 2.8) / 1 !important;
+    object-fit: cover !important;
+    object-position: left center !important;
   }
 }
 </style>
