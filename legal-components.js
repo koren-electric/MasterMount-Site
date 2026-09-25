@@ -67,11 +67,23 @@
     var address = biz.bizField ? biz.bizField("address", "כתובת") : "";
     var vatNote = biz.vatNote ? biz.vatNote({ includeShipping: !item.isService }) : "";
     var configuredWarranty = biz.warrantyMonths_installation;
-    var warrantyText = item.warrantyMonths
-      ? "אחריות " + item.warrantyMonths + " חודשים"
-      : (hasVal(configuredWarranty) && !isNaN(configuredWarranty)
-          ? "אחריות " + configuredWarranty + " חודשים"
-          : (biz.bizField ? biz.bizField("warrantyMonths_installation", "משך אחריות") : ""));
+    // 25.9.2026 (ברק): warrantyMonths_installation הוא ספציפית-אחריות-על-שירות-ההתקנה, לא-על-
+    // הטלוויזיה/העסקה-הכללית - התווית חייבת לומר "על ההתקנה" במפורש כדי שלא-תתפרש-בטעות
+    // כאחריות-על-המוצר-עצמו, במיוחד בעמוד-מוצר-רגיל שיש-בו גם אפשרות-"קניה מהירה ללא התקנה".
+    // warrantyLabel דינמי (לא-רק-warrantyText) כדי למנוע-כפל-מילה "אחריות" כשה-<li> מקדים כבר
+    // תווית-מודגשת-קבועה - ר' <li><strong>+warrantyLabel+</strong> למטה.
+    var installWarrantyFallback = biz.bizField ? biz.bizField("warrantyMonths_installation", "משך אחריות") : "";
+    var warrantyLabel = "אחריות";
+    var warrantyText = "";
+    if (item.warrantyMonths) {
+      warrantyText = item.warrantyMonths + " חודשים";
+    } else if (hasVal(configuredWarranty) && !isNaN(configuredWarranty)) {
+      warrantyLabel = "אחריות על ההתקנה";
+      warrantyText = configuredWarranty + " חודשים";
+    } else if (hasVal(installWarrantyFallback)) {
+      warrantyLabel = "אחריות על ההתקנה";
+      warrantyText = installWarrantyFallback;
+    }
     var contactHtml = contactValueHtml(biz);
 
     var html = "";
@@ -100,7 +112,7 @@
     }
     html += "<li><strong>תוקף ההצעה:</strong> 7 ימים ממועד קבלתה, אלא אם צוין אחרת.</li>";
     if (hasVal(warrantyText)) {
-      html += "<li><strong>אחריות:</strong> " + esc(warrantyText) + "</li>";
+      html += "<li><strong>" + esc(warrantyLabel) + ":</strong> " + esc(warrantyText) + "</li>";
     }
     html += '<li><a class="legal-disclosure-link" href="./cancellation-policy.html">מדיניות ביטולים והחזרות</a></li>';
     html += '<li><a class="legal-disclosure-link" href="./delivery-terms.html">תנאי הובלה ותוספות</a></li>';
