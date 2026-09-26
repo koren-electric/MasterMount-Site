@@ -6055,7 +6055,7 @@ footer.site-foot .foot-links a {
   }
 }
 
-@media (width >= 1280px) {
+@media (any-pointer: fine) and (any-hover: hover) {
   .mobile-drawer-nav, .mobile-nav-backdrop {
     display: none !important;
   }
@@ -8128,7 +8128,7 @@ fieldset.step-fieldset legend {
    למעלה) יחזרו למובייל, בלי לגעת בהתנהגות-הדסקטופ. */
 .mm-quicklinks { display: none !important; }
 
-@media (width >= 1280px) {
+@media (any-pointer: fine) and (any-hover: hover) {
   .menu-toggle-btn { display: none !important; }
   .topbar-inner { flex-wrap: nowrap !important; }
   .toplinks {
@@ -8204,7 +8204,7 @@ fieldset.step-fieldset legend {
     }
   });
   if(window.matchMedia){
-    var mq=window.matchMedia("(min-width: 1280px)");
+    var mq=window.matchMedia("(any-pointer: fine) and (any-hover: hover)");
     var onMq=function(){if(mq.matches)closeMenu(false);};
     if(mq.addEventListener){mq.addEventListener("change",onMq);}else if(mq.addListener){mq.addListener(onMq);}
   }

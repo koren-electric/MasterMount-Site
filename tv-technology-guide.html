@@ -8266,7 +8266,7 @@ footer.site-foot a:hover {
    למעלה) יחזרו למובייל, בלי לגעת בהתנהגות-הדסקטופ. */
 .mm-quicklinks { display: none !important; }
 
-@media (width >= 1280px) {
+@media (any-pointer: fine) and (any-hover: hover) {
   .menu-toggle-btn { display: none !important; }
   .topbar-inner,
   .tvguide-page .topbar-inner { flex-wrap: nowrap !important; }
@@ -8315,7 +8315,7 @@ backdrop.addEventListener("click",function(){closeMenu(true);});
 nav.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){closeMenu(false);});});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&isOpen()){closeMenu(true);}});
 /* מעבר לרוחב מחשב (>=1280px) בזמן שהמגירה פתוחה: סוגרים כדי לא להשאיר רקע/נעילת גלילה */
-if(window.matchMedia){var mq=window.matchMedia("(min-width:1280px)");var onMq=function(){if(mq.matches){closeMenu(false);}};if(mq.addEventListener){mq.addEventListener("change",onMq);}else if(mq.addListener){mq.addListener(onMq);}}
+if(window.matchMedia){var mq=window.matchMedia("(any-pointer: fine) and (any-hover: hover)");var onMq=function(){if(mq.matches){closeMenu(false);}};if(mq.addEventListener){mq.addEventListener("change",onMq);}else if(mq.addListener){mq.addListener(onMq);}}
 })();</script>
 
 <main id="main-content" tabindex="-1">

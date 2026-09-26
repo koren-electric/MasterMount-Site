@@ -330,8 +330,11 @@ body.mobile-nav-open .mobile-drawer-nav {
   }
 }
 
-/* מ-1280px: תוויות ניווט מלאות במקום המבורגר */
-@media (min-width: 1280px) {
+/* 26.9.2026 - ברק: המבורגר יוצג אך-ורק במכשירי-מגע (מובייל) - במחשב (עכבר+hover) כל התוויות
+   יוצגו תמיד בסרגל, גם אם החלון צר, בלי תלות ברוחב-חלון בפיקסלים (תוקן אחרי שדיווח שהמבורגר
+   הופיע בדפדפן-שולחני-רגיל בגלל חלון-דפדפן-צר-מ-1280px). ר' installation.html/index.html
+   לפירוט-המלא-של-אותו-תיקון-בדיוק. */
+@media (any-pointer: fine) and (any-hover: hover) {
   .menu-toggle-btn,
   .mobile-drawer-nav,
   .mobile-nav-backdrop {
@@ -653,14 +656,13 @@ footer.site-foot .foot-links a:hover {
    המשפט, בלי לגעת בהתנהגות-הדסקטופ. */
 .mm-quicklinks { display: none !important; }
 
-@media (width >= 1280px) {
+@media (any-pointer: fine) and (any-hover: hover) {
   .menu-toggle-btn { display: none !important; }
   .topbar-inner { flex-wrap: nowrap !important; }
   .toplinks {
     display: flex !important;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
+    flex-wrap: wrap;
+    row-gap: 2px;
     min-width: 0;
   }
 }

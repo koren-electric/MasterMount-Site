@@ -125,7 +125,7 @@
     });
 
     if (window.matchMedia) {
-      var mq = window.matchMedia("(min-width: 1280px)");
+      var mq = window.matchMedia("(any-pointer: fine) and (any-hover: hover)");
       var onChange = function () {
         if (mq.matches && isOpen()) setOpen(false, false);
       };

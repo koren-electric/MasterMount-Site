@@ -72,7 +72,7 @@ body.mobile-nav-open .mobile-nav-backdrop{display:block}
 body.mobile-nav-open{overflow:hidden}
 .mobile-drawer-close{display:flex;align-items:center;justify-content:center;align-self:flex-start;flex-shrink:0;width:44px;height:44px;margin:0 0 6px;padding:0;border:none;border-radius:999px;background:transparent;color:var(--text-primary);cursor:pointer}
 .mobile-drawer-close:hover{background:var(--surface-2)}
-@media (width < 1280px){
+@media not (any-pointer: fine), not (any-hover: hover){
   .menu-toggle-btn{display:inline-flex;margin-inline-end:auto}
   .toplinks{display:none}
   .mobile-drawer-nav{position:fixed;top:0;right:0;bottom:0;z-index:200;display:flex;width:min(300px,84vw);flex-direction:column;align-items:stretch;gap:4px;padding:12px 20px 24px;background:var(--bg);border-left:1px solid var(--border);box-shadow:-8px 0 24px rgba(0,0,0,.18);overflow-y:auto;transform:translateX(100%);visibility:hidden;transition:transform .25s ease, visibility 0s linear .25s}
@@ -81,7 +81,7 @@ body.mobile-nav-open{overflow:hidden}
   .mobile-drawer-nav a:hover{background:var(--surface-2)}
   .mobile-drawer-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 }
-@media (width >= 1280px){
+@media (any-pointer: fine) and (any-hover: hover){
   body.mobile-nav-open{overflow:visible}
   body.mobile-nav-open .mobile-nav-backdrop{display:none}
 }
@@ -286,7 +286,7 @@ document.addEventListener("keydown",function(e){
     else if(!nav.contains(document.activeElement)){e.preventDefault();first.focus();}
   }
 });
-var mq=window.matchMedia?window.matchMedia("(min-width: 1280px)"):null;
+var mq=window.matchMedia?window.matchMedia("(any-pointer: fine) and (any-hover: hover)"):null;
 function onMq(ev){if(ev.matches&&isOpen())setOpen(false,false);}
 if(mq){if(mq.addEventListener)mq.addEventListener("change",onMq);else if(mq.addListener)mq.addListener(onMq);}
 })();</script>
