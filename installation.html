@@ -8480,7 +8480,6 @@ footer.site-foot p, footer.site-foot a {
   </div>
 </section>
 
-<section class="block" id="installQaSection"><div class="wrap"><div class="qa-box" id="installQaBox"></div></div></section>
 <section class="block" id="installFaqCtaSection">
   <div class="wrap" style="text-align:center">
     <div class="block-head" style="margin-bottom:22px">
@@ -8536,7 +8535,6 @@ footer.site-foot p, footer.site-foot a {
 <script src="./business-config.js"></script>
 <script src="./footer-common.js"></script>
 <script src="./sellers-data.js"></script>
-<script src="./installation-exclusions.js"></script>
 <script src="./legal-components.js"></script>
 <script src="./lead-capture.js"></script>
 <script src="./cookie-consent.js"></script>
@@ -8580,9 +8578,6 @@ function initInstallation() {
     w.focus();
     setTimeout(function () { w.print(); }, 300);
   }
-
-  // "מה כלול ומה לא כלול" - רשימה עשירה מ-installation-exclusions.js (קובץ משותף, ניתן לעריכה)
-  if (window.renderExclusionsQa) window.renderExclusionsQa("installQaBox", "מה כלול ומה לא כלול בהתקנה");
 
   function setRunningPrice() {
     var el = document.getElementById("runningPrice");

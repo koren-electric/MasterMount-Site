@@ -8240,7 +8240,6 @@ fieldset.step-fieldset legend {
     </div>
   </div>
 </section>
-<section class="block" id="movingQaSection"><div class="wrap"><div class="qa-box" id="movingQaBox"></div></div></section>
 <section class="block" id="movingFaqCtaSection">
   <div class="wrap" style="text-align:center">
     <div class="block-head" style="margin-bottom:22px">
@@ -8284,7 +8283,6 @@ fieldset.step-fieldset legend {
 </footer></div><!--/$-->
 <script src="./business-config.js"></script>
 <script src="./footer-common.js"></script>
-<script src="./installation-exclusions.js"></script>
 <script src="./legal-components.js"></script>
 <script src="./compare-data.js"></script>
 <script src="./cookie-consent.js"></script>
@@ -8305,10 +8303,6 @@ function initMovingDay() {
     var link = e.target.closest('a[href^="https://wa.me/"], a[href^="tel:"]');
     if (link) { e.preventDefault(); e.stopPropagation(); }
   }, true);
-
-  // "מה כלול ומה לא כלול" - רשימה עשירה מ-installation-exclusions.js (קובץ משותף, ניתן לעריכה).
-  // תוספת יזומה (לא התבקשה במפורש בטקסט המקורי) - אותו סיכון-מחיר-דומה קיים גם בהעברת-דירה.
-  if (window.renderExclusionsQa) window.renderExclusionsQa("movingQaBox", "מה כלול ומה לא כלול בשירות");
 
   /* מייל-לשירות-והזמנות (16.9.2026) - חלופה למייל לכל כפתור-WhatsApp ששולח הזמנה/פנייה.
      mailto: לא-נחסם ע"י המאזין-החוסם-למעלה (שממוקד רק wa.me/tel), אז זמין תמיד ללא-תלות
