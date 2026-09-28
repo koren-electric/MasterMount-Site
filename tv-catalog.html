@@ -6062,6 +6062,46 @@ section.block {
   display: flex;
 }
 
+/* 28.9.2026 (בקשת ברק): כפתור "הוספה לעגלה" (#productPageAddToCart) כבר-קיים-ב-HTML+ה-JS
+   שלו כבר-מחווט (window.__addProductToCart - שומר-לעגלה, מעדכן-badge, סוגר-את-החלון, פותח-
+   mini-cart) - אבל .btn-add-cart מעולם-לא-הועתקה-מ-index.html, אז-הכפתור-רץ-לגמרי-בלי-עיצוב
+   (ברירת-מחדל-של-הדפדפן, כמעט-בלתי-נראה) - נראה-כאילו-"אין-כפתור-בכלל". מועתק-verbatim +
+   העדכון-המאוחר-של .product-page-price-row (flex-wrap+align-items:center+gap-כפול) שגם-הוא
+   חסר-היה-כאן - נדרש-כדי-שכפתור-44px-גבוה לא-ייצמד-ל-baseline של-מספר-המחיר-הגדול (2rem)
+   ולא-יגלוש-בחלונות-צרים. */
+.btn-add-cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 999px;
+  background: var(--premium-oncolor, #cc4714);
+  color: var(--orange-ink, #fff);
+  font: inherit;
+  font-size: .98rem;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn-add-cart:hover {
+  filter: brightness(1.07);
+}
+
+.btn-add-cart:focus-visible {
+  outline: 3px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+.product-page-price-row {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+}
+
 .product-page-price {
   color: var(--premium);
   font-variant-numeric: tabular-nums;
