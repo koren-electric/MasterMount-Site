@@ -4504,15 +4504,59 @@ section.block {
    מהעיגול (118%) ויוצאת מגבולותיו בכוונה, מוטה ב-4 מעלות. מופיע על כל מתקני-התליה ועל הבאנדלים,
    לעולם לא על טלוויזיות למכירה. כל המידות יחסיות ל---mm-badge-size. קריא מ-72px ומעלה.
    בכרטיס - "חותם" בפינה השמאלית-עליונה (ריפוד-המסלול כאן רק 6px, לכן top:-4px ולא יותר). */
+/* 28.9.2026: תוקן בשורש - הקוד הקודם כאן העתיק בטעות את גרסת-.mm-badges הישנה/הספציפית-
+   למתקני-תליה (top:-4px/left:6px/גודל-78px, בלי --mm-k) במקום את .mm-badges *הגנרי* האמיתי
+   (index.html, שורה 4889 - "סימני-מוצר עגולים... מופעלים פר-מוצר... p.badges=[officialImporter,
+   mmWarranty]") שמשמש גם ל"יבואן רשמי" (הבאדג' היחיד שרלוונטי לטלוויזיות-למכירה כאן) - זה מה
+   שגרם לתג להיראות שבור/דהוי. הועתק-מחדש-במדויק, כולל גרסת-הדף (.mm-badges-page) שחסרה-לגמרי. */
 .mm-badges {
-  --mm-badge-size: 78px;
+  --mm-badge-size: 34px;
+  --mm-k: .27;
   position: absolute;
-  top: -4px;
-  left: 6px;
+  top: 24px;
+  right: 6px;
+  left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
   z-index: 2;
   pointer-events: none;
   direction: ltr;
-  display: flex;
+}
+
+.mm-badges.mm-badges-two {
+  --mm-badge-size: 31px;
+}
+
+.mm-badges.mm-badges-page {
+  --mm-badge-size: 92px;
+  --mm-k: .215;
+  top: 24px;
+  right: calc((100% - min(50%, 380px)) / 4 - var(--mm-badge-size) / 2);
+  left: auto;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mm-badges.mm-badges-page.mm-badges-two {
+  --mm-badge-size: 84px;
+}
+
+@media (width <= 640px) {
+  .mm-badges.mm-badges-page {
+    --mm-badge-size: 64px;
+  }
+
+  .mm-badges.mm-badges-page.mm-badges-two {
+    --mm-badge-size: 52px;
+    gap: 4px;
+  }
+}
+
+@media (width <= 640px) {
+  .flat-card .mm-badges {
+    top: 18px;
+  }
 }
 
 .mm-badge {
@@ -4528,6 +4572,7 @@ section.block {
   justify-content: center;
   align-items: center;
   font-family: Noto Sans Hebrew, sans-serif;
+  font-size: calc(var(--mm-badge-size) * var(--mm-k, .215));
   font-weight: 800;
   line-height: 1.02;
   display: flex;
@@ -4538,6 +4583,12 @@ section.block {
   display: block;
 }
 
+.mm-badge-importer {
+  background: radial-gradient(circle at 32% 24%, #e8571d, #c9450f 78%);
+}
+
+/* מעולם לא-מופעל בפועל בעמוד הזה (MM_BADGE_DEFS כאן מכיל רק officialImporter, לא mmWarranty -
+   התג הזה שמור-לטלוויזיות-למכירה-בלבד) - נשאר מ-הבנייה-המקורית, לא-מזיק, לא-הוסר-ביוזמה. */
 .mm-badge-warranty {
   background: radial-gradient(circle at 32% 24%, #2f3944, #171d23 80%);
 }
@@ -4574,10 +4625,113 @@ section.block {
   letter-spacing: .01em;
 }
 
+/* 28.9.2026: לוגו-מותג + "יבואן רשמי"-כצ'יפ-מובייל - הועתקו-בשלמותם מ-index.html (היו-חסרים-
+   לגמרי כאן), אותה סיבה-שורש כמו .mm-badges למעלה - הפונקציות (brandLogoChipHtml/brandLogoPageHtml/
+   productChipsHtml) כבר-היו-מיובאות-verbatim, אבל ה-CSS-שלהן לא-הועתק-מעולם. */
+.flat-card-brand-logo {
+  align-self: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 1px 4px #00000026;
+  padding: 4px 10px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.flat-card-brand-logo img {
+  display: block;
+  height: 22px;
+  width: auto;
+  max-width: 92px;
+  object-fit: contain;
+}
+
+.item-page-brand-logo {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  width: calc((100% - min(50%, 380px)) / 2);
+  display: flex;
+  justify-content: center;
+  padding-inline: 8px;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.item-page-brand-logo .flat-card-brand-logo {
+  margin-top: 0;
+}
+
+.item-page-brand-logo .flat-card-brand-logo img {
+  height: 26px;
+  max-width: 100%;
+}
+
 @media (width <= 640px) {
-  .mm-badges {
-    --mm-badge-size: 66px;
-    top: -4px;
+  .item-page-brand-logo {
+    top: 14px;
+    left: auto;
+    right: 16px;
+    width: auto;
+    padding-inline: 0;
+  }
+
+  .item-page-brand-logo .flat-card-brand-logo img {
+    height: 26px;
+  }
+
+  .flat-card-brand-logo img {
+    height: 16px;
+    max-width: 72px;
+  }
+}
+
+.mm-chips {
+  display: none;
+}
+
+.mm-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  max-width: 100%;
+}
+
+.mm-chip-importer {
+  background: var(--premium-oncolor);
+  color: var(--orange-ink);
+  border-color: var(--premium-oncolor);
+}
+
+@media (width <= 640px) {
+  .flat-card > .mm-badges,
+  .mm-badges.mm-badges-page {
+    display: none;
+  }
+
+  .mm-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .mm-chips-page {
+    margin: 14px 16px 0;
+  }
+
+  .mm-chips-page .mm-chip {
+    font-size: 13px;
+    padding: 5px 12px;
   }
 }
 
@@ -6543,6 +6697,13 @@ footer.site-foot a:hover {
   align-items: center;
   gap: 8px;
   display: flex;
+  /* 28.9.2026: תוקן-באג-אמיתי - בלי width:100% מפורש, .filter-group (עם align-items:center,
+     לא stretch) לעולם לא-מקבל-רוחב-מוגבל-מ-.product-filters - שורת-הצ'יפים/כפתורים-הפנימית
+     שלו (flex-wrap:wrap) "חושבת" שיש-לה-מקום-אינסופי ולעולם לא-נאלצת-לגלוש-לשורה-שנייה, גם
+     במסך צר - נחשף ע"י כפתורי-המותג-הגדולים-החדשים (ובאותה-מידה גם ע"י שורת-גדלי-המסך הישנה,
+     שסבלה מאותה בעיה, רק פחות-בולט כי הצ'יפים שם קטנים-יותר) - גורם לגלישה-אופקית-אמיתית
+     במובייל. תוקן ע"י הגבלת-רוחב מפורשת, שמאלצת wrap-פנימי לפעול כמתוכנן. */
+  width: 100%;
 }
 
 .product-filters .filter-group-title {
@@ -8034,10 +8195,12 @@ fieldset.step-fieldset legend {
   font-variant-numeric: tabular-nums;
   min-height: 1.4em;
 }
+/* 28.9.2026: הכלל "`.mm-badges{display:none}`" שהיה כאן במקור הוסר - זה שריד ממערכת "חותם
+   האחריות"-של-מתקני-תליה מ-installation.html (עדיין-מיועד לתחליף `.mm-warranty-chip`, שאין-
+   לו כלל תוכן/סימון בעמוד-הזה - 0 שימוש ב-HTML) - היה מנצח-בשקט ומבטל את הגרסה-הנכונה של
+   .mm-badges (יבואן רשמי, ר' סמוך לשורה 4507) בכל רוחב-מסך≤860px, כולל רוב רוחבי-הדסקטופ
+   בפועל - זה שורש-הבאג האמיתי שברק דיווח עליו ("הסימן של יבואן רשמי לא נראה טוב"). */
 @media (width <= 860px) {
-  .mm-badges {
-    display: none;
-  }
   .mm-warranty-chip {
     display: inline-flex;
     align-self: center;
@@ -8412,6 +8575,136 @@ footer.site-foot p, footer.site-foot a {
   color: var(--text-secondary);
   padding: 24px 0;
 }
+
+/* 28.9.2026 (ביקורת-עיצוב, בקשת ברק): כותרת-העמוד גדולה משמעותית מ-.block-head h2 הגנרי
+   (clamp 1.5-2.1rem, אותו-גודל-בדיוק-כמו-כותרות-מקטע-רגילות בשאר האתר) - זה עמוד-קטלוג-מרכזי,
+   לא-מקטע-משני-בתוך-דף-אחר, ראוי לכותרת-hero. שורת "104 דגמים זמינים..." הוסרה לגמרי (גם
+   מה-HTML וגם מה-JS) - לא-הוחלפה בתחליף, לבקשתו המפורשת. */
+#tvCatalogHeadSection .block-head h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+/* כפתורי-מותג גדולים בסינון (במקום צ'יפ-טקסט-קטן) - שימוש-חוזר באותם קובצי-לוגו (BRAND_LOGOS)
+   שכבר-קיימים לתג-המותג-הקטן-בכרטיס, בקונטיינר-קבוע-גודל אחיד (כדי שהלוגואים-השונים-ביחס-
+   רוחב/גובה-שלהם - סמסונג רחב-משמעותית מ-LG - ייראו-עקביים; לא-תיקון-של-קובצי-התמונה עצמם).
+   מותג-בלי-לוגו-מוכר נופל-אוטומטית לגרסת-טקסט-גדולה (fallback עתידי-בטוח). */
+#tvCatalogBrandFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tv-brand-btn {
+  position: relative;
+  width: 148px;
+  height: 68px;
+  padding: 8px 12px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+
+.tv-brand-btn:hover {
+  border-color: var(--orange);
+  box-shadow: 0 3px 12px -5px rgba(0, 0, 0, .22);
+}
+
+.tv-brand-btn.active {
+  border-color: var(--orange);
+  background: var(--premium-soft);
+  box-shadow: 0 3px 12px -5px rgba(234, 91, 36, .4);
+}
+
+.tv-brand-btn-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.tv-brand-btn-logo img {
+  display: block;
+  max-width: 100%;
+  max-height: 42px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.tv-brand-btn-text {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.tv-brand-btn-check {
+  position: absolute;
+  top: -9px;
+  left: -9px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 900;
+  align-items: center;
+  justify-content: center;
+  display: none;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, .35);
+}
+
+.tv-brand-btn.active .tv-brand-btn-check {
+  display: flex;
+}
+
+@media (width <= 640px) {
+  #tvCatalogHeadSection .block-head h2 {
+    font-size: 1.7rem;
+  }
+
+  /* 28.9.2026: תוקן-באג-אמיתי (אומת ברמת-פיקסל, לא לפי מדידת-JS - ר' הערה בהמשך) - ברוחב-
+     מסך צר, 3 כפתורים ברוחב-קבוע (118px) לא-תמיד נכנסים בשורה אחת ולא-עוברים-לשורה-שנייה (
+     flex-wrap:wrap על ההורה לא-פתר את זה בפועל - ה"התכווצות"-הפנימית-של-flex-item שאינו-
+     percentage-based התנהגה-בצורה-לא-צפויה). הפתרון: גריד-CSS רספונסיבי (auto-fit/minmax)
+     במקום flex-wrap+רוחב-קבוע - זה מבטיח-מבנית שלעולם לא ייתכן-גלישה-אופקית, ללא-תלות-במספר-
+     המותגים-בפועל (גם אם יתווסף-מותג-רביעי בעתיד) - הרוחב נגזר-תמיד-מהמקום-הפנוי-האמיתי,
+     לא-מונח-מראש. */
+  #tvCatalogBrandFilter {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+
+  .tv-brand-btn {
+    width: auto;
+    height: 56px;
+  }
+
+  .tv-brand-btn-logo img {
+    max-height: 32px;
+  }
+
+  .tv-brand-btn-text {
+    font-size: .92rem;
+  }
+
+  /* 28.9.2026: אותה-סיבה-בדיוק כמו כפתורי-המותג למעלה - שורת-צ'יפי-גודל-המסך (קיימת-מלפני-
+     היום, לא-נגעתי-בה) סבלה מאותו-בדיוק-כשל-גלישה-אופקית ברוחב-מסך צר (chips נחתכים בקצה
+     ולא-עוברים-לשורה-הבאה). תוקן באותה שיטה - גריד-רספונסיבי. `.filter-chip-row`'s
+     flex-wrap:wrap הכללי לא-הוסר (עדיין-רלוונטי-בדסקטופ ולשאר-השימושים-הפוטנציאליים-של-
+     המחלקה) - זו החרגה-ל-ID-ספציפי במובייל-בלבד. */
+  #tvCatalogSizeFilter {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 8px;
+  }
+}
 </style>
 </head>
 <body>
@@ -8486,7 +8779,6 @@ footer.site-foot p, footer.site-foot a {
     <div class="block-head">
       <span class="block-eyebrow">הקטלוג המלא</span>
       <h2>טלוויזיות למכירה</h2>
-      <p id="tvCatalogCountLine">טוען מוצרים...</p>
     </div>
   </div>
 </section>
@@ -8568,6 +8860,9 @@ footer.site-foot p, footer.site-foot a {
 <script src="./cookie-consent.js"></script>
 <script src="./accessibility-widget.js"></script>
 <script src="./tv-products-data.js"></script>
+<script src="./compare-data.js"></script>
+<script src="./compare-select.js"></script>
+<script src="./compare-bar.js"></script>
 <script>
 
 /* לוגיקת העמוד - tv-catalog.html, קטלוג טלוויזיות למכירה. שלד-הדף (nav/footer/עגלה) שוכפל
@@ -9269,6 +9564,18 @@ function initTvCatalog() {
       '<span class="filter-check-box" aria-hidden="true">' + (active ? "✓" : "") + '</span>' +
       '<span class="wc-title">' + escapeHtmlMM(label) + '</span></button>';
   }
+  /* 28.9.2026: כפתור-מותג גדול-ייעודי (לא-.multi-chip הגנרי) - לוגו-אמיתי כשקיים ב-BRAND_LOGOS
+     (אותם קבצים כמו התג-הקטן-בכרטיס), טקסט-גדול כ-fallback למותג-עתידי-בלי-לוגו. */
+  function tvCatalogBrandChipHtml(brand, active) {
+    var logoSrc = BRAND_LOGOS[String(brand || "").toUpperCase()];
+    var inner = logoSrc
+      ? '<span class="tv-brand-btn-logo"><img src="' + logoSrc + '" alt="" loading="lazy"></span>'
+      : '<span class="tv-brand-btn-text">' + escapeHtmlMM(brand) + '</span>';
+    return '<button type="button" role="checkbox" aria-checked="' + (active ? "true" : "false") +
+      '" aria-label="סינון לפי מותג ' + escapeHtmlMM(brand) + '" class="tv-brand-btn' + (active ? " active" : "") +
+      '" data-value="' + escapeHtmlMM(brand) + '">' + inner +
+      '<span class="tv-brand-btn-check" aria-hidden="true">✓</span></button>';
+  }
   function tvCatalogFilteredProducts() {
     var list = allActiveTvProducts.filter(function (p) {
       if (tvCatalogActiveBrands.length && tvCatalogActiveBrands.indexOf(p.brand) < 0) return false;
@@ -9288,9 +9595,9 @@ function initTvCatalog() {
     var el = document.getElementById("tvCatalogBrandFilter");
     if (!el) return;
     el.innerHTML = tvCatalogAvailableBrands().map(function (b) {
-      return tvCatalogFilterChipHtml("brand", b, b, tvCatalogActiveBrands.indexOf(b) >= 0);
+      return tvCatalogBrandChipHtml(b, tvCatalogActiveBrands.indexOf(b) >= 0);
     }).join("");
-    el.querySelectorAll(".filter-check-chip").forEach(function (chip) {
+    el.querySelectorAll(".tv-brand-btn").forEach(function (chip) {
       chip.addEventListener("click", function () {
         tvCatalogToggleIn(tvCatalogActiveBrands, chip.dataset.value);
         renderTvCatalogAll();
@@ -9314,15 +9621,8 @@ function initTvCatalog() {
     var list = tvCatalogFilteredProducts();
     var grid = document.getElementById("tvCatalogGrid");
     var emptyNote = document.getElementById("tvCatalogEmptyNote");
-    var countLine = document.getElementById("tvCatalogCountLine");
     if (grid) grid.innerHTML = list.map(flatProductCardHtml).join("");
     if (emptyNote) emptyNote.hidden = list.length > 0;
-    if (countLine) {
-      var totalCount = allActiveTvProducts.length;
-      countLine.textContent = (list.length === totalCount)
-        ? (totalCount + " דגמים זמינים - LG, Samsung, TCL ועוד, כל אחד עם מחיר סופי ושקוף.")
-        : (list.length + " דגמים מתוך " + totalCount + " בקטלוג.");
-    }
     var clearBtn = document.getElementById("tvCatalogClearFiltersBtn");
     if (clearBtn) clearBtn.hidden = !(tvCatalogActiveBrands.length || tvCatalogActiveSizeBucket !== "all");
   }

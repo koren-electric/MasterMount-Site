@@ -11,7 +11,10 @@
   if (!DATA || !SEL || !Array.isArray(DATA.models)) return;
   var byId = {};
   DATA.models.forEach(function (m) { byId[m.id] = m; });
-  var TRACKS = ["productTrack", "bestSellersTrack"];
+  /* 28.9.2026: נוסף "tvCatalogGrid" - הגריד-הכללי בעמוד-הקטלוג-הנפרד (tv-catalog.html),
+     גריד-CSS ולא קרוסלת-flex-track כמו שני-הראשונים, אבל אותה סמנטיקה בדיוק (":scope > .flat-
+     card" ישירים) - ה-MutationObserver+enhance() לא-תלויים בסוג-הפריסה בכלל. */
+  var TRACKS = ["productTrack", "bestSellersTrack", "tvCatalogGrid"];
 
   var css = [
     ".flat-card-cell{flex:none;display:flex;flex-direction:column;align-items:stretch;gap:6px;scroll-snap-align:start}",
