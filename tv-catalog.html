@@ -8704,6 +8704,28 @@ footer.site-foot p, footer.site-foot a {
     grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
     gap: 8px;
   }
+
+  /* 28.9.2026 (המשך, אותו-יום): שורת-הטכנולוגיות החדשה (14 צ'יפים - יותר-מ-size) נמצאת-
+     בדיוק-בסיכון-הזהה, אף-חמור-יותר - אותה-הגנת-גריד-רספונסיבי. */
+  #tvCatalogTechFilter {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 8px;
+  }
+
+  /* ⚠️ תוקן-אגב, נתפס-בפועל בצילום-מסך: תגית-חד-מילתית-ללא-נקודת-שבירה ("NanoCell", בלי
+     רווח/מקף כמו "Neo QLED"/"Super QD Mini-LED" שגולשות-בבטחה) גלשה-מחוץ-לתא-הגריד-הצר-שלה-
+     במובייל (`width:auto` הרגיל של הצ'יפ כבר-לא-שולט-ברוחב-בפועל, שנקבע-עכשיו ע"י-תא-הגריד).
+     אומת-ברמת-פיקסל: לא-חריגה-מהמסך (הכל-בתוך-390px), אבל-כן-חיתוך-חזותי-בתוך-הצ'יפ-עצמו. */
+  /* ⚠️ תוקן-שוב, אומת-ברמת-פיקסל שהתיקון-הראשון (overflow-wrap בלבד) לא-הספיק: .wc-title הוא-
+     flex-item בתוך .filter-check-chip (display:flex) - min-width-הדיפולטי (auto) מונע-
+     מ-flex-shrink לדחוס-אותו-מתחת-לרוחב-התוכן-הטבעי, אז overflow-wrap מעולם-לא-קיבל-הזדמנות-
+     לפעול (הטקסט תמיד-נשאר-ברוחבו-המלא-הבלתי-מכווץ, גולש-מעבר-לתא) - min-width:0 המפורש הוא-
+     התיקון-הידוע-לבעיה-הקלאסית-הזו ("flexbox min-width:auto trap"). */
+  #tvCatalogTechFilter .wc-title {
+    overflow-wrap: break-word;
+    min-width: 0;
+  }
 }
 </style>
 </head>
@@ -8789,6 +8811,10 @@ footer.site-foot p, footer.site-foot a {
       <div class="filter-group" id="tvCatalogBrandFilterGroup">
         <div class="filter-group-title"><span>מותג</span></div>
         <div class="filter-chip-row" id="tvCatalogBrandFilter" role="group" aria-label="סינון לפי מותג"></div>
+      </div>
+      <div class="filter-group" id="tvCatalogTechFilterGroup">
+        <div class="filter-group-title"><span>טכנולוגיות</span></div>
+        <div class="filter-chip-row" id="tvCatalogTechFilter" role="group" aria-label="סינון לפי טכנולוגיה"></div>
       </div>
       <div class="filter-group" id="tvCatalogSizeFilterGroup">
         <div class="filter-group-title"><span>גודל מסך</span></div>
@@ -9352,6 +9378,43 @@ function initTvCatalog() {
     return BEST_SELLER_PRODUCT_IDS.indexOf(p && p.id) >= 0;
   }
 
+  /* 28.9.2026: הועתק-verbatim מ-index.html (שם-עדיין-קיים, משמש-גם-לחיפוש-האתר) - חסר-היה-
+     כאן-לגמרי, לכן סינון-הטכנולוגיות (OLED/QLED/וכו') שקיים-בעמוד-הבית-הישן מעולם-לא-הגיע-
+     לעמוד-הקטלוג-הנפרד - זה בדיוק-הבאג-שברק-דיווח-עליו. */
+  var TECH_TAG_DEFS = [
+    { id: "oled", label: "OLED", test: /(^|[^Q])OLED/i },
+    { id: "neo_qled", label: "Neo QLED", test: /Neo\s*QLED/i },
+    { id: "qned", label: "QNED", test: /QNED/i },
+    { id: "qled", label: "QLED", test: /QLED/i },
+    { id: "nanocell", label: "NanoCell", test: /Nano\s*Cell|NANO\s*UHD/i },
+    { id: "super_qd_mini_led", label: "Super QD Mini-LED", test: /Super\s*QD\s*Mini\s*-?\s*LED/i },
+    { id: "qd_mini_led", label: "QD Mini-LED", test: /(^|[^A-Za-z])QD\s*Mini\s*-?\s*LED/i },
+    { id: "rgb_mini_led", label: "RGB Mini-LED", test: /(^|[^A-Za-z])RGB\s*Mini\s*-?\s*LED/i },
+    { id: "mrgb", label: "MRGB", test: /MRGB|Micro\s*-?\s*RGB/i },
+    { id: "micro_rgb", label: "Micro RGB", test: /Micro\s*-?\s*RGB/i },
+    { id: "mini_led", label: "Mini-LED", test: /Mini\s*-?\s*LED/i },
+    { id: "crystal", label: "Crystal-UHD", test: /Crystal/i },
+    { id: "uhd", label: "UHD", test: /\bUHD\b/i },
+    { id: "led", label: "LED", test: /LED/i }
+  ];
+  var MINI_LED_VARIANTS = ["super_qd_mini_led", "qd_mini_led", "rgb_mini_led"];
+  function productTechTags(p) {
+    var s = p && p.screenType ? p.screenType : "";
+    var tags = TECH_TAG_DEFS.filter(function (t) { return t.test.test(s); }).map(function (t) { return t.id; });
+    if (tags.length > 1 && tags.indexOf("led") >= 0) tags = tags.filter(function (id) { return id !== "led"; });
+    if (tags.indexOf("uhd") >= 0 && tags.some(function (id) { return id !== "uhd"; })) tags = tags.filter(function (id) { return id !== "uhd"; });
+    if (tags.indexOf("neo_qled") >= 0) tags = tags.filter(function (id) { return id !== "qled"; });
+    if (tags.indexOf("micro_rgb") >= 0) tags = tags.filter(function (id) { return id !== "mrgb"; });
+    if (tags.indexOf("super_qd_mini_led") >= 0) tags = tags.filter(function (id) { return id !== "qd_mini_led"; });
+    var hasVariant = MINI_LED_VARIANTS.some(function (id) { return tags.indexOf(id) >= 0; });
+    if (hasVariant) tags = tags.filter(function (id) { return id !== "mini_led"; });
+    return tags;
+  }
+  function techLabel(id) {
+    var d = TECH_TAG_DEFS.find(function (t) { return t.id === id; });
+    return d ? d.label : id;
+  }
+
   /* כרטיס-מוצר - קליק פותח דף-מוצר מלא (זהה חזותית לקרוסלה הקיימת בעמוד הבית) */
   function flatProductCardHtml(p) {
     var __productCardLabel = ("פתיחת פרטי המוצר: " + p.brand + " " + p.model + (p.sizeInches ? " " + p.sizeInches + " אינץ'" : "")).replace(/"/g, "&quot;");
@@ -9540,6 +9603,7 @@ function initTvCatalog() {
   /* ================= קטלוג-מלא: פילטרים + מיון + גריד (חדש, לא-קרוסלה) ================= */
   var allActiveTvProducts = CATALOG.tvProducts.filter(function (p) { return p.active !== false; });
   var tvCatalogActiveBrands = [];
+  var tvCatalogActiveTechs = [];
   var tvCatalogActiveSizeBucket = "all";
   var tvCatalogSortMode = "default";
 
@@ -9551,6 +9615,11 @@ function initTvCatalog() {
     var seen = {}, list = [];
     allActiveTvProducts.forEach(function (p) { if (p.brand && !seen[p.brand]) { seen[p.brand] = true; list.push(p.brand); } });
     return list.sort();
+  }
+  /* כל הטכנולוגיות המוגדרות זמינות לסינון, גם אם אין כרגע מוצר תואם במלאי - אותה-התנהגות-
+     בדיוק כמו ה-availableTechs() הישן ב-index.html (רשימה-קבועה, לא-data-driven כמו מותג). */
+  function tvCatalogAvailableTechs() {
+    return TECH_TAG_DEFS.map(function (d) { return d.id; });
   }
   function tvCatalogAvailableSizeBuckets() {
     var seen = {};
@@ -9579,6 +9648,11 @@ function initTvCatalog() {
   function tvCatalogFilteredProducts() {
     var list = allActiveTvProducts.filter(function (p) {
       if (tvCatalogActiveBrands.length && tvCatalogActiveBrands.indexOf(p.brand) < 0) return false;
+      if (tvCatalogActiveTechs.length) {
+        var tags = productTechTags(p);
+        var hit = tvCatalogActiveTechs.some(function (t) { return tags.indexOf(t) >= 0; });
+        if (!hit) return false;
+      }
       if (tvCatalogActiveSizeBucket !== "all" && productSizeBucketId(p.sizeInches) !== tvCatalogActiveSizeBucket) return false;
       return true;
     });
@@ -9604,6 +9678,19 @@ function initTvCatalog() {
       });
     });
   }
+  function renderTvCatalogTechFilter() {
+    var el = document.getElementById("tvCatalogTechFilter");
+    if (!el) return;
+    el.innerHTML = tvCatalogAvailableTechs().map(function (t) {
+      return tvCatalogFilterChipHtml("tech", t, techLabel(t), tvCatalogActiveTechs.indexOf(t) >= 0);
+    }).join("");
+    el.querySelectorAll(".filter-check-chip").forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        tvCatalogToggleIn(tvCatalogActiveTechs, chip.dataset.value);
+        renderTvCatalogAll();
+      });
+    });
+  }
   function renderTvCatalogSizeFilter() {
     var el = document.getElementById("tvCatalogSizeFilter");
     if (!el) return;
@@ -9624,10 +9711,11 @@ function initTvCatalog() {
     if (grid) grid.innerHTML = list.map(flatProductCardHtml).join("");
     if (emptyNote) emptyNote.hidden = list.length > 0;
     var clearBtn = document.getElementById("tvCatalogClearFiltersBtn");
-    if (clearBtn) clearBtn.hidden = !(tvCatalogActiveBrands.length || tvCatalogActiveSizeBucket !== "all");
+    if (clearBtn) clearBtn.hidden = !(tvCatalogActiveBrands.length || tvCatalogActiveTechs.length || tvCatalogActiveSizeBucket !== "all");
   }
   function renderTvCatalogAll() {
     renderTvCatalogBrandFilter();
+    renderTvCatalogTechFilter();
     renderTvCatalogSizeFilter();
     renderTvCatalogGrid();
   }
@@ -9642,6 +9730,7 @@ function initTvCatalog() {
   if (__tvCatalogClearBtn) {
     __tvCatalogClearBtn.addEventListener("click", function () {
       tvCatalogActiveBrands = [];
+      tvCatalogActiveTechs = [];
       tvCatalogActiveSizeBucket = "all";
       renderTvCatalogAll();
     });
