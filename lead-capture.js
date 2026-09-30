@@ -85,6 +85,9 @@
     ".lead-field-error[hidden]{display:none}" +
     ".lead-single-field{display:flex;flex-direction:column;gap:4px}" +
     ".lead-fields-bottom-gap{margin-top:2px}" +
+    ".lead-sent-notice{margin:10px 0 0;padding:10px 12px;border:1px solid var(--accent,#0e8f66);border-radius:8px;background:var(--surface-2,#eef6f1);color:var(--text-primary,#1c1712);font-size:.9rem;line-height:1.6;font-weight:600}" +
+    ".lead-sent-notice[hidden]{display:none}" +
+    "#cartMailtoBtn.is-sent,#cartWhatsappBtn.is-sent{outline:3px solid var(--accent,#0e8f66);outline-offset:2px}" +
     "@media (max-width:340px){.lead-fields-grid{grid-template-columns:1fr}}";
 
   function ensureStyle() {
@@ -345,6 +348,45 @@
     });
   }
 
+  /* משוב ללקוח אחרי לחיצה תקינה על כפתור השליחה. קישור mailto:/wa.me רק פותח אפליקציה אחרת -
+     האתר לא יכול לדעת אם ההודעה נשלחה בפועל, ולכן ההודעה אומרת במפורש שנפתחה טיוטה ושצריך ללחוץ
+     "שליחה" שם (לא טוענת "נשלח"). המשפט על "פרטי הקשר נשלחו אלינו" מוצג רק כשקיים leadEndpoint. */
+  var sentBtnTimer = null;
+  function showSentFeedback(btn, channel) {
+    var isMail = channel === "email";
+    var email = biz.email || "";
+    var msg = isMail
+      ? "✓ נפתחה טיוטת מייל עם פרטי ההזמנה שלכם באפליקציית הדואר. כדי להשלים את הפנייה יש ללחוץ שם על \"שליחה\"." +
+        (biz.leadEndpoint ? " פרטי הקשר שמילאתם נשלחו אלינו." : "") +
+        (email ? " אם לא נפתח חלון מייל, אפשר לכתוב לנו ל-" + email + "." : "")
+      : "✓ נפתח וואטסאפ עם פרטי ההזמנה שלכם. כדי להשלים את הפנייה יש ללחוץ שם על \"שליחה\"." +
+        (biz.leadEndpoint ? " פרטי הקשר שמילאתם נשלחו אלינו." : "");
+    var box = el("cartFormStatus");
+    if (box) {
+      ensureStyle();
+      box.className = "form-status lead-sent-notice";
+      box.textContent = msg;
+      box.hidden = false;
+      try { box.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (e) {}
+    }
+    /* סימון ויזואלי על הכפתור עצמו + החלפת הטקסט הגלוי (צומת הטקסט הראשון) ל-6 שניות */
+    btn.classList.add("is-sent");
+    var textNode = null;
+    for (var i = 0; i < btn.childNodes.length; i++) {
+      var n = btn.childNodes[i];
+      if (n.nodeType === 3 && n.nodeValue.trim()) { textNode = n; break; }
+    }
+    if (textNode) {
+      if (textNode._orig === undefined) textNode._orig = textNode.nodeValue;
+      textNode.nodeValue = isMail ? " ✓ נפתחה טיוטת מייל - יש ללחוץ שליחה" : " ✓ נפתח וואטסאפ - יש ללחוץ שליחה";
+      clearTimeout(sentBtnTimer);
+      sentBtnTimer = setTimeout(function () {
+        btn.classList.remove("is-sent");
+        if (textNode._orig !== undefined) textNode.nodeValue = textNode._orig;
+      }, 6000);
+    }
+  }
+
   /* חסימת קישורי השליחה (וואטסאפ / מייל בעגלה) כל עוד חסר משהו, ושמירה כשהכל תקין.
      מאזין בשלב הלכידה, לפני המאזינים הקיימים בעמודים. */
   document.addEventListener("click", function (e) {
@@ -357,7 +399,9 @@
       return;
     }
     notifyUpdate();
-    save(t.id === "cartWhatsappBtn" ? "whatsapp" : "email");
+    var channelName = t.id === "cartWhatsappBtn" ? "whatsapp" : "email";
+    save(channelName);
+    showSentFeedback(t, channelName);
   }, true);
 
   window.MMLead = {
