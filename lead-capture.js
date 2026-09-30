@@ -1,18 +1,23 @@
 /**
  * lead-capture.js
- * תיבת פרטי לקוח בעגלת הקניות (index.html + installation.html) - שמירת פרטים למעקב פנימי (CRM)
- * ולתיאום הזמנה מול נציג. משותף לשני העמודים.
+ * תיבת פרטי לקוח בעגלת הקניות (checkout.html) - שמירת פרטים למעקב פנימי (CRM) ולתיאום ההזמנה
+ * מול נציג. נטען גם בעוד כמה עמודים (index.html/installation*.html/tv-catalog.html) רק לשימוש
+ * ב-messageLines()/setCartProvider() המשותפים לטופסי-הקשר הפשוטים שלהם - הטופס המלא (עם
+ * ה-honeypot) מוצג אך ורק ב-checkout.html, היחיד עם המכלים cartLeadFieldsTop/Bottom.
  *
- * שדות: שם פרטי, שם משפחה, טלפון (חובה), טלפון נוסף, ת.ז / ח.פ / ע.מ, כתובת (רחוב ומספר בית, קומה, דירה),
+ * שדות: שם פרטי, שם משפחה, טלפון (חובה), טלפון נוסף, כתובת (רחוב ומספר בית, קומה, דירה),
  * עיר, דוא"ל. חובה: שם פרטי, שם משפחה וטלפון. שאר השדות רשות.
+ * ⚠️ ת.ז / ח.פ / ע.מ הוסר במכוון (30.9.2026) - הועבר לשלב מאוחר יותר בתהליך (לא באיסוף-ליד
+ * ראשוני), לא נאסף כרגע בכלל. אם יוחזר בעתיד - זה יהיה כתוספת מודעת, לא שחזור-מהיר של הקוד הישן.
  *
  * מה קורה כשהלקוח לוחץ על אחד קישורי יצירת הקשר בעגלה (וואטסאפ / מייל):
  *   1. בדיקת שדות (אם חסר משהו חובה - הקישור לא נפתח, ומוצגת הודעה ליד השדה).
  *   2. הפרטים נכנסים לגוף ההודעה בתבנית קבועה ("פרטי הלקוח:" + שורות "תווית: ערך"), כך שאפשר לייבא אותם
  *      אחר כך ללידים בדשבורד הניהול בהדבקה אחת.
- *   3. הפרטים נשמרים בדפדפן של הלקוח להשלמה אוטומטית בפעם הבאה (בלי מספר הזהות).
+ *   3. הפרטים נשמרים בדפדפן של הלקוח להשלמה אוטומטית בפעם הבאה.
  *   4. אם מוגדר BUSINESS_CONFIG.leadEndpoint (כתובת קליטה חיצונית) - הליד נשלח אליה גם כן (ומתוזמר לניסיון
  *      חוזר אם נכשל). כל עוד השדה ריק - אין שום שליחת רשת, וההעברה נעשית דרך ההודעה בלבד.
+ *      כולל שדה-מלכודת חבוי (honeypot, "hp") נגד בוטים - בן-אדם אמיתי לעולם לא-רואה/ממלא אותו.
  *
  * אין כאן ערכים עסקיים קשיחים. נטען אחרי business-config.js.
  */
@@ -34,20 +39,6 @@
   /* ---------- בדיקות תקינות ---------- */
   function phoneOk(v) { var d = digits(v); return d.length >= 9 && d.length <= 15; }
   function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v || "").trim()); }
-  /* ת.ז / ח.פ / ע.מ ישראליים: 9 ספרות (מותר להשמיט אפסים מובילים) עם ספרת ביקורת. שדה ריק תקין (רשות). */
-  function idOk(v) {
-    var d = digits(v);
-    if (!d) return true;
-    if (d.length < 5 || d.length > 9) return false;
-    d = ("000000000" + d).slice(-9);
-    var sum = 0;
-    for (var i = 0; i < 9; i++) {
-      var n = Number(d.charAt(i)) * (i % 2 === 0 ? 1 : 2);
-      if (n > 9) n -= 9;
-      sum += n;
-    }
-    return sum % 10 === 0;
-  }
 
   /* ---------- הגדרת שדות ---------- */
   var FIELDS = {
@@ -55,7 +46,6 @@
     last:   { id: "cartLeadLast",   err: "cartLeadLastError",   label: "שם משפחה", required: true, auto: "family-name", type: "text" },
     phone:  { id: "cartLeadPhone",  err: "cartLeadPhoneError",  label: "טלפון", required: true, static: true },
     phone2: { id: "cartLeadPhone2", err: "cartLeadPhone2Error", label: "טלפון נוסף (רשות)", auto: "tel", type: "tel", ltr: true },
-    idnum:  { id: "cartLeadIdNum",  err: "cartLeadIdNumError",  label: "ת.ז / ח.פ / ע.מ (רשות)", type: "text", ltr: true, inputmode: "numeric", auto: "off" },
     street: { id: "cartLeadStreet", err: "cartLeadStreetError", label: "כתובת: רחוב ומספר בית, קומה, דירה (רשות)", auto: "street-address", type: "text", full: true },
     city:   { id: "cartLeadCity",   err: "cartLeadCityError",   label: "עיר (רשות)", auto: "address-level2", type: "text" },
     email:  { id: "cartLeadEmail",  err: "cartLeadEmailError",  label: 'דוא"ל (רשות)', auto: "email", type: "email", ltr: true, full: true }
@@ -66,9 +56,22 @@
     last: "נא להזין שם משפחה.",
     phone: "נא להזין מספר טלפון תקין (לפחות 9 ספרות), כדי שנוכל לחזור אליכם.",
     phone2: "מספר הטלפון הנוסף אינו תקין. אפשר להשאיר את השדה ריק.",
-    idnum: "המספר אינו תקין. בדקו שהוזנו כל הספרות, או השאירו את השדה ריק.",
     email: 'כתובת הדוא"ל אינה תקינה. אפשר להשאיר את השדה ריק.'
   };
+
+  /* שדה-מלכודת חבוי (honeypot) נגד בוטים - לא שדה-אמיתי מבחינת המשתמש, לא ב-FIELDS/ORDER,
+     לא-נבדק/לא-חוסם-שליחה לעולם. מוצג רק ל"עיניים" של בוט-שסורק-HTML, מוסתר ויזואלית + מ-
+     קוראי-מסך (aria-hidden) + לא-נגיש בטאב (tabindex=-1) לבן-אדם אמיתי. */
+  var HP_ID = "cartLeadHp";
+  var HP_HTML =
+    '<div style="position:absolute;left:-9999px;top:-9999px;height:0;overflow:hidden" aria-hidden="true">' +
+    '<label for="' + HP_ID + '">אתר החברה</label>' +
+    '<input type="text" id="' + HP_ID + '" name="company_website" tabindex="-1" autocomplete="off" />' +
+    "</div>";
+  function honeypotVal() {
+    var n = el(HP_ID);
+    return n ? String(n.value || "").trim() : "";
+  }
 
   var CSS =
     ".lead-fields-note{font-size:.85rem;line-height:1.55;color:var(--text-secondary,#55606b);margin:0 0 2px}" +
@@ -117,7 +120,7 @@
   function collect() {
     var d = {
       firstName: val("first"), lastName: val("last"), phone: val("phone"), phone2: val("phone2"),
-      idNumber: val("idnum"), street: val("street"), city: val("city"), email: val("email")
+      street: val("street"), city: val("city"), email: val("email"), hp: honeypotVal()
     };
     d.fullName = (d.firstName + " " + d.lastName).trim();
     return d;
@@ -160,12 +163,11 @@
     if (key === "first" || key === "last") ok = v.length > 0;
     else if (key === "phone") ok = phoneOk(v);
     else if (key === "phone2") ok = !v || phoneOk(v);
-    else if (key === "idnum") ok = idOk(v);
     else if (key === "email") ok = !v || emailOk(v);
     if (ok) clearError(key); else showError(key, ERR[key]);
     return ok;
   }
-  var ORDER = ["first", "last", "phone", "phone2", "idnum", "street", "city", "email"];
+  var ORDER = ["first", "last", "phone", "phone2", "street", "city", "email"];
   function validate() {
     var firstBad = null;
     ORDER.forEach(function (k) {
@@ -184,7 +186,7 @@
   function messageLines(nameFallback, phoneFallback) {
     var d = collect();
     var lines = [];
-    var hasAny = d.fullName || d.phone || d.phone2 || d.idNumber || d.street || d.city || d.email;
+    var hasAny = d.fullName || d.phone || d.phone2 || d.street || d.city || d.email;
     if (!hasAny) {
       if (nameFallback) lines.push("שם: " + nameFallback);
       if (phoneFallback) lines.push("טלפון: " + phoneFallback);
@@ -196,7 +198,6 @@
     if (d.phone) lines.push("טלפון: " + d.phone);
     else if (phoneFallback) lines.push("טלפון: " + phoneFallback);
     if (d.phone2) lines.push("טלפון נוסף: " + d.phone2);
-    if (d.idNumber) lines.push("ת.ז / ח.פ / ע.מ: " + d.idNumber);
     if (d.street) lines.push("כתובת: " + d.street);
     if (d.city) lines.push("עיר: " + d.city);
     if (d.email) lines.push('דוא"ל: ' + d.email);
@@ -227,10 +228,11 @@
       channel: channel || "",
       page: (location.pathname || "").split("/").pop() || "index.html",
       firstName: d.firstName, lastName: d.lastName, fullName: d.fullName,
-      phone: d.phone, phone2: d.phone2, idNumber: d.idNumber,
+      phone: d.phone, phone2: d.phone2,
       street: d.street, city: d.city, email: d.email,
       marketingOptIn: !!(consent && consent.consented),
-      cart: cart
+      cart: cart,
+      hp: d.hp
     };
   }
 
@@ -265,7 +267,7 @@
     box.forEach(function (rec) { if (rec && rec.id) sendRecord(rec); });
   }
 
-  /* שומר את הפרטים להשלמה אוטומטית בפעם הבאה. מספר הזהות לא נשמר בדפדפן. */
+  /* שומר את הפרטים להשלמה אוטומטית בפעם הבאה. */
   function persistDetails() {
     var d = collect();
     writeJson(STORE_KEY, {
@@ -298,12 +300,13 @@
     ensureStyle();
     if (top) {
       top.innerHTML =
+        HP_HTML +
         '<p class="lead-fields-note">הפרטים נשמרים אצלנו למעקב פנימי ולתיאום ההזמנה מול נציג. שדות עם * הם חובה.</p>' +
         '<div class="lead-fields-grid">' + fieldHtml("first") + fieldHtml("last") + "</div>";
     }
     if (bottom) {
       bottom.innerHTML =
-        '<div class="lead-fields-grid lead-fields-bottom-gap">' + fieldHtml("phone2") + fieldHtml("idnum") + fieldHtml("street") + fieldHtml("city") + fieldHtml("email") + "</div>";
+        '<div class="lead-fields-grid lead-fields-bottom-gap">' + fieldHtml("phone2") + fieldHtml("street") + fieldHtml("city") + fieldHtml("email") + "</div>";
     }
     rendered = true;
     wire();
@@ -347,7 +350,6 @@
     collect: collect,
     messageLines: messageLines,
     save: save,
-    idOk: idOk,
     phoneOk: phoneOk,
     emailOk: emailOk,
     onUpdate: function (fn) { onUpdateFn = fn; },

@@ -63,10 +63,12 @@
     },
 
     // כתובת קליטה חיצונית לפניות מהעגלה (אופציונלי). ריק = אין שום שליחת רשת; פרטי הלקוח עוברים רק בתוך הודעת הוואטסאפ/המייל.
-    leadEndpoint: "",
+    // חובר בפועל ב-30.9.2026 (Google Apps Script + Google Sheet פרטי, בבעלות ברק) - נבדק
+    // ואומת עם שליחות אמיתיות (כולל הגנת-כפילות והגנת-ספאם) לפני החיבור בקוד.
+    leadEndpoint: "https://script.google.com/macros/s/AKfycbwgDzZ-5q8JON6eRcnSyiApZkp1O-WMwvLjax9n7JTR9B2MMGmINT7VUlN2tTUUf3RfLw/exec",
 
     // מטא
-    lastUpdated: "2026-09-20",
+    lastUpdated: "2026-09-30",
 
     // דגל מרכזי: האם העוסק כבר רשום ופעיל מסחרית
     isRegistered: false,
