@@ -347,12 +347,15 @@
    * צ'קבוקס-הסכמה לעדכונים/מבצעים - לא מסומן כברירת מחדל, לא חוסם שליחה.
    * idPrefix - קידומת ייחודית ל-id של תיבת הסימון (כדי לתמוך בכמה טפסים באותו עמוד).
    */
+  /* נוסח ההסכמה לדיוור (חוק התקשורת §30א): מציין מפרסם, ערוצים ודרך ביטול. מקור-אמת יחיד - משמש גם את
+     תיבת הסימון וגם את הרשומה השמורה (consentWording), כך שמה שנשמר הוא בדיוק מה שהלקוח ראה. */
+  var MARKETING_CONSENT_WORDING = "אשמח לקבל מ-Master Mount עדכונים ומבצעים בוואטסאפ, SMS או דוא\"ל. אפשר להסיר את ההסכמה בכל עת בפנייה אלינו.";
   function consentCheckboxHtml(idPrefix) {
     var id = esc((idPrefix || "consent") + "MarketingOptIn");
     return (
       '<label for="' + id + '" style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--text-tertiary,#7a7a7a);margin-top:6px;cursor:pointer;">' +
       '<input type="checkbox" id="' + id + '" style="margin:0;" />' +
-      "אשמח לקבל עדכונים ומבצעים." +
+      MARKETING_CONSENT_WORDING +
       "</label>"
     );
   }
@@ -363,7 +366,7 @@
    * שהיא הרישום העסקי-האמיתי-הניתן-להוכחה.
    */
   function recordMarketingConsent(checked) {
-    var record = { consented: !!checked, at: new Date().toISOString(), wording: "אשמח לקבל עדכונים ומבצעים." };
+    var record = { consented: !!checked, at: new Date().toISOString(), wording: MARKETING_CONSENT_WORDING };
     try {
       localStorage.setItem("mm_marketing_consent", JSON.stringify(record));
     } catch (e) {}
@@ -378,4 +381,5 @@
   window.privacyNoticeHtml = privacyNoticeHtml;
   window.consentCheckboxHtml = consentCheckboxHtml;
   window.recordMarketingConsent = recordMarketingConsent;
+  window.MARKETING_CONSENT_WORDING = MARKETING_CONSENT_WORDING;
 })();

@@ -229,7 +229,7 @@
     var cb = document.querySelector('input[type="checkbox"][id$="MarketingOptIn"]');
     var optIn = !!(cb && cb.checked);
     var stored = readJson("mm_marketing_consent", null);
-    var wording = (stored && stored.wording) || "אשמח לקבל עדכונים ומבצעים.";
+    var wording = window.MARKETING_CONSENT_WORDING || (stored && stored.wording) || "";
     return {
       id: "L" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
       createdAt: new Date().toISOString(),
