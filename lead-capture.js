@@ -65,8 +65,8 @@
   var HP_ID = "cartLeadHp";
   var HP_HTML =
     '<div style="position:absolute;left:-9999px;top:-9999px;height:0;overflow:hidden" aria-hidden="true">' +
-    '<label for="' + HP_ID + '">אתר החברה</label>' +
-    '<input type="text" id="' + HP_ID + '" name="company_website" tabindex="-1" autocomplete="off" />' +
+    '<label for="' + HP_ID + '">נא להשאיר שדה זה ריק</label>' +
+    '<input type="text" id="' + HP_ID + '" name="mm_extra_ref" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true" />' +
     "</div>";
   function honeypotVal() {
     var n = el(HP_ID);
@@ -220,7 +220,13 @@
     var d = collect();
     var cart = null;
     if (typeof cartProviderFn === "function") { try { cart = cartProviderFn(); } catch (e) { cart = null; } }
-    var consent = readJson("mm_marketing_consent", null);
+    /* הסכמה שיווקית נלקחת ממצב תיבת-הסימון בעמוד ברגע השליחה, לא מ-localStorage: הרשומה ב-
+       localStorage נשמרת לצמיתות והתיבה מתחילה לא-מסומנת בכל ביקור, כך שהסכמה ישנה הייתה
+       נצמדת לליד שהלקוח לא הסכים בו. אם אין תיבה בעמוד - אין הסכמה. */
+    var cb = document.querySelector('input[type="checkbox"][id$="MarketingOptIn"]');
+    var optIn = !!(cb && cb.checked);
+    var stored = readJson("mm_marketing_consent", null);
+    var wording = (stored && stored.wording) || "אשמח לקבל עדכונים ומבצעים.";
     return {
       id: "L" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
       createdAt: new Date().toISOString(),
@@ -230,7 +236,9 @@
       firstName: d.firstName, lastName: d.lastName, fullName: d.fullName,
       phone: d.phone, phone2: d.phone2,
       street: d.street, city: d.city, email: d.email,
-      marketingOptIn: !!(consent && consent.consented),
+      marketingOptIn: optIn,
+      consentAt: optIn ? new Date().toISOString() : "",
+      consentWording: optIn ? wording : "",
       cart: cart,
       hp: d.hp
     };
@@ -240,12 +248,20 @@
     var url = biz.leadEndpoint;
     if (!url) return false;
     try {
-      /* text/plain + no-cors: פשוט ועובד מול שירותי קליטה חיצוניים (Apps Script / Formspree וכד') בלי preflight */
-      fetch(url, {
-        method: "POST", mode: "no-cors", keepalive: true,
+      /* נכנס ל-outbox *לפני* השליחה: אם הדפדפן מבטל את הבקשה בזמן ניווט (ה-rejection handler
+         לא-רץ) הרשומה עדיין-שמורה ותישלח בטעינה הבאה. no-cors מחזיר תשובה-אטומה, אז "הצליח" כאן
+         = הבקשה יצאה ונענתה, לא שהשרת אישר (שגיאות-שרת מגיעות למייל-החירום/Errors בצד-ה-Script). */
+      addToOutbox(rec);
+      var payload = JSON.stringify(rec);
+      /* keepalive מוגבל ל-64KB - מעל זה fetch זורק; אז שולחים בלי-keepalive. */
+      var opts = {
+        method: "POST", mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(rec)
-      }).then(function () { removeFromOutbox(rec.id); }, function () { addToOutbox(rec); });
+        body: payload
+      };
+      if (payload.length < 60000) opts.keepalive = true;
+      /* text/plain + no-cors: פשוט ועובד מול שירותי קליטה חיצוניים (Apps Script / Formspree וכד') בלי preflight */
+      fetch(url, opts).then(function () { removeFromOutbox(rec.id); }, function () { addToOutbox(rec); });
       return true;
     } catch (e) { addToOutbox(rec); return false; }
   }
