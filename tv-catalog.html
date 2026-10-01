@@ -8757,20 +8757,23 @@ footer.site-foot p, footer.site-foot a {
   padding: 24px 0;
 }
 
-/* --- 1.10.2026 (בקשת ברק) - קרוסלת-גדלים לסינון: כרטיס-אייקון-טלוויזיה לכל גודל קיים בפועל
-   בקטלוג (לא טווחים/buckets כמו קודם), גוללת עם חיצים - אותו מנגנון-חצים/dir=ltr-trick כמו
-   .flat-arrow/.flat-viewport הגלובליים (ר' FlatCarousel ב-installation.html), אבל טראק+כרטיס
-   ייעודיים ל-size-filter-card כדי לא לגעת ב-.flat-card/.flat-track המשותפים לשאר האתר. אייקון-
-   הטלוויזיה עצמו זהה ל-icon-fallback הקיים כבר (מתקן בלי תמונה) - עקביות ויזואלית מכוונת. */
-/* .filter-group הוא flex column עם align-items:center (לא stretch) - בלי width:100% מפורש
-   כאן, .flat-outer-הזה היה מתכווץ לרוחב-תוכנו-בלבד (רק שני-החיצים) בדיוק כמו הבאג המתועד
-   למעלה ב-.filter-group עצמו - נתפס ותוקן באותו-אופן. */
+/* --- 1.10.2026 (בקשת ברק) - כרטיס-אייקון-טלוויזיה לכל גודל קיים בפועל בקטלוג (לא טווחים/
+   buckets כמו קודם). אייקון-הטלוויזיה עצמו זהה ל-icon-fallback הקיים כבר (מתקן בלי תמונה) -
+   עקביות ויזואלית מכוונת.
+   2.10.2026 (בקשת ברק: "משבצות יותר גדולות, פרוסות לכמה שורות במקום קרוסלה") - הוסרה הקרוסלה-
+   הגוללת-עם-חיצים (flat-outer/flat-viewport/חיצי-גלילה) לטובת track עם flex-wrap שפורס את-
+   הכרטיסים לכמה-שורות לפי-רוחב-הזמין, כל-הכרטיסים גלויים-תמיד בלי-גלילה. ה-DOM חזר-לסדר-
+   טבעי (all תחילה, גדלים-עולים) כי אין-יותר dir=ltr-trick על-viewport - תחת ה-RTL הטבעי של
+   הדף, ילד-ה-DOM-הראשון (all) מוצג מימין (תחילת-קריאה), בדיוק-כמו-שהיה-בכוונה-מקורית. הסגנון
+   (צבעים/hover/selected/גרדיאנט) לא-נגע - רק המידות גדלו. */
 .size-filter-outer {
   width: 100%;
 }
 
 .size-filter-track {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 14px;
   padding: 8px 4px 16px;
 }
@@ -8783,13 +8786,12 @@ footer.site-foot p, footer.site-foot a {
 .size-filter-card {
   position: relative;
   flex: none;
-  scroll-snap-align: start;
-  width: 96px;
+  width: 134px;
   cursor: pointer;
   background: var(--surface-2);
   border: 1.5px solid var(--border);
   border-radius: 16px;
-  padding: 13px 8px 11px;
+  padding: 17px 10px 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8838,8 +8840,8 @@ footer.site-foot p, footer.site-foot a {
 
 .size-filter-tv {
   position: relative;
-  width: 66px;
-  height: 52px;
+  width: 94px;
+  height: 74px;
 }
 
 .size-filter-tv svg {
@@ -8859,12 +8861,12 @@ footer.site-foot p, footer.site-foot a {
 
 .size-filter-num {
   position: absolute;
-  inset: 0 0 13px 0;
+  inset: 0 0 18px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 900;
-  font-size: .98rem;
+  font-size: 1.4rem;
   color: var(--text-primary);
   pointer-events: none;
   transition: color .2s;
@@ -8875,28 +8877,36 @@ footer.site-foot p, footer.site-foot a {
 }
 
 .size-filter-card.all-sizes {
-  min-height: 82px;
+  min-height: 116px;
 }
 
 .size-filter-all-label {
   font-weight: 900;
-  font-size: 1.02rem;
+  font-size: 1.3rem;
 }
 
 @media (width <= 640px) {
   .size-filter-card {
-    width: 80px;
-    padding: 10px 6px 8px;
+    width: 108px;
+    padding: 13px 8px 11px;
   }
 
   .size-filter-tv {
-    width: 56px;
-    height: 44px;
+    width: 80px;
+    height: 63px;
   }
 
   .size-filter-num {
-    font-size: .85rem;
-    inset-block-end: 10px;
+    font-size: 1.2rem;
+    inset-block-end: 15px;
+  }
+
+  .size-filter-card.all-sizes {
+    min-height: 100px;
+  }
+
+  .size-filter-all-label {
+    font-size: 1.1rem;
   }
 }
 
@@ -9033,11 +9043,9 @@ footer.site-foot p, footer.site-foot a {
     font-size: .92rem;
   }
 
-  /* 1.10.2026: #tvCatalogSizeFilter הפך לקרוסלת-כרטיסים-גוללת (size-filter-track) - אין-יותר
-     סיכון-לגלישה-אופקית-בלתי-נשלטת (זו בדיוק המטרה של viewport עם overflow-x:auto), אז
-     ה-grid-override הישן-ל-ID-הזה (מ-28.9.2026, נועד-לתקן-את-שורת-הצ'יפים-העוטפת-הישנה) הוסר -
-     היה הופך-בפועל את הקרוסלה-החדשה לגריד-עוטף, מבטל את הגלילה. ר' .size-filter-card/
-     .size-filter-outer למעלה לכללי-המובייל העדכניים של הקרוסלה הזו. */
+  /* 2.10.2026: #tvCatalogSizeFilter הוא כרטיסי-size-filter-card עם flex-wrap (לא-קרוסלה-
+     גוללת יותר, ר' .size-filter-track למעלה) - אין-כאן grid-override נפרד למובייל, הגלישה-
+     לכמה-שורות היא-בדיוק ההתנהגות-הרצויה בכל-רוחב-מסך, אין-צורך-להחריג. */
 
   /* 28.9.2026 (המשך, אותו-יום): שורת-הטכנולוגיות החדשה (14 צ'יפים - יותר-מ-size) נמצאת-
      בדיוק-בסיכון-הזהה, אף-חמור-יותר - אותה-הגנת-גריד-רספונסיבי. */
@@ -9180,10 +9188,8 @@ footer.site-foot p, footer.site-foot a {
       </div>
       <div class="filter-group" id="tvCatalogSizeFilterGroup">
         <div class="filter-group-title"><span>גודל מסך</span></div>
-        <div class="flat-outer size-filter-outer">
-          <button type="button" class="flat-arrow" id="tvCatalogSizeRightBtn" aria-label="גלילה ימינה בין גדלי המסך"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></button>
-          <div class="flat-viewport" id="tvCatalogSizeViewport"><div class="size-filter-track" id="tvCatalogSizeFilter" role="radiogroup" aria-label="סינון לפי גודל מסך"></div></div>
-          <button type="button" class="flat-arrow" id="tvCatalogSizeLeftBtn" aria-label="גלילה שמאלה בין גדלי המסך"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <div class="size-filter-outer">
+          <div class="size-filter-track" id="tvCatalogSizeFilter" role="radiogroup" aria-label="סינון לפי גודל מסך"></div>
         </div>
       </div>
       <div class="filter-group" id="tvCatalogSortGroup">
@@ -10134,10 +10140,14 @@ function initTvCatalog() {
     });
     return list.sort(function (a, b) { return a - b; });
   }
-  /* 1.10.2026 (בקשת ברק) - קרוסלת-כרטיסי-גודל במקום צ'יפים-עוטפים. רשימת-הכרטיסים עצמה כמעט-
-     אף-פעם לא משתנה באותה טעינת-עמוד (תלויה רק בקטלוג, לא בסינון הנוכחי) - בונים את ה-DOM רק
-     פעם אחת (dataset.sizesKey כ-guard) וממחזרים-אותו בכל render נוסף, רק מעדכנים selected/
-     aria-checked - כדי לא לאפס את מיקום-הגלילה של המשתמש בכל לחיצה על סינון אחר (מותג/טכנולוגיה). */
+  /* 2.10.2026 (בקשת ברק: "משבצות יותר גדולות, פרוסות לכמה שורות במקום קרוסלה") - בוטלה
+     הקרוסלה-הגוללת (היו-כאן חצים + dir=ltr-trick על viewport + היפוך-סדר-ה-DOM לצורך-כך) -
+     עכשיו .size-filter-track הוא flex-wrap רגיל תחת ה-RTL הטבעי של הדף, אז סדר-ה-DOM חזר-
+     להיות טבעי (all תחילה, גדלים-עולים) בלי-היפוך - "all" עדיין-מוצג-ראשון/מימין (תחילת-
+     קריאה ב-RTL) בדיוק-כמו-קודם, רק-בלי-הטריק. רשימת-הכרטיסים עצמה כמעט-אף-פעם לא משתנה
+     באותה טעינת-עמוד (תלויה רק בקטלוג, לא בסינון הנוכחי) - בונים את ה-DOM רק פעם אחת
+     (dataset.sizesKey כ-guard) וממחזרים-אותו בכל render נוסף, רק מעדכנים selected/
+     aria-checked. */
   function renderTvCatalogSizeFilter() {
     var el = document.getElementById("tvCatalogSizeFilter");
     if (!el) return;
@@ -10148,10 +10158,7 @@ function initTvCatalog() {
       var cards = [tvCatalogSizeCardHtml("all", "הכל", true)].concat(sizes.map(function (s) {
         return tvCatalogSizeCardHtml(String(s), s + '"', false);
       }));
-      /* DOM הפוך + dir=ltr על ה-viewport - אותו trick בדיוק כמו FlatCarousel הגלובלי
-         (installation.html) כדי שחישובי scrollLeft יהיו עקביים בין דפדפנים, עם "הכל" בקצה-
-         הימני (תחילת-הקריאה ב-RTL). */
-      el.innerHTML = cards.slice().reverse().join("");
+      el.innerHTML = cards.join("");
       el.querySelectorAll(".size-filter-card").forEach(function (card) {
         card.addEventListener("click", function () {
           var v = card.dataset.value;
@@ -10167,38 +10174,6 @@ function initTvCatalog() {
       card.setAttribute("aria-checked", active ? "true" : "false");
     });
   }
-  /* חיווט-חד-פעמי של חצי-הגלילה + dir=ltr-trick (לא בתוך render - הכפתורים הם HTML סטטי,
-     לא נבנים-מחדש). אותה סמנטיקת-חצים בדיוק כמו FlatCarousel הגלובלי (בקשתו-המפורשת-של-ברק,
-     ר' ההערה המקבילה ב-installation.html): חץ-ימין (ממוקם-פיזית מימין) = scrollBy(-step). */
-  (function wireSizeFilterCarousel() {
-    var viewport = document.getElementById("tvCatalogSizeViewport");
-    var rightBtn = document.getElementById("tvCatalogSizeRightBtn");
-    var leftBtn = document.getElementById("tvCatalogSizeLeftBtn");
-    if (!viewport || !rightBtn || !leftBtn) return;
-    viewport.setAttribute("dir", "ltr");
-    function measureStep() {
-      var card = viewport.querySelector(".size-filter-card");
-      var track = viewport.firstElementChild;
-      if (!card || !track) return 90;
-      var rect = card.getBoundingClientRect();
-      var cs = getComputedStyle(track);
-      var gap = parseFloat(cs.columnGap || cs.gap) || 10;
-      return rect.width + gap;
-    }
-    function updateArrows() {
-      var maxScroll = viewport.scrollWidth - viewport.clientWidth;
-      rightBtn.classList.toggle("is-disabled", viewport.scrollLeft <= 1);
-      leftBtn.classList.toggle("is-disabled", viewport.scrollLeft >= maxScroll - 1);
-    }
-    rightBtn.addEventListener("click", function () { viewport.scrollBy({ left: -measureStep(), behavior: "smooth" }); });
-    leftBtn.addEventListener("click", function () { viewport.scrollBy({ left: measureStep(), behavior: "smooth" }); });
-    viewport.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", updateArrows);
-    requestAnimationFrame(function () {
-      viewport.scrollLeft = viewport.scrollWidth - viewport.clientWidth;
-      updateArrows();
-    });
-  })();
   function renderTvCatalogGrid() {
     var list = tvCatalogFilteredProducts();
     var grid = document.getElementById("tvCatalogGrid");
