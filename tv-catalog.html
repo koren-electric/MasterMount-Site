@@ -6850,6 +6850,36 @@ footer.site-foot a:hover {
   background: var(--accent-soft);
 }
 
+/* 1.10.2026 (בקשת ברק) - "נבחר" בצ'יפ-טכנולוגיה מקבל את אותה שפת-הדגשה-כתומה בדיוק כמו
+   כפתורי-המותג (.tv-brand-btn.active) וכרטיסי-הגודל (.size-filter-card.selected), במקום
+   הגוון-הכהה-הגנרי של .multi-chip.active - override ספציפי ל-.filter-check-chip בלבד
+   (היחיד שמשתמש במחלקה הזו בעמוד, ר' tvCatalogFilterChipHtml), כדי לא לגעת ב-.multi-chip
+   עצמו שעדיין בשימוש בקונפיגורטורים אחרים באתר (למשל אפשרויות-הסתרת-כבלים). הכללים האלה
+   באים *אחרי* .multi-chip.active במקור, אז הם גוברים-עליו באותה-רמת-ספציפיות. */
+.filter-check-chip {
+  transition: border-color .2s, background .2s, box-shadow .2s;
+}
+
+.filter-check-chip:hover {
+  border-color: var(--orange);
+}
+
+.filter-check-chip.active {
+  border-color: var(--orange);
+  background: var(--premium-soft);
+  box-shadow: 0 3px 12px -5px rgba(234, 91, 36, .4);
+}
+
+.filter-check-chip.active .wc-title {
+  color: var(--premium);
+}
+
+.filter-check-chip.active .filter-check-box {
+  border-color: var(--orange);
+  background: var(--orange);
+  color: #fff;
+}
+
 .active-filters-bar {
   flex-wrap: wrap;
   justify-content: center;
