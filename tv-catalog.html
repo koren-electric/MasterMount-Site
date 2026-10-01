@@ -4441,6 +4441,8 @@ section.block {
   transition: border-color .2s, box-shadow .2s;
   display: flex;
   position: relative;
+  color: inherit;
+  text-decoration: none;
 }
 
 .flat-card:hover {
@@ -9261,6 +9263,81 @@ footer.site-foot p, footer.site-foot a {
 
 function initTvCatalog() {
 
+  /* 1.10.2026 (בקשת ברק: "אפשר לשתף/שגוגל יכוון למוצר עם מחיר") - תשתית ה-deep-link למוצר
+     בודד (?tv=<id>). נלכדים-כאן ברגע-הטעינה (לפני כל שינוי) ברירות-המחדל של title/meta/
+     canonical/og - כדי ש-__setProductPageMeta(null) ידע-בדיוק למה-לחזור כשסוגרים את עמוד-
+     המוצר, בלי-להניח-מחדש מה היה שם. ר' window.__openProductPage/closeProductPage למטה
+     לאיפה זה נקרא בפועל. */
+  var __mmDefaultTitle = document.title;
+  var __mmDescEl = document.querySelector('meta[name="description"]');
+  var __mmDefaultDesc = __mmDescEl ? __mmDescEl.content : "";
+  var __mmOgTitleEl = document.querySelector('meta[property="og:title"]');
+  var __mmDefaultOgTitle = __mmOgTitleEl ? __mmOgTitleEl.content : "";
+  var __mmOgDescEl = document.querySelector('meta[property="og:description"]');
+  var __mmDefaultOgDesc = __mmOgDescEl ? __mmOgDescEl.content : "";
+  var __mmOgUrlEl = document.querySelector('meta[property="og:url"]');
+  var __mmDefaultOgUrl = __mmOgUrlEl ? __mmOgUrlEl.content : "";
+  var __mmOgImageEl = document.querySelector('meta[property="og:image"]');
+  var __mmDefaultOgImage = __mmOgImageEl ? __mmOgImageEl.content : "";
+  var __mmCanonicalEl = document.querySelector('link[rel="canonical"]');
+  var __mmDefaultCanonical = __mmCanonicalEl ? __mmCanonicalEl.href : "";
+  var __mmBaseUrl = location.origin + location.pathname;
+  /* המוכר-המשפטי-בפועל של הטלוויזיה הוא לא Master Mount (ר' sellerDisclosureHtml ב-
+     legal-components.js - Master Mount אחראית רק על משלוח/התקנה/שירות) - אותו מקור-נתונים
+     בדיוק (window.MM_SELLERS_DATA) משמש כאן ל-Product-schema.seller, כדי לא לסתור את הגילוי-
+     המשפטי המוצג בפועל בעמוד המוצר עם claim שגוי ב-structured-data שגוגל קורא. */
+  function __mmSellerLegalName(sellerId) {
+    var D = window.MM_SELLERS_DATA || {};
+    var seller = (D.sellers || {})[sellerId || "koren"];
+    return (seller && (seller.legalName || seller.displayName)) || null;
+  }
+  function __setProductLdJson(p, url) {
+    var existing = document.getElementById("productLdJson");
+    if (!p) { if (existing) existing.remove(); return; }
+    var data = {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": p.title,
+      "image": [new URL(p.imageUrl, location.href).href],
+      "brand": { "@type": "Brand", "name": p.brand },
+      "sku": p.model,
+      "url": url,
+      "offers": {
+        "@type": "Offer",
+        "url": url,
+        "priceCurrency": "ILS",
+        "price": p.priceILS,
+        "availability": "https://schema.org/" + (p.stockStatus === "out_of_stock" ? "OutOfStock" : "InStock"),
+        "itemCondition": "https://schema.org/NewCondition"
+      }
+    };
+    var sellerName = __mmSellerLegalName(p.sellerId);
+    if (sellerName) data.offers.seller = { "@type": "Organization", "name": sellerName };
+    if (!existing) {
+      existing = document.createElement("script");
+      existing.type = "application/ld+json";
+      existing.id = "productLdJson";
+      document.head.appendChild(existing);
+    }
+    existing.textContent = JSON.stringify(data);
+  }
+  /* p=מוצר -> מעדכן title/meta/canonical/og/JSON-LD + כתובת-ה-URL (replaceState, לא pushState -
+     ה-history-entry כבר נפתח ע"י openModalA11y/__mmModalOpened למעלה, לא רוצים entry כפול).
+     p=null/undefined -> מחזיר הכל לברירת-המחדל שנלכדה למעלה (נקרא גם מ-closeProductPage וגם
+     מה-popstate handler כשסוגרים עם כפתור-אחורה - שני-המקומות-היחידים שסוגרים את עמוד-המוצר). */
+  function __setProductPageMeta(p) {
+    var url = p ? (__mmBaseUrl + "?tv=" + encodeURIComponent(p.id)) : __mmBaseUrl;
+    try { history.replaceState(history.state, "", url); } catch (e) {}
+    if (__mmCanonicalEl) __mmCanonicalEl.href = p ? url : __mmDefaultCanonical;
+    document.title = p ? (p.title + " | קטלוג טלוויזיות - Master Mount") : __mmDefaultTitle;
+    var desc = p ? (p.title + " במחיר " + fmt(p.priceILS) + ' ש"ח, כולל משלוח עד הבית. אפשר גם להזמין התקנה מקצועית.') : __mmDefaultDesc;
+    if (__mmDescEl) __mmDescEl.content = desc;
+    if (__mmOgTitleEl) __mmOgTitleEl.content = p ? document.title : __mmDefaultOgTitle;
+    if (__mmOgDescEl) __mmOgDescEl.content = p ? desc : __mmDefaultOgDesc;
+    if (__mmOgUrlEl) __mmOgUrlEl.content = p ? url : __mmDefaultOgUrl;
+    if (__mmOgImageEl) __mmOgImageEl.content = (p && p.imageUrl) ? new URL(p.imageUrl, location.href).href : __mmDefaultOgImage;
+    __setProductLdJson(p, url);
+  }
 
   var BUSINESS = window.BUSINESS_CONFIG;
   // מתג מרכזי: business-config.js -> contactActionsEnabled (true = וואטסאפ/חיוג פתוחים בכל העמודים; החלטת הבעלים 20.9.2026).
@@ -9619,7 +9696,11 @@ function initTvCatalog() {
   window.addEventListener("popstate", function () {
     if (__mmSelfNav > 0) { __mmSelfNav--; return; }
     if (__mmOpenOverlays.length) {
-      closeModalA11y(__mmOpenOverlays.pop(), true);
+      var __closedOverlay = __mmOpenOverlays.pop();
+      closeModalA11y(__closedOverlay, true);
+      /* כפתור-אחורה כבר-החזיר את location.href לכתובת-הנכונה (native) - רק ה-DOM
+         (title/meta/JSON-LD) לא-מתעדכן-לבד ב-navigation בתוך-העמוד, חייב-אתחול-ידני. */
+      if (__closedOverlay && __closedOverlay.id === "productPageOverlay") __setProductPageMeta(null);
     } else if (__mmPendingRemovals > 0) {
       __mmPendingRemovals--;
       if (!__mmPendingRemovals && __mmBackTimer) { clearTimeout(__mmBackTimer); __mmBackTimer = null; }
@@ -9755,12 +9836,18 @@ function initTvCatalog() {
     return d ? d.label : id;
   }
 
-  /* כרטיס-מוצר - קליק פותח דף-מוצר מלא (זהה חזותית לקרוסלה הקיימת בעמוד הבית) */
+  /* כרטיס-מוצר - קליק פותח דף-מוצר מלא (זהה חזותית לקרוסלה הקיימת בעמוד הבית).
+     1.10.2026 (בקשת ברק: "אפשר לשתף/שגוגל יכוון למוצר עם מחיר") - <a href> אמיתי במקום
+     div-עם-onclick: גוגל יכול לעקוב-אחרי-הקישור ולאנדקס tv-catalog.html?tv=<id> כעמוד נפרד
+     (ר' window.__openProductPage/__setProductPageMeta למטה - שם זה מקבל title/meta/Product-
+     schema ייעודיים כשנפתח), ואפשר-להעתיק/לשתף את הקישור הזה (קליק-ימני/גרירה/Ctrl+קליק).
+     קליק-רגיל (לא Ctrl/Cmd/Shift, לא כפתור-עכבר-אחר) עדיין-פותח באותו-מקום כמודאל SPA מהיר -
+     לא ניווט-מלא - כדי לא לשנות את חוויית-המשתמש הקיימת. */
   function flatProductCardHtml(p) {
     var __productCardLabel = ("פתיחת פרטי המוצר: " + p.brand + " " + p.model + (p.sizeInches ? " " + p.sizeInches + " אינץ'" : "")).replace(/"/g, "&quot;");
     var productSub = '<bdi>' + p.model + (p.sizeInches ? ' · ' + p.sizeInches + '"' : '') + '</bdi>';
     var __isOutOfStock = (p.stockStatus === "out_of_stock");
-    return '<div class="flat-card" role="button" tabindex="0" aria-label="' + __productCardLabel + '" onclick="this.focus();window.__openProductPage(\'' + p.id + '\')" onkeydown="if(event.key===&quot;Enter&quot;||event.key===&quot; &quot;){event.preventDefault();window.__openProductPage(\'' + p.id + '\')}">' +
+    return '<a class="flat-card" href="tv-catalog.html?tv=' + encodeURIComponent(p.id) + '" aria-label="' + __productCardLabel + '" onclick="if(!event.ctrlKey&&!event.metaKey&&!event.shiftKey&&!event.altKey&&event.button===0){event.preventDefault();this.focus();window.__openProductPage(\'' + p.id + '\')}">' +
       (isBestSeller(p) ? '<span class="best-seller-badge">מומלץ</span>' : '') +
       (__isOutOfStock ? '<span class="out-of-stock-badge">אזל מהמלאי</span>' : '') +
       productBadgesHtml(p) +
@@ -9772,7 +9859,7 @@ function initTvCatalog() {
       '<div class="flat-card-vat-note">' + (BUSINESS && BUSINESS.vatNote ? BUSINESS.vatNote() : "המחיר כולל מע\"מ") + '</div>' +
       '<span class="flat-card-buy-tag' + (__isOutOfStock ? ' flat-card-buy-tag-oos' : '') + '">' + (__isOutOfStock ? 'אזל מהמלאי' : 'לרכישה') + '</span>' +
       brandLogoChipHtml(p.brand) +
-    '</div>';
+    '</a>';
   }
 
   /* ================= CART BRIDGE (cart/saveCartToStorage/renderCartBadge/openMiniCart כבר
@@ -9844,6 +9931,7 @@ function initTvCatalog() {
   /* ================= PRODUCT PAGE MODAL ================= */
   function closeProductPage() {
     closeModalA11y(document.getElementById("productPageOverlay"));
+    __setProductPageMeta(null);
   }
   function setProductFeaturesOpen(open) {
     var toggle = document.getElementById("productFeaturesToggle");
@@ -9919,6 +10007,7 @@ function initTvCatalog() {
     }).join("");
     setProductFeaturesOpen(false);
     openModalA11y(document.getElementById("productPageOverlay"), document.getElementById("productPageTitle"), "נפתח חלון: " + p.title);
+    __setProductPageMeta(p);
   };
   wireFocusTrap(document.getElementById("productPageOverlay"));
   document.getElementById("productPageCloseBtn").addEventListener("click", closeProductPage);
@@ -10142,6 +10231,12 @@ function initTvCatalog() {
     });
   }
   renderTvCatalogAll();
+
+  /* 1.10.2026 - פתיחה-אוטומטית של עמוד-המוצר כשנכנסים ישירות עם tv-catalog.html?tv=<id>
+     (קישור ששותף, או שגוגל-עקב-אחריו מ-flatProductCardHtml). __openProductPage כבר-מתעלם
+     בשקט אם ה-id לא-קיים (p ריק -> return), אין-צורך-בטיפול-שגיאה נוסף כאן. */
+  var __mmDeepLinkId = new URLSearchParams(location.search).get("tv");
+  if (__mmDeepLinkId) window.__openProductPage(__mmDeepLinkId);
 
 }
 
