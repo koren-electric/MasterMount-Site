@@ -8725,6 +8725,115 @@ footer.site-foot p, footer.site-foot a {
   padding: 24px 0;
 }
 
+/* --- 1.10.2026 (בקשת ברק) - קרוסלת-גדלים לסינון: כרטיס-אייקון-טלוויזיה לכל גודל קיים בפועל
+   בקטלוג (לא טווחים/buckets כמו קודם), גוללת עם חיצים - אותו מנגנון-חצים/dir=ltr-trick כמו
+   .flat-arrow/.flat-viewport הגלובליים (ר' FlatCarousel ב-installation.html), אבל טראק+כרטיס
+   ייעודיים ל-size-filter-card כדי לא לגעת ב-.flat-card/.flat-track המשותפים לשאר האתר. אייקון-
+   הטלוויזיה עצמו זהה ל-icon-fallback הקיים כבר (מתקן בלי תמונה) - עקביות ויזואלית מכוונת. */
+/* .filter-group הוא flex column עם align-items:center (לא stretch) - בלי width:100% מפורש
+   כאן, .flat-outer-הזה היה מתכווץ לרוחב-תוכנו-בלבד (רק שני-החיצים) בדיוק כמו הבאג המתועד
+   למעלה ב-.filter-group עצמו - נתפס ותוקן באותו-אופן. */
+.size-filter-outer {
+  width: 100%;
+}
+
+.size-filter-track {
+  display: flex;
+  gap: 10px;
+  padding: 6px 4px 12px;
+}
+
+.size-filter-card {
+  flex: none;
+  scroll-snap-align: start;
+  width: 80px;
+  cursor: pointer;
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 10px 6px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font: inherit;
+  color: inherit;
+  transition: border-color .2s, background .2s;
+}
+
+.size-filter-card:hover {
+  border-color: var(--accent);
+}
+
+.size-filter-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.size-filter-card.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.size-filter-tv {
+  position: relative;
+  width: 50px;
+  height: 40px;
+}
+
+.size-filter-tv svg {
+  width: 100%;
+  height: 100%;
+  color: var(--text-tertiary);
+}
+
+.size-filter-card.selected .size-filter-tv svg {
+  color: var(--accent);
+}
+
+.size-filter-num {
+  position: absolute;
+  inset: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: .76rem;
+  color: var(--text-primary);
+  pointer-events: none;
+}
+
+.size-filter-card.selected .size-filter-num {
+  color: var(--accent);
+}
+
+.size-filter-card.all-sizes {
+  min-height: 66px;
+}
+
+.size-filter-all-label {
+  font-weight: 800;
+  font-size: .85rem;
+}
+
+@media (width <= 640px) {
+  .size-filter-card {
+    width: 66px;
+    padding: 8px 4px 6px;
+  }
+
+  .size-filter-tv {
+    width: 44px;
+    height: 34px;
+  }
+
+  .size-filter-num {
+    font-size: .68rem;
+    inset-block-end: 8px;
+  }
+}
+
 /* 28.9.2026 (ביקורת-עיצוב, בקשת ברק): כותרת-העמוד גדולה משמעותית מ-.block-head h2 הגנרי
    (clamp 1.5-2.1rem, אותו-גודל-בדיוק-כמו-כותרות-מקטע-רגילות בשאר האתר) - זה עמוד-קטלוג-מרכזי,
    לא-מקטע-משני-בתוך-דף-אחר, ראוי לכותרת-hero. שורת "104 דגמים זמינים..." הוסרה לגמרי (גם
@@ -8858,16 +8967,11 @@ footer.site-foot p, footer.site-foot a {
     font-size: .92rem;
   }
 
-  /* 28.9.2026: אותה-סיבה-בדיוק כמו כפתורי-המותג למעלה - שורת-צ'יפי-גודל-המסך (קיימת-מלפני-
-     היום, לא-נגעתי-בה) סבלה מאותו-בדיוק-כשל-גלישה-אופקית ברוחב-מסך צר (chips נחתכים בקצה
-     ולא-עוברים-לשורה-הבאה). תוקן באותה שיטה - גריד-רספונסיבי. `.filter-chip-row`'s
-     flex-wrap:wrap הכללי לא-הוסר (עדיין-רלוונטי-בדסקטופ ולשאר-השימושים-הפוטנציאליים-של-
-     המחלקה) - זו החרגה-ל-ID-ספציפי במובייל-בלבד. */
-  #tvCatalogSizeFilter {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-    gap: 8px;
-  }
+  /* 1.10.2026: #tvCatalogSizeFilter הפך לקרוסלת-כרטיסים-גוללת (size-filter-track) - אין-יותר
+     סיכון-לגלישה-אופקית-בלתי-נשלטת (זו בדיוק המטרה של viewport עם overflow-x:auto), אז
+     ה-grid-override הישן-ל-ID-הזה (מ-28.9.2026, נועד-לתקן-את-שורת-הצ'יפים-העוטפת-הישנה) הוסר -
+     היה הופך-בפועל את הקרוסלה-החדשה לגריד-עוטף, מבטל את הגלילה. ר' .size-filter-card/
+     .size-filter-outer למעלה לכללי-המובייל העדכניים של הקרוסלה הזו. */
 
   /* 28.9.2026 (המשך, אותו-יום): שורת-הטכנולוגיות החדשה (14 צ'יפים - יותר-מ-size) נמצאת-
      בדיוק-בסיכון-הזהה, אף-חמור-יותר - אותה-הגנת-גריד-רספונסיבי. */
@@ -9010,7 +9114,11 @@ footer.site-foot p, footer.site-foot a {
       </div>
       <div class="filter-group" id="tvCatalogSizeFilterGroup">
         <div class="filter-group-title"><span>גודל מסך</span></div>
-        <div class="filter-chip-row" id="tvCatalogSizeFilter" role="group" aria-label="סינון לפי גודל מסך"></div>
+        <div class="flat-outer size-filter-outer">
+          <button type="button" class="flat-arrow" id="tvCatalogSizeRightBtn" aria-label="גלילה ימינה בין גדלי המסך"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></button>
+          <div class="flat-viewport" id="tvCatalogSizeViewport"><div class="size-filter-track" id="tvCatalogSizeFilter" role="radiogroup" aria-label="סינון לפי גודל מסך"></div></div>
+          <button type="button" class="flat-arrow" id="tvCatalogSizeLeftBtn" aria-label="גלילה שמאלה בין גדלי המסך"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg></button>
+        </div>
       </div>
       <div class="filter-group" id="tvCatalogSortGroup">
         <div class="filter-group-title"><span>מיון</span></div>
@@ -9539,31 +9647,7 @@ function initTvCatalog() {
     return src ? '<div class="item-page-brand-logo"><span class="flat-card-brand-logo"><img src="' + src + '" alt=""></span></div>' : "";
   }
 
-  /* ================= PRODUCT SIZE BUCKETS + BEST-SELLER ================= */
-  var PRODUCT_SIZE_BUCKETS = [
-    { id: "all", label: "הכל" },
-    { id: "b32", label: "32\"", inches: [32] },
-    { id: "b42", label: "42\"-43\"", range: [42, 43] },
-    { id: "b48", label: "48\"", inches: [48] },
-    { id: "b50", label: "50\"", inches: [50] },
-    { id: "b55", label: "55\"", inches: [55] },
-    { id: "b65", label: "65\"", inches: [65] },
-    { id: "b75", label: "75\"", inches: [75] },
-    { id: "b77", label: "77\"", inches: [77] },
-    { id: "b83", label: "83\"", inches: [83] },
-    { id: "b85", label: "85\"-86\"", range: [85, 86] },
-    { id: "b98", label: "98\" ומעלה", min: 98 }
-  ];
-  function productSizeBucketId(inches) {
-    if (inches == null) return null;
-    for (var i = 1; i < PRODUCT_SIZE_BUCKETS.length; i++) {
-      var b = PRODUCT_SIZE_BUCKETS[i];
-      if (b.inches && b.inches.indexOf(inches) >= 0) return b.id;
-      if (b.range && inches >= b.range[0] && inches <= b.range[1]) return b.id;
-      if (b.min != null && inches >= b.min) return b.id;
-    }
-    return null;
-  }
+  /* ================= BEST-SELLER ================= */
   var BEST_SELLER_PRODUCT_IDS = [];
   function isBestSeller(p) {
     if (p && p.bestSeller === true) return true;
@@ -9796,7 +9880,7 @@ function initTvCatalog() {
   var allActiveTvProducts = CATALOG.tvProducts.filter(function (p) { return p.active !== false; });
   var tvCatalogActiveBrands = [];
   var tvCatalogActiveTechs = [];
-  var tvCatalogActiveSizeBucket = "all";
+  var tvCatalogActiveSize = "all";
   var tvCatalogSortMode = "default";
 
   function tvCatalogToggleIn(arr, v) {
@@ -9812,11 +9896,6 @@ function initTvCatalog() {
      בדיוק כמו ה-availableTechs() הישן ב-index.html (רשימה-קבועה, לא-data-driven כמו מותג). */
   function tvCatalogAvailableTechs() {
     return TECH_TAG_DEFS.map(function (d) { return d.id; });
-  }
-  function tvCatalogAvailableSizeBuckets() {
-    var seen = {};
-    allActiveTvProducts.forEach(function (p) { var b = productSizeBucketId(p.sizeInches); if (b) seen[b] = true; });
-    return PRODUCT_SIZE_BUCKETS.filter(function (b) { return b.id === "all" || seen[b.id]; });
   }
   function tvCatalogFilterChipHtml(group, value, label, active) {
     return '<button type="button" role="checkbox" aria-checked="' + (active ? "true" : "false") +
@@ -9837,6 +9916,16 @@ function initTvCatalog() {
       '" data-value="' + escapeHtmlMM(brand) + '">' + inner +
       '<span class="tv-brand-btn-check" aria-hidden="true">✓</span></button>';
   }
+  /* 1.10.2026 (בקשת ברק) - כרטיס-אייקון-טלוויזיה לקרוסלת-סינון-הגדלים; אייקון-ה-SVG זהה ל-
+     icon-fallback הקיים כבר (מתקן בלי תמונה, installation.html) לעקביות ויזואלית. */
+  function tvCatalogSizeCardHtml(value, label, isAll) {
+    var inner = isAll
+      ? '<span class="size-filter-all-label">הכל</span>'
+      : '<span class="size-filter-tv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M9 20h6M12 17v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span class="size-filter-num">' + escapeHtmlMM(label) + '</span></span>';
+    return '<button type="button" dir="rtl" class="size-filter-card' + (isAll ? " all-sizes" : "") +
+      '" role="radio" aria-checked="false" data-value="' + value + '" aria-label="' +
+      (isAll ? "כל הגדלים" : "סינון לגודל מסך " + escapeHtmlMM(label)) + '">' + inner + '</button>';
+  }
   function tvCatalogFilteredProducts() {
     var list = allActiveTvProducts.filter(function (p) {
       if (tvCatalogActiveBrands.length && tvCatalogActiveBrands.indexOf(p.brand) < 0) return false;
@@ -9845,7 +9934,7 @@ function initTvCatalog() {
         var hit = tvCatalogActiveTechs.some(function (t) { return tags.indexOf(t) >= 0; });
         if (!hit) return false;
       }
-      if (tvCatalogActiveSizeBucket !== "all" && productSizeBucketId(p.sizeInches) !== tvCatalogActiveSizeBucket) return false;
+      if (tvCatalogActiveSize !== "all" && p.sizeInches !== tvCatalogActiveSize) return false;
       return true;
     });
     if (tvCatalogSortMode === "price-asc") list = list.slice().sort(function (a, b) { return a.priceILS - b.priceILS; });
@@ -9883,19 +9972,80 @@ function initTvCatalog() {
       });
     });
   }
+  /* כל גדלי-המסך הקיימים בפועל בקטלוג-הפעיל (לא רשימה קבועה) - אותה-גישה-בדיוק כמו
+     tvCatalogAvailableBrands() למעלה. */
+  function tvCatalogAvailableSizes() {
+    var seen = {}, list = [];
+    allActiveTvProducts.forEach(function (p) {
+      if (p.sizeInches != null && !seen[p.sizeInches]) { seen[p.sizeInches] = true; list.push(p.sizeInches); }
+    });
+    return list.sort(function (a, b) { return a - b; });
+  }
+  /* 1.10.2026 (בקשת ברק) - קרוסלת-כרטיסי-גודל במקום צ'יפים-עוטפים. רשימת-הכרטיסים עצמה כמעט-
+     אף-פעם לא משתנה באותה טעינת-עמוד (תלויה רק בקטלוג, לא בסינון הנוכחי) - בונים את ה-DOM רק
+     פעם אחת (dataset.sizesKey כ-guard) וממחזרים-אותו בכל render נוסף, רק מעדכנים selected/
+     aria-checked - כדי לא לאפס את מיקום-הגלילה של המשתמש בכל לחיצה על סינון אחר (מותג/טכנולוגיה). */
   function renderTvCatalogSizeFilter() {
     var el = document.getElementById("tvCatalogSizeFilter");
     if (!el) return;
-    el.innerHTML = tvCatalogAvailableSizeBuckets().map(function (b) {
-      return tvCatalogFilterChipHtml("size", b.id, b.label, tvCatalogActiveSizeBucket === b.id);
-    }).join("");
-    el.querySelectorAll(".filter-check-chip").forEach(function (chip) {
-      chip.addEventListener("click", function () {
-        tvCatalogActiveSizeBucket = chip.dataset.value;
-        renderTvCatalogAll();
+    var sizes = tvCatalogAvailableSizes();
+    var key = sizes.join(",");
+    if (el.dataset.sizesKey !== key) {
+      el.dataset.sizesKey = key;
+      var cards = [tvCatalogSizeCardHtml("all", "הכל", true)].concat(sizes.map(function (s) {
+        return tvCatalogSizeCardHtml(String(s), s + '"', false);
+      }));
+      /* DOM הפוך + dir=ltr על ה-viewport - אותו trick בדיוק כמו FlatCarousel הגלובלי
+         (installation.html) כדי שחישובי scrollLeft יהיו עקביים בין דפדפנים, עם "הכל" בקצה-
+         הימני (תחילת-הקריאה ב-RTL). */
+      el.innerHTML = cards.slice().reverse().join("");
+      el.querySelectorAll(".size-filter-card").forEach(function (card) {
+        card.addEventListener("click", function () {
+          var v = card.dataset.value;
+          tvCatalogActiveSize = v === "all" ? "all" : Number(v);
+          renderTvCatalogAll();
+        });
       });
+    }
+    el.querySelectorAll(".size-filter-card").forEach(function (card) {
+      var v = card.dataset.value === "all" ? "all" : Number(card.dataset.value);
+      var active = v === tvCatalogActiveSize;
+      card.classList.toggle("selected", active);
+      card.setAttribute("aria-checked", active ? "true" : "false");
     });
   }
+  /* חיווט-חד-פעמי של חצי-הגלילה + dir=ltr-trick (לא בתוך render - הכפתורים הם HTML סטטי,
+     לא נבנים-מחדש). אותה סמנטיקת-חצים בדיוק כמו FlatCarousel הגלובלי (בקשתו-המפורשת-של-ברק,
+     ר' ההערה המקבילה ב-installation.html): חץ-ימין (ממוקם-פיזית מימין) = scrollBy(-step). */
+  (function wireSizeFilterCarousel() {
+    var viewport = document.getElementById("tvCatalogSizeViewport");
+    var rightBtn = document.getElementById("tvCatalogSizeRightBtn");
+    var leftBtn = document.getElementById("tvCatalogSizeLeftBtn");
+    if (!viewport || !rightBtn || !leftBtn) return;
+    viewport.setAttribute("dir", "ltr");
+    function measureStep() {
+      var card = viewport.querySelector(".size-filter-card");
+      var track = viewport.firstElementChild;
+      if (!card || !track) return 90;
+      var rect = card.getBoundingClientRect();
+      var cs = getComputedStyle(track);
+      var gap = parseFloat(cs.columnGap || cs.gap) || 10;
+      return rect.width + gap;
+    }
+    function updateArrows() {
+      var maxScroll = viewport.scrollWidth - viewport.clientWidth;
+      rightBtn.classList.toggle("is-disabled", viewport.scrollLeft <= 1);
+      leftBtn.classList.toggle("is-disabled", viewport.scrollLeft >= maxScroll - 1);
+    }
+    rightBtn.addEventListener("click", function () { viewport.scrollBy({ left: -measureStep(), behavior: "smooth" }); });
+    leftBtn.addEventListener("click", function () { viewport.scrollBy({ left: measureStep(), behavior: "smooth" }); });
+    viewport.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", updateArrows);
+    requestAnimationFrame(function () {
+      viewport.scrollLeft = viewport.scrollWidth - viewport.clientWidth;
+      updateArrows();
+    });
+  })();
   function renderTvCatalogGrid() {
     var list = tvCatalogFilteredProducts();
     var grid = document.getElementById("tvCatalogGrid");
@@ -9903,7 +10053,7 @@ function initTvCatalog() {
     if (grid) grid.innerHTML = list.map(flatProductCardHtml).join("");
     if (emptyNote) emptyNote.hidden = list.length > 0;
     var clearBtn = document.getElementById("tvCatalogClearFiltersBtn");
-    if (clearBtn) clearBtn.hidden = !(tvCatalogActiveBrands.length || tvCatalogActiveTechs.length || tvCatalogActiveSizeBucket !== "all");
+    if (clearBtn) clearBtn.hidden = !(tvCatalogActiveBrands.length || tvCatalogActiveTechs.length || tvCatalogActiveSize !== "all");
   }
   function renderTvCatalogAll() {
     renderTvCatalogBrandFilter();
@@ -9923,7 +10073,7 @@ function initTvCatalog() {
     __tvCatalogClearBtn.addEventListener("click", function () {
       tvCatalogActiveBrands = [];
       tvCatalogActiveTechs = [];
-      tvCatalogActiveSizeBucket = "all";
+      tvCatalogActiveSize = "all";
       renderTvCatalogAll();
     });
   }
