@@ -8739,19 +8739,25 @@ footer.site-foot p, footer.site-foot a {
 
 .size-filter-track {
   display: flex;
-  gap: 10px;
-  padding: 6px 4px 12px;
+  gap: 14px;
+  padding: 8px 4px 16px;
 }
 
+/* 1.10.2026 (עדכון-עיצוב באותו-יום, בקשת ברק: "עיצוב ייחודי, קצת צבע") - הכרטיסים מאמצים
+   את צבע-המותג הכתום (var(--premium) / var(--brand-orange)) שכבר משמש באתר לתגי "הנמכר-
+   ביותר" (ר' .best-seller-badge למעלה) - עקביות-מכוונת: "נבחר" מקבל בדיוק את אותה שפת-זוהר-
+   כתום, לא צבע-חדש-מומצא. פס-הגרדיאנט העליון (::before, cap מעוגל בזכות overflow:hidden +
+   border-radius המשותף) חשוף רק ב-hover/selected - תוספת-עיצובית ייחודית לקרוסלה הזו בלבד. */
 .size-filter-card {
+  position: relative;
   flex: none;
   scroll-snap-align: start;
-  width: 80px;
+  width: 96px;
   cursor: pointer;
   background: var(--surface-2);
   border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 10px 6px 8px;
+  border-radius: 16px;
+  padding: 13px 8px 11px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8759,78 +8765,106 @@ footer.site-foot p, footer.site-foot a {
   gap: 6px;
   font: inherit;
   color: inherit;
-  transition: border-color .2s, background .2s;
+  overflow: hidden;
+  transition: border-color .2s, background .2s, box-shadow .2s, transform .2s;
+}
+
+.size-filter-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--brand-orange), var(--brand-orange-2));
+  transform: scaleX(0);
+  transition: transform .25s;
 }
 
 .size-filter-card:hover {
-  border-color: var(--accent);
+  border-color: var(--brand-orange-2);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px -16px var(--premium);
+}
+
+.size-filter-card:hover::before {
+  transform: scaleX(1);
 }
 
 .size-filter-card:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--premium);
   outline-offset: 2px;
 }
 
 .size-filter-card.selected {
-  border-color: var(--accent);
-  background: var(--accent-soft);
+  border-color: var(--premium);
+  background: var(--premium-soft);
+  box-shadow: 0 14px 30px -14px var(--premium);
+}
+
+.size-filter-card.selected::before {
+  transform: scaleX(1);
 }
 
 .size-filter-tv {
   position: relative;
-  width: 50px;
-  height: 40px;
+  width: 66px;
+  height: 52px;
 }
 
 .size-filter-tv svg {
   width: 100%;
   height: 100%;
   color: var(--text-tertiary);
+  transition: color .2s;
+}
+
+.size-filter-card:hover .size-filter-tv svg {
+  color: var(--brand-orange-2);
 }
 
 .size-filter-card.selected .size-filter-tv svg {
-  color: var(--accent);
+  color: var(--premium);
 }
 
 .size-filter-num {
   position: absolute;
-  inset: 0 0 10px 0;
+  inset: 0 0 13px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: .76rem;
+  font-weight: 900;
+  font-size: .98rem;
   color: var(--text-primary);
   pointer-events: none;
+  transition: color .2s;
 }
 
 .size-filter-card.selected .size-filter-num {
-  color: var(--accent);
+  color: var(--premium);
 }
 
 .size-filter-card.all-sizes {
-  min-height: 66px;
+  min-height: 82px;
 }
 
 .size-filter-all-label {
-  font-weight: 800;
-  font-size: .85rem;
+  font-weight: 900;
+  font-size: 1.02rem;
 }
 
 @media (width <= 640px) {
   .size-filter-card {
-    width: 66px;
-    padding: 8px 4px 6px;
+    width: 80px;
+    padding: 10px 6px 8px;
   }
 
   .size-filter-tv {
-    width: 44px;
-    height: 34px;
+    width: 56px;
+    height: 44px;
   }
 
   .size-filter-num {
-    font-size: .68rem;
-    inset-block-end: 8px;
+    font-size: .85rem;
+    inset-block-end: 10px;
   }
 }
 
