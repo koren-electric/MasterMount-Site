@@ -6782,15 +6782,15 @@ footer.site-foot a:hover {
 
 .product-filters {
   flex-direction: column;
-  gap: 14px;
-  margin-bottom: 22px;
+  gap: 10px;
+  margin-bottom: 16px;
   display: flex;
 }
 
 .product-filters .filter-group {
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   display: flex;
   /* 28.9.2026: תוקן-באג-אמיתי - בלי width:100% מפורש, .filter-group (עם align-items:center,
      לא stretch) לעולם לא-מקבל-רוחב-מוגבל-מ-.product-filters - שורת-הצ'יפים/כפתורים-הפנימית
@@ -6810,6 +6810,42 @@ footer.site-foot a:hover {
 
 .product-filters .size-filter-grid {
   margin-bottom: 0;
+}
+
+/* 2.10.2026 (בקשת ברק: "לדחוס כלפי מעלה", "טכנולוגיות שלא יתפוס כל כך הרבה נפח") - שורת-
+   הטכנולוגיות (14 צ'יפים, הייתה-נשברת-ל-2-שורות-עוטפות) הפכה לרצועה גוללת-אופקית-אחת, באותו
+   .flat-viewport-הגלובלי-הקיים (גלילה-חלקה/scrollbar מוסתר, ר' FlatCarousel) בלי-חיצים (52px
+   חיצים היו-כבדים-מדי-ויזואלית לצ'יפים-קטנים כאלה) - גלילה טבעית-באצבע/בעכבר/trackpad מספיקה
+   כאן. .filter-group עם align-items:center דורש width:100% מפורש ל-viewport (אותו-באג-מתועד
+   כבר פעמיים-למעלה ל-.filter-group/.size-filter-outer). */
+.product-filters .filter-group > .flat-viewport {
+  width: 100%;
+}
+
+#tvCatalogTechFilter {
+  flex-wrap: nowrap;
+}
+
+/* "מיון" (היה filter-group נפרד עם כותרת+שורה משלו) + "איפוס סינון" (היה שורה-נפרדת אחריו) -
+   מאוחדים לרצועה-קומפקטית-אחת, מוצמדת-לצדדים (לא ממורכזת כמו שאר-קבוצות-הסינון) - חוסך שתי
+   שורות-גובה-מלאות. */
+.filter-utility-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
+
+.filter-sort-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  letter-spacing: .02em;
+  font-size: .86rem;
+  font-weight: 800;
 }
 
 .filter-chip-row {
@@ -9184,7 +9220,7 @@ footer.site-foot p, footer.site-foot a {
       </div>
       <div class="filter-group" id="tvCatalogTechFilterGroup">
         <div class="filter-group-title"><span>טכנולוגיות</span></div>
-        <div class="filter-chip-row" id="tvCatalogTechFilter" role="group" aria-label="סינון לפי טכנולוגיה"></div>
+        <div class="flat-viewport" id="tvCatalogTechViewport" dir="ltr"><div class="filter-chip-row" id="tvCatalogTechFilter" role="group" aria-label="סינון לפי טכנולוגיה"></div></div>
       </div>
       <div class="filter-group" id="tvCatalogSizeFilterGroup">
         <div class="filter-group-title"><span>גודל מסך</span></div>
@@ -9192,15 +9228,16 @@ footer.site-foot p, footer.site-foot a {
           <div class="size-filter-track" id="tvCatalogSizeFilter" role="radiogroup" aria-label="סינון לפי גודל מסך"></div>
         </div>
       </div>
-      <div class="filter-group" id="tvCatalogSortGroup">
-        <div class="filter-group-title"><span>מיון</span></div>
-        <select id="tvCatalogSortSelect" class="tv-catalog-sort-select" aria-label="מיון תוצאות">
-          <option value="default">לפי סדר הקטלוג</option>
-          <option value="price-asc">מחיר: מהזול לגבוה</option>
-          <option value="price-desc">מחיר: מהגבוה לזול</option>
-        </select>
+      <div class="filter-utility-row">
+        <label class="filter-sort-inline" for="tvCatalogSortSelect"><span>מיון:</span>
+          <select id="tvCatalogSortSelect" class="tv-catalog-sort-select" aria-label="מיון תוצאות">
+            <option value="default">לפי סדר הקטלוג</option>
+            <option value="price-asc">מחיר: מהזול לגבוה</option>
+            <option value="price-desc">מחיר: מהגבוה לזול</option>
+          </select>
+        </label>
+        <button type="button" class="btn-ghost" id="tvCatalogClearFiltersBtn" hidden>איפוס סינון</button>
       </div>
-      <button type="button" class="btn-ghost" id="tvCatalogClearFiltersBtn" hidden>איפוס סינון</button>
     </div>
   </div>
 </section>
@@ -10118,17 +10155,34 @@ function initTvCatalog() {
       });
     });
   }
+  /* 2.10.2026 (בקשת ברק: "טכנולוגיות שלא יתפוס כל כך הרבה נפח") - הפכה מצ'יפים-עוטפים-ל-2-
+     שורות לרצועה גוללת-אופקית-אחת (.flat-viewport ב-tvCatalogTechFilterGroup). DOM-הפוך +
+     dir=ltr על ה-viewport - אותו trick בדיוק כמו קרוסלת-גדלים הישנה (ר' __mmInitTechScroll
+     למטה) כדי שחישוב-scrollLeft-ההתחלתי יהיה עקבי בין דפדפנים תחת RTL, עם OLED (הטכנולוגיה-
+     הראשונה ברשימה) בקצה-הימני (תחילת-הקריאה). */
   function renderTvCatalogTechFilter() {
     var el = document.getElementById("tvCatalogTechFilter");
     if (!el) return;
     el.innerHTML = tvCatalogAvailableTechs().map(function (t) {
       return tvCatalogFilterChipHtml("tech", t, techLabel(t), tvCatalogActiveTechs.indexOf(t) >= 0);
-    }).join("");
+    }).reverse().join("");
     el.querySelectorAll(".filter-check-chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
         tvCatalogToggleIn(tvCatalogActiveTechs, chip.dataset.value);
         renderTvCatalogAll();
       });
+    });
+    __mmInitTechScroll();
+  }
+  /* חד-פעמי (guard על dataset) - מציב את הגלילה בקצה-ההתחלה (ימין, OLED) בפעם-הראשונה
+     שהרצועה נבנית, בלי-לאפס-גלילה-שהמשתמש-כבר-ביצע ב-render-ים הבאים (כל-לחיצה על סינון-
+     אחר קוראת ל-renderTvCatalogAll, שקוראת-שוב ל-renderTvCatalogTechFilter). */
+  function __mmInitTechScroll() {
+    var viewport = document.getElementById("tvCatalogTechViewport");
+    if (!viewport || viewport.dataset.scrollInit) return;
+    viewport.dataset.scrollInit = "1";
+    requestAnimationFrame(function () {
+      viewport.scrollLeft = viewport.scrollWidth - viewport.clientWidth;
     });
   }
   /* כל גדלי-המסך הקיימים בפועל בקטלוג-הפעיל (לא רשימה קבועה) - אותה-גישה-בדיוק כמו
