@@ -6812,60 +6812,27 @@ footer.site-foot a:hover {
   margin-bottom: 0;
 }
 
-/* 2.10.2026 (בקשת ברק: "לדחוס כלפי מעלה", "טכנולוגיות שלא יתפוס כל כך הרבה נפח") - שורת-
-   הטכנולוגיות (14 צ'יפים, הייתה-נשברת-ל-2-שורות-עוטפות) הפכה לרצועה גוללת-אופקית-אחת, באותו
-   .flat-viewport-הגלובלי-הקיים (גלילה-חלקה/scrollbar מוסתר, ר' FlatCarousel). .filter-group
-   עם align-items:center דורש width:100% מפורש ל-.flat-outer (אותו-באג-מתועד כבר פעמיים-למעלה
-   ל-.filter-group/.size-filter-outer) - .flat-viewport עצמו כבר-יודע-להתמתח בין-שני-החיצים
-   (flex:1 1 auto מוגדר-עליו גלובלית). */
-.product-filters .filter-group > .flat-outer {
-  width: 100%;
-}
-
-/* 2.10.2026 (תיקון-דחוף #1, בקשת ברק: "נעלמו אופציות") - בלי-חיצים (כפי-שנוסה-קודם) אין-שום-
-   רמז-ויזואלי שיש-עוד-טכנולוגיות-מעבר-לקצה-הנראה - המשתמש-חשב-שהן-"נעלמו" (הן-היו-שם, רק-
-   גלולות-מחוץ-לתצוגה). הוחזרו-חיצים, אבל קטנים (32px, לא 52px הגנריים-של-קרוסלות-הירו) כדי-
-   שלא-יהיו-כבדים-מדי ביחס-לצ'יפים-הקטנים. */
-.tech-filter-arrow {
-  width: 32px;
-  height: 32px;
-}
-
-.tech-filter-arrow .flat-arrow-icon {
-  width: 16px;
-  height: 16px;
-}
-
-#tvCatalogTechFilter {
-  flex-wrap: nowrap;
-}
-
-/* 2.10.2026 (תיקון-דחוף #2, בקשת ברק - "יצא יותר גדול ממה שהיה") - בלי זה, הצ'יפים (עם
-   min-width:0 ו-flex-shrink:1 דיפולטיבי מ-.filter-check-chip/.multi-chip) התכווצו כדי
-   להיכנס-כולם-בשורה-אחת-בלי-גלילה, מה שגרם לטקסט-הדו-מילתי (Crystal-UHD, Super QD Mini-LED
-   וכו') להישבר ל-2-3 שורות *בתוך* כל צ'יפ - בדיוק-ההפך-מהמטרה (השורה יצאה גבוהה-יותר, לא-
-   פחות). flex:none מבטל-את-ההתכווצות - כל צ'יפ שומר-על-רוחב-תוכנו-הטבעי (שורה אחת), וה-
-   viewport גולל-אופקית כשאין-מספיק-מקום, כמו שתוכנן. */
+/* 2.10.2026 (בקשת ברק: "לדחוס כלפי מעלה", ואז "בטל את הקרוסלה לגמרי, תקטין עוד יותר") -
+   ניסינו-קודם רצועה-גוללת-עם-חיצים (ר' git history אם-צריך) - ברק-ביקש-לבטל-את-זה-לגמרי
+   ולהסתמך-רק-על-הקטנה כדי שכל-14-הטכנולוגיות ייכנסו בלי-גלילה. חזרה-ל-.filter-chip-row
+   הרגיל (flex-wrap:wrap - בדיוק-כמו-שורת-המותג), עם צ'יפים קטנים-משמעותית מהגרסה-הקודמת. */
 #tvCatalogTechFilter .filter-check-chip {
-  flex: none;
-}
-
-/* 2.10.2026 (תיקון-דחוף #3, בקשת ברק: "תקטין את הכתב, זה יעזור בפרופורציות") - צ'יפים
-   קומפקטיים-יותר רק-בשורת-הטכנולוגיות הזו (לא ב-.filter-check-chip/.multi-chip הגנרי - עדיין
-   בשימוש-רגיל במקומות-אחרים). טקסט קטן-יותר -> צ'יפ צר-יותר -> יותר-נראה-בבת-אחת בלי-לגלול. */
-#tvCatalogTechFilter .filter-check-chip {
-  padding: 6px 10px;
-  gap: 5px;
+  padding: 2px 6px;
+  gap: 3px;
 }
 
 #tvCatalogTechFilter .wc-title {
-  font-size: .78rem;
+  font-size: .58rem;
 }
 
 #tvCatalogTechFilter .filter-check-box {
-  width: 14px;
-  height: 14px;
-  font-size: .6rem;
+  width: 10px;
+  height: 10px;
+  font-size: .46rem;
+}
+
+#tvCatalogTechFilter {
+  gap: 4px;
 }
 
 /* "מיון" (היה filter-group נפרד עם כותרת+שורה משלו) + "איפוס סינון" (היה שורה-נפרדת אחריו) -
@@ -9011,6 +8978,18 @@ footer.site-foot p, footer.site-foot a {
   margin-bottom: 2px;
 }
 
+/* 2.10.2026 (בקשת ברק, בעקבות-סימון-בתמונה: שני-מרווחים-גדולים - מתחת-לכותרת, ובין-הסינונים
+   לגריד) - אותה-סיבה-בדיוק כמו #tvCatalogHeadSection למעלה: section.block הגנרי
+   (padding-block:60px!) מיועד-למקטעים-עצמאיים-מופרדים-היטב, מוגזם-לגמרי כששני-מקטעים-כאלה
+   יושבים-צמודים-זה-לזה כחלקים-מאותו-"אזור-סינון-וקטלוג" לוגי. padding מינימלי, מוגבל-לשני-ה-
+   ID-ים-האלה-בלבד (לא section.block הגנרי - משמש-במקטעים-עצמאיים-אמיתיים בשאר-האתר). */
+#tvCatalogFilterSection {
+  padding-block: 16px;
+}
+#tvCatalogGridSection {
+  padding-top: 16px;
+}
+
 /* כפתורי-מותג גדולים בסינון (במקום צ'יפ-טקסט-קטן) - שימוש-חוזר באותם קובצי-לוגו (BRAND_LOGOS)
    שכבר-קיימים לתג-המותג-הקטן-בכרטיס, בקונטיינר-קבוע-גודל אחיד (כדי שהלוגואים-השונים-ביחס-
    רוחב/גובה-שלהם - סמסונג רחב-משמעותית מ-LG - ייראו-עקביים; לא-תיקון-של-קובצי-התמונה עצמם).
@@ -9262,11 +9241,7 @@ footer.site-foot p, footer.site-foot a {
       </div>
       <div class="filter-group" id="tvCatalogTechFilterGroup">
         <div class="filter-group-title"><span>טכנולוגיות</span></div>
-        <div class="flat-outer tech-filter-outer">
-          <button type="button" class="flat-arrow tech-filter-arrow" id="tvCatalogTechRightBtn" aria-label="גלילה ימינה בין הטכנולוגיות"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></button>
-          <div class="flat-viewport" id="tvCatalogTechViewport" dir="ltr"><div class="filter-chip-row" id="tvCatalogTechFilter" role="group" aria-label="סינון לפי טכנולוגיה"></div></div>
-          <button type="button" class="flat-arrow tech-filter-arrow" id="tvCatalogTechLeftBtn" aria-label="גלילה שמאלה בין הטכנולוגיות"><svg class="flat-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg></button>
-        </div>
+        <div class="filter-chip-row" id="tvCatalogTechFilter" role="group" aria-label="סינון לפי טכנולוגיה"></div>
       </div>
       <div class="filter-group" id="tvCatalogSizeFilterGroup">
         <div class="filter-group-title"><span>גודל מסך</span></div>
@@ -10201,58 +10176,20 @@ function initTvCatalog() {
       });
     });
   }
-  /* 2.10.2026 (בקשת ברק: "טכנולוגיות שלא יתפוס כל כך הרבה נפח") - הפכה מצ'יפים-עוטפים-ל-2-
-     שורות לרצועה גוללת-אופקית-אחת (.flat-viewport ב-tvCatalogTechFilterGroup). DOM-הפוך +
-     dir=ltr על ה-viewport - אותו trick בדיוק כמו קרוסלת-גדלים הישנה (ר' __mmInitTechScroll
-     למטה) כדי שחישוב-scrollLeft-ההתחלתי יהיה עקבי בין דפדפנים תחת RTL, עם OLED (הטכנולוגיה-
-     הראשונה ברשימה) בקצה-הימני (תחילת-הקריאה). */
+  /* 2.10.2026 (בקשת ברק: קודם רצועה-גוללת, אחר-כך "בטל את הקרוסלה לגמרי, תקטין עוד") -
+     חזרה-לצ'יפים-עוטפים-רגילים (כמו-שורת-המותג) - אין-יותר dir=ltr/היפוך-DOM/גלילה, רק
+     סדר-טבעי (OLED ראשון ברשימה -> ראשון ב-DOM -> מימין, תחת ה-RTL הטבעי של הדף). */
   function renderTvCatalogTechFilter() {
     var el = document.getElementById("tvCatalogTechFilter");
     if (!el) return;
     el.innerHTML = tvCatalogAvailableTechs().map(function (t) {
       return tvCatalogFilterChipHtml("tech", t, techLabel(t), tvCatalogActiveTechs.indexOf(t) >= 0);
-    }).reverse().join("");
+    }).join("");
     el.querySelectorAll(".filter-check-chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
         tvCatalogToggleIn(tvCatalogActiveTechs, chip.dataset.value);
         renderTvCatalogAll();
       });
-    });
-    __mmInitTechScroll();
-  }
-  /* חד-פעמי (guard על dataset) - מציב את הגלילה בקצה-ההתחלה (ימין, OLED) בפעם-הראשונה
-     שהרצועה נבנית, בלי-לאפס-גלילה-שהמשתמש-כבר-ביצע ב-render-ים הבאים (כל-לחיצה על סינון-
-     אחר קוראת ל-renderTvCatalogAll, שקוראת-שוב ל-renderTvCatalogTechFilter). מחווט-כאן-גם
-     את-חיצי-הגלילה (תוקן-דחוף 2.10.2026, ר' ההערה למעלה על .tech-filter-arrow) - אותה-
-     סמנטיקת-חצים-בדיוק כמו קרוסלת-גדלים-הישנה שהוסרה: חץ-ימין (ממוקם-פיזית מימין) =
-     scrollBy(-step). */
-  function __mmInitTechScroll() {
-    var viewport = document.getElementById("tvCatalogTechViewport");
-    if (!viewport || viewport.dataset.scrollInit) return;
-    viewport.dataset.scrollInit = "1";
-    var rightBtn = document.getElementById("tvCatalogTechRightBtn");
-    var leftBtn = document.getElementById("tvCatalogTechLeftBtn");
-    function measureStep() {
-      var chip = viewport.querySelector(".filter-check-chip");
-      var track = viewport.firstElementChild;
-      if (!chip || !track) return 90;
-      var rect = chip.getBoundingClientRect();
-      var cs = getComputedStyle(track);
-      var gap = parseFloat(cs.columnGap || cs.gap) || 8;
-      return rect.width + gap;
-    }
-    function updateArrows() {
-      var maxScroll = viewport.scrollWidth - viewport.clientWidth;
-      if (rightBtn) rightBtn.classList.toggle("is-disabled", viewport.scrollLeft <= 1);
-      if (leftBtn) leftBtn.classList.toggle("is-disabled", viewport.scrollLeft >= maxScroll - 1);
-    }
-    if (rightBtn) rightBtn.addEventListener("click", function () { viewport.scrollBy({ left: -measureStep() * 3, behavior: "smooth" }); });
-    if (leftBtn) leftBtn.addEventListener("click", function () { viewport.scrollBy({ left: measureStep() * 3, behavior: "smooth" }); });
-    viewport.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", updateArrows);
-    requestAnimationFrame(function () {
-      viewport.scrollLeft = viewport.scrollWidth - viewport.clientWidth;
-      updateArrows();
     });
   }
   /* כל גדלי-המסך הקיימים בפועל בקטלוג-הפעיל (לא רשימה קבועה) - אותה-גישה-בדיוק כמו
