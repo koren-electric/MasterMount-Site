@@ -8384,6 +8384,26 @@ footer.site-foot p, footer.site-foot a {
     min-width: 0;
   }
 }
+
+/* 2.10.2026 (באג-ויזואלי, בקשת ברק) - #regionalLinksSection שם p+a.btn-ghost כאחים-ישירים
+   בתוך .wrap הרגיל (לא-flex) - .btn-ghost הוא display:inline כברירת-מחדל (עובד נכון בכל-מקום-
+   אחר באתר רק כי תמיד-יושב בתוך קונטיינר-flex שמבצע לו blockify ממילא; כאן זה המקום היחיד
+   שהוא לא) - ה-padding האנכי שלו (13px) לא-משפיע-על-גובה-שורת-הטקסט כשהוא inline-טהור, אז
+   הרקע/המסגרת שלו חפפו-ויזואלית את הפסקה-מעליו. תוקן עם עטיפת-flex ייעודית, לא שינוי-של-
+   .btn-ghost הגנרי (ישפיע על כל שאר-השימושים-באתר). */
+.regional-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+}
+
+.regional-links-row p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-weight: 700;
+}
 </style>
 </head>
 <body>
@@ -8485,11 +8505,13 @@ footer.site-foot p, footer.site-foot a {
 
 <section class="block" id="regionalLinksSection">
   <div class="wrap">
-    <p>מתקינים טלוויזיות גם באזורים נוספים:</p>
-    <a class="btn-ghost" href="installation.html">למחשבון ההתקנה המלא</a>
-    <a class="btn-ghost" href="installation-raanana.html">התקנה ברעננה</a>
-    <a class="btn-ghost" href="installation-tel-aviv.html">התקנה בתל אביב יפו</a>
-    <a class="btn-ghost" href="installation-petah-tikva.html">התקנה בפתח תקווה</a>
+    <div class="regional-links-row">
+      <p>מתקינים טלוויזיות גם באזורים נוספים:</p>
+      <a class="btn-ghost" href="installation.html">למחשבון ההתקנה המלא</a>
+      <a class="btn-ghost" href="installation-raanana.html">התקנה ברעננה</a>
+      <a class="btn-ghost" href="installation-tel-aviv.html">התקנה בתל אביב יפו</a>
+      <a class="btn-ghost" href="installation-petah-tikva.html">התקנה בפתח תקווה</a>
+    </div>
   </div>
 </section>
 
