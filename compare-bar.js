@@ -1,6 +1,9 @@
-/* compare-bar.js - "להשוואה" בקטלוג עמוד הבית: תיבת סימון לכל כרטיס טלוויזיה + סרגל השוואה צף בתחתית.
+/* compare-bar.js - "להשוואה" בקטלוג עמוד הבית: תיבת סימון לכל כרטיס טלוויזיה + פאנל השוואה צף.
    * מקסימום שני דגמים. סימון שלישי לא מחליף אוטומטית: מוצגת הודעה שצריך להסיר אחד קודם.
-   * הסרגל מופיע מהסימון הראשון: תמונה ממוזערת + שם דגם + X לכל דגם, וכפתור "השווה" (פעיל רק כשנבחרו שניים).
+   * הפאנל (2.10.2026, בקשת ברק - בהשראת-צילום-מסך-ממתחרה שצורף: כרטיס-צף מעוגן-פינה, לא-
+     סרגל-רוחב-מלא) מוצג מהסימון הראשון: כותרת-גרדיאנט-כתום לחיצה-לקיפול ("VS | רשימת השוואה"
+     + ספירה + חץ), גוף עם שורת-תמונה-ממוזערת+שם+X לכל דגם, ותחתית עם כפתור "השווה" (פעיל רק
+     כשנבחרו שניים) + כפתור-"+" עגול (גלילה-לקטלוג להוספת-דגם-נוסף, מוצג רק-כשיש-עוד-מקום).
    * הבחירה נשמרת ב-localStorage (compare-select.js) ולכן שורדת רענון וניווט.
    * לא נוגע בקוד הקרוסלה: כל כרטיס (.flat-card) עטוף ב-.flat-card-cell שמכיל גם את תיבת הסימון כאח של הכרטיס
      (ולא בתוכו - אלמנט אינטראקטיבי בתוך role="button" הוא כשל נגישות).
@@ -32,33 +35,57 @@
     ".cmp-pick:has(input:checked) .cmp-on{display:inline}",
     ".cmp-pick:has(input:checked) .cmp-off{display:none}",
     ".cmp-pick:has(input:focus-visible){outline:3px solid var(--orange,#ea5b24);outline-offset:2px}",
-    "#mmCompareBar{position:fixed;inset-inline:0;bottom:var(--mm-cookie-h,0px);z-index:120;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface,#fff);border-top:2px solid var(--orange,#ea5b24);box-shadow:0 -10px 30px -12px rgba(0,0,0,.35)}",
+    /* 2.10.2026 - כרטיס-צף מעוגן-פינה (לא-רוחב-מלא), בהשראת-עיצוב שברק-צירף: כותרת-גרדיאנט
+       לחיצה-לקיפול, גוף-רשימה, תחתית-פעולה. right (לא inset-inline-end) בכוונה - ברק ביקש
+       פינה-ימנית-פיזית-ספציפית, לא "תחילת-שורה" לוגי שבעמוד-RTL היה-הופך-לשמאל. */
+    "#mmCompareBar{position:fixed;right:16px;bottom:calc(16px + var(--mm-cookie-h,0px) + env(safe-area-inset-bottom,0px));z-index:120;width:min(336px,calc(100vw - 32px));border-radius:18px;overflow:hidden;background:var(--surface,#fff);box-shadow:0 20px 44px -16px rgba(0,0,0,.4);transition:box-shadow .15s}",
     "#mmCompareBar[hidden]{display:none}",
-    "#mmCompareBar .cmp-bar-in{max-width:1000px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}",
-    "#mmCompareBar .cmp-bar-items{display:flex;gap:10px;flex:1 1 320px;min-width:0}",
-    "#mmCompareBar .cmp-bar-item{position:relative;display:flex;align-items:center;gap:8px;flex:1 1 0;min-width:0;padding:6px 8px;padding-inline-end:34px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface-2,#f1efe9)}",
-    "#mmCompareBar .cmp-bar-item.is-empty{border-style:dashed;justify-content:center;color:var(--text-secondary);font-size:.8rem;padding:6px 8px}",
-    "#mmCompareBar img{width:44px;height:36px;object-fit:contain;flex:none;background:#fff;border-radius:6px}",
-    "#mmCompareBar .cmp-bar-name{min-width:0;font-size:.8rem;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}",
-    "#mmCompareBar .cmp-bar-name b{display:block;font-size:.85rem}",
-    "#mmCompareBar .cmp-bar-x{position:absolute;inset-inline-end:4px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text-primary);font-size:.9rem;line-height:1;cursor:pointer}",
-    "#mmCompareBar .cmp-bar-x:hover{border-color:var(--orange,#ea5b24)}",
-    "#mmCompareBar .cmp-bar-go{flex:none;padding:11px 22px;border-radius:10px;border:none;background:var(--premium-oncolor,#cc4714);color:#fff;font-weight:700;font-size:.95rem;text-decoration:none;text-align:center}",
-    "#mmCompareBar .cmp-bar-go[aria-disabled='true']{background:var(--surface-2,#eee);color:var(--text-tertiary,#606870);cursor:not-allowed;border:1px dashed var(--border)}",
-    "#mmCompareBar .cmp-bar-msg{flex:1 0 100%;font-size:.82rem;font-weight:600;color:var(--premium-text,#ba4112);min-height:0}",
-    "#mmCompareBar .cmp-bar-msg:empty{display:none}",
-    "@media (max-width:640px){#mmCompareBar .cmp-bar-go{flex:1 0 100%}#mmCompareBar .cmp-bar-items{flex-basis:100%}}",
-    "body.has-cmp-bar{padding-bottom:110px}"
+    "#mmCompareBar .cmp-panel-head{display:flex;align-items:center;gap:10px;width:100%;padding:13px 16px;border:none;background:linear-gradient(90deg,var(--brand-orange,#ea5b24),var(--brand-orange-2,#ff8a52));color:#fff;font:inherit;cursor:pointer;text-align:start}",
+    "#mmCompareBar .cmp-panel-vs{flex:none;font-size:.78rem;font-weight:900;letter-spacing:.04em;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.22)}",
+    "#mmCompareBar .cmp-panel-title{flex:1 1 auto;min-width:0;font-weight:800;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}",
+    "#mmCompareBar .cmp-panel-count{flex:none;font-size:.78rem;font-weight:700;opacity:.9}",
+    "#mmCompareBar .cmp-panel-chevron{flex:none;width:18px;height:18px;transition:transform .2s}",
+    "#mmCompareBar.is-collapsed .cmp-panel-chevron{transform:rotate(-90deg)}",
+    "#mmCompareBar.is-collapsed .cmp-panel-head{border-radius:18px}",
+    "#mmCompareBar .cmp-panel-body{max-height:50vh;overflow-y:auto}",
+    "#mmCompareBar.is-collapsed .cmp-panel-body,#mmCompareBar.is-collapsed .cmp-panel-foot{display:none}",
+    "#mmCompareBar .cmp-bar-item{position:relative;display:flex;align-items:center;gap:10px;min-width:0;padding:10px 16px;padding-inline-end:40px;border-bottom:1px solid var(--border)}",
+    "#mmCompareBar .cmp-bar-item.is-empty{color:var(--text-secondary);font-size:.82rem;justify-content:center;padding:14px 16px}",
+    "#mmCompareBar img{width:46px;height:38px;object-fit:contain;flex:none;background:#fff;border:1px solid var(--border);border-radius:8px}",
+    "#mmCompareBar .cmp-bar-name{min-width:0;font-size:.82rem;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}",
+    "#mmCompareBar .cmp-bar-name b{display:block;font-size:.87rem}",
+    "#mmCompareBar .cmp-bar-x{position:absolute;inset-inline-end:10px;top:50%;transform:translateY(-50%);width:28px;height:28px;flex:none;border-radius:50%;border:none;background:transparent;color:var(--text-tertiary);font-size:1.05rem;line-height:1;cursor:pointer}",
+    "#mmCompareBar .cmp-bar-x:hover{background:var(--surface-2,#f1efe9);color:var(--premium,#ea5b24)}",
+    "#mmCompareBar .cmp-panel-foot{display:flex;align-items:center;gap:10px;padding:12px 14px}",
+    "#mmCompareBar .cmp-bar-go{flex:1 1 auto;padding:12px 18px;border-radius:999px;border:none;background:var(--premium-oncolor,#cc4714);color:#fff;font-weight:800;font-size:.92rem;text-decoration:none;text-align:center}",
+    "#mmCompareBar .cmp-bar-go[aria-disabled='true']{background:var(--surface-2,#eee);color:var(--text-tertiary,#606870)}",
+    "#mmCompareBar .cmp-panel-add{flex:none;width:40px;height:40px;border-radius:50%;border:none;background:var(--brand-ink,#20272e);color:#fff;font-size:1.3rem;line-height:1;cursor:pointer}",
+    "#mmCompareBar .cmp-bar-msg{padding:0 16px 10px;font-size:.78rem;font-weight:700;color:var(--premium-text,#ba4112)}",
+    "#mmCompareBar .cmp-bar-msg:empty{display:none;padding:0}"
   ].join("\n");
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
   var bar = document.createElement("div");
   bar.id = "mmCompareBar"; bar.hidden = true;
-  bar.setAttribute("role", "region"); bar.setAttribute("aria-label", "סרגל השוואת טלוויזיות");
-  bar.innerHTML = '<div class="cmp-bar-in"><div class="cmp-bar-items" id="mmCmpItems"></div><a class="cmp-bar-go" id="mmCmpGo" role="link" aria-disabled="true">השווה</a><div class="cmp-bar-msg" id="mmCmpMsg" role="status" aria-live="polite"></div></div>';
+  bar.setAttribute("role", "region"); bar.setAttribute("aria-label", "השוואת טלוויזיות");
+  bar.innerHTML =
+    '<button type="button" class="cmp-panel-head" id="mmCmpHead" aria-expanded="true">' +
+      '<span class="cmp-panel-vs">VS</span>' +
+      '<span class="cmp-panel-title">רשימת השוואה</span>' +
+      '<span class="cmp-panel-count" id="mmCmpCount"></span>' +
+      '<svg class="cmp-panel-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+    '</button>' +
+    '<div class="cmp-panel-body" id="mmCmpItems"></div>' +
+    '<div class="cmp-bar-msg" id="mmCmpMsg" role="status" aria-live="polite"></div>' +
+    '<div class="cmp-panel-foot">' +
+      '<a class="cmp-bar-go" id="mmCmpGo" role="link" aria-disabled="true">השווה</a>' +
+      '<button type="button" class="cmp-panel-add" id="mmCmpAdd" aria-label="הוספת דגם נוסף - גלילה לקטלוג" hidden>+</button>' +
+    '</div>';
   document.body.appendChild(bar);
-  var itemsEl = bar.querySelector("#mmCmpItems"), goEl = bar.querySelector("#mmCmpGo"), msgEl = bar.querySelector("#mmCmpMsg");
+  var itemsEl = bar.querySelector("#mmCmpItems"), goEl = bar.querySelector("#mmCmpGo"), msgEl = bar.querySelector("#mmCmpMsg"),
+    headEl = bar.querySelector("#mmCmpHead"), countEl = bar.querySelector("#mmCmpCount"), addEl = bar.querySelector("#mmCmpAdd");
   var msgTimer = null;
+  var collapsed = false;
 
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function say(text) {
@@ -77,7 +104,9 @@
     var raw = SEL.get(), ids = raw.filter(function (id) { return !!byId[id]; });
     if (ids.length !== raw.length) { SEL.set(ids); return; }
     bar.hidden = ids.length === 0;
-    document.body.classList.toggle("has-cmp-bar", ids.length > 0);
+    bar.classList.toggle("is-collapsed", collapsed);
+    headEl.setAttribute("aria-expanded", String(!collapsed));
+    countEl.textContent = ids.length + "/" + SEL.MAX;
     var html = "";
     ids.forEach(function (id) {
       var m = byId[id];
@@ -90,10 +119,22 @@
     goEl.setAttribute("aria-disabled", ready ? "false" : "true");
     if (ready) { goEl.setAttribute("href", compareHref(ids)); goEl.removeAttribute("tabindex"); }
     else { goEl.removeAttribute("href"); goEl.setAttribute("tabindex", "-1"); }
+    addEl.hidden = ids.length >= SEL.MAX;
     /* סנכרון כל תיבות הסימון בדף */
     Array.prototype.forEach.call(document.querySelectorAll(".cmp-pick input[data-id]"), function (cb) { cb.checked = ids.indexOf(cb.getAttribute("data-id")) !== -1; });
   }
 
+  headEl.addEventListener("click", function () {
+    collapsed = !collapsed;
+    bar.classList.toggle("is-collapsed", collapsed);
+    headEl.setAttribute("aria-expanded", String(!collapsed));
+  });
+  /* "+" - אין כאן זרימת-חיפוש-והוספה-מהפאנל (לא קיימת בפיצ'ר); גולל-אל-הקטלוג-הקרוב-ביותר
+     בעמוד-הנוכחי כדי שהמשתמש יוכל לבחור-את-הדגם-הבא. מוצג רק-כשיש-עוד-מקום (ר' renderBar). */
+  addEl.addEventListener("click", function () {
+    var target = document.getElementById("tvCatalogGridSection") || document.getElementById("productTrack") || document.getElementById("bestSellersTrack");
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
   bar.addEventListener("click", function (e) {
     var x = e.target.closest(".cmp-bar-x");
     if (x) { SEL.remove(x.getAttribute("data-id")); say(""); }
@@ -138,8 +179,9 @@
         cb.checked = false;
         say("אפשר להשוות שני דגמים בלבד. יש להסיר אחד מהדגמים בסרגל לפני הוספת דגם נוסף.");
         bar.hidden = false;
+        collapsed = false;
         var x = bar.querySelector(".cmp-bar-x"); if (x) x.focus();
-      } else say("");
+      } else { collapsed = false; say(""); }
     } else { SEL.remove(id); say(""); }
   });
 
