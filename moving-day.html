@@ -8408,22 +8408,22 @@ function initMovingDay() {
   var MOVING_SIZE_OPTIONS = CATALOG.sizeTiers.map(function (t) { return { id: t.id, label: t.label }; });
   /* מחירי-מעבר-דירה עצמאיים לגמרי ממחירי-ההתקנה-הראשונית ב-CATALOG (אותם גדלים/מיקומים, סכומים
      שונים - שירות-העברה, לא התקנה-חדשה) */
-  var MOVING_SIZE_PRICES = { t1: 80, t2: 120, t3: 190, t4: 280, t5: 400 };
-  var MOVING_SCREEN_COUNT_PRICES = { 1: 180, 2: 320, 3: 440, 4: 550, 5: 650, max: 720 };
+  var MOVING_SIZE_PRICES = { t1: 120, t2: 150, t3: 220, t4: 290, t5: 400 };
+  var MOVING_SCREEN_COUNT_PRICES = { 1: 240, 2: 380, 3: 500, 4: 600, 5: 700, max: 750 };
   var MOVING_CURRENT_MOUNT_OPTIONS = [
     { id: "wall", label: "תלוי על מתקן קיר", priceILS: 90 },
     { id: "other", label: "מתקן אחר", priceILS: 90 },
-    { id: "legs", label: "מונח על רגליות הטלוויזיה", priceILS: 40 }
+    { id: "legs", label: "מונח על רגליות הטלוויזיה", priceILS: 50 }
   ];
   var MOVING_SAME_MOUNT_PRICE = 90;
   var MOVING_NEW_MOUNT_OPTIONS = [
     { id: "existing_mount", label: "יש מתקן חדש ברשותי שמתאים למסך", priceILS: 100 },
-    { id: "buy_catalog", label: "ארכוש מתקן חדש מהקטלוג בשלב הבא", priceILS: 80 },
+    { id: "buy_catalog", label: "ארכוש מתקן חדש מהקטלוג בשלב הבא", priceILS: 0 },
     { id: "wall", label: "התקנה על קיר", priceILS: 90 },
-    { id: "table", label: "התקנה שולחנית סטנדרטית", priceILS: 40 },
-    { id: "cart", label: "התקנה על עגלה ניידת", priceILS: 130 },
-    { id: "floor_pole", label: "התקנה על עמוד רצפתי סטטי", priceILS: 130 },
-    { id: "ceiling", label: "התקנה מהתקרה (עד גובה 3 מטר)", priceILS: 260 },
+    { id: "table", label: "התקנה שולחנית סטנדרטית", priceILS: 50 },
+    { id: "cart", label: "התקנה על עגלה ניידת", priceILS: 140 },
+    { id: "floor_pole", label: "התקנה על עמוד רצפתי סטטי", priceILS: 150 },
+    { id: "ceiling", label: "התקנה מהתקרה (עד גובה 3 מטר)", priceILS: 300 },
     { id: "special", label: "התקנות מיוחדות", priceILS: null }
   ];
   /* שלב "בחירת מתקן" (אחרי "איך תרצו להתקין"): לכל מסך שנבחר לו "תליה באופן אחר" - מתקן חדש שברשותי (מחיר קבוע)
@@ -8477,7 +8477,7 @@ function initMovingDay() {
   ];
   var MOVING_STORAGE_OPTIONS = [
     { id: "short", label: "עד 7 ימי עסקים", priceILS: 0 },
-    { id: "long", label: "עד 30 ימי עסקים", priceILS: 35, perScreen: true }
+    { id: "long", label: "עד 30 ימי עסקים", priceILS: 39, perScreen: true }
   ];
   var MOVING_STORAGE_LONG_PRICE = findIn(MOVING_STORAGE_OPTIONS, "long").priceILS;
 
